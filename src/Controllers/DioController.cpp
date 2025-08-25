@@ -18,8 +18,10 @@ void DioController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "pullup") handlePullup(cmd);
     else if (cmd.getRoot() == "pwm")    handlePwm(cmd);
     else if (cmd.getRoot() == "toggle") handleTogglePin(cmd);
+    else if (cmd.getRoot() == "pulse")  handlePulse(cmd);
     else if (cmd.getRoot() == "analog") handleAnalog(cmd);
     else if (cmd.getRoot() == "measure") handleMeasure(cmd);
+    else if (cmd.getRoot() == "servo")  handleServo(cmd);
     else if (cmd.getRoot() == "reset")  handleResetPin(cmd);
     else                                handleHelp();
     
@@ -374,6 +376,57 @@ void DioController::handleResetPin(const TerminalCommand& cmd) {
     terminalView.println("DIO Reset: Pin " + std::to_string(pin) + " to INPUT (no pull-up, no PWM).");
 }
 
+void DioController::handleServo(const TerminalCommand& cmd) {
+    if (cmd.getSubcommand().empty() || cmd.getArgs().empty()) {
+        terminalView.println("Usage: servo <pin> <angle>");
+        return;
+    }
+
+    if (!argTransformer.isValidNumber(cmd.getSubcommand()) ||
+        !argTransformer.isValidNumber(cmd.getArgs())) {
+        terminalView.println("DIO Servo: Invalid arguments.");
+        return;
+    }
+
+    uint8_t pin = argTransformer.parseHexOrDec(cmd.getSubcommand());
+    if (!isPinAllowed(pin, "Servo")) return;
+
+    uint8_t angle = argTransformer.parseHexOrDec(cmd.getArgs());
+    pinService.setServoAngle(pin, angle);
+    terminalView.println("DIO Servo: Set pin " + std::to_string(pin) + " to angle " + std::to_string(angle) + ".");
+}
+
+/*
+Pulse
+*/
+void DioController::handlePulse(const TerminalCommand& cmd) {
+    if (cmd.getSubcommand().empty() || cmd.getArgs().empty()) {
+        terminalView.println("Usage: pulse <pin> <duration_us>");
+        return;
+    }
+
+    if (!argTransformer.isValidNumber(cmd.getSubcommand()) ||
+        !argTransformer.isValidNumber(cmd.getArgs())) {
+        terminalView.println("DIO Pulse: Invalid arguments.");
+        return;
+    }
+
+    uint8_t pin = argTransformer.parseHexOrDec(cmd.getSubcommand());
+    if (!isPinAllowed(pin, "Pulse")) return;
+
+    uint32_t durationUs = argTransformer.toUint32(cmd.getArgs());
+
+    // Configure en sortie
+    pinService.setOutput(pin);
+
+    pinService.setHigh(pin);
+    delayMicroseconds(durationUs);
+    pinService.setLow(pin);
+
+    terminalView.println("DIO Pulse: Pin " + std::to_string(pin) +
+                         " HIGH for " + std::to_string(durationUs) + " µs.");
+}
+
 /*
 Help
 */
@@ -384,7 +437,9 @@ void DioController::handleHelp() {
     terminalView.println("  set <pin> <H/L/I/O>");
     terminalView.println("  pullup <pin>");
     terminalView.println("  pwm <pin> <freq> <duty>");
+    terminalView.println("  servo <pin> <angle>");
     terminalView.println("  measure <pin> [ms]");
+    terminalView.println("  pulse <pin> <us>");
     terminalView.println("  toggle <pin> <ms>");
     terminalView.println("  analog <pin>");
     terminalView.println("  reset <pin>");

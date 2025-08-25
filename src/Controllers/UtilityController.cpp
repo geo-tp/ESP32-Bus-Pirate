@@ -362,6 +362,8 @@ void UtilityController::handleHelp() {
     terminalView.println("  read <pin>           - Get pin state");
     terminalView.println("  set <pin> <H/L/I/O>  - Set pin state");
     terminalView.println("  pullup <pin>         - Set pin pullup");
+    terminalView.println("  pulse <pin> <us>     - Send pulse on pin");
+    terminalView.println("  servo <pin> <angle>  - Set servo angle");
     terminalView.println("  pwm <pin> freq <dut> - Set PWM on pin");
     terminalView.println("  toggle <pin> <ms>    - Toggle pin periodically");
     terminalView.println("  measure <pin> [ms]   - Calculate frequency");

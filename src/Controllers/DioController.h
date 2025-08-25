@@ -51,6 +51,12 @@ private:
     // Edge count on a pin
     void handleMeasure(const TerminalCommand& cmd);
 
+    // Set servo angle
+    void handleServo(const TerminalCommand& cmd);
+
+    // Send a given ms pulse to a pin
+    void handlePulse(const TerminalCommand& cmd);
+
     // Display DIO help info
     void handleHelp();
 
