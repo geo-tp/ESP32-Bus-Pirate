@@ -1,4 +1,5 @@
 #include "PinService.h"
+#
 
 void PinService::setInput(uint8_t pin) {
     pinMode(pin, INPUT);
@@ -46,27 +47,59 @@ int PinService::readAnalog(uint8_t pin) {
 bool PinService::setupPwm(uint8_t pin, uint32_t freq, uint8_t dutyPercent) {
     if (dutyPercent > 100) dutyPercent = 100;
 
-    int channel = pin % 16;
-    int resolution = 8;
+    int channel = pin % 8;
 
-    if (!isPwmFeasible(freq, resolution))
-        return false;
-
-    bool ok = ledcSetup(channel, freq, resolution);
-    if (!ok) return false;
+    // Find the highest compatible resolution
+    int resolution = -1;
+    for (int bits = 14; bits >= 1; --bits) {
+        if (isPwmFeasible(freq, bits)) {
+            if (ledcSetup(channel, freq, bits)) {  // ok
+                resolution = bits;
+                break;
+            }
+        }
+    }
+    if (resolution < 0) return false;
 
     ledcAttachPin(pin, channel);
-    uint32_t dutyVal = (dutyPercent * ((1 << resolution) - 1)) / 100;
-    ledcWrite(channel, dutyVal);
 
+    uint32_t dutyMax = (1UL << resolution) - 1;
+    uint32_t dutyVal = ((uint32_t)dutyPercent * dutyMax) / 100U;
+    ledcWrite(channel, dutyVal);
     return true;
 }
 
-bool PinService::isPwmFeasible(uint32_t freq, uint8_t resolutionBits) {
-    const uint32_t clkHz = 80000000; // horloge APB
-    const uint32_t maxDiv = 1 << 20;   // 20 bit prescaler max
-    if (resolutionBits > 20 || resolutionBits == 0) return false;
+void PinService::setServoAngle(uint8_t pin, uint8_t angle) {
+  const int channel = 0;
+  const int freq = 50; // Hz
+  const int resolution = 14;  // max stable
 
-    uint32_t divParam = clkHz / (freq * (1 << resolutionBits));
-    return divParam <= maxDiv && divParam > 0;
+  // setup et attach
+  ledcSetup(channel, freq, resolution);
+  ledcAttachPin(pin, channel);
+
+  // period and duty
+  const uint32_t periodUs = 1000000UL / freq;    // 20000 us
+  const uint32_t dutyMax  = (1UL << resolution) - 1;
+
+  // map angle
+  uint32_t pulseUs = map(angle, 0, 180, 1000, 2000);
+  uint32_t dutyVal = (pulseUs * dutyMax) / periodUs;
+
+  ledcWrite(channel, dutyVal);
+}
+
+bool PinService::isPwmFeasible(uint32_t freq, uint8_t resolutionBits) {
+    if (resolutionBits < 1 || resolutionBits > 14) return false;
+
+    const uint32_t baseClkHz     = 80000000UL;   // 80 MHz
+    const uint32_t maxDivParam   = 0x3FFFF;      // limite
+    if (freq == 0) return false;
+
+    // div_param = baseClk / (freq * 2^resolution)
+    uint64_t denom = (uint64_t)freq * (1ULL << resolutionBits);
+    if (denom == 0) return false;
+
+    uint32_t divParam = (uint32_t)(baseClkHz / denom);
+    return (divParam >= 1 && divParam <= maxDivParam);
 }
