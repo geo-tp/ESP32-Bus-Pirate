@@ -1,13 +1,5 @@
 #include "HttpService.h"
 
-struct HttpGetParams {
-    std::string url;
-    int timeout_ms;
-    int bodyMaxBytes;
-    bool insecure;
-    HttpService* self;
-};
-
 void HttpService::ensureClient(bool https, bool insecure, int timeout_s)
 {
     // Recreate the client if not initialized or if the type changes
@@ -41,10 +33,10 @@ bool HttpService::beginHttp(const std::string& url, int timeout_ms)
 }
 
 void HttpService::startGetTask(const std::string& url, int timeout_ms, int bodyMaxBytes, bool insecure,
-                               int stack_bytes, int core)
+                               int stack_bytes, int core, bool onlyContent)
 {
     ready = false;
-    auto* p = new HttpGetParams{url, timeout_ms, bodyMaxBytes, insecure, this};
+    auto* p = new HttpGetParams{url, timeout_ms, bodyMaxBytes, insecure, onlyContent, this};
     xTaskCreatePinnedToCore(&HttpService::getTask, "HttpGet", stack_bytes,
                             p, 1, nullptr, core);
 }
@@ -72,7 +64,6 @@ void HttpService::getTask(void* pv)
         return;
     }
 
-    // Headers
     self->http_.collectHeaders(HttpService::headerKeys,
                                sizeof(HttpService::headerKeys) / sizeof(HttpService::headerKeys[0]));
     self->http_.addHeader("Accept-Encoding", "identity");
@@ -82,22 +73,31 @@ void HttpService::getTask(void* pv)
     const int code = self->http_.GET();
     if (code > 0) {
         // Response headers
-        result = "HTTP/1.1 " + std::to_string(code) + "\r\n";
-        const int n = self->http_.headers();
-        for (int i = 0; i < n; i++) {
-            result += self->http_.headerName(i).c_str();
-            result += ": ";
-            result += self->http_.header(i).c_str();
-            result += "\r\n";
+        if (!p->onlyContent) {
+            result = "HTTP/1.1 " + std::to_string(code) + "\r\n";
+            const int n = self->http_.headers();
+            for (int i = 0; i < n; i++) {
+                result += self->http_.headerName(i).c_str();
+                result += ": ";
+                result += self->http_.header(i).c_str();
+                result += "\r\n";
+            }
         }
 
-        // Json body if content type is json
+        // Content-Type handling
         const String ct = self->http_.header("Content-Type");
-        const bool isJson = ct.length() && (ct.indexOf("json") >= 0);
+        const bool hasCT   = ct.length() > 0;
+        const bool isJson  = hasCT && (ct.indexOf("json")  >= 0);
+        const bool isText  = hasCT && (ct.startsWith("text/") || ct.indexOf("plain") >= 0);
+
         if (isJson) {
-            result += "\r\nJSON BODY:\n";
+            if (!p->onlyContent) result += "\r\nJSON BODY:\n";
             result += HttpService::getJsonBody(self->http_, p->bodyMaxBytes);
-        } 
+        }
+        else if (isText) {
+            if (!p->onlyContent) result += "\r\nTEXT BODY:\n";
+            result += HttpService::getTextBody(self->http_, p->bodyMaxBytes);
+        }
     } else {
         result = "ERROR: ";
         result += self->http_.errorToString(code).c_str();
@@ -172,6 +172,24 @@ std::string HttpService::getJsonBody(HTTPClient& http, int bodyMaxBytes)
     return out;
 }
 
+std::string HttpService::getTextBody(HTTPClient& http, size_t maxBytes)
+{
+    Stream& s = http.getStream();
+    std::string out;
+    out.reserve(maxBytes);
+
+    const unsigned long deadline = millis() + 3000;
+    while ((millis() < deadline) && (out.size() < maxBytes)) {
+        while (s.available() && out.size() < maxBytes) {
+            int c = s.read();
+            if (c < 0) break;
+            out.push_back(static_cast<char>(c));
+        }
+        if (!s.available()) delay(10);
+    }
+    return out;
+}
+
 std::string HttpService::lastResponse()
 {
     std::string out;
@@ -180,6 +198,7 @@ std::string HttpService::lastResponse()
     return out;
 }
 
-bool HttpService::isResponseReady() const noexcept {
+bool HttpService::isResponseReady() const noexcept 
+{
     return ready.load(std::memory_order_acquire);
 }

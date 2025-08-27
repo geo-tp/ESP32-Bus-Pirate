@@ -7,25 +7,18 @@
 #include <vector>
 #include <string>
 #include <atomic>
+#include <mutex>
 
 class HttpService {
 public:
-    // ============ GET ================
-
     // Http(s) get task on url
-    void startGetTask(const std::string& url,
-                      int timeout_ms,
-                      int bodyMaxBytes,
-                      bool insecure,
-                      int stack_bytes = 24 * 1024,
-                      int core = 1);
-
-    // ===================================
+    void startGetTask(const std::string& url, int timeout_ms, int bodyMaxBytes, bool insecure,
+                      int stack_bytes = 20000, int core = 1, bool onlyContent = false);
 
     // Verify if the response is ready
     bool isResponseReady() const noexcept;
 
-    // Get last HTTP response, status + headers + (json body)
+    // Get last HTTP response
     std::string lastResponse();
 
     // Resets the internal state
@@ -34,12 +27,22 @@ public:
 private:
     static void getTask(void* pv);
     static std::string getJsonBody(HTTPClient& http, int bodyMaxBytes);
+    static std::string getTextBody(HTTPClient& http, size_t maxBytes);
     void ensureClient(bool https, bool insecure, int timeout_s);
     bool beginHttp(const std::string& url, int timeout_ms);
 
-    // Response
+    // Get Response
     std::atomic<bool> ready{false}; // response is ready
     std::string response; // http response
+
+    struct HttpGetParams {
+      std::string url;
+      int timeout_ms;
+      int bodyMaxBytes;
+      bool insecure;
+      bool onlyContent;
+      HttpService* self;
+    };
 
     // HTTP client
     std::unique_ptr<WiFiClient> client_;
