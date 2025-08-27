@@ -501,34 +501,54 @@ void ANetworkController::handleHttpAnalyze(const TerminalCommand& cmd)
     // Ensure URL has HTTP scheme and then extract host
     const std::string url  = argTransformer.ensureHttpScheme(cmd.getArgs());
     const std::string host = argTransformer.extractHostFromUrl(url);
+    std::vector<std::string> lines;
 
-    // urlscan.io (last public scan)
-    const std::string urlscanUrl =
-        "https://urlscan.io/api/v1/search?datasource=scans&q=page.domain:" + host + "&size=1";
+    // === urlscan.io (last public scan) ====
+    { // scope to limit variable lifetime
+        const std::string urlscanUrl =
+            "https://urlscan.io/api/v1/search?datasource=scans&q=page.domain:" + host + "&size=1";
 
-    terminalView.println("HTTP Analyze: " + urlscanUrl + " (latest public scan)...");
-    std::string urlscanJson = httpService.fetchJson(urlscanUrl, 8192);
-
-    terminalView.println("\n===== URLSCAN LATEST =====");
-    auto urlScanStrings = jsonTransformer.toLines(jsonTransformer.dechunk(urlscanJson));
-    for (auto& l : urlScanStrings) terminalView.println(l);
-    terminalView.println("==========================\n");
-
-    // W3C HTML Validator (optional)
-    auto confirm = userInputManager.readYesNo("\nAnalyze with the W3C Validator?", false);
-    if (confirm) {
-        const std::string w3cUrl =
-            "https://validator.w3.org/nu/?out=json&doc=" + url;
-
-        terminalView.println("Analyze: " + w3cUrl + " (W3C validator)...");
-        std::string w3cJson = httpService.fetchJson(w3cUrl, 16384);
-
-        terminalView.println("\n===== W3C RESULT =====");
-        auto wc3Strings = jsonTransformer.toLines(jsonTransformer.dechunk(w3cJson));
-        for (auto& l : wc3Strings) terminalView.println(l);
-        terminalView.println("======================\n");
+        terminalView.println("HTTP Analyze: " + urlscanUrl + " (latest public scan)...");
+        std::string urlscanJson = httpService.fetchJson(urlscanUrl, 8192);
+        terminalView.println("\n===== URLSCAN LATEST =====");
+        lines = jsonTransformer.toLines(jsonTransformer.dechunk(urlscanJson));
+        for (auto& l : lines) terminalView.println(l);
+        terminalView.println("==========================\n");
     }
 
+    // === ssllabs.com ====
+    { // scope to limit variable lifetime
+        auto lines = std::vector<std::string>();
+        const std::string ssllabsUrl =
+            "https://api.ssllabs.com/api/v3/analyze?host=" + host;
+            
+
+        terminalView.println("HTTP Analyze: " + ssllabsUrl + " (SSL Labs)...");
+        std::string ssllabsJson = httpService.fetchJson(ssllabsUrl, 16384);
+
+        terminalView.println("\n===== SSL LABS =====");
+        lines = jsonTransformer.toLines(jsonTransformer.dechunk(ssllabsJson));
+        for (auto& l : lines) terminalView.println(l);
+        terminalView.println("====================\n");
+        httpService.reset();
+    }
+
+    // ==== W3C HTML Validator (optional) ====
+    { // scope to limit variable lifetime
+        auto confirm = userInputManager.readYesNo("\nAnalyze with the W3C Validator?", false);
+        if (confirm) {
+            const std::string w3cUrl =
+                "https://validator.w3.org/nu/?out=json&doc=" + url;
+
+            terminalView.println("Analyze: " + w3cUrl + " (W3C validator)...");
+            std::string w3cJson = httpService.fetchJson(w3cUrl, 16384);
+            terminalView.println("\n===== W3C RESULT =====");
+            lines = jsonTransformer.toLines(jsonTransformer.dechunk(w3cJson));
+            for (auto& l : lines) terminalView.println(l);
+            terminalView.println("======================\n");
+            httpService.reset();
+        }
+    }
     terminalView.println("\nHTTP Analyze: Finished.");
 }
 
