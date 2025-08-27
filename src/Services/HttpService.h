@@ -15,6 +15,9 @@ public:
     void startGetTask(const std::string& url, int timeout_ms, int bodyMaxBytes, bool insecure,
                       int stack_bytes = 20000, int core = 1, bool onlyContent = false);
 
+    // Fetch JSON data from a URL
+    std::string fetchJson(const std::string& url, int bodyMaxBytes);
+
     // Verify if the response is ready
     bool isResponseReady() const noexcept;
 

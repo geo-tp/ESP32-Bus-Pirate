@@ -116,6 +116,33 @@ void HttpService::getTask(void* pv)
     vTaskDelete(nullptr);
 }
 
+std::string HttpService::fetchJson(const std::string& url ,int bodyMaxBytes)
+{
+    constexpr int timeout_ms   = 10000;
+    constexpr bool insecure    = true;
+    constexpr int stack_bytes  = 20000;
+    constexpr int core         = 1;
+
+    // Task
+    startGetTask(url, timeout_ms, bodyMaxBytes,
+                 insecure, stack_bytes, core, true);
+
+    // Wait for response
+    unsigned long start = millis();
+    while (!isResponseReady() && millis() - start < timeout_ms) {
+        delay(100);
+    }
+
+    if (!isResponseReady()) {
+        return "ERROR: timeout waiting response";
+    }
+
+    // Get response
+    std::string resp = lastResponse();
+
+    return resp;
+}
+
 std::string HttpService::getJsonBody(HTTPClient& http, int bodyMaxBytes)
 {
     std::string out;
