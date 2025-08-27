@@ -520,7 +520,7 @@ void ANetworkController::handleHttpAnalyze(const TerminalCommand& cmd)
     { // scope to limit variable lifetime
         auto lines = std::vector<std::string>();
         const std::string ssllabsUrl =
-            "https://api.ssllabs.com/api/v3/analyze?host=" + host;
+            "https://api.ssllabs.com/api/v3/analyze?host=" + url;
             
 
         terminalView.println("HTTP Analyze: " + ssllabsUrl + " (SSL Labs)...");
