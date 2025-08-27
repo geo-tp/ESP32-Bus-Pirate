@@ -38,6 +38,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       instructionTransformer(),
       argTransformer(),
       webRequestTransformer(),
+      jsonTransformer(),
 
       // Managers
       commandHistoryManager(),
@@ -77,9 +78,9 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       ledController(terminalView, terminalInput, ledService, argTransformer, userInputManager),
       bluetoothController(terminalView, terminalInput, deviceInput, bluetoothService, argTransformer, userInputManager),
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager),
-      wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, argTransformer, userInputManager),
+      wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, argTransformer, jsonTransformer, userInputManager),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
-      ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, argTransformer, userInputManager)
+      ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, argTransformer, jsonTransformer, userInputManager)
 {
 }
 
@@ -140,6 +141,7 @@ TerminalCommandTransformer &DependencyProvider::getCommandTransformer() { return
 InstructionTransformer &DependencyProvider::getInstructionTransformer() { return instructionTransformer; }
 ArgTransformer &DependencyProvider::getArgTransformer() { return argTransformer; }
 WebRequestTransformer &DependencyProvider::getWebRequestTransformer() { return webRequestTransformer; }
+JsonTransformer &DependencyProvider::getJsonTransformer() { return jsonTransformer; }
 
 // Managers
 CommandHistoryManager &DependencyProvider::getCommandHistoryManager() { return commandHistoryManager; }

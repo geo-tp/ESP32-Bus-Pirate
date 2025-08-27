@@ -138,6 +138,7 @@ public:
     InstructionTransformer &getInstructionTransformer();
     ArgTransformer &getArgTransformer();
     WebRequestTransformer &getWebRequestTransformer();
+    JsonTransformer &getJsonTransformer();
 
     // Managers
     CommandHistoryManager &getCommandHistoryManager();
@@ -225,6 +226,7 @@ private:
     InstructionTransformer instructionTransformer;
     ArgTransformer argTransformer;
     WebRequestTransformer webRequestTransformer;
+    JsonTransformer jsonTransformer;
 
     // Managers
     CommandHistoryManager commandHistoryManager;
