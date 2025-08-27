@@ -570,7 +570,7 @@ void ANetworkController::handleLookup(const TerminalCommand& cmd)
         handleLookupIp(cmd);
     } else {
         terminalView.println("Usage: lookup mac <addr>");
-        terminalView.println("       lookup ip <addr or host>");
+        terminalView.println("       lookup ip <addr or url>");
     }
 
     #else
@@ -593,7 +593,7 @@ void ANetworkController::handleLookupMac(const TerminalCommand& cmd)
     const std::string mac = cmd.getArgs();
     const std::string url = "https://api.maclookup.app/v2/macs/" + mac;
 
-    // Http  task params
+    // Http task params
     auto timeout = 10000;
     auto stackBytes = 20000;
     auto bodyMaxBytes = 1024 * 4;
