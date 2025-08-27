@@ -1,5 +1,8 @@
 #include "ANetworkController.h"
 
+/*
+Constructor
+*/
 ANetworkController::ANetworkController(
     ITerminalView& terminalView, 
     IInput& terminalInput, 
@@ -109,6 +112,9 @@ void ANetworkController::handlePing(const TerminalCommand &cmd)
     #endif
 }
 
+/*
+Discovery  
+*/
 void ANetworkController::handleDiscovery(const TerminalCommand &cmd)
 {
     bool wifiConnected = wifiService.isConnected();
@@ -658,6 +664,9 @@ void ANetworkController::handleLookupIp(const TerminalCommand& cmd)
     httpService.reset();
 }
 
+/*
+Help
+*/
 void ANetworkController::handleHelp()
 {
     terminalView.println("  ping <host>");
