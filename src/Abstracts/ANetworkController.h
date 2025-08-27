@@ -14,6 +14,7 @@
 #include "Services/ICMPService.h"
 #include "Services/NvsService.h"
 #include "Transformers/ArgTransformer.h"
+#include "Transformers/JsonTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
 #include "Models/TerminalCommand.h"
@@ -36,6 +37,7 @@ public:
         NvsService& nvsService,
         HttpService& httpService,
         ArgTransformer& argTransformer,
+        JsonTransformer& jsonTransformer,
         UserInputManager& userInputManager
     );
 
@@ -44,9 +46,19 @@ protected:
     void handleNmap(const TerminalCommand& cmd);
     void handleSsh(const TerminalCommand& cmd);
     void handlePing(const TerminalCommand& cmd);
-    void handleDiscovery(const TerminalCommand &cmd);
+    void handleDiscovery(const TerminalCommand& cmd);
+    void handleHelp();
+
+    // HTTP
     void handleHttp(const TerminalCommand &cmd);
     void handleHttpGet(const TerminalCommand &cmd);
+    void handleHttpAnalyze(const TerminalCommand &cmd);
+    
+        // Lookup
+    void handleLookup(const TerminalCommand& cmd);
+    void handleLookupMac(const TerminalCommand& cmd);
+    void handleLookupIp(const TerminalCommand& cmd);
+
 
 protected:
     ITerminalView&     terminalView;
@@ -66,6 +78,7 @@ protected:
     HttpService&      httpService;
 
     ArgTransformer&    argTransformer;
+    JsonTransformer&   jsonTransformer;
     UserInputManager&  userInputManager;
     GlobalState&       globalState = GlobalState::getInstance();
 };

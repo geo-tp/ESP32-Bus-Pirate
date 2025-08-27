@@ -22,6 +22,7 @@ void WifiController::handleCommand(const TerminalCommand &cmd)
     else if (root == "nc") handleNetcat(cmd);
     else if (root == "nmap") handleNmap(cmd);
     else if (root == "http") handleHttp(cmd);
+    else if (root == "lookup") handleLookup(cmd);
     else if (root == "discovery") handleDiscovery(cmd);
     else if (root == "reset") handleReset();
     else if (root == "deauth") handleDeauth(cmd);
@@ -472,9 +473,7 @@ void WifiController::handleHelp()
 {
     terminalView.println("WiFi commands:");
     terminalView.println("  scan");
-    terminalView.println("  connect");
-    terminalView.println("  ping <host>");
-    terminalView.println("  discovery [wifi|eth]");
+    terminalView.println("  connect");;
     terminalView.println("  sniff");
     terminalView.println("  probe");
     terminalView.println("  spoof sta <mac>");
@@ -483,10 +482,7 @@ void WifiController::handleHelp()
     terminalView.println("  disconnect");
     terminalView.println("  ap <ssid> <password>");
     terminalView.println("  ap spam");
-    terminalView.println("  ssh <host> <username> <password> [port]");
-    terminalView.println("  nc <host> <port>");
-    terminalView.println("  nmap <host> [port]");
-    terminalView.println("  http <get|post|put|delete> <url>");
+    ANetworkController::handleHelp();
     terminalView.println("  webui");
     terminalView.println("  reset");
     terminalView.println("  deauth <ssid>");

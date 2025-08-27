@@ -176,12 +176,7 @@ void EthernetController::handleHelp() {
     terminalView.println("Ethernet commands:");
     terminalView.println("  status");
     terminalView.println("  connect");
-    terminalView.println("  ping <host>");
-    terminalView.println("  discovery [wifi|eth]");
-    terminalView.println("  ssh <host> <user> <password> [port]");
-    terminalView.println("  nc <host> <port>");
-    terminalView.println("  nmap <host> [port]");
-    terminalView.println("  http get <url>");
+    ANetworkController::handleHelp();
     terminalView.println("  reset");
     terminalView.println("  config");
 }

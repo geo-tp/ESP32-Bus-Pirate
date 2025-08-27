@@ -14,6 +14,7 @@ ANetworkController::ANetworkController(
     NvsService& nvsService,
     HttpService& httpService,
     ArgTransformer& argTransformer,
+    JsonTransformer& jsonTransformer,
     UserInputManager& userInputManager
 )
 : terminalView(terminalView),
@@ -29,6 +30,7 @@ ANetworkController::ANetworkController(
   nvsService(nvsService),
   httpService(httpService),
   argTransformer(argTransformer),
+  jsonTransformer(jsonTransformer),
   userInputManager(userInputManager)
 {
 }
@@ -418,6 +420,10 @@ void ANetworkController::handleHttp(const TerminalCommand &cmd)
     } else if (sub == "post" || sub == "put" || sub == "delete") {
         terminalView.println("HTTP: Only GET implemented for now.");
         return;
+    // http analyze <url>
+    } else if (sub == "analyze") {
+        handleHttpAnalyze(cmd);
+        return;
     // http <url>
     } else if (!sub.empty() && cmd.getArgs().empty()) {
         handleHttpGet(cmd);
@@ -469,4 +475,198 @@ void ANetworkController::handleHttpGet(const TerminalCommand &cmd)
     }
 
     httpService.reset();
+}
+
+/*
+HTTP Analayze
+*/
+void ANetworkController::handleHttpAnalyze(const TerminalCommand& cmd)
+{
+    if (!wifiService.isConnected() && !ethernetService.isConnected()) {
+        terminalView.println("Analyze: You must be connected to Wi-Fi or Ethernet. Use 'connect' first.");
+        return;
+    }
+
+    if (cmd.getArgs().empty()) {
+        terminalView.println("Usage: http analyze <url>");
+        return;
+    }
+
+    // Ensure URL has HTTP scheme and then extract host
+    const std::string url  = argTransformer.ensureHttpScheme(cmd.getArgs());
+    const std::string host = argTransformer.extractHostFromUrl(url);
+
+    // Http Tasks params
+    auto timeout = 10000;
+    auto stackBytes = 20000;
+    auto bodyMaxBytes = 1024 * 16;
+    auto core = 1;
+    auto onlyJson = true;
+    auto insecure = true;
+
+    // urlscan.io (last public scan)
+    const std::string urlscanUrl =
+        "https://urlscan.io/api/v1/search?datasource=scans&q=page.domain:" + host + "&size=1";
+
+    terminalView.println("HTTP Analyze: " + urlscanUrl + " (latest public scan)...");
+    httpService.startGetTask(urlscanUrl, timeout, bodyMaxBytes,
+                             insecure, stackBytes, core, onlyJson);
+
+    unsigned long startUrlScan = millis();
+    while (!httpService.isResponseReady() && millis() - startUrlScan < timeout) { delay(100); }
+
+    const std::string urlscanJson = httpService.lastResponse();
+    terminalView.println("\n===== URLSCAN LATEST =====");
+    auto urlScanStrings = jsonTransformer.toLines(jsonTransformer.dechunk(urlscanJson));
+    for (auto& l : urlScanStrings) terminalView.println(l);
+    terminalView.println("==========================\n");
+
+    httpService.reset();
+
+    // W3C HTML Validator
+    auto confirm = userInputManager.readYesNo("\nAnalyze with the W3C Validator?", false);
+    if (confirm) {
+        const std::string w3cUrl =
+            "https://validator.w3.org/nu/?out=json&doc=" + url;
+    
+        terminalView.println("Analyze: " + w3cUrl + " (W3C validator)...");
+        httpService.startGetTask(w3cUrl, timeout, bodyMaxBytes, insecure,
+                                 stackBytes, core, onlyJson);
+    
+        unsigned long startWc3 = millis();
+        while (!httpService.isResponseReady() && millis() - startWc3 < timeout) {
+            delay(100);
+        }
+    
+        const std::string w3cJson = httpService.lastResponse();
+        terminalView.println("\n===== W3C RESULT =====");
+        auto wc3Strings = jsonTransformer.toLines(jsonTransformer.dechunk(w3cJson));
+        for (auto& l : wc3Strings) {
+            terminalView.println(l);
+        }
+        terminalView.println("======================\n");
+        httpService.reset();
+    }
+
+    terminalView.println("\nHTTP Analyze: Finished.");
+}
+
+/*
+Lookup
+*/
+void ANetworkController::handleLookup(const TerminalCommand& cmd)
+{
+    # ifndef DEVICE_M5STICK
+
+    if (!wifiService.isConnected() && !ethernetService.isConnected()) {
+        terminalView.println("Lookup: You must be connected to Wi-Fi or Ethernet. Use 'connect' first.");
+        return;
+    }
+
+    const std::string sub = cmd.getSubcommand();
+    if (sub == "mac") {
+        handleLookupMac(cmd);
+    } else if (sub == "ip") {
+        handleLookupIp(cmd);
+    } else {
+        terminalView.println("Usage: lookup mac <addr>");
+        terminalView.println("       lookup ip <addr or host>");
+    }
+
+    #else
+
+    terminalView.println("Lookup: M5Stick is not supported.");
+
+    #endif
+}
+
+/*
+Lookup MAC
+*/
+void ANetworkController::handleLookupMac(const TerminalCommand& cmd)
+{
+    if (cmd.getArgs().empty()) {
+        terminalView.println("Usage: lookup mac <mac addr>");
+        return;
+    }
+
+    const std::string mac = cmd.getArgs();
+    const std::string url = "https://api.maclookup.app/v2/macs/" + mac;
+
+    // Http  task params
+    auto timeout = 10000;
+    auto stackBytes = 20000;
+    auto bodyMaxBytes = 1024 * 4;
+    auto core = 1;
+    auto onlyJson = true;
+    auto insecure = true;
+
+    terminalView.println("Lookup MAC: " + url + " ...");
+    httpService.startGetTask(url, timeout, bodyMaxBytes,
+                             insecure, stackBytes, core, onlyJson);
+
+    unsigned long start = millis();
+    while (!httpService.isResponseReady() && millis() - start < timeout) {
+        delay(100);
+    }
+
+    const std::string resp = httpService.lastResponse();
+    terminalView.println("\n===== MAC LOOKUP =====");
+    auto lines = jsonTransformer.toLines(resp);
+    for (auto& l : lines) terminalView.println(l);
+    terminalView.println("======================\n");
+
+    httpService.reset();
+}
+
+/*
+Lookup IP info
+*/
+void ANetworkController::handleLookupIp(const TerminalCommand& cmd)
+{
+    if (cmd.getArgs().empty()) {
+        terminalView.println("Usage: lookup ip <addr or url>");
+        return;
+    }
+
+    const std::string target = cmd.getArgs();
+    const std::string url = "http://ip-api.com/json/" + target;
+
+    // Http task params
+    auto timeout = 10000;
+    auto stackBytes = 20000;
+    auto bodyMaxBytes = 1024 * 4;
+    auto core = 1;
+    auto onlyJson = true;
+    auto insecure = true;
+
+    terminalView.println("Lookup IP: " + url + " ...");
+    httpService.startGetTask(url, timeout, bodyMaxBytes,
+                             insecure, stackBytes, core, onlyJson);
+
+    unsigned long start = millis();
+    while (!httpService.isResponseReady() && millis() - start < timeout) {
+        delay(100);
+    }
+
+    const std::string resp = httpService.lastResponse();
+    terminalView.println("\n===== IP LOOKUP =====");
+    auto lines = jsonTransformer.toLines(resp);
+    for (auto& l : lines) terminalView.println(l);
+    terminalView.println("=====================\n");
+
+    httpService.reset();
+}
+
+void ANetworkController::handleHelp()
+{
+    terminalView.println("  ping <host>");
+    terminalView.println("  discovery");
+    terminalView.println("  ssh <host> <user> <password> [port]");
+    terminalView.println("  nc <host> <port>");
+    terminalView.println("  nmap <host> [-p ports]");
+    terminalView.println("  http get <url>");
+    terminalView.println("  http analyze <url>");
+    terminalView.println("  lookup mac <addr>");
+    terminalView.println("  lookup ip <addr or url>");
 }
