@@ -362,7 +362,7 @@ std::string ArgTransformer::ensureHttpScheme(std::string u) {
 
 std::string ArgTransformer::normalizeLines(const std::string& in) {
     std::string out;
-    out.reserve(in.size() * 2);  // pire cas : tout '\n' doublé
+    out.reserve(in.size() * 2);
     for (size_t i = 0; i < in.size(); i++) {
         if (in[i] == '\n') {
             out += "\r\n";
@@ -371,4 +371,12 @@ std::string ArgTransformer::normalizeLines(const std::string& in) {
         }
     }
     return out;
+}
+
+std::string ArgTransformer::extractHostFromUrl(const std::string& url) {
+    size_t s = url.find("://");
+    std::string host = (s == std::string::npos) ? url : url.substr(s + 3);
+    size_t slash = host.find('/');
+    if (slash != std::string::npos) host.erase(slash);
+    return host;
 }

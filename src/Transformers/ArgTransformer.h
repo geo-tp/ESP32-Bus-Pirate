@@ -35,4 +35,5 @@ public:
     bool parseMac(const std::string& s, std::array<uint8_t,6>& out);
     std::string ensureHttpScheme(std::string u);
     std::string normalizeLines(const std::string& in);
+    std::string extractHostFromUrl(const std::string& url);
 };
