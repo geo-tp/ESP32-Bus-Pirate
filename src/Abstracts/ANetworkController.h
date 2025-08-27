@@ -54,7 +54,7 @@ protected:
     void handleHttpGet(const TerminalCommand &cmd);
     void handleHttpAnalyze(const TerminalCommand &cmd);
     
-        // Lookup
+    // Lookup
     void handleLookup(const TerminalCommand& cmd);
     void handleLookupMac(const TerminalCommand& cmd);
     void handleLookupIp(const TerminalCommand& cmd);

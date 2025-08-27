@@ -502,56 +502,31 @@ void ANetworkController::handleHttpAnalyze(const TerminalCommand& cmd)
     const std::string url  = argTransformer.ensureHttpScheme(cmd.getArgs());
     const std::string host = argTransformer.extractHostFromUrl(url);
 
-    // Http Tasks params
-    auto timeout = 10000;
-    auto stackBytes = 20000;
-    auto bodyMaxBytes = 1024 * 16;
-    auto core = 1;
-    auto onlyJson = true;
-    auto insecure = true;
-
     // urlscan.io (last public scan)
     const std::string urlscanUrl =
         "https://urlscan.io/api/v1/search?datasource=scans&q=page.domain:" + host + "&size=1";
 
     terminalView.println("HTTP Analyze: " + urlscanUrl + " (latest public scan)...");
-    httpService.startGetTask(urlscanUrl, timeout, bodyMaxBytes,
-                             insecure, stackBytes, core, onlyJson);
+    std::string urlscanJson = httpService.fetchJson(urlscanUrl, 8192);
 
-    unsigned long startUrlScan = millis();
-    while (!httpService.isResponseReady() && millis() - startUrlScan < timeout) { delay(100); }
-
-    const std::string urlscanJson = httpService.lastResponse();
     terminalView.println("\n===== URLSCAN LATEST =====");
     auto urlScanStrings = jsonTransformer.toLines(jsonTransformer.dechunk(urlscanJson));
     for (auto& l : urlScanStrings) terminalView.println(l);
     terminalView.println("==========================\n");
 
-    httpService.reset();
-
-    // W3C HTML Validator
+    // W3C HTML Validator (optional)
     auto confirm = userInputManager.readYesNo("\nAnalyze with the W3C Validator?", false);
     if (confirm) {
         const std::string w3cUrl =
             "https://validator.w3.org/nu/?out=json&doc=" + url;
-    
+
         terminalView.println("Analyze: " + w3cUrl + " (W3C validator)...");
-        httpService.startGetTask(w3cUrl, timeout, bodyMaxBytes, insecure,
-                                 stackBytes, core, onlyJson);
-    
-        unsigned long startWc3 = millis();
-        while (!httpService.isResponseReady() && millis() - startWc3 < timeout) {
-            delay(100);
-        }
-    
-        const std::string w3cJson = httpService.lastResponse();
+        std::string w3cJson = httpService.fetchJson(w3cUrl, 16384);
+
         terminalView.println("\n===== W3C RESULT =====");
         auto wc3Strings = jsonTransformer.toLines(jsonTransformer.dechunk(w3cJson));
-        for (auto& l : wc3Strings) {
-            terminalView.println(l);
-        }
+        for (auto& l : wc3Strings) terminalView.println(l);
         terminalView.println("======================\n");
-        httpService.reset();
     }
 
     terminalView.println("\nHTTP Analyze: Finished.");
@@ -599,30 +574,16 @@ void ANetworkController::handleLookupMac(const TerminalCommand& cmd)
     const std::string mac = cmd.getArgs();
     const std::string url = "https://api.maclookup.app/v2/macs/" + mac;
 
-    // Http task params
-    auto timeout = 10000;
-    auto stackBytes = 20000;
-    auto bodyMaxBytes = 1024 * 4;
-    auto core = 1;
-    auto onlyJson = true;
-    auto insecure = true;
-
     terminalView.println("Lookup MAC: " + url + " ...");
-    httpService.startGetTask(url, timeout, bodyMaxBytes,
-                             insecure, stackBytes, core, onlyJson);
 
-    unsigned long start = millis();
-    while (!httpService.isResponseReady() && millis() - start < timeout) {
-        delay(100);
-    }
+    std::string resp = httpService.fetchJson(url, 1024 * 4);
 
-    const std::string resp = httpService.lastResponse();
     terminalView.println("\n===== MAC LOOKUP =====");
     auto lines = jsonTransformer.toLines(resp);
-    for (auto& l : lines) terminalView.println(l);
+    for (auto& l : lines) {
+        terminalView.println(l);
+    }
     terminalView.println("======================\n");
-
-    httpService.reset();
 }
 
 /*
@@ -637,31 +598,21 @@ void ANetworkController::handleLookupIp(const TerminalCommand& cmd)
 
     const std::string target = cmd.getArgs();
     const std::string url = "http://ip-api.com/json/" + target;
-
-    // Http task params
-    auto timeout = 10000;
-    auto stackBytes = 20000;
-    auto bodyMaxBytes = 1024 * 4;
-    auto core = 1;
-    auto onlyJson = true;
-    auto insecure = true;
+    const std::string url2 = "https://isc.sans.edu/api/ip/" + target + "?json";
 
     terminalView.println("Lookup IP: " + url + " ...");
-    httpService.startGetTask(url, timeout, bodyMaxBytes,
-                             insecure, stackBytes, core, onlyJson);
 
-    unsigned long start = millis();
-    while (!httpService.isResponseReady() && millis() - start < timeout) {
-        delay(100);
-    }
+    std::string resp = httpService.fetchJson(url, 1024 * 4);
 
-    const std::string resp = httpService.lastResponse();
     terminalView.println("\n===== IP LOOKUP =====");
     auto lines = jsonTransformer.toLines(resp);
     for (auto& l : lines) terminalView.println(l);
-    terminalView.println("=====================\n");
+    terminalView.println("=====================");
 
-    httpService.reset();
+    std::string resp2 = httpService.fetchJson(url2, 1024 * 4);
+    lines = jsonTransformer.toLines(resp2);
+    for (auto& l : lines) terminalView.println(l);
+    terminalView.println("=====================\n");
 }
 
 /*
