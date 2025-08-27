@@ -88,7 +88,7 @@ void HttpService::getTask(void* pv)
         const String ct = self->http_.header("Content-Type");
         const bool hasCT   = ct.length() > 0;
         const bool isJson  = hasCT && (ct.indexOf("json")  >= 0);
-        const bool isText  = hasCT && (ct.startsWith("text/") || ct.indexOf("plain") >= 0);
+        const bool isText = hasCT && (ct.indexOf("plain") >= 0);
 
         if (isJson) {
             if (!p->onlyContent) result += "\r\nJSON BODY:\n";
