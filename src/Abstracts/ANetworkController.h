@@ -13,6 +13,7 @@
 #include "Services/NmapService.h"
 #include "Services/ICMPService.h"
 #include "Services/NvsService.h"
+#include "Services/TelnetService.h"
 #include "Transformers/ArgTransformer.h"
 #include "Transformers/JsonTransformer.h"
 #include "Managers/UserInputManager.h"
@@ -36,6 +37,7 @@ public:
         ICMPService& icmpService,
         NvsService& nvsService,
         HttpService& httpService,
+        TelnetService& telnetService,
         ArgTransformer& argTransformer,
         JsonTransformer& jsonTransformer,
         UserInputManager& userInputManager
@@ -47,6 +49,7 @@ protected:
     void handleSsh(const TerminalCommand& cmd);
     void handlePing(const TerminalCommand& cmd);
     void handleDiscovery(const TerminalCommand& cmd);
+    void handleTelnet(const TerminalCommand& cmd);
     void handleHelp();
 
     // HTTP
@@ -75,7 +78,8 @@ protected:
     NetcatService&     netcatService;
     NmapService&       nmapService;
     ICMPService&       icmpService;
-    HttpService&      httpService;
+    HttpService&       httpService;
+    TelnetService&     telnetService;
 
     ArgTransformer&    argTransformer;
     JsonTransformer&   jsonTransformer;

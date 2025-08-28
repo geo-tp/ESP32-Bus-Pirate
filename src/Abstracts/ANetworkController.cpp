@@ -16,6 +16,7 @@ ANetworkController::ANetworkController(
     ICMPService& icmpService,
     NvsService& nvsService,
     HttpService& httpService,
+    TelnetService& telnetService,
     ArgTransformer& argTransformer,
     JsonTransformer& jsonTransformer,
     UserInputManager& userInputManager
@@ -32,6 +33,7 @@ ANetworkController::ANetworkController(
   icmpService(icmpService),
   nvsService(nvsService),
   httpService(httpService),
+  telnetService(telnetService),
   argTransformer(argTransformer),
   jsonTransformer(jsonTransformer),
   userInputManager(userInputManager)
@@ -216,8 +218,7 @@ void ANetworkController::handleNetcat(const TerminalCommand& cmd)
         return;
     }
 
-    terminalView.println("Netcat: Connected. Shell started...\n");
-    terminalView.println("Press [CTRL+C],[ESC] or [ANY ESP32 BUTTON] to stop.\n");
+    terminalView.println("Netcat: Connected. Shell started... Press [ANY ESP32 BUTTON] to stop.\n");
 
     while (true) {
         char deviceKey = deviceInput.readChar();
@@ -233,8 +234,7 @@ void ANetworkController::handleNetcat(const TerminalCommand& cmd)
         }
 
         netcatService.writeChar(terminalKey);
-        terminalView.print(std::string(1, terminalKey));        // local echo
-        if (terminalKey == 0x1B || terminalKey == 0x03) break;  // ESC ou CTRL+C
+        terminalView.print(std::string(1, terminalKey)); // local echo
         if (terminalKey == '\r' || terminalKey == '\n') terminalView.println("");
 
         std::string output = netcatService.readOutputNonBlocking();
@@ -488,11 +488,6 @@ HTTP Analayze
 */
 void ANetworkController::handleHttpAnalyze(const TerminalCommand& cmd)
 {
-    if (!wifiService.isConnected() && !ethernetService.isConnected()) {
-        terminalView.println("Analyze: You must be connected to Wi-Fi or Ethernet. Use 'connect' first.");
-        return;
-    }
-
     if (cmd.getArgs().empty()) {
         terminalView.println("Usage: http analyze <url>");
         return;
@@ -518,7 +513,6 @@ void ANetworkController::handleHttpAnalyze(const TerminalCommand& cmd)
 
     // === ssllabs.com ====
     { // scope to limit variable lifetime
-        auto lines = std::vector<std::string>();
         const std::string ssllabsUrl =
             "https://api.ssllabs.com/api/v3/analyze?host=" + url;
             
@@ -604,6 +598,8 @@ void ANetworkController::handleLookupMac(const TerminalCommand& cmd)
         terminalView.println(l);
     }
     terminalView.println("======================\n");
+
+    httpService.reset();
 }
 
 /*
@@ -633,6 +629,60 @@ void ANetworkController::handleLookupIp(const TerminalCommand& cmd)
     lines = jsonTransformer.toLines(resp2);
     for (auto& l : lines) terminalView.println(l);
     terminalView.println("=====================\n");
+
+    httpService.reset();
+}
+
+/*
+Telnet
+*/
+void ANetworkController::handleTelnet(const TerminalCommand &cmd)
+{
+    if (!wifiService.isConnected() && !ethernetService.isConnected()) {
+        terminalView.println("TELNET: You must be connected to Wi-Fi or Ethernet. Use 'connect' first.");
+        return;
+    }
+
+    if (cmd.getSubcommand().empty()) {
+        terminalView.println("Usage: telnet <host> [port]");
+        return;
+    }
+
+    // Get host and port
+    const std::string host = cmd.getSubcommand();
+    uint16_t port = 23; // default telnet
+    if (argTransformer.isValidNumber(cmd.getArgs())) {
+        port = argTransformer.parseHexOrDec16(cmd.getArgs());
+    }
+
+    // Connect to telnet
+    terminalView.println("TELNET: Connecting to " + host + " on port " + std::to_string(port) + "...");
+    if (!telnetService.connectTo(host, static_cast<uint16_t>(port), 3000)) {
+        terminalView.println("TELNET: Connection failed: " + telnetService.lastError());
+        return;
+    }
+
+    // Connection success
+    terminalView.println("TELNET: Connected. Shell started... Press [ANY ESP32 KEY] to stop.\n");
+    while (true)
+    {
+        // terminal to telnet
+        char k = terminalInput.readChar();
+        if (k != KEY_NONE) telnetService.writeChar(k);
+
+        // device button press to stop
+        if (deviceInput.readChar() != KEY_NONE) break;
+
+        // telnet to terminal
+        telnetService.poll();
+        std::string out = telnetService.readOutputNonBlocking();
+        if (!out.empty()) terminalView.print(out);
+
+        delay(5);
+    }
+
+    telnetService.close();
+    terminalView.println("\r\n\nTELNET: Session closed.");
 }
 
 /*
@@ -643,6 +693,7 @@ void ANetworkController::handleHelp()
     terminalView.println("  ping <host>");
     terminalView.println("  discovery");
     terminalView.println("  ssh <host> <user> <password> [port]");
+    terminalView.println("  telnet <host> [port]");
     terminalView.println("  nc <host> <port>");
     terminalView.println("  nmap <host> [-p ports]");
     terminalView.println("  http get <url>");
