@@ -430,16 +430,17 @@ void UtilityController::handleHelp() {
     terminalView.println("  spoof ap <mac>       - Spoof AP MAC");
     terminalView.println("  spoof sta <mac>      - Spoof Station MAC");
     terminalView.println("  status               - Show Wi-Fi status");
+    terminalView.println("  deauth <ssid>        - Deauthenticate hosts");
     terminalView.println("  disconnect           - Disconnect from Wi-Fi");
     terminalView.println("  ap <ssid> <password> - Set access point");
     terminalView.println("  ap spam              - Spam random beacons");
     terminalView.println("  ssh <h> <u> <p> [p]  - Open SSH session");
+    terminalView.println("  telnet <host> [port] - Open telnet session");
     terminalView.println("  nc <host> <port>     - Open netcat session");
     terminalView.println("  nmap <h> [-p ports]  - Scan host ports");
     terminalView.println("  http get <url>       - HTTP(s) GET request");
     terminalView.println("  http analyze <url>   - Get analysis report");
     terminalView.println("  lookup mac|ip <addr> - Lookup MAC or IP address");
-    terminalView.println("  deauth <ssid>        - Deauthenticate hosts");
     terminalView.println("  webui                - Show the web UI IP");
     terminalView.println("  reset                - Reset interface");
 
@@ -472,6 +473,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  ping <host>          - Ping a remote host");
     terminalView.println("  discovery            - Discover network devices");
     terminalView.println("  ssh <h> <u> <p> [p]  - Open SSH session");
+    terminalView.println("  telnet <host> [port] - Open telnet session");
     terminalView.println("  nc <host> <port>     - Open netcat session");
     terminalView.println("  nmap <h> [-p ports]  - Scan host ports");
     terminalView.println("  http get <url>       - HTTP(s) GET request");
