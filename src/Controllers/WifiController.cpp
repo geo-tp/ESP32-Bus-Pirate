@@ -19,6 +19,7 @@ void WifiController::handleCommand(const TerminalCommand &cmd)
     else if (root == "sniff") handleSniff(cmd);
     else if (root == "webui") handleWebUi(cmd);
     else if (root == "ssh") handleSsh(cmd);
+    else if (root == "telnet") handleTelnet(cmd);
     else if (root == "nc") handleNetcat(cmd);
     else if (root == "nmap") handleNmap(cmd);
     else if (root == "http") handleHttp(cmd);
@@ -237,7 +238,7 @@ void WifiController::handleApSpam()
     terminalView.println("WiFi: Starting beacon spam... Press [ENTER] to stop.");
     while (true)
     {
-        beaconCreate(); // func from Vendors/wifi_atks.h
+        beaconCreate(""); // func from Vendors/wifi_atks.h
 
         // Enter press to stop
         char key = terminalInput.readChar();
