@@ -33,6 +33,7 @@ and injecting shared instances of core components
 #include "Services/ThreeWireService.h"
 #include "Services/EthernetService.h"
 #include "Services/HttpService.h"
+#include "Services/TelnetService.h"
 #include "Controllers/UartController.h"
 #include "Controllers/I2cController.h"
 #include "Controllers/OneWireController.h"
@@ -112,6 +113,7 @@ public:
     SystemService &getSystemService();
     EthernetService &getEthernetService();
     HttpService &getHttpService();
+    TelnetService &getTelnetService();
 
     // Controllers
     UartController &getUartController();
@@ -201,6 +203,7 @@ private:
     SystemService systemService;
     EthernetService ethernetService;
     HttpService httpService;
+    TelnetService telnetService;
 
     // Controllers
     UartController uartController;
