@@ -10,31 +10,31 @@ It supports sniffing, sending, scripting, and interacting with various digital p
 
 - Interactive command-line interface (CLI) via **USB Serial or WiFi Web**.
 - **Modes for:**
-  - HiZ (default)
-  - I2C (scan, glitch, slave mode, dump, eeprom)
-  - SPI (eeprom, flash, sdcard, slave mode)
-  - UART / Half-Duplex UART (bridge, read, write)
-  - 1-WIRE (ibutton, temp sensor)
-  - 2WIRE (sniff, smartcard) / 3WIRE (eeprom)
-  - DIO (Digital I/O, read, pullup, set, pwm)
-  - Infrared (device-b-gone, send and receive)
-  - USB (HID, mouse, keyboard, gamepad, storage)
-  - Bluetooth (BLE HID, scan, spoofing, sniffing)
-  - Wi-Fi / Ethernet (sniff, deauth, nmap, netcat)
-  - JTAG (scan pinout, SWD)
-  - LED control (animations, set LEDs)
-  - I2S (test speakers, mic, play sound)
-  - CAN (sniff, send and receive frames)
+   - [HiZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/01-HiZ) (default)
+   - [I2C](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/05-I2C) (scan, glitch, slave mode, dump, eeprom)
+   - [SPI](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/06-SPI) (eeprom, flash, sdcard, slave mode)
+   - [UART](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/03-UART) / [Half-Duplex UART](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/04-HDUART) (bridge, read, write)
+   - [1-WIRE](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/02-1WIRE) (ibutton, temp sensor)
+   - [2WIRE](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/07-2WIRE) (sniff, smartcard) / [3WIRE](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/08-3WIRE) (eeprom)
+   - [DIO](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/09-DIO) (Digital I/O, read, pullup, set, pwm)
+   - [Infrared](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/11-INFRARED) (device-b-gone, universal remote)
+   - [USB](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/12-USB) (HID, mouse, keyboard, gamepad, storage)
+   - [Bluetooth](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/13-BLUETOOTH) (BLE HID, scan, spoofing, sniffing)
+   - [Wi-Fi](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/14-WIFI) / [Ethernet](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/18-ETHERNET) (sniff, deauth, nmap, netcat)
+   - [JTAG](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/15-JTAG) (scan pinout, SWD)
+   - [LED](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/10-LED) (animations, set LEDs)
+   - [I2S](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/16-I2S) (test speakers, mic, play sound)
+   - [CAN](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/17-CAN) (sniff, send and receive frames)
 
 - **Protocol sniffers** for I2C, Wi-Fi, Bluetooth, 1Wire, 2wire, CAN.
 - Baudrate **auto-detection**, AT commands and various tools for UART.
-- Registers manipulation, eeprom dump tools, identify devices for I2C.
-- Read all sort of EEPROM, Flash and various others tools for SPI.
+- Registers manipulation, **eeprom dump tools**, identify devices for I2C.
+- Read all sort of **EEPROM, Flash** and various others tools for SPI.
 - Scripting using **Bus Pirate-style bytecode** instructions.
-- Device-B-Gone command with more than 80 supported INFRARED protocols.
-- Direct I/O management, PWM, pin state.
-- Massive adressable LEDs protocol support.
-- Ethernet and WiFi are supported to access networks.
+- Device-B-Gone command with more than **80 supported INFRARED protocols**.
+- Direct I/O management, **PWM, servo**, pulse.
+- Near than **50 addressable LEDs protocols** supported.
+- **Ethernet and WiFi** are supported to access networks.
 - Web interface with **live terminal**, or a classic **serial CLI**.
 
 ## Supported Devices
@@ -80,7 +80,6 @@ Includes:
 - [Python scripting examples](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Python) - Automate tasks using Python.
 
 
-
 The wiki is the best place to learn how everything works.
 
 ## Getting Started
@@ -91,7 +90,7 @@ The wiki is the best place to learn how everything works.
 
 2. 🔌 Connect via Serial or Web
    - Serial: any terminal app (see [Connect via Serial](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Serial))
-   - Web: configure Wi-Fi and access the CLI via browser
+   - Web: configure Wi-Fi and access the CLI via browser (see [Wi-Fi Connection](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal))
 
 3. 🧪 Use commands like:
    ```bash
@@ -116,7 +115,7 @@ Don’t know how to flash firmware? Read this:
 ![ESP32 Bus Pirate on M5Burner software](images/bus_pirate_m5burner.jpg)
 
 
-**That’s it, no command line, no complicated tools, just 3 clicks and you’re ready to go.**
+That’s it, no command line, no complicated tools, just 3 clicks and you’re ready to go. You can now [connect via Serial or WiFi](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal).
    
 ## ESP32 Bus Pirate on M5 Devices
 ![ESP32 Bus Pirate running on M5 Stack devices](images/m5buspirate_s.jpg)
@@ -134,7 +133,7 @@ The ESP32 Bus Pirate firmware provides two command-line interface (CLI) modes:
 | **Serial Interface** | - Faster performance<br>- Instant responsiveness<br>- Handles large data smoothly | Intensive sessions, frequent interactions |
 
 
-Both interfaces share the same command structure and can be used interchangeably.
+Both interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
 
 ![An iPhone screenshot showing Bus Pirate web cli](images/mobile_s.jpg)
 
