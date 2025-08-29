@@ -14,6 +14,7 @@ class ArgTransformer {
 public:
     std::vector<uint8_t> parseByteList(const std::string& input) const;
     std::vector<uint8_t> parseHexList(const std::string& input) const;
+    std::vector<uint16_t> parseHexList16(const std::string& input) const;
     uint8_t parseByte(const std::string& str, int index = -1) const;
     uint8_t parseHexOrDec(const std::string& s) const ;
     uint16_t parseHexOrDec16(const std::string& str) const;
@@ -36,4 +37,9 @@ public:
     std::string ensureHttpScheme(std::string u);
     std::string normalizeLines(const std::string& in);
     std::string extractHostFromUrl(const std::string& url);
+    std::vector<uint8_t> parse01List(const std::string& line);
+    std::vector<uint8_t> packLsbFirst(const std::vector<uint8_t>& bits);
+    bool unpackLsbFirst(const std::vector<uint8_t>& bytes,
+                        size_t qty,
+                        std::vector<uint8_t>& outBits);
 };

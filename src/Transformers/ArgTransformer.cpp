@@ -52,6 +52,32 @@ std::vector<uint8_t> ArgTransformer::parseHexList(const std::string& input) cons
     return result;
 }
 
+std::vector<uint16_t> ArgTransformer::parseHexList16(const std::string& input) const {
+    std::vector<uint16_t> result;
+
+    std::string normalized = input;
+    for (char& c : normalized) {
+        if (c == ',' || c == ';') c = ' ';
+    }
+
+    std::istringstream iss(normalized);
+    std::string token;
+
+    while (iss >> token) {
+        try {
+            size_t pos = 0;
+            unsigned long v = std::stoul(token, &pos, 16);
+            if (pos != token.size()) continue;
+            if (v <= 0xFFFF) result.push_back(static_cast<uint16_t>(v));
+        } catch (...) {
+            // token invalide
+        }
+    }
+
+    return result;
+}
+
+
 uint8_t ArgTransformer::parseHexOrDec(const std::string& str) const {
     if (str.empty()) return 0;
 
@@ -379,4 +405,40 @@ std::string ArgTransformer::extractHostFromUrl(const std::string& url) {
     size_t slash = host.find('/');
     if (slash != std::string::npos) host.erase(slash);
     return host;
+}
+
+std::vector<uint8_t> ArgTransformer::parse01List(const std::string& line) {
+  std::vector<uint8_t> bits;
+  auto toks = splitArgs(line);
+  if (toks.size() > 1) {
+    for (auto& t : toks) {
+      if (t == "0" || t == "1") bits.push_back(t == "1" ? 1 : 0);
+      else return {};
+    }
+  } else {
+    for (char c : line) {
+      if (c=='0' || c=='1') bits.push_back(c=='1' ? 1 : 0);
+    }
+  }
+  return bits;
+}
+
+std::vector<uint8_t> ArgTransformer::packLsbFirst(const std::vector<uint8_t>& bits) {
+    std::vector<uint8_t> out((bits.size() + 7) / 8, 0);
+    for (size_t i = 0; i < bits.size(); ++i) {
+        if (bits[i] & 1) out[i / 8] |= (1u << (i % 8));
+    }
+    return out;
+}
+
+bool ArgTransformer::unpackLsbFirst(const std::vector<uint8_t>& bytes,
+                                    size_t qty,
+                                    std::vector<uint8_t>& outBits) {
+    const size_t need = (qty + 7) / 8;
+    if (bytes.size() < need) return false;    // too short
+    outBits.resize(qty);
+    for (size_t i = 0; i < qty; ++i) {
+        outBits[i] = (bytes[i / 8] >> (i % 8)) & 0x1;
+    }
+    return true;
 }
