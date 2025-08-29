@@ -14,8 +14,10 @@ void EthernetController::handleCommand(const TerminalCommand& cmd) {
     else if (root == "ping")      handlePing(cmd);
     else if (root == "ssh")       handleSsh(cmd);
     else if (root == "telnet")    handleTelnet(cmd);
-    else if (root == "status")    handleStatus();
+    else if (root == "modbus")    handleModbus(cmd);
     else if (root == "http")      handleHttp(cmd);
+    else if (root == "lookup")    handleLookup(cmd);
+    else if (root == "status")    handleStatus();
     else if (root == "reset")     handleReset();
     else                          handleHelp();
 }

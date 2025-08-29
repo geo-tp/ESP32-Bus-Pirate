@@ -22,6 +22,7 @@ void WifiController::handleCommand(const TerminalCommand &cmd)
     else if (root == "telnet") handleTelnet(cmd);
     else if (root == "nc") handleNetcat(cmd);
     else if (root == "nmap") handleNmap(cmd);
+    else if (root == "modbus") handleModbus(cmd);
     else if (root == "http") handleHttp(cmd);
     else if (root == "lookup") handleLookup(cmd);
     else if (root == "discovery") handleDiscovery(cmd);

@@ -14,12 +14,14 @@
 #include "Services/ICMPService.h"
 #include "Services/NvsService.h"
 #include "Services/TelnetService.h"
+#include "Services/HttpService.h"
+#include "Services/ModbusService.h"
 #include "Transformers/ArgTransformer.h"
 #include "Transformers/JsonTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
 #include "Models/TerminalCommand.h"
-#include "Services/HttpService.h"
+#include "Shells/ModbusShell.h"
 
 class ANetworkController {
 public:
@@ -40,7 +42,8 @@ public:
         TelnetService& telnetService,
         ArgTransformer& argTransformer,
         JsonTransformer& jsonTransformer,
-        UserInputManager& userInputManager
+        UserInputManager& userInputManager,
+        ModbusShell& modbusShell
     );
 
 protected:
@@ -50,6 +53,7 @@ protected:
     void handlePing(const TerminalCommand& cmd);
     void handleDiscovery(const TerminalCommand& cmd);
     void handleTelnet(const TerminalCommand& cmd);
+    void handleModbus(const TerminalCommand& cmd);
     void handleHelp();
 
     // HTTP
@@ -80,6 +84,8 @@ protected:
     ICMPService&       icmpService;
     HttpService&       httpService;
     TelnetService&     telnetService;
+
+    ModbusShell&       modbusShell;
 
     ArgTransformer&    argTransformer;
     JsonTransformer&   jsonTransformer;

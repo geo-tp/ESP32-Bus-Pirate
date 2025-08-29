@@ -19,7 +19,8 @@ ANetworkController::ANetworkController(
     TelnetService& telnetService,
     ArgTransformer& argTransformer,
     JsonTransformer& jsonTransformer,
-    UserInputManager& userInputManager
+    UserInputManager& userInputManager,
+    ModbusShell& modbusShell
 )
 : terminalView(terminalView),
   terminalInput(terminalInput),
@@ -36,7 +37,8 @@ ANetworkController::ANetworkController(
   telnetService(telnetService),
   argTransformer(argTransformer),
   jsonTransformer(jsonTransformer),
-  userInputManager(userInputManager)
+  userInputManager(userInputManager),
+  modbusShell(modbusShell)
 {
 }
 
@@ -686,6 +688,35 @@ void ANetworkController::handleTelnet(const TerminalCommand &cmd)
 }
 
 /*
+Modbus
+*/
+void ANetworkController::handleModbus(const TerminalCommand &cmd)
+{
+    // Verify connection
+    if (!wifiService.isConnected() && !ethernetService.isConnected()) {
+        terminalView.println("Modbus: You must be connected to Wi-Fi or Ethernet. Use 'connect' first.");
+        return;
+    }
+
+    // Verify host
+    const std::string host = cmd.getSubcommand();
+    if (host.empty()) {
+        terminalView.println("Usage: modbus <host> [port]");
+        return;
+    }
+
+    // Port
+    uint16_t port = 502; // default modbus
+    if (argTransformer.isValidNumber(cmd.getArgs())) {
+        port = argTransformer.parseHexOrDec16(cmd.getArgs());
+    }
+
+    // Start shell
+    terminalView.println("Starting Modbus shell...");
+    modbusShell.run(host, port);
+}
+
+/*
 Help
 */
 void ANetworkController::handleHelp()
@@ -696,6 +727,7 @@ void ANetworkController::handleHelp()
     terminalView.println("  telnet <host> [port]");
     terminalView.println("  nc <host> <port>");
     terminalView.println("  nmap <host> [-p ports]");
+    terminalView.println("  modbus <host> [port]");
     terminalView.println("  http get <url>");
     terminalView.println("  http analyze <url>");
     terminalView.println("  lookup mac <addr>");
