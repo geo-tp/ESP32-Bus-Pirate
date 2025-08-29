@@ -438,6 +438,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  telnet <host> [port] - Open telnet session");
     terminalView.println("  nc <host> <port>     - Open netcat session");
     terminalView.println("  nmap <h> [-p ports]  - Scan host ports");
+    terminalView.println("  modbus <host> [port] - Modbus TCP operations");
     terminalView.println("  http get <url>       - HTTP(s) GET request");
     terminalView.println("  http analyze <url>   - Get analysis report");
     terminalView.println("  lookup mac|ip <addr> - Lookup MAC or IP address");
@@ -476,6 +477,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  telnet <host> [port] - Open telnet session");
     terminalView.println("  nc <host> <port>     - Open netcat session");
     terminalView.println("  nmap <h> [-p ports]  - Scan host ports");
+    terminalView.println("  modbus <host> [port] - Modbus TCP operations");
     terminalView.println("  http get <url>       - HTTP(s) GET request");
     terminalView.println("  http analyze <url>   - Get analysis report");
     terminalView.println("  lookup mac|ip <addr> - Lookup MAC or IP address");
