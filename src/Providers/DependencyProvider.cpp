@@ -33,6 +33,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       ethernetService(),
       httpService(),
       telnetService(),
+      modbusService(),
 
       // Transformers
       commandTransformer(),
@@ -57,6 +58,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       uartAtShell(terminalView, terminalInput, userInputManager, argTransformer, uartService),
       threeWireEepromShell(terminalView, terminalInput, userInputManager, threeWireService, argTransformer),
       sysInfoShell(terminalView, terminalInput, userInputManager, argTransformer, systemService, wifiService),
+      modbusShell(terminalView, terminalInput, argTransformer, userInputManager, modbusService),
 
       // Selectors
       horizontalSelector(deviceView, deviceInput),
@@ -79,9 +81,9 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       ledController(terminalView, terminalInput, ledService, argTransformer, userInputManager),
       bluetoothController(terminalView, terminalInput, deviceInput, bluetoothService, argTransformer, userInputManager),
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager),
-      wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager),
+      wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
-      ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager)
+      ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
 {
 }
 

@@ -34,6 +34,7 @@ and injecting shared instances of core components
 #include "Services/EthernetService.h"
 #include "Services/HttpService.h"
 #include "Services/TelnetService.h"
+#include "Services/ModbusService.h"
 #include "Controllers/UartController.h"
 #include "Controllers/I2cController.h"
 #include "Controllers/OneWireController.h"
@@ -69,6 +70,7 @@ and injecting shared instances of core components
 #include "Shells/IbuttonShell.h"
 #include "Shells/UartAtShell.h"
 #include "Shells/SysInfoShell.h"
+#include "Shells/ModbusShell.h"
 #include "Config/TerminalTypeConfigurator.h"
 
 class DependencyProvider
@@ -114,6 +116,7 @@ public:
     EthernetService &getEthernetService();
     HttpService &getHttpService();
     TelnetService &getTelnetService();
+    ModbusService &getModbusService();
 
     // Controllers
     UartController &getUartController();
@@ -158,6 +161,7 @@ public:
     IbuttonShell &getIbuttonShell();
     UartAtShell &getUartAtShell();
     SysInfoShell &getSysInfoShell();
+    ModbusShell &getModbusShell();
 
     // Selectors
     HorizontalSelector &getHorizontalSelector();
@@ -204,6 +208,7 @@ private:
     EthernetService ethernetService;
     HttpService httpService;
     TelnetService telnetService;
+    ModbusService modbusService;
 
     // Controllers
     UartController uartController;
@@ -247,7 +252,8 @@ private:
     IbuttonShell ibuttonShell;
     UartAtShell uartAtShell;
     SysInfoShell sysInfoShell;
-    
+    ModbusShell modbusShell;
+
     // Selectors
     HorizontalSelector horizontalSelector;
 
