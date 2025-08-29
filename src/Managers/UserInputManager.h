@@ -28,7 +28,7 @@ public:
         const std::vector<uint8_t>& defaultPins,
         const std::vector<uint8_t>& protectedPins
     );
-    std::string readValidatedHexString(const std::string& label, size_t numBytes, bool ignoreLen = false);
+    std::string readValidatedHexString(const std::string& label, size_t numBytes, bool ignoreLen = false, size_t digitsPerItem = 2);
     uint16_t readValidatedCanId(const std::string& label, uint16_t defaultValue);
     int readValidatedChoiceIndex(const std::string& label, const std::vector<std::string>& choices, int defaultIndex = 0);
 private:

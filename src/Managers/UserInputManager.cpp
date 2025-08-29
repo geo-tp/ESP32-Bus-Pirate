@@ -196,42 +196,57 @@ std::vector<uint8_t> UserInputManager::readValidatedPinGroup(
     }
 }
 
-std::string UserInputManager::readValidatedHexString(const std::string& label, size_t numBytes, bool ignoreLen) {
+std::string UserInputManager::readValidatedHexString(
+    const std::string& label,
+    size_t numItems,
+    bool ignoreLen,
+    size_t digitsPerItem /* = 2 */)
+{
     while (true) {
         terminalView.print(label + "(hex): ");
         std::string input = getLine();
 
-        // Erase space if any
-        input.erase(std::remove_if(input.begin(), input.end(), ::isspace), input.end());
+        // Remove space
+        input.erase(std::remove_if(input.begin(), input.end(),
+                    [](unsigned char c){ return std::isspace(c); }), input.end());
 
-        // Verify length
-        if (!ignoreLen && input.length() != numBytes * 2) {
-            terminalView.println("❌ Invalid length. Expected " + std::to_string(numBytes * 2) + " hex digits.");
-            continue;
-        }
-
-        // If ignoring length, ensure at least 1 hex char
+        // Empty ?
         if (input.empty()) {
-            if (ignoreLen) return "00"; // Default to "00" if empty
+            if (ignoreLen) {
+                // Default value (one item at 0)
+                return (digitsPerItem == 2) ? "00" : "0000";
+            }
             terminalView.println("❌ Input cannot be empty.");
             continue;
         }
 
-        // Verify each char as hexadecimal
-        bool valid = std::all_of(input.begin(), input.end(), [](char c) {
-            return std::isxdigit(static_cast<unsigned char>(c));
-        });
-
+        // Verify hex
+        bool valid = std::all_of(input.begin(), input.end(),
+                        [](unsigned char c){ return std::isxdigit(c); });
         if (!valid) {
             terminalView.println("❌ Invalid characters. Only hexadecimal digits (0-9, A-F) are allowed.");
             continue;
         }
 
-        // Add spaces
+        // Verify length
+        if (ignoreLen) {
+            if (input.length() % digitsPerItem != 0) {
+                terminalView.println("❌ Length must be a multiple of " + std::to_string(digitsPerItem) + " hex digits.");
+                continue;
+            }
+        } else {
+            const size_t expected = numItems * digitsPerItem;
+            if (input.length() != expected) {
+                terminalView.println("❌ Invalid length. Expected " + std::to_string(expected) + " hex digits.");
+                continue;
+            }
+        }
+
+        // Inject spaces between items (every digitsPerItem characters)
         std::string spaced;
-        for (size_t i = 0; i < input.length(); i += 2) {
+        for (size_t i = 0; i < input.length(); i += digitsPerItem) {
             if (i > 0) spaced += ' ';
-            spaced += input.substr(i, 2);
+            spaced += input.substr(i, digitsPerItem);
         }
 
         return spaced;
