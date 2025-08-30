@@ -3,10 +3,22 @@
 /*
 Constructor
 */
-OneWireController::OneWireController(ITerminalView& terminalView, IInput& terminalInput, 
-                                    OneWireService& service, ArgTransformer& argTransformer,
-                                    UserInputManager& userInputManager, IbuttonShell& ibuttonShell)
-    : terminalView(terminalView), terminalInput(terminalInput), oneWireService(service), argTransformer(argTransformer), userInputManager(userInputManager), ibuttonShell(ibuttonShell) {
+OneWireController::OneWireController(
+    ITerminalView& terminalView, 
+    IInput& terminalInput, 
+    OneWireService& service, 
+    ArgTransformer& argTransformer,
+    UserInputManager& userInputManager, 
+    IbuttonShell& ibuttonShell,
+    OneWireEepromShell& eepromShell
+)
+    : terminalView(terminalView), 
+      terminalInput(terminalInput), 
+      oneWireService(service), 
+      argTransformer(argTransformer), 
+      userInputManager(userInputManager), 
+      ibuttonShell(ibuttonShell),
+      eepromShell(eepromShell) {
 }
 
 /*
@@ -19,6 +31,7 @@ void OneWireController::handleCommand(const TerminalCommand& command) {
     else if (command.getRoot() == "read")   handleRead();
     else if (command.getRoot() == "write")  handleWrite(command);
     else if (command.getRoot() == "ibutton")   handleIbutton(command);
+    else if (command.getRoot() == "eeprom")   handleEeprom();
     else if (command.getRoot() == "temp")   handleTemperature();
     else if (command.getRoot() == "config") handleConfig();
     else                                    handleHelp();
@@ -496,6 +509,23 @@ void OneWireController::handleTemperature() {
 }
 
 /*
+EEPROM
+*/
+void OneWireController::handleEeprom() {
+    #ifndef DEVICE_M5STICK
+        terminalView.println("OneWire EEPROM: EEPROM Shell starts...");
+        oneWireService.close();
+        oneWireService.configureEeprom(state.getOneWirePin());
+        eepromShell.run();
+        oneWireService.closeEeprom();
+
+    #else
+        // No space left for the eeprom lib
+        terminalView.println("OneWire EEPROM: Not supported on M5STICK.");
+    #endif
+}
+
+/*
 Help
 */
 void OneWireController::handleHelp() {
@@ -507,6 +537,7 @@ void OneWireController::handleHelp() {
     terminalView.println("  write id [8 bytes]");
     terminalView.println("  write sp [8 bytes]");
     terminalView.println("  ibutton");
+    terminalView.println("  eeprom");
     terminalView.println("  temp");
     terminalView.println("  config");
     terminalView.println("  raw instructions, [0X33 r:8] ...");
@@ -522,3 +553,4 @@ void OneWireController::ensureConfigured() {
     uint8_t pin = state.getOneWirePin();
     oneWireService.configure(pin);
 }
+

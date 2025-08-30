@@ -292,6 +292,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  write sp [8 bytes]   - Write scratchpad");
     terminalView.println("  temp                 - Read temperature");
     terminalView.println("  ibutton              - iButton operations");
+    terminalView.println("  eeprom               - EEPROM operations");
     terminalView.println("  config               - Configure settings");
     terminalView.println("  [0xAA r:8] ...       - Instruction syntax");
 

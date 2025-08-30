@@ -10,13 +10,20 @@
 #include "Transformers/ArgTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "Shells/IbuttonShell.h"
+#include "Shells/OneWireEepromShell.h"
 
 class OneWireController {
 public:
     // Constructor
-    OneWireController(ITerminalView& terminalView, IInput& terminalInput, 
-                      OneWireService& service, ArgTransformer& argTransformer,
-                      UserInputManager& userInputManager, IbuttonShell& ibuttonShell);
+    OneWireController(
+      ITerminalView& terminalView, 
+      IInput& terminalInput, 
+      OneWireService& service, 
+      ArgTransformer& argTransformer,
+      UserInputManager& userInputManager, 
+      IbuttonShell& ibuttonShell,
+      OneWireEepromShell& eepromShell
+    );
 
     // Entry point for handle command
     void handleCommand(const TerminalCommand& cmd);
@@ -34,6 +41,7 @@ private:
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
     IbuttonShell& ibuttonShell;
+    OneWireEepromShell& eepromShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
 
@@ -75,4 +83,7 @@ private:
 
     // Read temperature sensor
     void handleTemperature();
+
+    // 1Wire EEPROM shell
+    void handleEeprom();
 };
