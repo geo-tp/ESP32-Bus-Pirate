@@ -92,10 +92,11 @@ void setup() {
             auto usb = UsbConfigurator::configure(serialView, serialInput, deviceInput);
 
             // Build the provider for serial type and run the dispatcher loop
-            DependencyProvider provider(serialView, deviceView, serialInput, deviceInput, usb.usbService, usb.usbController);
-            ActionDispatcher dispatcher(provider);
+            // too big to fit on the stack anymore, allocated on the heap
+            DependencyProvider* provider = new DependencyProvider(serialView, deviceView, serialInput, deviceInput, usb.usbService, usb.usbController);
+            ActionDispatcher dispatcher(*provider);
             dispatcher.setup(terminalType, baud);
-            dispatcher.run();
+            dispatcher.run(); // Forever
             break;
         }
         case TerminalTypeEnum::WiFiAp: // Not Yet Implemented
@@ -123,10 +124,12 @@ void setup() {
             auto usb = UsbConfigurator::configure(webView, webInput, deviceInput);
 
             // Build the provider for webui type and run the dispatcher loop
-            DependencyProvider provider(webView, deviceView, webInput, deviceInput, usb.usbService, usb.usbController);
-            ActionDispatcher dispatcher(provider);
+            // too big to fit on the stack anymore, allocated on the heap
+            DependencyProvider* provider = new DependencyProvider(webView, deviceView, webInput, deviceInput, usb.usbService, usb.usbController);
+            ActionDispatcher dispatcher(*provider);
+            
             dispatcher.setup(terminalType, webIp);
-            dispatcher.run();
+            dispatcher.run(); // Forever
             break;
         }
     }
