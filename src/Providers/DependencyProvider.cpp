@@ -59,6 +59,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       threeWireEepromShell(terminalView, terminalInput, userInputManager, threeWireService, argTransformer),
       sysInfoShell(terminalView, terminalInput, userInputManager, argTransformer, systemService, wifiService),
       modbusShell(terminalView, terminalInput, argTransformer, userInputManager, modbusService),
+      oneWireEepromShell(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, binaryAnalyzeManager),
 
       // Selectors
       horizontalSelector(deviceView, deviceInput),
@@ -69,7 +70,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       // Controllers
       uartController(terminalView, terminalInput, deviceInput, uartService, sdService, hdUartService, argTransformer, userInputManager, uartAtShell),
       i2cController(terminalView, terminalInput, i2cService, argTransformer, userInputManager, i2cEepromShell),
-      oneWireController(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, ibuttonShell),
+      oneWireController(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, ibuttonShell, oneWireEepromShell),
       infraredController(terminalView, terminalInput, infraredService, argTransformer, userInputManager, universalRemoteShell),
       utilityController(terminalView, deviceView, terminalInput, pinService, userInputManager, argTransformer, sysInfoShell),
       hdUartController(terminalView, terminalInput, deviceInput, hdUartService, uartService, argTransformer, userInputManager),
