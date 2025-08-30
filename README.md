@@ -67,6 +67,10 @@ It supports sniffing, sending, scripting, and interacting with various digital p
 
 ![A LilyGo T-Embed micro controller](images/tembedcc1101.jpg)
 
+- **Seeed Studio Xiao S3**
+
+![A Seeed Studio Xiao ESP32-S3 micro controller](images/xiaos3.jpg)
+
 
 ## Wiki
 
