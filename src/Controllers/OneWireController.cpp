@@ -518,6 +518,7 @@ void OneWireController::handleEeprom() {
         oneWireService.configureEeprom(state.getOneWirePin());
         eepromShell.run();
         oneWireService.closeEeprom();
+        ensureConfigured();
 
     #else
         // No space left for the eeprom lib
