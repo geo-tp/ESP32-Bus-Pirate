@@ -617,18 +617,19 @@ void ANetworkController::handleLookupIp(const TerminalCommand& cmd)
     const std::string target = cmd.getArgs();
     const std::string url = "http://ip-api.com/json/" + target;
     const std::string url2 = "https://isc.sans.edu/api/ip/" + target + "?json";
+    std::vector<std::string> lines;
+    std::string resp;
 
     terminalView.println("Lookup IP: " + url + " ...");
 
-    std::string resp = httpService.fetchJson(url, 1024 * 4);
-
+    resp = httpService.fetchJson(url, 1024 * 4);
     terminalView.println("\n===== IP LOOKUP =====");
-    auto lines = jsonTransformer.toLines(resp);
+    lines = jsonTransformer.toLines(resp);
     for (auto& l : lines) terminalView.println(l);
     terminalView.println("=====================");
 
-    std::string resp2 = httpService.fetchJson(url2, 1024 * 4);
-    lines = jsonTransformer.toLines(resp2);
+    resp = httpService.fetchJson(url2, 1024 * 4);
+    lines = jsonTransformer.toLines(resp);
     for (auto& l : lines) terminalView.println(l);
     terminalView.println("=====================\n");
 
