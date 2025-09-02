@@ -34,6 +34,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       httpService(),
       telnetService(),
       modbusService(),
+      subGhzService(),
 
       // Transformers
       commandTransformer(),
@@ -84,6 +85,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager),
       wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
+      subGhzController(terminalView, terminalInput, subGhzService, argTransformer, userInputManager),
       ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
 {
 }
@@ -119,6 +121,7 @@ JtagService &DependencyProvider::getJtagService() { return jtagService; }
 CanService &DependencyProvider::getCanService() { return canService; }
 SystemService &DependencyProvider::getSystemService() { return systemService; }
 EthernetService &DependencyProvider::getEthernetService() { return ethernetService; }
+SubGhzService &DependencyProvider::getSubGhzService() { return subGhzService; }
 
 // Controllers
 UartController &DependencyProvider::getUartController() { return uartController; }
@@ -139,6 +142,7 @@ BluetoothController &DependencyProvider::getBluetoothController() { return bluet
 I2sController &DependencyProvider::getI2sController() { return i2sController; }
 CanController &DependencyProvider::getCanController() { return canController; }
 EthernetController &DependencyProvider::getEthernetController() { return ethernetController; }
+SubGhzController &DependencyProvider::getSubGhzController() { return subGhzController; }
 
 // Transformers
 TerminalCommandTransformer &DependencyProvider::getCommandTransformer() { return commandTransformer; }
