@@ -466,7 +466,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  send [id]            - Send frame with given ID");
     terminalView.println("  receive [id]         - Capture frames with ID");
     terminalView.println("  status               - State of the CAN controller");
-    terminalView.println("  config               - Configure settings");
+    terminalView.println("  config               - Configure MCP2515 settings");
 
     terminalView.println("");
     terminalView.println(" 18. ETHERNET:");
@@ -483,7 +483,14 @@ void UtilityController::handleHelp() {
     terminalView.println("  http analyze <url>   - Get analysis report");
     terminalView.println("  lookup mac|ip <addr> - Lookup MAC or IP address");
     terminalView.println("  reset                - Reset interface");
-    terminalView.println("  config               - Configure settings");
+    terminalView.println("  config               - Configure W5500 settings");
+
+    terminalView.println("");
+    terminalView.println(" 19. SUBGHZ:");
+    terminalView.println("  scan                 - Search frequencies");
+    terminalView.println("  sniff                - Raw frame sniffing");
+    terminalView.println("  setfrequency         - Set operating frequency");
+    terminalView.println("  config               - Configure CC1101 settings");
 
     terminalView.println("");
     terminalView.println(" Instructions (available in most modes):");
