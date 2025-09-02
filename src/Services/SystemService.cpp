@@ -114,8 +114,46 @@ std::string SystemService::getArduinoCore() const
 }
 
 // -----------------------------
-// Heap / PSRAM
+// Stack / Heap / PSRAM
 // -----------------------------
+
+size_t SystemService::getStackUsed() const {
+    TaskHandle_t h = xTaskGetCurrentTaskHandle();
+    size_t usedNow = 0;
+
+    // Get snapshot of tasks
+    TaskSnapshot_t snaps[16];
+    UBaseType_t count = 0;
+    UBaseType_t got = uxTaskGetSnapshotAll(snaps, 16, &count);
+    if (got == 0) {
+        return -1;
+    }
+
+    // Find the snapshot of the current task
+    const TaskSnapshot_t* self = nullptr;
+    for (UBaseType_t i = 0; i < got; ++i) {
+        if (snaps[i].pxTCB == h) {
+            self = &snaps[i];
+            break;
+        }
+    }
+    if (!self) {
+        return -1;
+    }
+
+    uintptr_t top = reinterpret_cast<uintptr_t>(self->pxTopOfStack);
+    uintptr_t end = reinterpret_cast<uintptr_t>(self->pxEndOfStack);
+    if (top == 0 || end == 0 || end <= top) {
+        return -1;
+    }
+
+    usedNow = end - top;
+    return usedNow;
+}
+
+size_t SystemService::getStackTotal() const {
+    return CONFIG_ARDUINO_LOOP_STACK_SIZE;
+}
 
 size_t SystemService::getHeapTotal() const
 {

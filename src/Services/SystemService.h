@@ -18,7 +18,9 @@ public:
     std::string getIdfVersion() const;
     std::string getArduinoCore() const;
 
-    // Heap / PSRAM
+    // Stack / Heap / PSRAM
+    size_t getStackUsed() const;
+    size_t getStackTotal() const;
     size_t getHeapTotal() const;
     size_t getHeapFree() const;
     size_t getHeapMinFree() const;
