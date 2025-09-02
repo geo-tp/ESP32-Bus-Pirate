@@ -25,6 +25,7 @@ enum class ModeEnum {
     I2S,
     CAN_,
     ETHERNET,
+    SUBGHZ,
     COUNT
 };
 
@@ -50,7 +51,8 @@ public:
             {ModeEnum::JTAG,       "JTAG"},
             {ModeEnum::I2S,        "I2S"},
             {ModeEnum::CAN_,        "CAN"},
-            {ModeEnum::ETHERNET,   "ETHERNET"}
+            {ModeEnum::ETHERNET,   "ETHERNET"},
+            {ModeEnum::SUBGHZ,     "SUBGHZ"}
         };
 
         auto it = map.find(proto);
@@ -84,7 +86,8 @@ public:
             {"JTAG",       ModeEnum::JTAG},
             {"I2S",        ModeEnum::I2S},
             {"CAN",        ModeEnum::CAN_},
-            {"ETHERNET",   ModeEnum::ETHERNET}
+            {"ETHERNET",   ModeEnum::ETHERNET},
+            {"SUBGHZ",     ModeEnum::SUBGHZ}
         };
 
         std::string upper;
