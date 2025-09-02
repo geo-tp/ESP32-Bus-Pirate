@@ -18,6 +18,8 @@ public:
     uint8_t readValidatedUint8(const std::string& label, uint8_t def, uint8_t min, uint8_t max);
     uint8_t readValidatedUint8(const std::string& label, uint8_t defaultVal);
     uint32_t readValidatedUint32(const std::string& label, uint32_t def);
+    int readValidatedInt(const std::string& label, int def, int min = -127, int max = 127);
+
     char readCharChoice(const std::string& label, char def, const std::vector<char>& allowed);
     bool readYesNo(const std::string& label, bool def);
     uint8_t readModeNumber();
@@ -28,9 +30,17 @@ public:
         const std::vector<uint8_t>& defaultPins,
         const std::vector<uint8_t>& protectedPins
     );
+    float readValidatedFloat(const std::string& label,
+                         float def,
+                         float min = -1e9f,
+                         float max =  1e9f
+    );
+
     std::string readValidatedHexString(const std::string& label, size_t numBytes, bool ignoreLen = false, size_t digitsPerItem = 2);
     uint16_t readValidatedCanId(const std::string& label, uint16_t defaultValue);
     int readValidatedChoiceIndex(const std::string& label, const std::vector<std::string>& choices, int defaultIndex = 0);
+    int readValidatedChoiceIndex(const std::string& label, const std::vector<int>& choices, int defaultIndex);
+    int readValidatedChoiceIndex(const std::string& label, const std::vector<float>& choices, int defaultIndex);
 private:
     ITerminalView& terminalView;
     IInput& terminalInput;

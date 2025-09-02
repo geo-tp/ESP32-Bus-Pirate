@@ -322,3 +322,63 @@ int UserInputManager::readValidatedChoiceIndex(const std::string& label, const s
 
     return index - 1; // Convert to 0 based index
 }
+
+int UserInputManager::readValidatedInt(const std::string& label, int def, int min /* = -127 */, int max /* = 127 */) {
+    while (true) {
+        terminalView.print(label + " [" + std::to_string(def) + "]: ");
+        std::string input = getLine();
+        if (input.empty()) return def;
+
+        int val = 0;
+        if (argTransformer.parseInt(input, val) && val >= min && val <= max) {
+            return val;
+        }
+        terminalView.println("Invalid input. Must be " + std::to_string(min) + "-" + std::to_string(max));
+    }
+}
+
+int UserInputManager::readValidatedChoiceIndex(const std::string& label, const std::vector<int>& choices, int defaultIndex) {
+    std::vector<std::string> strChoices;
+    strChoices.reserve(choices.size());
+    for (int val : choices) {
+        strChoices.push_back(std::to_string(val));
+    }
+    return readValidatedChoiceIndex(label, strChoices, defaultIndex);
+}
+
+int UserInputManager::readValidatedChoiceIndex(const std::string& label,
+                                               const std::vector<float>& choices,
+                                               int defaultIndex) {
+    std::vector<std::string> strChoices;
+    strChoices.reserve(choices.size());
+
+    for (float f : choices) {
+        std::ostringstream oss;
+        oss.setf(std::ios::fixed);
+        oss << std::setprecision(2) << f; 
+        strChoices.push_back(oss.str());
+    }
+    return readValidatedChoiceIndex(label, strChoices, defaultIndex);
+}
+
+float UserInputManager::readValidatedFloat(const std::string& label,
+                                           float def,
+                                           float min,
+                                           float max) {
+    while (true) {
+        terminalView.print(label + " [" + std::to_string(def) + "]: ");
+        std::string input = getLine();
+        if (input.empty()) return def;
+
+        // Remove spaces
+        input.erase(std::remove_if(input.begin(), input.end(), ::isspace), input.end());
+
+        try {
+            float v = std::stof(input);
+            if (v >= min && v <= max) return v;
+        } catch (...) {
+            // fallthrough
+        }
+        terminalView.println("Invalid input. Must be " + std::to_string(min) + " .. " + std::to_string(max));
+    }
+}
