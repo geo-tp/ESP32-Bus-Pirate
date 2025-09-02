@@ -124,6 +124,17 @@ private:
     uint32_t ethernetFrequency = 20000000; // 20 MHz
     std::array<uint8_t,6> ethernetMac = { 0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x42 };
 
+    // SubGHz Default Configuration
+    uint8_t subGhzSckPin = 12;
+    uint8_t subGhzMisoPin = 13;
+    uint8_t subGhzMosiPin = 14;
+    uint8_t subGhzCsPin = 15;
+    uint8_t subGhzGdoPin = 27;
+    float subGhzFrequency = 433.92; // mhz
+    uint8_t subGhzPower = 10; // dBm
+    uint8_t subGhzModulation = 2; // 0=FSK, 1=OOK, 2=ASK
+    uint32_t subGhzBandwidth = 125000; // 125 kHz
+
     // JTAG Default Pin
     std::vector<uint8_t> jtagScanPins = { 1, 3, 5, 7, 9 };
 
@@ -329,6 +340,21 @@ public:
     void setEthernetIrqPin(uint8_t pin) { ethernetIrqPin = pin; }
     void setEthernetMac(const std::array<uint8_t,6>& mac) { ethernetMac = mac; }
 
+    // SubGHz
+    uint8_t getSubGhzSckPin() const { return subGhzSckPin; }
+    uint8_t getSubGhzMisoPin() const { return subGhzMisoPin; }
+    uint8_t getSubGhzMosiPin() const { return subGhzMosiPin; }
+    uint8_t getSubGhzCsPin() const { return subGhzCsPin; }
+    uint8_t getSubGhzGdoPin() const { return subGhzGdoPin; }
+    float getSubGhzFrequency() const { return subGhzFrequency; }
+
+    void setSubGhzSckPin(uint8_t pin) { subGhzSckPin = pin; }
+    void setSubGhzMisoPin(uint8_t pin) { subGhzMisoPin = pin; }
+    void setSubGhzMosiPin(uint8_t pin) { subGhzMosiPin = pin; }
+    void setSubGhzCsPin(uint8_t pin) { subGhzCsPin = pin; }
+    void setSubGhzGdoPin(uint8_t pin) { subGhzGdoPin = pin; }
+    void setSubGhzFrequency(float freq) { subGhzFrequency = freq; }
+
     // SD File Limits
     size_t getFileCountLimit() const { return fileCountLimit; }
     size_t getFileCacheLimit() const { return fileCacheLimit; }
@@ -477,7 +503,21 @@ public:
         #ifdef ETHERNET_IRQ_PIN
             ethernetIrqPin = ETHERNET_IRQ_PIN;
         #endif
-
+        #ifdef SUBGHZ_SCK_PIN
+            subGhzSckPin = SUBGHZ_SCK_PIN;
+        #endif
+        #ifdef SUBGHZ_SO_PIN
+            subGhzMisoPin = SUBGHZ_SO_PIN;
+        #endif
+        #ifdef SUBGHZ_SI_PIN
+            subGhzMosiPin = SUBGHZ_SI_PIN;
+        #endif
+        #ifdef SUBGHZ_CS_PIN
+            subGhzCsPin = SUBGHZ_CS_PIN;
+        #endif
+        #ifdef SUBGHZ_GDO_PIN
+            subGhzGdoPin = SUBGHZ_GDO_PIN;
+        #endif
         #ifdef PROTECTED_PINS
         {
             protectedPins.clear();
