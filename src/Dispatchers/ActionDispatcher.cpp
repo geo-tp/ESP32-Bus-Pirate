@@ -145,6 +145,9 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
         case ModeEnum::ETHERNET:
             provider.getEthernetController().handleCommand(cmd);
             break;
+        case ModeEnum::SUBGHZ:
+            provider.getSubGhzController().handleCommand(cmd);
+            break;
     }
 
    // Config was handled in specific mode, we need to rerender the pinout view
@@ -448,6 +451,16 @@ void ActionDispatcher::setCurrentMode(ModeEnum newMode) {
                 "SCK GPIO " + std::to_string(state.getEthernetSckPin()),
                 "SI GPIO " + std::to_string(state.getEthernetMosiPin()),
                 "SO GPIO " + std::to_string(state.getEthernetMisoPin())
+            });
+            break;
+
+        case ModeEnum::SUBGHZ:
+            provider.getSubGhzController().ensureConfigured();
+            config.setMappings({
+                "SCK GPIO " + std::to_string(state.getSubGhzSckPin()),
+                "MISO GPIO " + std::to_string(state.getSubGhzMisoPin()),
+                "MOSI GPIO " + std::to_string(state.getSubGhzMosiPin()),
+                "CS GPIO " + std::to_string(state.getSubGhzCsPin()),
             });
             break;
     }
