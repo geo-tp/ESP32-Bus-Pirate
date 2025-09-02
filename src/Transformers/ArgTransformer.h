@@ -42,4 +42,5 @@ public:
     bool unpackLsbFirst(const std::vector<uint8_t>& bytes,
                         size_t qty,
                         std::vector<uint8_t>& outBits);
+    std::string toFixed2(float f);
 };

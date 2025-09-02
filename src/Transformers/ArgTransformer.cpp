@@ -442,3 +442,8 @@ bool ArgTransformer::unpackLsbFirst(const std::vector<uint8_t>& bytes,
     }
     return true;
 }
+
+std::string ArgTransformer::toFixed2(float f) {
+    std::ostringstream oss; oss.setf(std::ios::fixed); oss.precision(2); oss << f;
+    return oss.str();
+}
