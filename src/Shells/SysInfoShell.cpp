@@ -50,6 +50,7 @@ void SysInfoShell::cmdSummary() {
     const int rr = systemService.getResetReason();
     terminalView.println(std::string("Reset reason  : ") + resetReasonToStr(rr) + " (" + std::to_string(rr) + ")");
     
+    terminalView.println("Stack total   : " + std::to_string(systemService.getStackTotal()   / 1024) + " KB");
     terminalView.println("Heap total    : " + std::to_string(systemService.getHeapTotal()   / 1024) + " KB");
     terminalView.println("PSRAM total   : " + std::to_string(systemService.getPsramTotal()  / 1024) + " KB");
     terminalView.println("Flash total   : " + std::to_string(systemService.getFlashSizeBytes() / 1024) + " KB");
@@ -103,12 +104,32 @@ void SysInfoShell::cmdHardwareInfo() {
 
 void SysInfoShell::cmdMemory() {
     terminalView.println("\n=== Memory ===");
+    
+    // Stack
+    char line[96];
+    size_t stTot  = systemService.getStackTotal();
+    float totKB  = stTot  / 1024.0f;
+    snprintf(line, sizeof(line), "Stack total       : %.2f KB", totKB);
+    terminalView.println(line);
+
+    #ifndef DEVICE_M5STICK // M5StickC has no more IRAM left to handle this
+
+    size_t stUsed = systemService.getStackUsed();
+    float usedKB = stUsed / 1024.0f;
+    float freeKB = (stTot > stUsed ? (stTot - stUsed) : 0) / 1024.0f;
+    float pct    = (stUsed * 100.0f) / (float)stTot;
+    int   stPct  = (stUsed * 100.0 / stTot) + 0.5;
+    snprintf(line, sizeof(line), "Stack free        : %.2f KB", freeKB);
+    terminalView.println(line);
+    snprintf(line, sizeof(line), "Stack used        : %.2f KB (%.0f%%)", usedKB, pct);
+    terminalView.println(line);
+
+    #endif
 
     // Heap
     const size_t heapTotal = systemService.getHeapTotal();
     const size_t heapFree  = systemService.getHeapFree();
     const int    heapPct   = heapTotal ? static_cast<int>(((heapTotal - heapFree) * 100.0f / heapTotal) + 0.5f) : 0;
-
     terminalView.println("Heap total        : " + std::to_string(heapTotal / 1024) + " KB");
     terminalView.println("Heap free         : " + std::to_string(heapFree / 1024) + " KB");
     terminalView.println("Heap used         : " + std::to_string((heapTotal - heapFree) / 1024) + " KB (" + std::to_string(heapPct) + "%)");
@@ -119,7 +140,6 @@ void SysInfoShell::cmdMemory() {
     const size_t psramTotal = systemService.getPsramTotal();
     const size_t psramFree  = systemService.getPsramFree();
     const int    psramPct   = psramTotal ? static_cast<int>(((psramTotal - psramFree) * 100.0f / psramTotal) + 0.5f) : 0;
-
     terminalView.println("PSRAM total       : " + std::to_string(psramTotal / 1024) + " KB");
     terminalView.println("PSRAM free        : " + std::to_string(psramFree / 1024) + " KB");
     terminalView.println("PSRAM used        : " + std::to_string((psramTotal - psramFree) / 1024) + " KB (" + std::to_string(psramPct) + "%)");
