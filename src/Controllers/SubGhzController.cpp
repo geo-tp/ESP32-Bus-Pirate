@@ -10,6 +10,8 @@ void SubGhzController::handleCommand(const TerminalCommand& cmd) {
     else if (root == "scan")         handleScan(cmd);
     else if (root == "setfrequency") handleSetFrequency();
     else if (root == "setfreq")      handleSetFrequency();
+    else if (root == "replay")       handleReplay(cmd);
+    else if (root == "jam")          handleJam(cmd);
     else if (root == "config")       handleConfig();
     else                             handleHelp();
 }
@@ -159,12 +161,143 @@ void SubGhzController::handleSetFrequency() {
 }
 
 /*
+Replay
+*/
+void SubGhzController::handleReplay(const TerminalCommand&) {
+    const float f = state.getSubGhzFrequency();
+
+    // Set profile to read frames
+    if (!subGhzService.applySniffProfile(f)) {
+        terminalView.println("SUBGHZ: Not configured. Run 'config' first.");
+        return;
+    }
+
+    // Start sniffer
+    if (!subGhzService.startRawSniffer(state.getSubGhzGdoPin())) {
+        terminalView.println("Failed to start raw sniffer.");
+        return;
+    }
+
+    terminalView.println("SUBGHZ Replay: recording up to 64 frames @ " +
+                         std::to_string(f) + " MHz... Press [ENTER] to stop.\n");
+
+    std::vector<std::vector<rmt_item32_t>> frames;
+    frames.reserve(64);
+
+    bool stop = false;
+    while (!stop && frames.size() < 64) {
+        // Cancel
+        char c = terminalInput.readChar();
+        if (c == '\n' || c == '\r') { stop = true; break; }
+
+        // Read frame
+        auto items = subGhzService.readRawFrame();
+        if (!items.empty()) {
+            frames.push_back(std::move(items));
+            terminalView.println(" [Frame " + std::to_string(frames.size()) + " captured]");
+        }
+    }
+
+    subGhzService.stopRawSniffer();
+    terminalView.println("\nSUBGHZ Replay: Captured " + std::to_string(frames.size()) + " frame(s).");
+
+    if (frames.empty()) {
+        terminalView.println("Nothing to replay.\n");
+        return;
+    }
+
+    // Profil TX + sender
+    if (!subGhzService.applyRawSendProfile(f)) {
+        terminalView.println("Failed to apply TX profile.");
+        return;
+    }
+
+    // Start sending frames
+    terminalView.print("SUBGHZ Replay: In progress...");
+    bool okAll = true;
+    auto gdo = state.getSubGhzGdoPin();
+    bool confirm = true;
+    while (confirm) {
+        for (size_t i = 0; i < frames.size(); ++i) {
+            if (!subGhzService.sendRawFrame(gdo, frames[i])) {
+                terminalView.println("SUBGHZ Replay: Failed at frame " + std::to_string(i + 1));
+                okAll = false;
+                break;
+            }
+            delay(3);
+        }
+        confirm = userInputManager.readYesNo("SUBGHZ Replay: Done. Run again?", false);
+    }
+
+    terminalView.println(okAll ? "SUBGHZ Replay Done without error.\n" : "SUBGHZ Replay: Done with errors.\n");
+}
+
+void SubGhzController::handleJam(const TerminalCommand&) {
+    // Select band
+    auto bands = subGhzService.getSupportedBand();
+    int bandIndex = userInputManager.readValidatedChoiceIndex("Select frequency band:", bands, 0);
+    subGhzService.setScanBand(bands[bandIndex]);
+    std::vector<float> freqs = subGhzService.getSupportedFreq(bands[bandIndex]);
+
+    // Prompt for dwell and gap
+    int dwellMs = userInputManager.readValidatedInt("Hold time per frequency (ms):", 5, 1, 10000);
+    int gapUs   = userInputManager.readValidatedInt("Gap between bursts (us):",      100, 0, 500000);
+
+    const uint8_t gdo = state.getSubGhzGdoPin();
+
+    terminalView.println("\nSUBGHZ Jam: In progress... Press [ENTER] to stop.");
+    terminalView.println("Band: " + bands[bandIndex] + ", FreqCount=" + std::to_string(freqs.size()) +
+                         ", Hold=" + std::to_string(dwellMs) + " ms\n");
+
+    bool stop = false;
+    while (!stop) {
+        for (size_t i = 0; i < freqs.size() && !stop; ++i) {
+            // Cancel
+            char c = terminalInput.readChar();
+            if (c == '\n' || c == '\r') { stop = true; break; }
+
+            float f = freqs[i];
+            // Apply TX profile with freq
+            if (!subGhzService.applyRawSendProfile(f)) {
+                terminalView.println("Failed to apply TX profile at " + argTransformer.toFixed2(f) + " MHz");
+                continue;
+            }
+
+            unsigned long t0 = millis();
+            while (!stop && (millis() - t0 < static_cast<unsigned long>(dwellMs))) {
+                char c2 = terminalInput.readChar();
+                if (c2 == '\n' || c2 == '\r') { stop = true; break; }
+
+                // Random burst
+                if (!subGhzService.sendRandomBurst(gdo)) {
+                    terminalView.println("Send failed at " + argTransformer.toFixed2(f) + " MHz");
+                    break;
+                }
+
+                // Gap
+                int remain = gapUs;
+                while (remain > 0 && !stop) {
+                    char c3 = terminalInput.readChar();
+                    if (c3 == '\n' || c3 == '\r') { stop = true; break; }
+                    int chunk = std::min(remain, 1000);
+                    delayMicroseconds(chunk);
+                    remain -= chunk;
+                }
+            }
+        }
+    }
+
+    subGhzService.tune(state.getSubGhzFrequency());
+    terminalView.println("SUBGHZ Jam: Stopped by user.\n");
+}
+
+/*
 Config CC1101
 */
 void SubGhzController::handleConfig() {
     terminalView.println("\nSubGHz Configuration:");
 
-    const auto& forbidden = state.getProtectedPins();
+    const auto& forbidden = state.getProtectedPins();    
 
     // CC1101 pins
     uint8_t sck  = userInputManager.readValidatedPinNumber("CC1101 SCK pin",  state.getSubGhzSckPin(),  forbidden);
@@ -186,9 +319,9 @@ void SubGhzController::handleConfig() {
 
     // Configure
     auto isConfigured = subGhzService.configure(
+        deviceView.getScreenSpiInstance(),
         sck, miso, mosi, ss,
-        gdo0,
-        freq
+        gdo0, freq
     );
 
     // CC1101 feedback
@@ -204,9 +337,9 @@ void SubGhzController::handleConfig() {
         subGhzService.applyScanProfile();
         terminalView.println("CC1101 module detected and configured with default frequency.");
         terminalView.println("Use 'setfrequency' or 'scan' to change the frequency.\n");
+        configured = true;
     }
     
-    configured = true;
 }
 
 /*
@@ -225,7 +358,7 @@ void SubGhzController::ensureConfigured() {
     uint8_t mosi = state.getSubGhzMosiPin();
     float freq = state.getSubGhzFrequency();
 
-    subGhzService.configure(sck, miso, mosi, cs, gdo0, freq);
+    subGhzService.configure(deviceView.getScreenSpiInstance(), sck, miso, mosi, cs, gdo0, freq);
 }
 
 /*

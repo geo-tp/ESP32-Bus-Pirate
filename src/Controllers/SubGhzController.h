@@ -5,6 +5,7 @@
 #include <numeric>
 #include "Interfaces/ITerminalView.h"
 #include "Interfaces/IInput.h"
+#include "Interfaces/IDeviceView.h"
 #include "Models/TerminalCommand.h"
 #include "Models/ByteCode.h"
 #include "Transformers/ArgTransformer.h"
@@ -18,11 +19,13 @@ class SubGhzController {
 public:
     SubGhzController(ITerminalView& terminalView,
                      IInput& terminalInput,
+                     IDeviceView& deviceView,
                      SubGhzService& subGhzService,
                      ArgTransformer& argTransformer,
                      UserInputManager& userInputManager)
     : terminalView(terminalView),
       terminalInput(terminalInput),
+      deviceView(deviceView),
       subGhzService(subGhzService),
       argTransformer(argTransformer),
       userInputManager(userInputManager) {}
@@ -43,6 +46,12 @@ private:
     // Set current frequency
     void handleSetFrequency();
 
+    // Replay captured frames
+    void handleReplay(const TerminalCommand& cmd);
+
+    // Jam signals
+    void handleJam(const TerminalCommand& cmd);
+
     // Configure CC1101
     void handleConfig();
 
@@ -52,6 +61,7 @@ private:
 private:
     ITerminalView& terminalView;
     IInput& terminalInput;
+    IDeviceView& deviceView;
     SubGhzService& subGhzService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
