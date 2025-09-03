@@ -148,6 +148,9 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
         case ModeEnum::SUBGHZ:
             provider.getSubGhzController().handleCommand(cmd);
             break;
+        case ModeEnum::RFID:
+            provider.getRfidController().handleCommand(cmd);
+            break;
     }
 
    // Config was handled in specific mode, we need to rerender the pinout view
@@ -461,6 +464,14 @@ void ActionDispatcher::setCurrentMode(ModeEnum newMode) {
                 "MISO GPIO " + std::to_string(state.getSubGhzMisoPin()),
                 "MOSI GPIO " + std::to_string(state.getSubGhzMosiPin()),
                 "CS GPIO " + std::to_string(state.getSubGhzCsPin()),
+            });
+            break;
+
+        case ModeEnum::RFID:
+            provider.getRfidController().ensureConfigured();
+            config.setMappings({
+                "RFID SDA GPIO " + std::to_string(state.getRfidSdaPin()),
+                "RFID SCL GPIO " + std::to_string(state.getRfidSclPin())
             });
             break;
     }
