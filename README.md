@@ -26,6 +26,8 @@ It supports sniffing, sending, scripting, and interacting with various digital p
    - [I2S](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/16-I2S) (test speakers, mic, play sound)
    - [CAN](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/17-CAN) (sniff, send and receive frames)
    - [SUBGHZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/19-SUBGHZ) (sniff, scan)
+   - [RFID](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/20-RFID) (read, write, clone)
+
 
 - **Protocol sniffers** for I2C, Wi-Fi, Bluetooth, 1Wire, 2wire, CAN, SubGhz.
 - Baudrate **auto-detection**, AT commands and various tools for UART.
