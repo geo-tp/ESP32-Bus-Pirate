@@ -1,0 +1,19 @@
+{
+  "name": "SmartRC-CC1101-Driver-Lib",
+  "description": "This driver library can be used for many libraries that use a simple RF ASK module, with the advantages of the cc1101 module.It offers many direct setting options as in SmartRF Studio and calculates settings such as MHz directly.",
+  "keywords": "rf, radio, wireless, cc1101",
+  "authors":
+  {
+    "name": "Little Satan"
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/LSatan/SmartRC-CC1101-Driver-Lib"
+  },
+  "version": "2.5.7",
+  "frameworks": [
+        "arduino"
+  ],
+  "platforms": "*"
+}
