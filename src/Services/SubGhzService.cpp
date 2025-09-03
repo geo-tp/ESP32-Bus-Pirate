@@ -235,13 +235,11 @@ bool SubGhzService::sendRandomBurst(int pin)
 {
     if (!isConfigured_) return false;
 
-    // --- Paramètres interne simples (modifiable plus tard si besoin) ---
-    constexpr int ITEMS_PER_BURST = 256;   // nb d'items (couples phase0/phase1)
-    constexpr int MEAN_US         = 200;   // largeur moyenne en µs par phase
-    constexpr int JITTER_PCT      = 30;    // ±% autour de la moyenne
-    // -------------------------------------------------------------------
+    constexpr int ITEMS_PER_BURST = 256;   // Number of items
+    constexpr int MEAN_US         = 200;   // Mean duration in µs per phase
+    constexpr int JITTER_PCT      = 30;    // around the mean
 
-    // Config pin en sortie (une fois par appel, simple et robuste)
+    // Config pin as output
     gpio_config_t io{};
     io.pin_bit_mask = (1ULL << pin);
     io.mode = GPIO_MODE_OUTPUT;
@@ -260,10 +258,10 @@ bool SubGhzService::sendRandomBurst(int pin)
         return static_cast<uint32_t>(lo) + (esp_random() % span);
     };
 
-    // Niveau initial aléatoire
+    // Initial random level
     int level = (esp_random() & 1) ? 1 : 0;
 
-    // Bit-bang : on alterne H/L avec durées aléatoires (phase0/phase1)
+    // Bit-bang
     for (int i = 0; i < ITEMS_PER_BURST; ++i) {
         // phase 0
         gpio_set_level((gpio_num_t)pin, level);
@@ -276,7 +274,7 @@ bool SubGhzService::sendRandomBurst(int pin)
         esp_rom_delay_us(rnd_between(minUs, maxUs));
     }
 
-    // Idle bas
+    // Reset
     gpio_set_level((gpio_num_t)pin, 0);
     return true;
 }

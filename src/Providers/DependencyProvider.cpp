@@ -86,7 +86,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager),
       wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
-      subGhzController(terminalView, terminalInput, subGhzService, argTransformer, userInputManager),
+      subGhzController(terminalView, terminalInput, deviceView, subGhzService, argTransformer, userInputManager),
       rfidController(terminalView, terminalInput, rfidService, userInputManager, argTransformer),
       ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
 {
