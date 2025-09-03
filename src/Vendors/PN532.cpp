@@ -28,6 +28,12 @@ PN532::PN532(CONNECTION_TYPE connection_type) {
 }
 
 bool PN532::begin(uint8_t sda, uint8_t scl) {
+    #ifdef DEVICE_TEMBEDS3CC1101
+        pinMode(TEMBEDS3PN532_IRQ, OUTPUT);
+        digitalWrite(TEMBEDS3PN532_IRQ, HIGH);
+        delay(100);
+    #endif
+
     Wire.begin(sda, scl);
 
     bool i2c_check = true;

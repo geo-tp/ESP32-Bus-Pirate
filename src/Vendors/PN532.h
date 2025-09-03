@@ -12,6 +12,8 @@
 #include <Adafruit_PN532.h>
 #include <vector>
 
+#define TEMBEDS3PN532_IRQ 45
+
 class PN532 : public RFIDInterface {
 public:
     enum CONNECTION_TYPE { I2C = 1, I2C_SPI = 2, SPI = 3 };
