@@ -10,16 +10,20 @@
 #include "Data/SugGhzFreqs.h"
 
 #define RMT_RX_CHANNEL RMT_CHANNEL_6
+#define RMT_TX_CHANNEL RMT_CHANNEL_5
 #define RMT_CLK_DIV 80
 #define RMT_1US_TICKS (80000000 / RMT_CLK_DIV / 1000000)
 #define RMT_1MS_TICKS (RMT_1US_TICKS * 1000)
 
+#define TEMBED_CC1101_SW0 48
+#define TEMBED_CC1101_SW1 47
+
 class SubGhzService {
 public:
     // Configure CC1101
-    bool configure(uint8_t sck, uint8_t miso, uint8_t mosi, uint8_t ss, uint8_t gdo0,
+    bool configure(SPIClass& spi, uint8_t sck, uint8_t miso, uint8_t mosi, uint8_t ss, uint8_t gdo0,
                    float mhz = 433.92f, // default 433.92mhz
-                   int paDbm = 10); // TX power, max 10
+                   int paDbm = 10); // TX power, max 12
     
     // Base
     void tune(float mhz);
@@ -31,11 +35,19 @@ public:
     // RMT raw sniffer
     bool startRawSniffer(int pin);
     std::vector<std::string> readRawPulses();
+    std::vector<rmt_item32_t> readRawFrame();
     void stopRawSniffer();
-    
+
+    // Raw send
+    bool sendRawFrame(int pin,
+                      const std::vector<rmt_item32_t>& items,
+                      uint32_t tick_per_us = RMT_1US_TICKS);
+    bool sendRandomBurst(int pin);
+
     // Profiles
     bool applyDefaultProfile(float mhz = 433.92f);
     bool applySniffProfile(float mhz);
+    bool applyRawSendProfile(float mhz);
     bool applyScanProfile(float dataRateKbps = 4.8f,
                           float rxBwKhz      = 200.0f,
                           uint8_t modulation = 2,    // 2 = OOK/ASK
@@ -50,4 +62,11 @@ private:
     bool    ccMode_ = false;
     SubGhzScanBand scanBand_ = SubGhzScanBand::Band387_464;
     RingbufHandle_t rb_ = nullptr;
+    uint8_t rfSw0_ = TEMBED_CC1101_SW0;
+    uint8_t rfSw1_ = TEMBED_CC1101_SW1;
+    uint8_t rfSel_ = 2; //  uses 0/1/2 as selections
+
+    // Tembed S3 CC1101 specific
+    void initTembed();
+    void selectRfPathFor(float mhz);
 };
