@@ -2,6 +2,10 @@
 
 void NoScreenDeviceView::initialize() {}
 
+SPIClass& NoScreenDeviceView::getScreenSpiInstance() {
+    return *(SPIClass*)(nullptr);
+}
+
 void NoScreenDeviceView::logo() {}
 
 void NoScreenDeviceView::welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) {}

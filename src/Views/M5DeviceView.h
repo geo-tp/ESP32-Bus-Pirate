@@ -26,6 +26,7 @@
 class M5DeviceView : public IDeviceView {
 public:
     void initialize() override;
+    SPIClass& getScreenSpiInstance() override;
     void logo() override;
     void welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) override;
     void show(PinoutConfig& config) override;

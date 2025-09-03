@@ -5,6 +5,7 @@
 #include "Enums/ModeEnum.h"
 #include "Enums/TerminalTypeEnum.h"
 #include "Models/PinoutConfig.h"
+#include <SPI.h>
 
 class IDeviceView {
 public:
@@ -12,6 +13,9 @@ public:
 
     // Initiliaze the view
     virtual void initialize() = 0;
+
+    // Get the SPI instance
+    virtual SPIClass& getScreenSpiInstance() = 0;
 
     // Show logo
     virtual void logo() = 0;

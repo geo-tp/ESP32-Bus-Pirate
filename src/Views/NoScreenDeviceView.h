@@ -2,10 +2,12 @@
 
 #include "Interfaces/IDeviceView.h"
 #include <iostream>
+#include <SPI.h>
 
 class NoScreenDeviceView : public IDeviceView {
 public:
     void initialize() override;
+    SPIClass& getScreenSpiInstance() override;
     void logo() override;
     void welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) override;
     void show(PinoutConfig& config) override;

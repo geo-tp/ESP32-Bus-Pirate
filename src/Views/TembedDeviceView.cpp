@@ -17,6 +17,10 @@ TembedDeviceView::TembedDeviceView() {
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
 }
 
+SPIClass& TembedDeviceView::getScreenSpiInstance() {
+    return tft.getSPIinstance();
+}
+
 void TembedDeviceView::initDisplayRegs() {
     for (uint8_t i = 0; i < sizeof(lcd_st7789v) / sizeof(lcd_cmd_t); i++) {
         tft.writecommand(lcd_st7789v[i].cmd);

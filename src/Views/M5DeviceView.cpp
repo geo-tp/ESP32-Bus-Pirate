@@ -7,6 +7,10 @@ void M5DeviceView::initialize() {
     M5.Lcd.fillScreen(BACKGROUND_COLOR);
 }
 
+SPIClass& M5DeviceView::getScreenSpiInstance() {
+    return *(SPIClass*)(nullptr);
+}
+
 void M5DeviceView::welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) {
     if (terminalType == TerminalTypeEnum::Serial) {
         welcomeSerial(terminalInfos);
