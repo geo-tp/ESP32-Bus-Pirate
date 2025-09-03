@@ -36,6 +36,7 @@ and injecting shared instances of core components
 #include "Services/TelnetService.h"
 #include "Services/ModbusService.h"
 #include "Services/SubGhzService.h"
+#include "Services/RfidService.h"
 #include "Controllers/UartController.h"
 #include "Controllers/I2cController.h"
 #include "Controllers/OneWireController.h"
@@ -55,6 +56,7 @@ and injecting shared instances of core components
 #include "Controllers/CanController.h"
 #include "Controllers/SubGhzController.h"
 #include "Controllers/EthernetController.h"
+#include "Controllers/RfidController.h"
 #include "Transformers/TerminalCommandTransformer.h"
 #include "Transformers/InstructionTransformer.h"
 #include "Transformers/ArgTransformer.h"
@@ -121,6 +123,7 @@ public:
     TelnetService &getTelnetService();
     ModbusService &getModbusService();
     SubGhzService &getSubGhzService();
+    RfidService &getRfidService();
 
     // Controllers
     UartController &getUartController();
@@ -142,6 +145,7 @@ public:
     CanController &getCanController();
     EthernetController &getEthernetController();
     SubGhzController &getSubGhzController();
+    RfidController &getRfidController();
 
     // Transformers
     TerminalCommandTransformer &getCommandTransformer();
@@ -216,6 +220,7 @@ private:
     TelnetService telnetService;
     ModbusService modbusService;
     SubGhzService subGhzService;
+    RfidService rfidService;
 
     // Controllers
     UartController uartController;
@@ -236,6 +241,7 @@ private:
     CanController canController;
     EthernetController ethernetController;
     SubGhzController subGhzController;
+    RfidController rfidController;
 
     // Transformers
     TerminalCommandTransformer commandTransformer;

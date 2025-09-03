@@ -35,6 +35,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       telnetService(),
       modbusService(),
       subGhzService(),
+      rfidService(),
 
       // Transformers
       commandTransformer(),
@@ -86,6 +87,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
       subGhzController(terminalView, terminalInput, subGhzService, argTransformer, userInputManager),
+      rfidController(terminalView, terminalInput, rfidService, userInputManager, argTransformer),
       ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
 {
 }
@@ -122,6 +124,7 @@ CanService &DependencyProvider::getCanService() { return canService; }
 SystemService &DependencyProvider::getSystemService() { return systemService; }
 EthernetService &DependencyProvider::getEthernetService() { return ethernetService; }
 SubGhzService &DependencyProvider::getSubGhzService() { return subGhzService; }
+RfidService &DependencyProvider::getRfidService() { return rfidService; }
 
 // Controllers
 UartController &DependencyProvider::getUartController() { return uartController; }
@@ -143,6 +146,7 @@ I2sController &DependencyProvider::getI2sController() { return i2sController; }
 CanController &DependencyProvider::getCanController() { return canController; }
 EthernetController &DependencyProvider::getEthernetController() { return ethernetController; }
 SubGhzController &DependencyProvider::getSubGhzController() { return subGhzController; }
+RfidController &DependencyProvider::getRfidController() { return rfidController; }
 
 // Transformers
 TerminalCommandTransformer &DependencyProvider::getCommandTransformer() { return commandTransformer; }
