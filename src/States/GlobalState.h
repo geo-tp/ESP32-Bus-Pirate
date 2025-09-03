@@ -135,6 +135,10 @@ private:
     uint8_t subGhzModulation = 2; // 0=FSK, 1=OOK, 2=ASK
     uint32_t subGhzBandwidth = 125000; // 125 kHz
 
+    // RFID (I2C PN532)
+    uint8_t rfidSdaPin = 1;
+    uint8_t rfidSclPin = 2;
+
     // JTAG Default Pin
     std::vector<uint8_t> jtagScanPins = { 1, 3, 5, 7, 9 };
 
@@ -355,6 +359,13 @@ public:
     void setSubGhzGdoPin(uint8_t pin) { subGhzGdoPin = pin; }
     void setSubGhzFrequency(float freq) { subGhzFrequency = freq; }
 
+    // RFID (I2C PN532)
+    uint8_t getRfidSdaPin() const { return rfidSdaPin; }
+    uint8_t getRfidSclPin() const { return rfidSclPin; }
+
+    void setRfidSdaPin(uint8_t pin) { rfidSdaPin = pin; }
+    void setRfidSclPin(uint8_t pin) { rfidSclPin = pin; }
+
     // SD File Limits
     size_t getFileCountLimit() const { return fileCountLimit; }
     size_t getFileCacheLimit() const { return fileCacheLimit; }
@@ -517,6 +528,12 @@ public:
         #endif
         #ifdef SUBGHZ_GDO_PIN
             subGhzGdoPin = SUBGHZ_GDO_PIN;
+        #endif
+        #ifdef I2C_SCL_PIN
+            rfidSclPin = I2C_SCL_PIN;
+        #endif
+        #ifdef I2C_SDA_PIN
+            rfidSdaPin = I2C_SDA_PIN;
         #endif
         #ifdef PROTECTED_PINS
         {
