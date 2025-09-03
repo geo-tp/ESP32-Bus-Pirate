@@ -493,6 +493,14 @@ void UtilityController::handleHelp() {
     terminalView.println("  config               - Configure CC1101 settings");
 
     terminalView.println("");
+    terminalView.println(" 20. RFID:");
+    terminalView.println("  read                 - Read RFID tag data");
+    terminalView.println("  write                - Write UID/Block to tag");
+    terminalView.println("  clone                - Clone Mifare UID");
+    terminalView.println("  erase                - Erase RFID tag");
+    terminalView.println("  config               - Configure PN532 settings");
+
+    terminalView.println("");
     terminalView.println(" Instructions (available in most modes):");
     terminalView.println(" See documentation for instruction syntax.");
     terminalView.println("");
