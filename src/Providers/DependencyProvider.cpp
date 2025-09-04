@@ -48,6 +48,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       commandHistoryManager(),
       binaryAnalyzeManager(terminalView, terminalInput),
       userInputManager(terminalView, terminalInput, argTransformer),
+      subGhzAnalyzeManager(),
 
       // Shells
       sdCardShell(sdService, terminalView, terminalInput, argTransformer),
@@ -86,7 +87,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager),
       wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
-      subGhzController(terminalView, terminalInput, deviceView, subGhzService, argTransformer, userInputManager),
+      subGhzController(terminalView, terminalInput, deviceView, subGhzService, pinService, argTransformer, userInputManager, subGhzAnalyzeManager),
       rfidController(terminalView, terminalInput, rfidService, userInputManager, argTransformer),
       ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
 {
