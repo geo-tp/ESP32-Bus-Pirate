@@ -46,6 +46,7 @@ struct FrequencyActivity {
 
 class SubGhzAnalyzeManager {
 public:
+    enum class ModGuess { ASK_OOK, FSK_GFSK, NFM_FM, Unknown };
 
     // Analyse frame
     std::string analyzeFrame(const std::vector<rmt_item32_t>& items,
@@ -69,7 +70,8 @@ private:
                                 float avgDbm,
                                 float stddevDbm,
                                 float hitRatio,
-                                float confidence);
+                                float confidence,
+                                std::string mod);
 
     void   collectDurations(const std::vector<rmt_item32_t>& items, float tickPerUs,
                                    std::vector<uint32_t>& highs, std::vector<uint32_t>& lows);
@@ -84,6 +86,7 @@ private:
     // Decode
     bool   decodePT2262Like(float T, const std::vector<rmt_item32_t>& items, float tickPerUs,
                                    std::string& hexOut, int& bitCountOut);
+    std::pair<ModGuess, float>  decodeModulationRSSI(const std::vector<int>& samples);
 
     // Utils
     std::string bitsToHex(const std::string& bits);

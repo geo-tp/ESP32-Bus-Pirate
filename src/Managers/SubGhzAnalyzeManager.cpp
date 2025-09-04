@@ -125,6 +125,13 @@ std::string SubGhzAnalyzeManager::analyzeFrequencyActivity(
         conf *= 0.3f;                            // rare
     }
 
+    // Decode modulation
+    auto mod = decodeModulationRSSI(samples);
+    std::string modStr =
+        (mod.first == ModGuess::ASK_OOK)   ? "ASK/OOK" :
+        (mod.first == ModGuess::FSK_GFSK) ? "FSK/GFSK" :
+        (mod.first == ModGuess::NFM_FM)   ? "NFM/FM"   : "Unknown";
+
     // Bonus stable
     if (margin >= 15.f && hitRatio >= 0.60f && stddevDbm <= 3.0f) conf += 0.05f;
 
@@ -135,8 +142,9 @@ std::string SubGhzAnalyzeManager::analyzeFrequencyActivity(
 
     if (conf < 0.f) conf = 0.f;
     else if (conf > 1.f) conf = 1.f;
-    
-    return formatFrequency(peakDbm, hits, used, avgDbm, stddevDbm, hitRatio, conf);
+
+    auto formatted = formatFrequency(peakDbm, hits, used, avgDbm, stddevDbm, hitRatio, conf, modStr);
+    return formatted;
 }
 
 std::string SubGhzAnalyzeManager::formatFrequency(
@@ -146,7 +154,8 @@ std::string SubGhzAnalyzeManager::formatFrequency(
     float avgDbm,
     float stddevDbm,
     float hitRatio,
-    float confidence
+    float confidence,
+    std::string mod
 ) {
     std::ostringstream oss;
     oss << "peak=" << peakDbm << " dBm"
@@ -154,7 +163,8 @@ std::string SubGhzAnalyzeManager::formatFrequency(
         << "  conf=" << static_cast<int>(confidence * 100.f) << '%'
         << "  avg=" << static_cast<int>(std::lround(avgDbm)) << " dBm"
         << " (std=" << static_cast<int>(std::lround(stddevDbm)) << ")"
-        << "  hits=" << hits << '/' << windows;
+        << "  hits=" << hits << '/' << windows
+        << "  mod=" << mod;
     return oss.str();
 }
 
@@ -326,3 +336,93 @@ std::string SubGhzAnalyzeManager::bitsToHex(const std::string& bits) {
     return out;
 }
 
+std::pair<SubGhzAnalyzeManager::ModGuess, float>
+SubGhzAnalyzeManager::decodeModulationRSSI(const std::vector<int>& samples) {
+    if (samples.size() < 8) return {ModGuess::Unknown, 0.f};
+
+    // k means
+    int vmin = 127, vmax = -127;
+    for (size_t i = 0; i < samples.size(); ++i) {
+        int v = samples[i];
+        if (v < vmin) vmin = v;
+        if (v > vmax) vmax = v;
+    }
+
+    double c1 = vmin, c2 = vmax;
+    for (int it = 0; it < 6; ++it) {
+        double s1 = 0.0, s2 = 0.0; int n1 = 0, n2 = 0;
+        for (size_t i = 0; i < samples.size(); ++i) {
+            int v = samples[i];
+            if (std::fabs(v - c1) <= std::fabs(v - c2)) { s1 += v; ++n1; }
+            else                                         { s2 += v; ++n2; }
+        }
+        if (n1 > 0) c1 = s1 / n1;
+        if (n2 > 0) c2 = s2 / n2;
+    }
+
+    // Variances in clusters
+    double s1 = 0.0, s2 = 0.0; int n1 = 0, n2 = 0;
+    for (size_t i = 0; i < samples.size(); ++i) {
+        int v = samples[i];
+        if (std::fabs(v - c1) <= std::fabs(v - c2)) { s1 += (v - c1) * (v - c1); ++n1; }
+        else                                         { s2 += (v - c2) * (v - c2); ++n2; }
+    }
+    double v1 = (n1 > 1) ? (s1 / (n1 - 1)) : 1.0;
+    double v2 = (n2 > 1) ? (s2 / (n2 - 1)) : 1.0;
+
+    // Normalize
+    double sep = std::fabs(c1 - c2);
+    double sp  = std::sqrt(v1 + v2 + 1e-6);
+    double d   = (sp > 0.0) ? (sep / sp) : 0.0;
+
+    double p1 = (samples.empty() ? 0.0 : double(n1) / double(samples.size()));
+    double p2 = (samples.empty() ? 0.0 : double(n2) / double(samples.size()));
+    double pmin = (p1 < p2) ? p1 : p2;
+
+    // Global stats
+    double mean = 0.0;
+    for (size_t i = 0; i < samples.size(); ++i) mean += samples[i];
+    mean /= samples.size();
+
+    double var = 0.0;
+    for (size_t i = 0; i < samples.size(); ++i) {
+        double e = samples[i] - mean;
+        var += e * e;
+    }
+    var /= samples.size();
+    double sd = std::sqrt(var);
+
+    // ASK/OOK : bimodal
+    if (d >= 1.6 && pmin >= 0.15) {
+        double t = d / 3.0;
+        if (t < 0.0) t = 0.0;
+        if (t > 1.0) t = 1.0;
+        double score = t * (pmin / 0.5);
+        if (score < 0.0) score = 0.0;
+        if (score > 1.0) score = 1.0;
+        return {ModGuess::ASK_OOK, float(score)};
+    }
+
+    // FSK/GFSK : weak amplitude variation
+    if (sd <= 2.5 && d < 0.9) {
+        double t = (2.5 - sd) / 2.5;
+        if (t < 0.0) t = 0.0;
+        if (t > 1.0) t = 1.0;
+        return {ModGuess::FSK_GFSK, float(t)};
+    }
+
+    // NFM Moderate amplitude variation
+    if (sd >= 3.0 && sd <= 10.0 && d < 1.2) {
+        float sSd = float((sd - 3.0) / 7.0);   // 0..1
+        if (sSd < 0.0f) sSd = 0.0f; if (sSd > 1.0f) sSd = 1.0f;
+        float sD  = float((1.2 - d) / 1.2);    // 0..1
+        if (sD  < 0.0f) sD  = 0.0f; if (sD  > 1.0f) sD  = 1.0f;
+
+        float score = 0.85f * sSd + 0.15f * sD;
+        if (score < 0.0f) score = 0.0f;
+        if (score > 1.0f) score = 1.0f;
+        return {ModGuess::NFM_FM, score};
+    }
+
+    return {ModGuess::Unknown, 0.f};
+}
