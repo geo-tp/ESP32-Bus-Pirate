@@ -4,6 +4,8 @@
 
 It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI.
 
+There are also tools for communicating with radio protocols like Bluetooth, Wi-Fi, Sub-GHz, and RFID.
+
 ![Demo showing the different mode of the ESP32 Bus Pirate](images/demo12.gif)
 
 ## Features
@@ -25,7 +27,7 @@ It supports sniffing, sending, scripting, and interacting with various digital p
    - [LED](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/10-LED) (animations, set LEDs)
    - [I2S](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/16-I2S) (test speakers, mic, play sound)
    - [CAN](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/17-CAN) (sniff, send and receive frames)
-   - [SUBGHZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/19-SUBGHZ) (sniff, scan)
+   - [SUBGHZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/19-SUBGHZ) (sniff, scan, replay)
    - [RFID](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/20-RFID) (read, write, clone)
 
 
@@ -36,6 +38,7 @@ It supports sniffing, sending, scripting, and interacting with various digital p
 - Scripting using **Bus Pirate-style bytecode** instructions.
 - Device-B-Gone command with more than **80 supported INFRARED protocols**.
 - Direct I/O management, **PWM, servo**, pulse.
+- Analyze signals and frequencies **on every bands** for SubGhz.
 - Near than **50 addressable LEDs protocols** supported.
 - **Ethernet and WiFi** are supported to access networks.
 - Web interface with **live terminal**, or a classic **serial CLI**.
