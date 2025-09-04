@@ -405,7 +405,7 @@ void SubGhzController::handleTrace() {
     terminalView.println("\nSUBGHZ Trace: Displaying signals @ " + argTransformer.toFixed2(f) + " MHz on the ESP32 screen... Press [ENTER] to stop.\n");
 
     const uint8_t gdo = state.getSubGhzGdoPin();
-    uint32_t sampleUs = 200;
+    uint32_t sampleUs = 900;
 
     // Update device view
     deviceView.clear();
