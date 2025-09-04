@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <numeric>
+#include <sstream>
+#include <cctype>
 #include "Interfaces/ITerminalView.h"
 #include "Interfaces/IInput.h"
 #include "Interfaces/IDeviceView.h"
@@ -10,10 +12,11 @@
 #include "Models/ByteCode.h"
 #include "Transformers/ArgTransformer.h"
 #include "Managers/UserInputManager.h"
+#include "Managers/SubGhzAnalyzeManager.h"
 #include "States/GlobalState.h"
 #include "Services/SubGhzService.h"
-#include <sstream>
-#include <cctype>
+#include "Services/PinService.h"
+#include "Data/SubGhzProtocols.h"
 
 class SubGhzController {
 public:
@@ -21,14 +24,18 @@ public:
                      IInput& terminalInput,
                      IDeviceView& deviceView,
                      SubGhzService& subGhzService,
+                     PinService& pinService,
                      ArgTransformer& argTransformer,
-                     UserInputManager& userInputManager)
+                     UserInputManager& userInputManager,
+                     SubGhzAnalyzeManager& subGhzAnalyzeManager)
     : terminalView(terminalView),
       terminalInput(terminalInput),
       deviceView(deviceView),
       subGhzService(subGhzService),
+      pinService(pinService),
       argTransformer(argTransformer),
-      userInputManager(userInputManager) {}
+      userInputManager(userInputManager),
+      subGhzAnalyzeManager(subGhzAnalyzeManager) {}
 
     // Entry point for subghz commands
     void handleCommand(const TerminalCommand& cmd);
@@ -52,6 +59,21 @@ private:
     // Jam signals
     void handleJam(const TerminalCommand& cmd);
 
+    // Band Jam
+    void handleBandJam();
+
+    // Decode signals
+    void handleDecode(const TerminalCommand& cmd);
+
+    // Show signal trace
+    void handleTrace();
+
+    // Sweep and analyze signals
+    void handleSweep();
+
+    // Bruteforce attack
+    void handleBruteforce();
+
     // Configure CC1101
     void handleConfig();
 
@@ -63,8 +85,10 @@ private:
     IInput& terminalInput;
     IDeviceView& deviceView;
     SubGhzService& subGhzService;
+    PinService& pinService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    SubGhzAnalyzeManager& subGhzAnalyzeManager;
     GlobalState& state = GlobalState::getInstance();
 
     bool configured = false;

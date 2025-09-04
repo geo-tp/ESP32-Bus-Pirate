@@ -8,10 +8,14 @@ void SubGhzController::handleCommand(const TerminalCommand& cmd) {
 
     if (root == "sniff")             handleSniff(cmd);
     else if (root == "scan")         handleScan(cmd);
+    else if (root == "sweep")        handleSweep();
     else if (root == "setfrequency") handleSetFrequency();
     else if (root == "setfreq")      handleSetFrequency();
     else if (root == "replay")       handleReplay(cmd);
     else if (root == "jam")          handleJam(cmd);
+    else if (root == "bruteforce")   handleBruteforce();
+    else if (root == "decode")       handleDecode(cmd);
+    else if (root == "trace")        handleTrace();
     else if (root == "config")       handleConfig();
     else                             handleHelp();
 }
@@ -24,7 +28,7 @@ void SubGhzController::handleSniff(const TerminalCommand&) {
     uint32_t count = 0;
 
     if (!subGhzService.applySniffProfile(f)) {
-        terminalView.println("SUBGHZ: Not configured. Run 'config' first.");
+        terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
         return;
     }
     
@@ -66,7 +70,7 @@ void SubGhzController::handleScan(const TerminalCommand& cmd) {
 
     // Prepare the scan
     if (!subGhzService.applyScanProfile(4.8f, 200.0f, 2 /* OOK */, true)) {
-        terminalView.println("SUBGHZ: Not configured. Run 'config' first.");
+        terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
         return;
     }
 
@@ -168,7 +172,7 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
 
     // Set profile to read frames
     if (!subGhzService.applySniffProfile(f)) {
-        terminalView.println("SUBGHZ: Not configured. Run 'config' first.");
+        terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
         return;
     }
 
@@ -178,7 +182,7 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
         return;
     }
 
-    terminalView.println("SUBGHZ Replay: recording up to 64 frames @ " +
+    terminalView.println("SUBGHZ Replay: Recording up to 64 frames @ " +
                          std::to_string(f) + " MHz... Press [ENTER] to stop.\n");
 
     std::vector<std::vector<rmt_item32_t>> frames;
@@ -232,16 +236,41 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
     terminalView.println(okAll ? "SUBGHZ Replay Done without error.\n" : "SUBGHZ Replay: Done with errors.\n");
 }
 
+/*
+Jam
+*/
 void SubGhzController::handleJam(const TerminalCommand&) {
+    auto confirm = userInputManager.readYesNo("\nSUBGHZ Jam: This will transmit random signals. Continue?", false);
+    if (!confirm) return;
+
+    // confirm = userInputManager.readYesNo("Jam multiple frequencies?", true);
+    // if (confirm) {
+        handleBandJam();
+        return;
+    // }
+
+    // TODO
+}
+
+/*
+Band Jam
+*/
+void SubGhzController::handleBandJam() {
     // Select band
     auto bands = subGhzService.getSupportedBand();
-    int bandIndex = userInputManager.readValidatedChoiceIndex("Select frequency band:", bands, 0);
+    std::vector<std::string> bandsWithCustom = bands;
+
+    int bandIndex = userInputManager.readValidatedChoiceIndex(
+        "Select frequency band:", bandsWithCustom, 0
+    );
+
+    // Set band and get freqs
     subGhzService.setScanBand(bands[bandIndex]);
-    std::vector<float> freqs = subGhzService.getSupportedFreq(bands[bandIndex]);
+    auto freqs = subGhzService.getSupportedFreq(bands[bandIndex]);
 
     // Prompt for dwell and gap
     int dwellMs = userInputManager.readValidatedInt("Hold time per frequency (ms):", 5, 1, 10000);
-    int gapUs   = userInputManager.readValidatedInt("Gap between bursts (us):",      100, 0, 500000);
+    int gapUs   = userInputManager.readValidatedInt("Gap between bursts (us):",      1, 0, 500000);
 
     const uint8_t gdo = state.getSubGhzGdoPin();
 
@@ -289,6 +318,167 @@ void SubGhzController::handleJam(const TerminalCommand&) {
 
     subGhzService.tune(state.getSubGhzFrequency());
     terminalView.println("SUBGHZ Jam: Stopped by user.\n");
+}
+
+/*
+Decode
+*/
+void SubGhzController::handleDecode(const TerminalCommand&) {
+    float f = state.getSubGhzFrequency();
+
+    // Sniff profil
+    if (!subGhzService.applySniffProfile(f)) {
+        terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
+        return;
+    }
+
+    // Start sniffing
+    if (!subGhzService.startRawSniffer(state.getSubGhzGdoPin())) {
+        terminalView.println("\nFailed to start raw sniffer.\n");
+        return;
+    }
+
+    terminalView.println("SUBGHZ Decode: Listening @ " +
+                         std::to_string(f) + " MHz... Press [ENTER] to stop.\n");
+
+    std::vector<rmt_item32_t> frame;
+    bool stop = false;
+    while (!stop) {
+        // Cancel
+        char c = terminalInput.readChar();
+        if (c == '\n' || c == '\r') { stop = true; break; }
+
+        // Read and analyze frame
+        frame = subGhzService.readRawFrame();
+        if (!frame.empty()) {
+            auto result = subGhzAnalyzeManager.analyzeFrame(frame);
+            terminalView.println(result);
+        }
+    }
+
+    subGhzService.stopRawSniffer();
+    terminalView.println("SUBGHZ Decode: done.\n");
+}
+
+/*
+Trace
+*/
+void SubGhzController::handleTrace() {
+    const float f = state.getSubGhzFrequency();
+
+    // Sniff profile
+    if (!subGhzService.applySniffProfile(f)) {
+        terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
+        return;
+    }
+
+    terminalView.println("\nSUBGHZ Trace: Displaying signals @ " + argTransformer.toFixed2(f) + " MHz on the ESP32 screen... Press [ENTER] to stop.\n");
+
+    const uint8_t gdo = state.getSubGhzGdoPin();
+    uint32_t sampleUs = 50;
+
+    // Update device view
+    deviceView.clear();
+    deviceView.topBar("SubGHz Trace", false, false);
+
+    std::vector<uint8_t> buffer;
+    buffer.reserve(240); // screen width default
+
+    unsigned long lastPoll = millis();
+
+    // Samples loop
+    while (true) {
+        // Cancel
+        if (millis() - lastPoll >= 10) {
+            lastPoll = millis();
+            const char c = terminalInput.readChar();
+            if (c == '\n' || c == '\r') {
+                terminalView.println("SUBGHZ Trace: Stopped by user.\n");
+                break;
+            }
+        }
+
+        // Samples
+        buffer.push_back(pinService.read(gdo));
+
+        // Render
+        if (buffer.size() >= 240) {
+            buffer.resize(240);
+            deviceView.drawLogicTrace(gdo, buffer);
+            buffer.clear();
+        }
+
+        delayMicroseconds(sampleUs);
+    }
+}
+
+void SubGhzController::handleSweep() {
+    // Select band
+    auto bands = subGhzService.getSupportedBand();
+    int bandIndex = userInputManager.readValidatedChoiceIndex("Select frequency band:", bands, 0);
+    subGhzService.setScanBand(bands[bandIndex]);
+    std::vector<float> freqs = subGhzService.getSupportedFreq(bands[bandIndex]);
+    if (freqs.empty()) {
+        terminalView.println("SUBGHZ Sweep: No frequencies in selected band.");
+        return;
+    }
+
+    // Params
+    int dwellMs  = userInputManager.readValidatedInt("Hold time per frequency (ms)", 300, 20, 5000);
+    int windowMs = userInputManager.readValidatedInt("Window granularity (ms)",      20,  5,  200);
+    int thrDbm   = userInputManager.readValidatedInt("RSSI threshold (dBm)",        -67, -120, 0);
+
+    // Scan profile
+    if (!subGhzService.applyScanProfile(4.8f, 200.0f, 2 /* OOK */, true)) {
+        terminalView.println("SUBGHZ: Not configured. Run 'config' first.");
+        return;
+    }
+
+    terminalView.println("\nSUBGHZ Sweep: " + bands[bandIndex] +
+                         " | freqs=" + std::to_string(freqs.size()) +
+                         " | hold=" + std::to_string(dwellMs) + " ms" +
+                         " | window=" + std::to_string(windowMs) + " ms" +
+                         " | thr=" + std::to_string(thrDbm) + " dBm");
+    terminalView.println("Press [ENTER] to stop.\n");
+
+    struct Row { size_t idx; std::string line; };
+    std::vector<Row> rows;
+    rows.reserve(freqs.size());
+    bool run = true;
+
+    // Sweep and analyze each frequency
+    while (run) {
+        for (size_t i = 0; i < freqs.size() && run; ++i) {
+            // Cancel
+            char c = terminalInput.readChar();
+            if (c == '\n' || c == '\r') { run = false; break; }
+
+            // Tune
+            float f = freqs[i];
+            subGhzService.tune(f);
+
+            // Analyze
+            auto line = subGhzAnalyzeManager.analyzeFrequencyActivity(dwellMs, windowMs, thrDbm,
+                // measure(windowMs)
+                [&](int winMs){ return subGhzService.measurePeakRssi(winMs); },
+                // shouldAbort()
+                [&](){
+                    char cc = terminalInput.readChar();
+                    if (cc == '\n' || cc == '\r') { run = false; return true; }
+                    return false;
+                },
+                /*neighborLeftConf=*/0.f,
+                /*neighborRightConf=*/0.f
+            );
+
+            rows.push_back({i, line});
+
+            // Log result
+            terminalView.println("  " + argTransformer.toFixed2(f) + " MHz  " + line);
+        }
+    }
+
+    terminalView.println("SUBGHZ Sweep: Stopped by user.\n");
 }
 
 /*
@@ -342,6 +532,99 @@ void SubGhzController::handleConfig() {
     
 }
 
+void SubGhzController::handleBruteforce() {
+    // Adapted From Bruce: https://github.com/pr3y/Bruce
+    // Bruteforce attack for 12 Bit SubGHz protocols
+
+    auto gdo0 = state.getSubGhzGdoPin();
+    std::vector<std::string> protocolNames(
+        std::begin(subghz_protocol_list),
+        std::end(subghz_protocol_list)
+    );
+
+    // Prompt for protocol index
+    auto protocolIndex = userInputManager.readValidatedChoiceIndex("\nSelect protocol to brute force:", protocolNames, 0);
+    auto bruteProtocol = protocolNames[protocolIndex];
+
+    // Freq
+    float mhz = userInputManager.readValidatedFloat("Enter frequency (MHz):", 433.92f, 0.0f, 1000.0f);
+    state.setSubGhzFrequency(mhz);
+
+    // Profil TX + sender
+    if (!subGhzService.applyRawSendProfile(mhz)) {
+        terminalView.println("Failed to apply TX profile.");
+        return;
+    }
+
+    c_rf_protocol protocol;
+    int bits = 0;
+
+    // Protocol selection
+    if (bruteProtocol == " Nice 12 Bit") {
+        protocol = protocol_nice_flo();
+        bits = 12;
+    } else if (bruteProtocol == " Came 12 Bit") {
+        protocol = protocol_came();
+        bits = 12;
+    } else if (bruteProtocol == " Ansonic 12 Bit") {
+        protocol = protocol_ansonic();
+        bits = 12;
+    } else if (bruteProtocol == " Holtek 12 Bit") {
+        protocol = protocol_holtek();
+        bits = 12;
+    } else if (bruteProtocol == " Linear 12 Bit") {
+        protocol = protocol_linear();
+        bits = 12;
+    } else if (bruteProtocol == " Chamberlain 12 Bit") {
+        protocol = protocol_chamberlain();
+        bits = 12;
+    } else {
+        terminalView.println("SUBGHZ BruteForce: Protocol not implemented yet.");
+        return;
+    }
+
+    // Repeat
+    auto bruteRepeats = userInputManager.readValidatedUint8("Enter number of repeats per code:", 1);
+    subGhzService.setTxBitBang();
+
+    // Send all codes
+    terminalView.println("SUBGHZ BruteForce: Sending all codes for" + bruteProtocol + "... Press [ENTER] to stop.\n");
+    auto count = 0;
+    for (int i = 0; i < (1 << bits); ++i) {
+        for (int r = 0; r < bruteRepeats; ++r) {
+            for (const auto &pulse : protocol.pilot_period) { 
+                subGhzService.sendRawPulse(gdo0, pulse); 
+            }
+
+            for (int j = bits - 1; j >= 0; --j) {
+                bool bit = (i >> j) & 1;
+                const std::vector<int> &timings = protocol.transposition_table[bit ? '1' : '0'];
+                for (auto duration : timings) { 
+                    subGhzService.sendRawPulse(gdo0, duration); 
+                }
+            }
+
+            for (const auto &pulse : protocol.stop_bit) { subGhzService.sendRawPulse(gdo0, pulse); }
+            
+        }
+
+        // Display progress
+        count++;
+        if (count % 100 == 0) {
+            terminalView.println(" " + bruteProtocol + " @ " + argTransformer.toFixed2(mhz) + " MHz sent " + std::to_string(count) + " codes.");
+        }
+
+        // Cancel
+        char cc = terminalInput.readChar();
+        if (cc == '\n' || cc == '\r') {
+            terminalView.println("\nSUBGHZ BruteForce: Stopped by user.\n");
+            return;
+        }
+    }
+
+    terminalView.println("\nSUBGHZ Bruteforce: Done.\n");
+}
+
 /*
 Ensure SubGHz is configured
 */
@@ -367,7 +650,13 @@ Help
 void SubGhzController::handleHelp() {
     terminalView.println("SubGHz commands:");
     terminalView.println("  scan");
+    terminalView.println("  sweep");
     terminalView.println("  sniff");
+    terminalView.println("  decode");
+    terminalView.println("  replay");
+    terminalView.println("  jam");
+    terminalView.println("  bruteforce");
+    terminalView.println("  trace");
     terminalView.println("  setfrequency");
     terminalView.println("  config");
 }

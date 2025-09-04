@@ -487,10 +487,14 @@ void UtilityController::handleHelp() {
 
     terminalView.println("");
     terminalView.println(" 19. SUBGHZ:");
-    terminalView.println("  scan                 - Search frequencies");
+    terminalView.println("  scan                 - Search best frequencies");
     terminalView.println("  sniff                - Raw frame sniffing");
+    terminalView.println("  sweep                - Analyze frequency band");
+    terminalView.println("  decode               - Receive and decode frames");
     terminalView.println("  replay               - Record and replay frames");
     terminalView.println("  jam                  - Jam selected frequencies");
+    terminalView.println("  bruteforce           - Bruteforce 12 bit keys");
+    terminalView.println("  trace                - Observe RX signal trace");
     terminalView.println("  setfrequency         - Set operating frequency");
     terminalView.println("  config               - Configure CC1101 settings");
 
