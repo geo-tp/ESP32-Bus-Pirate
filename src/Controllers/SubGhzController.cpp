@@ -312,7 +312,7 @@ void SubGhzController::handleBandJam() {
             // Apply TX profile with freq
             if (!subGhzService.applyRawSendProfile(f)) {
                 terminalView.println("Failed to apply TX profile at " + argTransformer.toFixed2(f) + " MHz");
-                continue;
+                return;
             }
 
             unsigned long t0 = millis();
