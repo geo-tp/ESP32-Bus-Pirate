@@ -49,7 +49,7 @@ void SubGhzController::handleSniff(const TerminalCommand&) {
     }
     subGhzService.stopRawSniffer();
 
-    terminalView.println("\nSUBGHZ Sniff: Done. " + std::to_string(count) + " frames\n");
+    terminalView.println("\nSUBGHZ Sniff: Stopped by user. " + std::to_string(count) + " frames\n");
 }
 
 /*
@@ -387,7 +387,7 @@ void SubGhzController::handleDecode(const TerminalCommand&) {
     }
 
     subGhzService.stopRawSniffer();
-    terminalView.println("SUBGHZ Decode: done.\n");
+    terminalView.println("SUBGHZ Decode: Stopped by user.\n");
 }
 
 /*
@@ -467,19 +467,13 @@ void SubGhzController::handleSweep() {
         return;
     }
 
-    terminalView.println("\nSUBGHZ Sweep: " + bands[bandIndex] +
-                         " | freqs=" + std::to_string(freqs.size()) +
+    terminalView.println("\nSUBGHZ Sweep:" + bands[bandIndex] +
                          " | hold=" + std::to_string(dwellMs) + " ms" +
                          " | window=" + std::to_string(windowMs) + " ms" +
-                         " | thr=" + std::to_string(thrDbm) + " dBm");
-    terminalView.println("Press [ENTER] to stop.\n");
-
-    struct Row { size_t idx; std::string line; };
-    std::vector<Row> rows;
-    rows.reserve(freqs.size());
-    bool run = true;
-
+                         " | thr=" + std::to_string(thrDbm) + " dBm... Press [ENTER] to stop.\n");
+    
     // Sweep and analyze each frequency
+    bool run = true;
     while (run) {
         for (size_t i = 0; i < freqs.size() && run; ++i) {
             // Cancel
@@ -504,14 +498,12 @@ void SubGhzController::handleSweep() {
                 /*neighborRightConf=*/0.f
             );
 
-            rows.push_back({i, line});
-
             // Log result
             terminalView.println("  " + argTransformer.toFixed2(f) + " MHz  " + line);
         }
     }
 
-    terminalView.println("SUBGHZ Sweep: Stopped by user.\n");
+    terminalView.println("\nSUBGHZ Sweep: Stopped by user.\n");
 }
 
 /*
@@ -562,7 +554,6 @@ void SubGhzController::handleConfig() {
         terminalView.println("Use 'setfrequency' or 'scan' to change the frequency.\n");
         configured = true;
     }
-    
 }
 
 void SubGhzController::handleBruteforce() {
