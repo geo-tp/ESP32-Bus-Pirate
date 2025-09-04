@@ -201,13 +201,7 @@ bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items
     if (!isConfigured_ || items.empty()) return false;
 
     // Output
-    gpio_config_t io{};
-    io.pin_bit_mask = (1ULL << pin);
-    io.mode = GPIO_MODE_OUTPUT;
-    io.pull_up_en = GPIO_PULLUP_DISABLE;
-    io.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    io.intr_type = GPIO_INTR_DISABLE;
-    if (gpio_config(&io) != ESP_OK) return false;
+    if (!setTxBitBang()) return false;
 
     // tick to us
     auto ticks_to_us = [tick_per_us](uint32_t ticks) -> uint32_t {
@@ -231,6 +225,31 @@ bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items
     return true;
 }
 
+bool SubGhzService::setTxBitBang() {
+    if (!isConfigured_) return false;
+
+    gpio_config_t io{};
+    io.pin_bit_mask = (1ULL << gdo0_);
+    io.mode = GPIO_MODE_OUTPUT;
+    io.pull_up_en = GPIO_PULLUP_DISABLE;
+    io.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io.intr_type = GPIO_INTR_DISABLE;
+    return gpio_config(&io) == ESP_OK;
+}
+
+bool SubGhzService::sendRawPulse(int pin, int duration) {
+    if (!isConfigured_) return false;
+
+    if (duration < 0) {
+        gpio_set_level((gpio_num_t)pin, 0);
+        delayMicroseconds(-duration);
+    } else {
+        gpio_set_level((gpio_num_t)pin, 1);
+        delayMicroseconds(duration);
+    }
+    return true;
+}
+
 bool SubGhzService::sendRandomBurst(int pin)
 {
     if (!isConfigured_) return false;
@@ -240,13 +259,7 @@ bool SubGhzService::sendRandomBurst(int pin)
     constexpr int JITTER_PCT      = 30;    // around the mean
 
     // Config pin as output
-    gpio_config_t io{};
-    io.pin_bit_mask = (1ULL << pin);
-    io.mode = GPIO_MODE_OUTPUT;
-    io.pull_up_en = GPIO_PULLUP_DISABLE;
-    io.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    io.intr_type = GPIO_INTR_DISABLE;
-    if (gpio_config(&io) != ESP_OK) return false;
+    if (!setTxBitBang()) return false;
 
     // Calcul bornes jitter
     int j     = (MEAN_US * JITTER_PCT) / 100;

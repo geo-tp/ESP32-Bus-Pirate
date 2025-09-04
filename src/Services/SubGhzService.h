@@ -39,10 +39,12 @@ public:
     void stopRawSniffer();
 
     // Raw send
+    bool setTxBitBang();
     bool sendRawFrame(int pin,
                       const std::vector<rmt_item32_t>& items,
                       uint32_t tick_per_us = RMT_1US_TICKS);
     bool sendRandomBurst(int pin);
+    bool sendRawPulse(int pin, int duration);
 
     // Profiles
     bool applyDefaultProfile(float mhz = 433.92f);
