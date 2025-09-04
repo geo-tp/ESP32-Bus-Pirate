@@ -17,14 +17,26 @@ bool SubGhzService::configure(SPIClass& spi, uint8_t sck, uint8_t miso, uint8_t 
     paDbm_ = paDbm;
     ccMode_ = true;
 
+
+    // SPI instance
     #ifdef DEVICE_TEMBEDS3CC1101
 
     initTembed();
+    ELECHOUSE_cc1101.setSPIinstance(&spi);
+
+    #elif defined(DEVICE_M5STICK) || defined(DEVICE_CARDPUTER)
+
+    SPI.end();
+    delay(10);
+    ELECHOUSE_cc1101.setSPIinstance(&SPI);
+
+    #else
+
+    ELECHOUSE_cc1101.setSPIinstance(&spi);
 
     #endif
 
     // Initialize CC1101
-    ELECHOUSE_cc1101.setSPIinstance(&spi);
     ELECHOUSE_cc1101.setSpiPin(sck_, miso_, mosi_, ss_);
     ELECHOUSE_cc1101.setGDO0(gdo0_);
     ELECHOUSE_cc1101.Init();
