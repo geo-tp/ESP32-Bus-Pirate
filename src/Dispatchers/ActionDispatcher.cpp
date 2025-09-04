@@ -153,8 +153,8 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
             break;
     }
 
-   // Config was handled in specific mode, we need to rerender the pinout view
-   if (cmd.getRoot() == "config" || cmd.getRoot() == "setprotocol") {
+   // Handled in specific mode, we need to rerender the pinout view
+   if (cmd.getRoot() == "config" || cmd.getRoot() == "setprotocol" || cmd.getRoot() == "trace") {
         setCurrentMode(state.getCurrentMode());
    } 
 }
