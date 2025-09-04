@@ -243,13 +243,36 @@ void SubGhzController::handleJam(const TerminalCommand&) {
     auto confirm = userInputManager.readYesNo("\nSUBGHZ Jam: This will transmit random signals. Continue?", false);
     if (!confirm) return;
 
-    // confirm = userInputManager.readYesNo("Jam multiple frequencies?", true);
-    // if (confirm) {
+    confirm = userInputManager.readYesNo("Jam multiple frequencies?", true);
+    if (confirm) {
         handleBandJam();
         return;
-    // }
+    }
 
-    // TODO
+    float f = userInputManager.readValidatedFloat("Enter frequency to jam (MHz)", state.getSubGhzFrequency(), 0.0f, 1000.0f);
+    
+    // Apply TX profile with freq
+    if (!subGhzService.applyRawSendProfile(f)) {
+        terminalView.println("Failed to apply TX profile at " + argTransformer.toFixed2(f) + " MHz");
+        return;
+    }
+
+    terminalView.println("SUBGHZ Jam: In progress @ " + argTransformer.toFixed2(f) + " MHz... Press [ENTER] to stop.");
+    delay(5); // let display the message
+    
+    auto gdo = state.getSubGhzGdoPin();
+    while (true) {
+        // Stop
+        auto c = terminalInput.readChar();
+        if (c == '\n' || c == '\r') break;
+
+        // Jam
+        pinService.setHigh(gdo);
+        delayMicroseconds(30);
+        pinService.setLow(gdo);
+    }
+
+    terminalView.println("SUBGHZ Jam: Stopped by user.\n");
 }
 
 /*
@@ -301,6 +324,13 @@ void SubGhzController::handleBandJam() {
                 if (!subGhzService.sendRandomBurst(gdo)) {
                     terminalView.println("Send failed at " + argTransformer.toFixed2(f) + " MHz");
                     break;
+                }
+
+                // Jam
+                for (int i = 0; i < 64; i++) {
+                    pinService.setHigh(gdo);
+                    delayMicroseconds(30);
+                    pinService.setLow(gdo);
                 }
 
                 // Gap
@@ -375,7 +405,7 @@ void SubGhzController::handleTrace() {
     terminalView.println("\nSUBGHZ Trace: Displaying signals @ " + argTransformer.toFixed2(f) + " MHz on the ESP32 screen... Press [ENTER] to stop.\n");
 
     const uint8_t gdo = state.getSubGhzGdoPin();
-    uint32_t sampleUs = 50;
+    uint32_t sampleUs = 200;
 
     // Update device view
     deviceView.clear();
@@ -412,6 +442,9 @@ void SubGhzController::handleTrace() {
     }
 }
 
+/*
+Sweep
+*/
 void SubGhzController::handleSweep() {
     // Select band
     auto bands = subGhzService.getSupportedBand();
