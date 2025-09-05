@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 Bus Pirate - AtomS3 Lite",
+  "version": "0.8",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "https://github.com/geo-tp/ESP32-Bus-Pirate/releases/download/v0.8/bus_pirate_08_atomlites3.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
