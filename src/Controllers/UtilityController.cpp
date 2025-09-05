@@ -431,7 +431,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  spoof ap <mac>       - Spoof AP MAC");
     terminalView.println("  spoof sta <mac>      - Spoof Station MAC");
     terminalView.println("  status               - Show Wi-Fi status");
-    terminalView.println("  deauth <ssid>        - Deauthenticate hosts");
+    terminalView.println("  deauth [ssid]        - Deauthenticate hosts");
     terminalView.println("  disconnect           - Disconnect from Wi-Fi");
     terminalView.println("  ap <ssid> <password> - Set access point");
     terminalView.println("  ap spam              - Spam random beacons");

@@ -480,6 +480,7 @@ void WifiController::handleHelp()
     terminalView.println("  probe");
     terminalView.println("  spoof sta <mac>");
     terminalView.println("  spoof ap <mac>");
+    terminalView.println("  deauth [ssid]");
     terminalView.println("  status");
     terminalView.println("  disconnect");
     terminalView.println("  ap <ssid> <password>");
@@ -487,7 +488,6 @@ void WifiController::handleHelp()
     ANetworkController::handleHelp();
     terminalView.println("  webui");
     terminalView.println("  reset");
-    terminalView.println("  deauth <ssid>");
 }
 
 /*
@@ -507,18 +507,26 @@ Deauthenticate stations attack
 */
 void WifiController::handleDeauth(const TerminalCommand &cmd)
 {
+    if (!wifiService.isConnected())
+    {
+        terminalView.println("WiFi: Not connected. Use 'connect' first.");
+        return;
+    }
+    
     auto target = cmd.getSubcommand();
+    
+    // Select network if no target provided
+    if (target.empty()) {
+        terminalView.println("Wifi: Scanning for available networks...");
+        auto networks = wifiService.scanNetworks();
+        int selectedIndex = userInputManager.readValidatedChoiceIndex("\nSelect Wi-Fi network", networks, 0);
+        target = networks[selectedIndex];
+    }
 
     // if the SSID have space in name, e.g "Router Wifi"
     if (!cmd.getArgs().empty())
     {
         target += " " + cmd.getArgs();
-    }
-
-    if (target.empty())
-    {
-        terminalView.println("Usage: deauth <ssid>");
-        return;
     }
 
     terminalView.println("WiFi: Sending deauth to \"" + target + "\"...");
