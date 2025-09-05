@@ -94,6 +94,8 @@ The wiki is the best place to learn how everything works.
 
 ## Getting Started
 
+![ESP32 Bus Pirate web flasher](images/flasher.jpg)
+
 1. 🔧 Flash the firmware  
    - Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to burn the firmware directly from a web browser.
    - You can also burn it on [M5Burner](https://docs.m5stack.com/en/download), in the M5stick, AtomS3, M5StampS3 or Cardputer category.
