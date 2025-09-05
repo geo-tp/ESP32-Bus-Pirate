@@ -77,6 +77,13 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 
 ![A Seeed Studio Xiao ESP32-S3 micro controller](images/xiaos3.jpg)
 
+- **Other ESP32-S3-based Boards**
+
+  - All boards based on the **ESP32-S3 can be supported**, provided they have **8 MB of flash.**
+
+  - You can [**flash the DevKit firmware**](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) **onto any ESP32-S3 board.**
+
+  - Keep in mind that the **default pin mapping in the firmware may not match** your specific board.
 
 ## Wiki
 
