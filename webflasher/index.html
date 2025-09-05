@@ -47,12 +47,14 @@
     <h3>Tips</h3>
     <section class="tips-grid">
       <div class="tip-card"><h4>Cardputer</h4><p>Power off and unplug USB. Hold <b>G0</b> (upper-right), then plug USB while still holding.</p></div>
+      <div class="tip-card"><h4>Stamp-S3</h4><p>Press and hold the <b>BOOT</b> button <i>before</i> powering on or plugging in USB to enable flashing mode.</p></div>
       <div class="tip-card"><h4>Atom-S3 Lite</h4><p>Power on and press the </b>RESET</b> button for 3 seconds or until the LED blinks green.</p></div>
       <div class="tip-card"><h4>T-Embed</h4><p>Hold the encoder <b>center button</b>, then press <b>RESET</b>.<br>(CC1101 version: the button is next to the ESP32-S3.)</p></div>
       <div class="tip-card"><h4>S3-Dev-Kit</h4><p>Make sure to plug USB to the COM programming port, hold the <b>BOOT</b> button and power on.</p></div>
+      <div class="tip-card"><h4>Xiao-S3</h4><p>Press and hold the <b>BOOT</b> button <i>before</i> powering on or plugging in USB to enable flashing mode.</p></div>
+      <div class="tip-card"><h4>Other Boards</h4><p>If you have a different board based on the ESP32-S3, you can flash the <b>devkit</b> firmware on it.</p></div>
+      <div class="tip-card"><h4>Linux Users</h4><p>If flashing fails, run:<br><code>sudo setfacl -m u:$USER:rw /dev/ttyACM0</code><br>This grants access to the serial port.</p></div>
     </section>
-  </div>
-
   <!-- Wiki link -->
   <footer class="wiki-cta">
     <a href="https://github.com/geo-tp/ESP32-Bus-Pirate/wiki" target="_blank" rel="noopener">
