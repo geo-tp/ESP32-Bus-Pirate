@@ -6,7 +6,7 @@
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "https://github.com/geo-tp/ESP32-Bus-Pirate/releases/download/v0.8/bus_pirate_08_xiaos3.bin", "offset": 0 }
+        { "path": "./firmwares/bus_pirate_08_xiaos3.bin", "offset": 0 }
       ]
     }
   ]
