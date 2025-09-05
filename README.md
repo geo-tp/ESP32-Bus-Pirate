@@ -95,7 +95,7 @@ The wiki is the best place to learn how everything works.
 ## Getting Started
 
 1. 🔧 Flash the firmware  
-   - Download the latest release from the [Releases](https://github.com/geo-tp/ESP32-Bus-Pirate/releases) page, and flash it using your favorite tool (`esptool.py`, `PlatformIO`, etc.).
+   - Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to burn the firmware directly from a web browser.
    - You can also burn it on [M5Burner](https://docs.m5stack.com/en/download), in the M5stick, AtomS3, M5StampS3 or Cardputer category.
 
 2. 🔌 Connect via Serial or Web
@@ -111,21 +111,6 @@ The wiki is the best place to learn how everything works.
    ...
     ```
    See detailed explanations about [Terminal Commands](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) and how each one works.
-
-## Getting Started (for noobs)
-
-Don’t know how to flash firmware? Read this:
-
-1. **📥 Install [M5Burner](https://docs.m5stack.com/en/download),** Download M5Burner for your system (Windows/macOS/Linux). Open it after installation.
-
-2. **📂 Select the Firmware:** In M5Burner, go to the M5Stick, Cardputer, M5StampS3, or AtomS3 category. Find ESP32-Bus-Pirate in the list.
-
-3. **⚡ Click Flash:** Connect your device via USB. Hit the Flash button. Wait a few seconds… and done.
-
-![ESP32 Bus Pirate on M5Burner software](images/bus_pirate_m5burner.jpg)
-
-
-That’s it, no command line, no complicated tools, just 3 clicks and you’re ready to go. You can now [connect via Serial or WiFi](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal).
    
 ## ESP32 Bus Pirate on M5 Devices
 ![ESP32 Bus Pirate running on M5 Stack devices](images/m5buspirate_s.jpg)
