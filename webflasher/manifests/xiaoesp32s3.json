@@ -6,7 +6,7 @@
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "./firmwares/bus_pirate_08_xiaos3.bin", "offset": 0 }
+        { "path": "https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/firmwares/bus_pirate_08_xiaos3.bin", "offset": 0 }
       ]
     }
   ]

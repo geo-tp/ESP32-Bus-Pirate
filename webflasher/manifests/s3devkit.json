@@ -6,7 +6,7 @@
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "https://github.com/geo-tp/ESP32-Bus-Pirate/releases/download/v0.8/bus_pirate_08_s3devkit.bin", "offset": 0 }
+        { "path": "https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/firmwares/bus_pirate_08_s3devkit.bin", "offset": 0 }
       ]
     }
   ]
