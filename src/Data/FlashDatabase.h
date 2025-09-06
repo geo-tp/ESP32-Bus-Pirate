@@ -64,6 +64,9 @@ static constexpr FlashChipInfo flashDatabase[] = {
 
     // Zetta
     {0x1C, 0x30, 0x17, "Zetta",  "ZB25Q64", 8UL << 20},
+    
+    // Boya microelectronics
+    {0x68, 0x40, 0x17, "Boya", "BY25Q64AS", 8UL << 20},
 };
 
 static constexpr size_t flashDatabaseSize = sizeof(flashDatabase)/sizeof(flashDatabase[0]);
