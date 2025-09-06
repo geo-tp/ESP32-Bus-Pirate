@@ -114,7 +114,7 @@ void setup() {
             WebTerminalView webView(wsServer);
             WebTerminalInput webInput(wsServer);
             deviceView.loading();
-            delay(5000); // let the server begin
+            delay(6000); // let the server begin
             
             // Setup routes for index and ws
             httpServer.setupRoutes();

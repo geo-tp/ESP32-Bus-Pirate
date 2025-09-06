@@ -43,7 +43,7 @@ bool setupS3Wifi() {
 
     WiFi.begin(ssid.c_str(), password.c_str());
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 15; ++i) {
         if (WiFi.status() == WL_CONNECTED) {
             leds[0] = CRGB::Green;
             FastLED.show();
