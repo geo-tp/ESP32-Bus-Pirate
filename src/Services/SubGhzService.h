@@ -39,7 +39,8 @@ public:
     void stopRawSniffer();
 
     // Raw send
-    bool setTxBitBang();
+    bool startTxBitBang();
+    bool stopTxBitBang();
     bool sendRawFrame(int pin,
                       const std::vector<rmt_item32_t>& items,
                       uint32_t tick_per_us = RMT_1US_TICKS);

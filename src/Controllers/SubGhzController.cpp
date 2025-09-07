@@ -609,7 +609,7 @@ void SubGhzController::handleBruteforce() {
 
     // Repeat
     auto bruteRepeats = userInputManager.readValidatedUint8("Enter number of repeats per code:", 1);
-    subGhzService.setTxBitBang();
+    subGhzService.startTxBitBang();
 
     // Send all codes
     terminalView.println("SUBGHZ BruteForce: Sending all codes for" + bruteProtocol + "... Press [ENTER] to stop.\n");
@@ -642,10 +642,12 @@ void SubGhzController::handleBruteforce() {
         char cc = terminalInput.readChar();
         if (cc == '\n' || cc == '\r') {
             terminalView.println("\nSUBGHZ BruteForce: Stopped by user.\n");
+            subGhzService.stopTxBitBang();
             return;
         }
     }
 
+    subGhzService.stopTxBitBang();
     terminalView.println("\nSUBGHZ Bruteforce: Done.\n");
 }
 

@@ -213,7 +213,7 @@ bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items
     if (!isConfigured_ || items.empty()) return false;
 
     // Output
-    if (!setTxBitBang()) return false;
+    if (!startTxBitBang()) return false;
 
     // tick to us
     auto ticks_to_us = [tick_per_us](uint32_t ticks) -> uint32_t {
@@ -237,7 +237,7 @@ bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items
     return true;
 }
 
-bool SubGhzService::setTxBitBang() {
+bool SubGhzService::startTxBitBang() {
     if (!isConfigured_) return false;
 
     gpio_config_t io{};
@@ -246,6 +246,24 @@ bool SubGhzService::setTxBitBang() {
     io.pull_up_en = GPIO_PULLUP_DISABLE;
     io.pull_down_en = GPIO_PULLDOWN_DISABLE;
     io.intr_type = GPIO_INTR_DISABLE;
+    return gpio_config(&io) == ESP_OK;
+}
+
+bool SubGhzService::stopTxBitBang() {
+    if (!isConfigured_) return false;
+
+    // Force low
+    gpio_set_direction((gpio_num_t)gdo0_, GPIO_MODE_OUTPUT);
+    gpio_set_level((gpio_num_t)gdo0_, 0);
+    delay(1);
+
+    // Reset to input
+    gpio_config_t io{};
+    io.pin_bit_mask  = (1ULL << gdo0_);
+    io.mode          = GPIO_MODE_INPUT; 
+    io.pull_up_en    = GPIO_PULLUP_DISABLE;
+    io.pull_down_en  = GPIO_PULLDOWN_ENABLE;
+    io.intr_type     = GPIO_INTR_DISABLE;
     return gpio_config(&io) == ESP_OK;
 }
 
@@ -271,7 +289,7 @@ bool SubGhzService::sendRandomBurst(int pin)
     constexpr int JITTER_PCT      = 30;    // around the mean
 
     // Config pin as output
-    if (!setTxBitBang()) return false;
+    if (!startTxBitBang()) return false;
 
     // Calcul bornes jitter
     int j     = (MEAN_US * JITTER_PCT) / 100;
