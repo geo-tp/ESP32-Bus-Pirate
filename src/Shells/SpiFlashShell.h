@@ -30,9 +30,10 @@ private:
         " 📜 Extract strings",
         " 📖 Read bytes",
         " ✏️  Write bytes",
-        " 🗃️  Dump Flash",
+        " 🗃️  Dump ASCII",
+        " 🗃️  Dump RAW",
         " 💣 Erase Flash",
-        " 🚪 Exit Shell"
+        "🚪 Exit Shell"
     };
 
     SpiService& spiService;
@@ -50,7 +51,9 @@ private:
     void cmdRead();
     void cmdWrite();
     void cmdErase();
-    void cmdDump();
+    void cmdDump(bool raw = false);
     void readFlashInChunks(uint32_t address, uint32_t length);
+    void readFlashInChunksRaw(uint32_t address, uint32_t length);
+    uint32_t readFlashCapacity();
     bool checkFlashPresent();
 };

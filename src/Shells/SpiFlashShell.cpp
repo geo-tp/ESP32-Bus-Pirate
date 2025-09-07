@@ -26,7 +26,7 @@ void SpiFlashShell::run() {
         int index = userInputManager.readValidatedChoiceIndex("Select a SPI Flash action", actions, 0);
 
         // Quit
-        if (index == -1 || actions[index] == " 🚪 Exit Shell") {
+        if (index == -1 || actions[index] == "🚪 Exit Shell") {
             terminalView.println("Exiting SPI Flash Shell...\n");
             break;
         }
@@ -40,7 +40,8 @@ void SpiFlashShell::run() {
             case 4: cmdRead();    break;
             case 5: cmdWrite();   break;
             case 6: cmdDump();    break;
-            case 7: cmdErase();   break;
+            case 7: cmdDump(true); break;
+            case 8: cmdErase();   break;
             default:
                 terminalView.println("Unknown action.\n");
                 break;
@@ -327,20 +328,6 @@ void SpiFlashShell::readFlashInChunks(uint32_t address, uint32_t length) {
     uint32_t remaining = length;
     uint32_t currentAddr = address;
 
-    // Verify flash capacity
-    uint8_t id[3];
-    spiService.readFlashIdRaw(id);
-    const FlashChipInfo* chip = findFlashInfo(id[0], id[1], id[2]);
-    uint32_t flashCapacity = 0;
-    if (chip) {
-        flashCapacity = chip->capacityBytes;
-    } else {
-        flashCapacity = spiService.calculateFlashCapacity(id[2]);
-        std::stringstream capStr;
-        capStr << "Estimated capacity from ID: " << (flashCapacity >> 20) << " MB";
-        terminalView.println(capStr.str());
-    }
-
     // Display chunks
     while (remaining > 0) {
         uint32_t chunkSize = (remaining > 1024) ? 1024 : remaining;
@@ -383,6 +370,40 @@ void SpiFlashShell::readFlashInChunks(uint32_t address, uint32_t length) {
         currentAddr += chunkSize;
         remaining -= chunkSize;
     }
+}
+
+void SpiFlashShell::readFlashInChunksRaw(uint32_t address, uint32_t length) {
+    uint8_t buffer[1024];
+    uint32_t remaining = length;
+    uint32_t current   = address;
+
+    while (remaining > 0) {
+        uint32_t n = (remaining > sizeof(buffer)) ? sizeof(buffer) : remaining;
+        spiService.readFlashData(current, buffer, n);
+        for (uint32_t i = 0; i < n; ++i) {
+            terminalView.print(buffer[i]);
+        }
+        current   += n;
+        remaining -= n;
+    }
+}
+
+uint32_t SpiFlashShell::readFlashCapacity() {
+    // Verify flash capacity
+    uint8_t id[3];
+    spiService.readFlashIdRaw(id);
+    const FlashChipInfo* chip = findFlashInfo(id[0], id[1], id[2]);
+    uint32_t flashCapacity = 0;
+    if (chip) {
+        flashCapacity = chip->capacityBytes;
+    } else {
+        flashCapacity = spiService.calculateFlashCapacity(id[2]);
+        std::stringstream capStr;
+        capStr << "Estimated capacity from ID: " << (flashCapacity >> 20) << " MB";
+        terminalView.println(capStr.str());
+    }
+
+    return flashCapacity;   
 }
 
 /*
@@ -445,24 +466,9 @@ void SpiFlashShell::cmdErase() {
         return;
     }
 
-    // Get infos about the chip
-    uint8_t id[3];
-    spiService.readFlashIdRaw(id);
-    const FlashChipInfo* chip = findFlashInfo(id[0], id[1], id[2]);
     uint32_t freq = state.getSpiFrequency();
     const uint32_t sectorSize = 4096; // standard
-    uint32_t flashSize = 0;
-    
-    // Known
-    if (chip) {
-        flashSize = chip->capacityBytes;
-        terminalView.println("Flash: " + std::string(chip->modelName));
-    // Unknown
-    } else {
-        flashSize = spiService.calculateFlashCapacity(id[2]);
-        terminalView.println("Erasing unknown flash chip.");
-    }
-    terminalView.println("Capacity: " + std::to_string(flashSize >> 20) + " MB");
+    uint32_t flashSize = readFlashCapacity();
 
     // Erase sectors and display progression
     const uint32_t totalSectors = flashSize / sectorSize;
@@ -481,19 +487,22 @@ void SpiFlashShell::cmdErase() {
 /*
 Flash Dump
 */
-void SpiFlashShell::cmdDump() {
+void SpiFlashShell::cmdDump(bool raw) {
     if (!checkFlashPresent()) return;
 
     terminalView.println("\nSPI Flash: Full dump from 0x000000... Press [ENTER] to stop.\n");
 
-    // Obtenir la capacité
-    uint8_t id[3];
-    spiService.readFlashIdRaw(id);
-    const FlashChipInfo* chip = findFlashInfo(id[0], id[1], id[2]);
-    uint32_t flashSize = chip ? chip->capacityBytes : spiService.calculateFlashCapacity(id[2]);
+    if (raw) {
+        auto confirm = userInputManager.readYesNo("The raw mode is for python scripting, Continue?", false);
+        if (!confirm) return;
+    }
 
-    // Lecture par morceaux
-    readFlashInChunks(0, flashSize);
+    // Get flash size
+    uint32_t flashSize = readFlashCapacity();
+
+    // Chunk read
+    if (raw) readFlashInChunksRaw(0, flashSize); 
+    else readFlashInChunks(0, flashSize);
 
     terminalView.println("\nSPI Flash Dump: Done.\n");
 }
