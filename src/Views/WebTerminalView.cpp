@@ -14,6 +14,10 @@ void WebTerminalView::print(const std::string& text) {
     server.sendText(text);
 }
 
+void WebTerminalView::print(const uint8_t data) {
+    server.sendText(std::to_string(data)); // Convert byte to string
+}
+
 void WebTerminalView::println(const std::string& text) {
     server.sendText(text + "\n");
 }

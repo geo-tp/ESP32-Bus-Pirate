@@ -11,6 +11,7 @@ public:
     void initialize() override;
     void welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) override;
     void print(const std::string& text) override;
+    void print(const uint8_t data) override;
     void println(const std::string& text) override;
     void printPrompt(const std::string& mode) override;
     void clear() override;

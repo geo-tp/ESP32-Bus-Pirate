@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <Enums/TerminalTypeEnum.h>
 
 class ITerminalView {
@@ -14,6 +15,7 @@ public:
 
     // Print to the terminal
     virtual void print(const std::string& text) = 0;
+    virtual void print(const uint8_t data) = 0;
     virtual void println(const std::string& text) = 0;
     virtual void printPrompt(const std::string& mode = "HIZ") = 0;
 

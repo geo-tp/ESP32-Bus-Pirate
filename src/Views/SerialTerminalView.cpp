@@ -30,6 +30,10 @@ void SerialTerminalView::print(const std::string& text) {
     Serial.print(text.c_str());
 }
 
+void SerialTerminalView::print(const uint8_t data) {
+    Serial.write(data);
+}
+
 void SerialTerminalView::println(const std::string& text) {
     Serial.println(text.c_str());
 }
