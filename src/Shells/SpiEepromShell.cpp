@@ -64,8 +64,9 @@ void SpiEepromShell::run() {
             case 1: cmdAnalyze(); break;
             case 2: cmdRead();  break;
             case 3: cmdWrite(); break;
-            case 4: cmdDump();  break; 
-            case 5: cmdErase(); break; 
+            case 4: cmdDump();  break;
+            case 5: cmdDump(true); break;
+            case 6: cmdErase(); break;
             default:
                 terminalView.println("Unknown action.");
                 break;
@@ -146,35 +147,49 @@ void SpiEepromShell::cmdWrite() {
     }
 }
 
-void SpiEepromShell::cmdDump() {
+void SpiEepromShell::cmdDump(bool raw) {
     terminalView.println("\n🗃️ EEPROM Dump: Reading entire memory...");
 
+    if (raw) {
+        auto confirm = userInputManager.readYesNo("The raw dump is for python scripts. Continue?", false);
+        if (!confirm) return;
+    }
+
     const uint32_t totalSize = eepromSize;
-    const uint32_t lineSize = 16;
+    const uint32_t lineSize  = 16;
     uint8_t buffer[lineSize];
 
     for (uint32_t addr = 0; addr < totalSize; addr += lineSize) {
-        // Read line
+        // Read
         bool ok = spiService.readEepromBuffer(addr, buffer, lineSize);
         if (!ok) {
-            terminalView.println("\n ❌ Read failed at 0x" + argTransformer.toHex(addr, 6));
+            if (!raw) {
+                terminalView.println("\n ❌ Read failed at 0x" + argTransformer.toHex(addr, 6));
+            }
             return;
         }
 
-        // Format and print line
-        std::vector<uint8_t> line(buffer, buffer + lineSize);
-        std::string formattedLine = argTransformer.toAsciiLine(addr, line);
-        terminalView.println(formattedLine);
+        if (raw) {
+            // Mode RAW
+            for (uint32_t i = 0; i < lineSize; i++) terminalView.print(buffer[i]);
+        } else {
+            // Mode ASCII 
+            std::vector<uint8_t> line(buffer, buffer + lineSize);
+            std::string formattedLine = argTransformer.toAsciiLine(addr, line);
+            terminalView.println(formattedLine);
 
-        // Quit
-        char c = terminalInput.readChar();
-        if (c == '\r' || c == '\n') {
-            terminalView.println("\n ❌ Dump cancelled by user.");
-            return;
+            // Cancel
+            char c = terminalInput.readChar();
+            if (c == '\r' || c == '\n') {
+                terminalView.println("\n ❌ Dump cancelled by user.");
+                return;
+            }
         }
     }
 
-    terminalView.println("\n ✅ EEPROM Dump Done.");
+    if (!raw) {
+        terminalView.println("\n ✅ EEPROM Dump Done.");
+    }
 }
 
 void SpiEepromShell::cmdErase() {
