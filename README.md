@@ -1,5 +1,8 @@
 # ESP32 Bus Pirate
 
+![ESP32 Bus Pirate Firmware](images/bus_pirate_firmware.png)
+
+
 **ESP32 Bus Pirate** is an open-source firmware that turns your device into a multi-protocol hacker's tool, inspired by the [legendary Bus Pirate](https://buspirate.com/).
 
 It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It can also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz, and RFID.
@@ -120,6 +123,16 @@ The wiki is the best place to learn how everything works.
    ...
     ```
    See detailed explanations about [Terminal Commands](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) and how each one works.
+
+## Scripting
+
+![ESP32 Bus Pirate scripts](images/bus_pirate_scripts.png)
+
+You can automate interactions with the ESP32 Bus Pirate using **Python scripts over serial.**
+
+**Examples and ready-to-use scripts** are available in the repository: [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts).
+
+**Including:** Logging data in a file, eeprom and flash dump, interracting with GPIOs, LED animation...
    
 ## ESP32 Bus Pirate on M5 Devices
 ![ESP32 Bus Pirate running on M5 Stack devices](images/m5buspirate_s.jpg)
