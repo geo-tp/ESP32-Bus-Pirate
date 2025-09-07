@@ -506,13 +506,7 @@ void WifiController::ensureConfigured()
 Deauthenticate stations attack
 */
 void WifiController::handleDeauth(const TerminalCommand &cmd)
-{
-    if (!wifiService.isConnected())
-    {
-        terminalView.println("WiFi: Not connected. Use 'connect' first.");
-        return;
-    }
-    
+{   
     auto target = cmd.getSubcommand();
     
     // Select network if no target provided
