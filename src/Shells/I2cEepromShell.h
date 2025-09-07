@@ -27,7 +27,8 @@ private:
         " 📊 Analyze",
         " 📖 Read bytes",
         " ✏️  Write bytes",
-        " 🗃️  Dump EEPROM",
+        " 🗃️  Dump ASCII",
+        " 🗃️  Dump RAW",
         " 💣 Erase EEPROM",
         " 🚪 Exit Shell"
     };
@@ -69,6 +70,6 @@ private:
     void cmdAnalyze();
     void cmdRead();
     void cmdWrite();
-    void cmdDump();
+    void cmdDump(bool raw = false);
     void cmdErase();
 };

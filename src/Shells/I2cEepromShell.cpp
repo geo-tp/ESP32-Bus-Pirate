@@ -49,7 +49,8 @@ void I2cEepromShell::run(uint8_t addr) {
             case 2: cmdRead(); break;
             case 3: cmdWrite(); break;
             case 4: cmdDump(); break;
-            case 5: cmdErase(); break;
+            case 5: cmdDump(true); break;
+            case 6: cmdErase(); break;
         }
     }
 }
@@ -147,21 +148,40 @@ void I2cEepromShell::cmdWrite() {
     terminalView.println("\n✅ Data written.");
 }
 
-void I2cEepromShell::cmdDump() {
+void I2cEepromShell::cmdDump(bool raw) {
     uint32_t addr = 0;
     uint32_t count = i2cService.eepromLength();
 
-    terminalView.println("");
+    if (raw) {
+        auto confirm = userInputManager.readYesNo("The raw mode is for python scripting, Continue?", false);
+        if (!confirm) return;
+    }
 
     const uint8_t bytesPerLine = 16;
-    for (uint32_t i = 0; i < count; i += bytesPerLine) {
-        std::vector<uint8_t> line;
-        for (uint8_t j = 0; j < bytesPerLine && (i + j) < count; ++j) {
-            line.push_back(i2cService.eepromReadByte(addr + i + j));
-        }
 
-        std::string formatted = argTransformer.toAsciiLine(addr + i, line);
-        terminalView.println(formatted);
+    if (raw) {
+        // Mode RAW
+        for (uint32_t i = 0; i < count; ++i) {
+            uint8_t value = i2cService.eepromReadByte(addr + i);
+            terminalView.print(value); 
+        }
+    } else {
+        // Mode HEX/ASCII
+        terminalView.println("");
+        for (uint32_t i = 0; i < count; i += bytesPerLine) {
+            std::vector<uint8_t> line;
+            for (uint8_t j = 0; j < bytesPerLine && (i + j) < count; ++j) {
+                line.push_back(i2cService.eepromReadByte(addr + i + j));
+
+                char c = terminalInput.readChar();
+                if (c == '\n' || c == '\r') {
+                    terminalView.println("\n❌ Dump interrupted by user.");
+                    return;
+                }
+            }
+            std::string formatted = argTransformer.toAsciiLine(addr + i, line);
+            terminalView.println(formatted);
+        }
     }
 }
 
