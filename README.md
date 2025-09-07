@@ -7,7 +7,7 @@
 
 It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It can also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz, and RFID.
 
-Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click, and see the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command.
+Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click. See the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command. See [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts) for a collection of scripts.
 
 ![Demo showing the different mode of the ESP32 Bus Pirate](images/demo12.gif)
 
@@ -126,7 +126,7 @@ The wiki is the best place to learn how everything works.
 
 ## Scripting
 
-![ESP32 Bus Pirate scripts](images/bus_pirate_scripts.png)
+![ESP32 Bus Pirate Scripts](images/bus_pirate_scripts.png)
 
 You can automate interactions with the ESP32 Bus Pirate using **Python scripts over serial.**
 
