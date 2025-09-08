@@ -555,7 +555,7 @@ public:
         #ifdef I2C_SDA_PIN
             rfidSdaPin = I2C_SDA_PIN;
         #endif
-        #ifdef SUBGHZ_CS_PIN;
+        #ifdef SUBGHZ_CS_PIN
             rf24CsnPin = SUBGHZ_CS_PIN;
         #endif
         #ifdef SUBGHZ_GDO_PIN
@@ -570,7 +570,7 @@ public:
         #ifdef SUBGHZ_SI_PIN
             rf24MosiPin = SUBGHZ_SI_PIN;
         #endif
-        
+
         #ifdef PROTECTED_PINS
         {
             protectedPins.clear();
