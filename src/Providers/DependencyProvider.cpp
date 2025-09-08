@@ -36,6 +36,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       modbusService(),
       subGhzService(),
       rfidService(),
+      rf24Service(),
 
       // Transformers
       commandTransformer(),
@@ -89,6 +90,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
       subGhzController(terminalView, terminalInput, deviceView, subGhzService, pinService, argTransformer, userInputManager, subGhzAnalyzeManager),
       rfidController(terminalView, terminalInput, rfidService, userInputManager, argTransformer),
+      rf24Controller(terminalView, terminalInput, deviceView, rf24Service, pinService, argTransformer, userInputManager),
       ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
 {
 }
@@ -126,6 +128,7 @@ SystemService &DependencyProvider::getSystemService() { return systemService; }
 EthernetService &DependencyProvider::getEthernetService() { return ethernetService; }
 SubGhzService &DependencyProvider::getSubGhzService() { return subGhzService; }
 RfidService &DependencyProvider::getRfidService() { return rfidService; }
+Rf24Service &DependencyProvider::getRf24Service() { return rf24Service; }
 
 // Controllers
 UartController &DependencyProvider::getUartController() { return uartController; }
@@ -148,6 +151,7 @@ CanController &DependencyProvider::getCanController() { return canController; }
 EthernetController &DependencyProvider::getEthernetController() { return ethernetController; }
 SubGhzController &DependencyProvider::getSubGhzController() { return subGhzController; }
 RfidController &DependencyProvider::getRfidController() { return rfidController; }
+Rf24Controller &DependencyProvider::getRf24Controller() { return rf24Controller; }
 
 // Transformers
 TerminalCommandTransformer &DependencyProvider::getCommandTransformer() { return commandTransformer; }

@@ -37,6 +37,7 @@ and injecting shared instances of core components
 #include "Services/ModbusService.h"
 #include "Services/SubGhzService.h"
 #include "Services/RfidService.h"
+#include "Services/Rf24Service.h"
 #include "Controllers/UartController.h"
 #include "Controllers/I2cController.h"
 #include "Controllers/OneWireController.h"
@@ -57,6 +58,7 @@ and injecting shared instances of core components
 #include "Controllers/SubGhzController.h"
 #include "Controllers/EthernetController.h"
 #include "Controllers/RfidController.h"
+#include "Controllers/Rf24Controller.h"
 #include "Transformers/TerminalCommandTransformer.h"
 #include "Transformers/InstructionTransformer.h"
 #include "Transformers/ArgTransformer.h"
@@ -125,6 +127,7 @@ public:
     ModbusService &getModbusService();
     SubGhzService &getSubGhzService();
     RfidService &getRfidService();
+    Rf24Service &getRf24Service();
 
     // Controllers
     UartController &getUartController();
@@ -147,6 +150,7 @@ public:
     EthernetController &getEthernetController();
     SubGhzController &getSubGhzController();
     RfidController &getRfidController();
+    Rf24Controller &getRf24Controller();
 
     // Transformers
     TerminalCommandTransformer &getCommandTransformer();
@@ -223,6 +227,7 @@ private:
     ModbusService modbusService;
     SubGhzService subGhzService;
     RfidService rfidService;
+    Rf24Service rf24Service;
 
     // Controllers
     UartController uartController;
@@ -244,6 +249,7 @@ private:
     EthernetController ethernetController;
     SubGhzController subGhzController;
     RfidController rfidController;
+    Rf24Controller rf24Controller;
 
     // Transformers
     TerminalCommandTransformer commandTransformer;
