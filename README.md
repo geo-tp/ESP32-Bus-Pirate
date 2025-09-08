@@ -5,7 +5,7 @@
 
 **ESP32 Bus Pirate** is an open-source firmware that turns your device into a multi-protocol hacker's tool, inspired by the [legendary Bus Pirate](https://buspirate.com/).
 
-It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It can also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz, and RFID.
+It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It can also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz, RFID.
 
 Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click. See the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command. See [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts) for a collection of scripts.
 
@@ -32,16 +32,17 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
    - [CAN](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/17-CAN) (sniff, send and receive frames)
    - [SUBGHZ](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/19-SUBGHZ) (sniff, scan, replay)
    - [RFID](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/20-RFID) (read, write, clone)
+   - [RF24](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/21-RF24) (scan, sniff)
 
 
 - **Protocol sniffers** for I2C, Wi-Fi, Bluetooth, 1Wire, 2wire, CAN, SubGhz.
 - Baudrate **auto-detection**, AT commands and various tools for UART.
 - Registers manipulation, **eeprom dump tools**, identify devices for I2C.
 - Read all sort of **EEPROM, Flash** and various others tools for SPI.
-- Scripting using **Bus Pirate-style bytecode** instructions.
+- Scripting using **Bus Pirate-style bytecode** instructions or **Python**.
 - Device-B-Gone command with more than **80 supported INFRARED protocols**.
 - Direct I/O management, **PWM, servo**, pulse.
-- Analyze signals and frequencies **on every bands** for SubGhz.
+- Analyze radio signals and frequencies **on every bands**.
 - Near than **50 addressable LEDs protocols** supported.
 - **Ethernet and WiFi** are supported to access networks.
 - Web interface with **live terminal**, or a classic **serial CLI**.
