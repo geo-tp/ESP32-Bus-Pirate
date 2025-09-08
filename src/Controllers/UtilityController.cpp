@@ -510,6 +510,7 @@ void UtilityController::handleHelp() {
     terminalView.println(" 21. RF24:");
     terminalView.println("  scan                 - Search best active channels");
     terminalView.println("  sniff                - Sniff raw frames");
+    terminalView.println("  jam                  - Jam selected channels group");
     terminalView.println("  setchannel           - Set operating channel");
     terminalView.println("  config               - Configure NRF24 settings");
 
