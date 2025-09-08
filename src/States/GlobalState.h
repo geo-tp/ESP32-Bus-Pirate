@@ -135,6 +135,13 @@ private:
     uint8_t subGhzModulation = 2; // 0=FSK, 1=OOK, 2=ASK
     uint32_t subGhzBandwidth = 125000; // 125 kHz
 
+    // NRF24 Default Configuration
+    uint8_t rf24CsnPin = 1;
+    uint8_t rf24CePin = 3;
+    uint8_t rf24SckPin = 5;
+    uint8_t rf24MisoPin = 7;
+    uint8_t rf24MosiPin = 9;
+
     // RFID (I2C PN532)
     uint8_t rfidSdaPin = 1;
     uint8_t rfidSclPin = 2;
@@ -359,6 +366,19 @@ public:
     void setSubGhzGdoPin(uint8_t pin) { subGhzGdoPin = pin; }
     void setSubGhzFrequency(float freq) { subGhzFrequency = freq; }
 
+    // NRF24
+    uint8_t getRf24CsnPin() const { return rf24CsnPin; }
+    uint8_t getRf24CePin() const { return rf24CePin; }
+    uint8_t getRf24SckPin() const { return rf24SckPin; }
+    uint8_t getRf24MisoPin() const { return rf24MisoPin; }
+    uint8_t getRf24MosiPin() const { return rf24MosiPin; }
+
+    void setRf24CsnPin(uint8_t pin) { rf24CsnPin = pin; }
+    void setRf24CePin(uint8_t pin) { rf24CePin = pin; }
+    void setRf24SckPin(uint8_t pin) { rf24SckPin = pin; }
+    void setRf24MisoPin(uint8_t pin) { rf24MisoPin = pin; }
+    void setRf24MosiPin(uint8_t pin) { rf24MosiPin = pin; }
+
     // RFID (I2C PN532)
     uint8_t getRfidSdaPin() const { return rfidSdaPin; }
     uint8_t getRfidSclPin() const { return rfidSclPin; }
@@ -535,6 +555,22 @@ public:
         #ifdef I2C_SDA_PIN
             rfidSdaPin = I2C_SDA_PIN;
         #endif
+        #ifdef SUBGHZ_CS_PIN;
+            rf24CsnPin = SUBGHZ_CS_PIN;
+        #endif
+        #ifdef SUBGHZ_GDO_PIN
+            rf24CePin = SUBGHZ_GDO_PIN;
+        #endif
+        #ifdef SUBGHZ_SCK_PIN
+            rf24SckPin = SUBGHZ_SCK_PIN;
+        #endif
+        #ifdef SUBGHZ_SO_PIN
+            rf24MisoPin = SUBGHZ_SO_PIN;
+        #endif
+        #ifdef SUBGHZ_SI_PIN
+            rf24MosiPin = SUBGHZ_SI_PIN;
+        #endif
+        
         #ifdef PROTECTED_PINS
         {
             protectedPins.clear();
