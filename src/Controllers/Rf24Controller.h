@@ -12,6 +12,7 @@
 #include "States/GlobalState.h"
 #include "Services/Rf24Service.h"
 #include "Services/PinService.h"
+#include "Data/Rf24Channels.h"
 
 class Rf24Controller {
 public:
@@ -41,6 +42,7 @@ private:
     void handleConfig();
     void handleSniff(); 
     void handleScan();
+    void handleJam();
     void handleSetChannel();
     void handleHelp();
 

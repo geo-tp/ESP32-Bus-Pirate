@@ -10,6 +10,7 @@ void Rf24Controller::handleCommand(const TerminalCommand& cmd) {
     else if (root == "config")     handleConfig();
     else if (root == "sniff")      handleSniff();
     else if (root == "scan")       handleScan();
+    else if (root == "jam")        handleJam();
     else if (root == "setchannel") handleSetChannel();
     else                           handleHelp();
 }
@@ -151,6 +152,62 @@ void Rf24Controller::handleScan() {
     }
 }
 
+/*
+Jam
+*/
+void Rf24Controller::handleJam() {
+    auto confirm = userInputManager.readYesNo("RF24 Jam: This will transmit random signals. Continue?", false);
+    if (!confirm) return;
+
+    // List of group names
+    std::vector<std::string> groupNames;
+    groupNames.reserve(RF24_GROUP_COUNT);
+    for (size_t i = 0; i < RF24_GROUP_COUNT; ++i) groupNames.emplace_back(RF24_GROUPS[i].name);
+    groupNames.emplace_back("Full range (0..125)");
+
+    // Select group
+    int choice = userInputManager.readValidatedChoiceIndex("Select band to jam:", groupNames, 0);
+
+    // Get group
+    const Rf24ChannelGroup* group = nullptr;
+    if (choice >= (int)RF24_GROUP_COUNT) {
+        // Full range
+        uint8_t fullRangeChannels[126];
+        for (uint8_t i = 0; i <= 125; ++i) fullRangeChannels[i] = i;
+        static const Rf24ChannelGroup fullRangeGroup = {
+            " Full range",
+            fullRangeChannels,
+            126
+        };
+        group = &fullRangeGroup;
+    } else {
+        group = &RF24_GROUPS[choice];
+    }
+    
+    terminalView.println("\nRF24: Sweeping noise on channels... Press [ENTER] to stop.");
+
+    rf24Service.stopListening();
+    rf24Service.setDataRate(RF24_2MBPS);
+    rf24Service.powerUp();
+    rf24Service.setPowerMax();
+
+    // Jam loop
+    bool run = true;
+    while (run) {
+        for (size_t i = 0; i < group->count; ++i) {
+            // Cancel
+            int k = terminalInput.readChar();
+            if (k == '\n' || k == '\r') { run = false; break; }
+
+            // Sweep
+            rf24Service.setChannel(group->channels[i]);
+        }
+    }
+
+    rf24Service.flushTx();
+    rf24Service.powerDown();
+    terminalView.println("RF24: Jam stopped by user.\n");
+}
 
 /*
 Set Channel
@@ -189,6 +246,7 @@ void Rf24Controller::handleHelp() {
     terminalView.println("RF24 commands:");
     terminalView.println("  scan");
     terminalView.println("  sniff");
+    terminalView.println("  jam");
     terminalView.println("  setchannel");
     terminalView.println("  config");
 }
