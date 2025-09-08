@@ -507,6 +507,13 @@ void UtilityController::handleHelp() {
     terminalView.println("  config               - Configure PN532 settings");
 
     terminalView.println("");
+    terminalView.println(" 21. RF24:");
+    terminalView.println("  scan                 - Search best active channels");
+    terminalView.println("  sniff                - Sniff raw frames");
+    terminalView.println("  setchannel           - Set operating channel");
+    terminalView.println("  config               - Configure NRF24 settings");
+
+    terminalView.println("");
     terminalView.println(" Instructions (available in most modes):");
     terminalView.println(" See documentation for instruction syntax.");
     terminalView.println("");

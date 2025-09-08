@@ -548,7 +548,7 @@ void SubGhzController::handleConfig() {
 
     // CC1101 feedback
     if (!isConfigured) {
-        terminalView.println("\nFailed to detect CC1101 module. Check wiring.\n");
+        terminalView.println("\n ❌ Failed to detect CC1101 module. Check wiring.\n");
     } else {
         terminalView.println("\n[INFO] For SubGHz features, use **USB Serial** connection.");
         terminalView.println("       It offers lower latency and more reliable logging.");
@@ -557,8 +557,8 @@ void SubGhzController::handleConfig() {
         // Apply settings
         subGhzService.tune(freq);
         subGhzService.applyScanProfile();
-        terminalView.println("CC1101 module detected and configured with default frequency.");
-        terminalView.println("Use 'setfrequency' or 'scan' to change the frequency.\n");
+        terminalView.println(" ✅ CC1101 module detected and configured with default frequency.");
+        terminalView.println(" Use 'setfrequency' or 'scan' to change the frequency.\n");
         configured = true;
     }
 }
