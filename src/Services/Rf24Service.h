@@ -22,11 +22,12 @@ public:
     // Base
     void setChannel(uint8_t channel);              // 0..125
     uint8_t getChannel();
-    void setPowerLevel(rf24_pa_dbm_e level);       // RF24_PA_MIN .. RF24_PA_MAX
     void setDataRate(rf24_datarate_e rate);        // RF24_250KBPS, RF24_1MBPS, RF24_2MBPS
     void setCrcLength(rf24_crclength_e length);    // RF24_CRC_DISABLED, RF24_CRC_8, RF24_CRC_16
     void powerUp();
-    void powerDown();
+    void powerDown(bool hard = false);
+    void setPowerLevel(rf24_pa_dbm_e level);       // RF24_PA_MIN .. RF24_PA_MAX
+    void setPowerMax();
 
     // Communication
     void openWritingPipe(const uint64_t address);  

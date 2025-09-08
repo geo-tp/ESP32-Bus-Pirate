@@ -47,9 +47,35 @@ uint8_t Rf24Service::getChannel() {
     return 0;
 }
 
+void Rf24Service::powerUp() {
+    if (isInitialized) {
+        radio_->powerUp();
+    }
+}
+
+void Rf24Service::powerDown(bool hard) {
+    if (!isInitialized) {
+        return;
+    }
+
+    if (hard) {
+        radio_->powerDown();
+        return;
+    }
+    
+    radio_->stopConstCarrier();
+}
+
 void Rf24Service::setPowerLevel(rf24_pa_dbm_e level) {
     if (isInitialized) {
         radio_->setPALevel(level);
+    }
+}
+
+void Rf24Service::setPowerMax() {
+    if (isInitialized) {
+        radio_->setPALevel(RF24_PA_MAX);
+        radio_->startConstCarrier(RF24_PA_MAX, 45);
     }
 }
 
@@ -91,9 +117,7 @@ void Rf24Service::openReadingPipe(uint8_t number, uint64_t address) {
 
 bool Rf24Service::send(const void* buf, uint8_t len) {
     if (!isInitialized) return false;
-    radio_->stopListening();
     bool ok = radio_->write(buf, len);
-    radio_->startListening();
     return ok;
 }
 
