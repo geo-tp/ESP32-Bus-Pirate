@@ -151,6 +151,9 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
         case ModeEnum::RFID:
             provider.getRfidController().handleCommand(cmd);
             break;
+        case ModeEnum::RF24_:
+            provider.getRf24Controller().handleCommand(cmd);
+            break;
     }
 
    // Handled in specific mode, we need to rerender the pinout view
@@ -472,6 +475,16 @@ void ActionDispatcher::setCurrentMode(ModeEnum newMode) {
             config.setMappings({
                 "RFID SDA GPIO " + std::to_string(state.getRfidSdaPin()),
                 "RFID SCL GPIO " + std::to_string(state.getRfidSclPin())
+            });
+            break;
+
+        case ModeEnum::RF24_:
+            provider.getRf24Controller().ensureConfigured();
+            config.setMappings({
+                "CE GPIO " + std::to_string(state.getRf24CePin()),
+                "CSN GPIO " + std::to_string(state.getRf24CsnPin()),
+                "SCK GPIO " + std::to_string(state.getRf24SckPin()),
+                "MOSI GPIO " + std::to_string(state.getRf24MosiPin())
             });
             break;
     }
