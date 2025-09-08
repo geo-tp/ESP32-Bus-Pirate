@@ -27,6 +27,7 @@ enum class ModeEnum {
     ETHERNET,
     SUBGHZ,
     RFID,
+    RF24_,
     COUNT
 };
 
@@ -54,7 +55,8 @@ public:
             {ModeEnum::CAN_,        "CAN"},
             {ModeEnum::ETHERNET,   "ETHERNET"},
             {ModeEnum::SUBGHZ,     "SUBGHZ"},
-            {ModeEnum::RFID,       "RFID"}
+            {ModeEnum::RFID,       "RFID"},
+            {ModeEnum::RF24_,       "RF24"}
         };
 
         auto it = map.find(proto);
@@ -90,7 +92,8 @@ public:
             {"CAN",        ModeEnum::CAN_},
             {"ETHERNET",   ModeEnum::ETHERNET},
             {"SUBGHZ",     ModeEnum::SUBGHZ},
-            {"RFID",       ModeEnum::RFID}
+            {"RFID",       ModeEnum::RFID},
+            {"RF24",       ModeEnum::RF24_}
         };
 
         std::string upper;
