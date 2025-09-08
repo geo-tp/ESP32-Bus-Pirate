@@ -153,6 +153,7 @@ void SubGhzService::stopRawSniffer() {
     rmt_rx_stop(RMT_RX_CHANNEL);
     rmt_driver_uninstall(RMT_RX_CHANNEL);
     rb_ = nullptr;
+    ELECHOUSE_cc1101.setSidle();
 }
 
 std::vector<std::string> SubGhzService::readRawPulses() {
@@ -264,6 +265,9 @@ bool SubGhzService::stopTxBitBang() {
     io.pull_up_en    = GPIO_PULLUP_DISABLE;
     io.pull_down_en  = GPIO_PULLDOWN_ENABLE;
     io.intr_type     = GPIO_INTR_DISABLE;
+
+    ELECHOUSE_cc1101.setSidle();
+
     return gpio_config(&io) == ESP_OK;
 }
 
@@ -287,9 +291,6 @@ bool SubGhzService::sendRandomBurst(int pin)
     constexpr int ITEMS_PER_BURST = 256;   // Number of items
     constexpr int MEAN_US         = 200;   // Mean duration in µs per phase
     constexpr int JITTER_PCT      = 30;    // around the mean
-
-    // Config pin as output
-    if (!startTxBitBang()) return false;
 
     // Calcul bornes jitter
     int j     = (MEAN_US * JITTER_PCT) / 100;
@@ -330,7 +331,7 @@ bool SubGhzService::applyScanProfile(float dataRateKbps,
                                   bool packetMode)
 {
     if (!isConfigured_) return false;
-
+    ELECHOUSE_cc1101.setSidle();
     ELECHOUSE_cc1101.setCCMode(packetMode ? 0 : 1);
     ELECHOUSE_cc1101.setModulation(modulation);
     ELECHOUSE_cc1101.setDRate(dataRateKbps);
@@ -348,6 +349,7 @@ bool SubGhzService::applyScanProfile(float dataRateKbps,
 
 bool SubGhzService::applyDefaultProfile(float mhz) {
     if (!isConfigured_) return false;
+    ELECHOUSE_cc1101.setSidle();
     ELECHOUSE_cc1101.setPktFormat(0);   // PKT_FORMAT=0 (packet mode normal)
     ELECHOUSE_cc1101.setLengthConfig(1);// 1 = variable length
     ELECHOUSE_cc1101.setPacketLength(0xFF);
@@ -368,6 +370,7 @@ bool SubGhzService::applyDefaultProfile(float mhz) {
 bool SubGhzService::applySniffProfile(float mhz) {
     if (!isConfigured_) return false;
     // CC1101 en "raw/async" OOK
+    ELECHOUSE_cc1101.setSidle();
     ELECHOUSE_cc1101.setMHZ(mhz);
     ELECHOUSE_cc1101.setModulation(2);      // 2 = ASK/OOK
     ELECHOUSE_cc1101.setDRate(50);         // 50 kbps
@@ -384,7 +387,7 @@ bool SubGhzService::applySniffProfile(float mhz) {
 
 bool SubGhzService::applyRawSendProfile(float mhz) {
     if (!isConfigured_) return false;
-
+    ELECHOUSE_cc1101.setSidle();
     ELECHOUSE_cc1101.setMHZ(mhz);
     ELECHOUSE_cc1101.setModulation(2);   // OOK/ASK
     ELECHOUSE_cc1101.setDRate(50);
@@ -395,7 +398,7 @@ bool SubGhzService::applyRawSendProfile(float mhz) {
     ELECHOUSE_cc1101.setAdrChk(0);
     ELECHOUSE_cc1101.setDcFilterOff(true);
     ELECHOUSE_cc1101.setPktFormat(3);    // ASYNC SERIAL MODE (GDO0 = data)
-    ELECHOUSE_cc1101.SetTx(mhz_);
+    ELECHOUSE_cc1101.SetTx();
     return true;
 }
 

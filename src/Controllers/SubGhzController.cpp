@@ -234,6 +234,7 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
     }
 
     terminalView.println(okAll ? "SUBGHZ Replay Done without error.\n" : "SUBGHZ Replay: Done with errors.\n");
+    subGhzService.stopTxBitBang(); // ensure stopped
 }
 
 /*
@@ -261,6 +262,7 @@ void SubGhzController::handleJam(const TerminalCommand&) {
     delay(5); // let display the message
     
     auto gdo = state.getSubGhzGdoPin();
+    subGhzService.startTxBitBang();
     while (true) {
         // Stop
         auto c = terminalInput.readChar();
@@ -272,6 +274,7 @@ void SubGhzController::handleJam(const TerminalCommand&) {
         pinService.setLow(gdo);
     }
 
+    subGhzService.stopTxBitBang();
     terminalView.println("SUBGHZ Jam: Stopped by user.\n");
 }
 
@@ -302,6 +305,8 @@ void SubGhzController::handleBandJam() {
                          ", Hold=" + std::to_string(dwellMs) + " ms\n");
 
     bool stop = false;
+    subGhzService.startTxBitBang();
+
     while (!stop) {
         for (size_t i = 0; i < freqs.size() && !stop; ++i) {
             // Cancel
@@ -312,6 +317,7 @@ void SubGhzController::handleBandJam() {
             // Apply TX profile with freq
             if (!subGhzService.applyRawSendProfile(f)) {
                 terminalView.println("Failed to apply TX profile at " + argTransformer.toFixed2(f) + " MHz");
+                subGhzService.stopTxBitBang();
                 return;
             }
 
@@ -346,6 +352,7 @@ void SubGhzController::handleBandJam() {
         }
     }
 
+    subGhzService.stopTxBitBang();
     subGhzService.tune(state.getSubGhzFrequency());
     terminalView.println("SUBGHZ Jam: Stopped by user.\n");
 }
