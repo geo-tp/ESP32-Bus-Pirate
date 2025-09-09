@@ -34,7 +34,7 @@ public:
     // Entry point for rf24 commands
     void handleCommand(const TerminalCommand& cmd);
 
-    // Ensure RF24 is configured before use
+    // Ensure NRF24 is configured before use
     void ensureConfigured();
 
 private:
@@ -43,6 +43,7 @@ private:
     void handleSniff(); 
     void handleScan();
     void handleJam();
+    void handleSweep();
     void handleSetChannel();
     void handleHelp();
 

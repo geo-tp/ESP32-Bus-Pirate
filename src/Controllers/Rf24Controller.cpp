@@ -10,6 +10,7 @@ void Rf24Controller::handleCommand(const TerminalCommand& cmd) {
     else if (root == "config")     handleConfig();
     else if (root == "sniff")      handleSniff();
     else if (root == "scan")       handleScan();
+    else if (root == "sweep")      handleSweep();
     else if (root == "jam")        handleJam();
     else if (root == "setchannel") handleSetChannel();
     else                           handleHelp();
@@ -31,7 +32,6 @@ void Rf24Controller::ensureConfigured() {
     uint8_t miso = state.getRf24MisoPin();
     uint8_t mosi = state.getRf24MosiPin();
     rf24Service.configure(csn, ce, sck, miso, mosi);
-
 }
 
 /*
@@ -86,7 +86,7 @@ void Rf24Controller::handleScan() {
     uint8_t bestVal = 0;
     const uint8_t DECAY = 6;  // decay per sweep
     
-    terminalView.println("RF24: Scanning ch 0..125… Press [ENTER] to stop.\n");
+    terminalView.println("RF24: Scanning channel 0 to 125... Press [ENTER] to stop.\n");
     
     rf24Service.initRx();
     while (true) {
@@ -207,6 +207,62 @@ void Rf24Controller::handleJam() {
     rf24Service.flushTx();
     rf24Service.powerDown();
     terminalView.println("RF24: Jam stopped by user.\n");
+}
+
+/*
+Sweep
+*/
+void Rf24Controller::handleSweep() {
+    // Params
+    int dwellMs  = userInputManager.readValidatedInt("Hold time per channel (ms)", 10, 10, 1000);
+    int samples  = userInputManager.readValidatedInt("Samples per channel", 80, 1, 100);
+    int thrPct   = userInputManager.readValidatedInt("Activity threshold (%)", 1, 0, 100);
+
+    terminalView.println("\nRF24 Sweep: channels 0–125"
+                         " | hold=" + std::to_string(dwellMs) + " ms"
+                         " | samples=" + std::to_string(samples) +
+                         " | thr=" + std::to_string(thrPct) + "%... Press [ENTER] to stop.\n");
+
+    bool run = true;
+    while (run) {
+        for (int ch = 0; ch <= 125 && run; ++ch) {
+            // Cancel
+            char c = terminalInput.readChar();
+            if (c == '\n' || c == '\r') { run = false; break; }
+
+            rf24Service.setChannel(static_cast<uint8_t>(ch));
+
+            // Analyze activity
+            int hits = 0;
+            for (int s = 0; s < samples; ++s) {
+                rf24Service.startListening();
+                delayMicroseconds((dwellMs * 1000) / samples);
+                rf24Service.stopListening();
+                if (rf24Service.testRpd()) {
+                    hits += 2;
+                }
+
+                if  (rf24Service.testCarrier()) {
+                    hits++;
+                }
+            }
+
+            int activityPct = (hits * 100) / samples;
+            if (activityPct > 100) activityPct = 100;
+
+            // Log if above threshold
+            if (activityPct >= thrPct) {
+                terminalView.println(
+                    "  Channel " + std::to_string(ch) + " (" +
+                    std::to_string(2400 + ch) + " MHz)" +
+                    "  activity=" + std::to_string(activityPct) + "%"
+                );
+            }
+        }
+    }
+
+    rf24Service.flushRx();
+    terminalView.println("\nRF24 Sweep: Stopped by user.\n");
 }
 
 /*
