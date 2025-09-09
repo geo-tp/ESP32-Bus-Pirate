@@ -4,22 +4,7 @@
 #include <vector>
 #include "Transformers/ArgTransformer.h"
 #include "Services/ICMPService.h"
-
-struct NmapOptions {
-    bool tcp = true;        // -t sets TCP only (default)
-    bool udp = false;       // -u sets UDP only
-    int verbosity = 0;      // -v/-vv
-    bool hasPort = false;   // Did user pass `-p` ?
-    std::string ports;      // "80", "22,80-90"
-    bool hasTrash = false;  // Did user pass non-option tokens?
-    bool help = false;      // -h or --help
-    bool pingOnly = false;  // -sn
-};
-
-enum class Layer4Protocol {
-    TCP,
-    UDP
-};
+#include "Data/NmapUtils.h"
 
 class NmapService {
 public:
