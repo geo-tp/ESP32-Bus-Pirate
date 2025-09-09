@@ -487,7 +487,7 @@ void UtilityController::handleHelp() {
 
     terminalView.println("");
     terminalView.println(" 19. SUBGHZ:");
-    terminalView.println("  scan                 - Search best frequencies");
+    terminalView.println("  scan                 - Search best frequency");
     terminalView.println("  sniff                - Raw frame sniffing");
     terminalView.println("  sweep                - Analyze frequency band");
     terminalView.println("  decode               - Receive and decode frames");
@@ -508,8 +508,9 @@ void UtilityController::handleHelp() {
 
     terminalView.println("");
     terminalView.println(" 21. RF24:");
-    terminalView.println("  scan                 - Search best active channels");
+    terminalView.println("  scan                 - Search best active channel");
     terminalView.println("  sniff                - Sniff raw frames");
+    terminalView.println("  sweep                - Analyze channels activity");
     terminalView.println("  jam                  - Jam selected channels group");
     terminalView.println("  setchannel           - Set operating channel");
     terminalView.println("  config               - Configure NRF24 settings");

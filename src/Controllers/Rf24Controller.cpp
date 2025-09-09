@@ -302,6 +302,7 @@ void Rf24Controller::handleHelp() {
     terminalView.println("RF24 commands:");
     terminalView.println("  scan");
     terminalView.println("  sniff");
+    terminalView.println("  sweep");
     terminalView.println("  jam");
     terminalView.println("  setchannel");
     terminalView.println("  config");
