@@ -268,13 +268,8 @@ void SpiService::startSlave(int sclk, int miso, int mosi, int cs) {
     spiSlave.setUserPostTransCbAndArg(slaveTransactionCallback, nullptr);
     spiSlave.begin(FSPI, sclk, miso, mosi, cs);
     
-    // if (!slaveConfigured) {
-        // First launch then it loops until slave is true
-        spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
-        spiSlave.trigger();
-    // }
-    
-    slaveConfigured = true;
+    spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
+    spiSlave.trigger();    
 }
 
 void SpiService::stopSlave(int sclk, int miso, int mosi, int cs) {

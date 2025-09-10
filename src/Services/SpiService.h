@@ -59,7 +59,6 @@ public:
 private:
     uint8_t csPin;
     uint32_t spiFrequency = 1000000;
-    bool slaveConfigured = false;
     EEPROM_SPI_WE eeprom = EEPROM_SPI_WE(&SPI, SPI_CS_PIN, 999, 8000000);
     bool eepromInitialized = false;
     uint32_t eepromFrequency = 8000000;
