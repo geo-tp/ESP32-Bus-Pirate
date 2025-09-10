@@ -109,8 +109,11 @@ void SpiController::handleSlave() {
             terminalView.println(ss.str());
         }
     }
+    terminalView.println("\nSPI Slave: Stopping... Please wait.");
     spiService.stopSlave(sclk, miso, mosi, cs);
-    terminalView.println("\nSPI Slave: Stopped by user.\n");
+    spiService.end();
+    spiService.configure(mosi, miso, sclk, cs, state.getSpiFrequency());
+    terminalView.println("SPI Slave: Stopped by user.\n");
 }
 
 /*
