@@ -255,12 +255,6 @@ void IRAM_ATTR slaveTransactionCallback(spi_slave_transaction_t* trans, void* ar
         // Limit
         if (slaveBuffer.size() > 100) slaveBuffer.pop_front();
     }
-
-    // Relaunch
-    if (slave) {
-        spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
-        spiSlave.trigger();
-    }
 }
 
 void SpiService::startSlave(int sclk, int miso, int mosi, int cs) {
@@ -273,19 +267,21 @@ void SpiService::startSlave(int sclk, int miso, int mosi, int cs) {
         spiSlave.setUserPostTransCbAndArg(slaveTransactionCallback, nullptr);
         spiSlave.begin(FSPI, sclk, miso, mosi, cs);
         slaveConfigured = true;
+
+        // First launch then it loops until slave is true
+        spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
+        spiSlave.trigger();
     }
 
-    // First launch then it loops until slave is true
-    spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
-    spiSlave.trigger();
 }
 
 void SpiService::stopSlave(int sclk, int miso, int mosi, int cs) {
     slave = false;
+    delay(100);
     slaveBuffer.clear();
     memset(slave_rx_buf, 0, SLAVE_BUFFER_SIZE);
     memset(slave_tx_buf, 0, SLAVE_BUFFER_SIZE);
-    //Calling spiSlave.end() and then reallocate it cause crashes
+    // spiSlave.end(); // and then reallocate it cause crashes
 }
 
 bool SpiService::isSlave() const {
@@ -293,10 +289,23 @@ bool SpiService::isSlave() const {
 }
 
 std::vector<std::vector<uint8_t>> SpiService::getSlaveData() {
-    std::lock_guard<std::mutex> lock(slaveBufferMutex);
-    std::vector<std::vector<uint8_t>> data(slaveBuffer.begin(), slaveBuffer.end());
-    slaveBuffer.clear();
-    return data;
+    std::vector<std::vector<uint8_t>> out;
+
+    if (spiSlave.hasTransactionsCompletedAndAllResultsReady(1)) {
+        size_t receivedBytes = spiSlave.numBytesReceived();
+        if (receivedBytes > SLAVE_BUFFER_SIZE) receivedBytes = SLAVE_BUFFER_SIZE;
+
+        if (receivedBytes > 0) {
+            out.emplace_back(slave_rx_buf, slave_rx_buf + receivedBytes);
+        }
+
+        // relaunch
+        memset(slave_rx_buf, 0, SLAVE_BUFFER_SIZE);
+        spiSlave.queue(/*tx*/nullptr, /*rx*/slave_rx_buf, SLAVE_BUFFER_SIZE);
+        spiSlave.trigger();
+    }
+
+    return out;
 }
 
 // #### EEPROM ######

@@ -70,10 +70,13 @@ void SpiController::handleEeprom(const TerminalCommand& cmd) {
 Slave
 */
 void SpiController::handleSlave() {
-#ifdef DEVICE_M5STICK
+    #ifdef DEVICE_M5STICK
+
     terminalView.println("SPI Slave: Not supported on M5Stick devices due to shared SPI bus.");
     return;
-#endif
+
+    #endif
+
     spiService.end(); // Stop master mode if active
     
     int sclk = state.getSpiCLKPin();
@@ -105,12 +108,9 @@ void SpiController::handleSlave() {
             }
             terminalView.println(ss.str());
         }
-        delay(1);
     }
-
     spiService.stopSlave(sclk, miso, mosi, cs);
-    spiService.configure(mosi, miso, sclk, cs, state.getSpiFrequency()); // Reconfigure master
-    terminalView.println("SPI Slave: Cancelled by user.");
+    terminalView.println("\nSPI Slave: Stopped by user.\n");
 }
 
 /*
