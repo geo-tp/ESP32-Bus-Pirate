@@ -73,7 +73,14 @@ void SpiController::handleSniff() {
     int slaveMisoPin = sniffMosi ? miso : -1;
     int slaveMosiPin = sniffMosi ? mosi : miso;
 
-    terminalView.println("SPI Sniffer: In progress... Press [ENTER] to stop.\n");
+    terminalView.println("SPI Sniffer: In progress... Press [ENTER] to stop.");
+
+    terminalView.println("");
+    terminalView.println("  [INFO]");
+    terminalView.println("    SPI Sniff mode listens passively on the SPI bus.");
+    terminalView.println("    Connect SCK, MOSI, MISO and CS lines to the Bus Pirate.");
+    terminalView.println("    Data is only captured when CS (chip select) is active.");
+    terminalView.println("");
 
     // Launch SPI slave on the selected line
     spiService.startSlave(sclk, slaveMisoPin, slaveMosiPin, cs);
