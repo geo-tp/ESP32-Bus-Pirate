@@ -1,6 +1,6 @@
 #include "Services/SpiService.h"
 #include <ESP32SPISlave.h>
-
+#include "driver/spi_slave.h"
 
 void SpiService::configure(uint8_t mosi, uint8_t miso, uint8_t sclk, uint8_t cs, uint32_t frequency) {
     end();
@@ -243,6 +243,8 @@ static std::deque<std::vector<uint8_t>> slaveBuffer;
 static std::mutex slaveBufferMutex;
 
 void IRAM_ATTR slaveTransactionCallback(spi_slave_transaction_t* trans, void* arg) {
+    if (!slave) return;
+
     // Copy to vector
     size_t length_bytes = (trans->trans_len + 7) / 8; // trans_len in bits
     std::vector<uint8_t> received(slave_rx_buf, slave_rx_buf + length_bytes);
@@ -255,37 +257,37 @@ void IRAM_ATTR slaveTransactionCallback(spi_slave_transaction_t* trans, void* ar
         // Limit
         if (slaveBuffer.size() > 100) slaveBuffer.pop_front();
     }
-
-    // Relaunch
-    if (slave) {
-        spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
-        spiSlave.trigger();
-    }
 }
 
 void SpiService::startSlave(int sclk, int miso, int mosi, int cs) {
     if (slave) return;
     slave = true;
 
-    if (!slaveConfigured) {
-        spiSlave.setDataMode(SPI_MODE0);
-        spiSlave.setQueueSize(1);
-        spiSlave.setUserPostTransCbAndArg(slaveTransactionCallback, nullptr);
-        spiSlave.begin(FSPI, sclk, miso, mosi, cs);
-        slaveConfigured = true;
-    }
-
-    // First launch then it loops until slave is true
+    spiSlave.setDataMode(SPI_MODE0);
+    spiSlave.setQueueSize(1);
+    spiSlave.setUserPostTransCbAndArg(slaveTransactionCallback, nullptr);
+    spiSlave.begin(FSPI, sclk, miso, mosi, cs);
+    
     spiSlave.queue(slave_tx_buf, slave_rx_buf, SLAVE_BUFFER_SIZE);
-    spiSlave.trigger();
+    spiSlave.trigger();    
 }
 
 void SpiService::stopSlave(int sclk, int miso, int mosi, int cs) {
     slave = false;
+    
+    uint32_t t0 = millis();
+    while (!spiSlave.hasTransactionsCompletedAndAllResultsHandled() &&
+    (millis() - t0) < 100) {
+        delay(1);
+    }
+    
+    delay(100);
     slaveBuffer.clear();
     memset(slave_rx_buf, 0, SLAVE_BUFFER_SIZE);
     memset(slave_tx_buf, 0, SLAVE_BUFFER_SIZE);
-    //Calling spiSlave.end() and then reallocate it cause crashes
+
+    spiSlave.end();
+    spi_slave_free(SPI2_HOST);   // FSPI
 }
 
 bool SpiService::isSlave() const {
@@ -293,10 +295,23 @@ bool SpiService::isSlave() const {
 }
 
 std::vector<std::vector<uint8_t>> SpiService::getSlaveData() {
-    std::lock_guard<std::mutex> lock(slaveBufferMutex);
-    std::vector<std::vector<uint8_t>> data(slaveBuffer.begin(), slaveBuffer.end());
-    slaveBuffer.clear();
-    return data;
+    std::vector<std::vector<uint8_t>> out;
+
+    if (spiSlave.hasTransactionsCompletedAndAllResultsReady(1)) {
+        size_t receivedBytes = spiSlave.numBytesReceived();
+        if (receivedBytes > SLAVE_BUFFER_SIZE) receivedBytes = SLAVE_BUFFER_SIZE;
+
+        if (receivedBytes > 0) {
+            out.emplace_back(slave_rx_buf, slave_rx_buf + receivedBytes);
+        }
+
+        // relaunch
+        memset(slave_rx_buf, 0, SLAVE_BUFFER_SIZE);
+        spiSlave.queue(/*tx*/nullptr, /*rx*/slave_rx_buf, SLAVE_BUFFER_SIZE);
+        spiSlave.trigger();
+    }
+
+    return out;
 }
 
 // #### EEPROM ######

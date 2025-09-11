@@ -48,7 +48,67 @@ void SpiController::handleInstruction(const std::vector<ByteCode>& bytecodes) {
 Sniff
 */
 void SpiController::handleSniff() {
-    terminalView.println("SPI sniff [NYI]");
+    #ifdef DEVICE_M5STICK
+
+        terminalView.println("SPI Sniffer: Not supported on M5Stick devices due to shared SPI bus.");
+        return;
+
+    #endif
+
+    // Select line
+    std::vector<std::string> choices = { " MOSI", " MISO" };
+    int choice = userInputManager.readValidatedChoiceIndex("Select line to sniff", choices, 0);
+    bool sniffMosi = (choice == 0);
+
+    // Pins
+    int sclk = state.getSpiCLKPin();
+    int miso = state.getSpiMISOPin();
+    int mosi = state.getSpiMOSIPin();
+    int cs   = state.getSpiCSPin();
+
+    // Release SPI if in use
+    spiService.end();
+
+    // Mapping 
+    int slaveMisoPin = sniffMosi ? miso : -1;
+    int slaveMosiPin = sniffMosi ? mosi : miso;
+
+    terminalView.println("SPI Sniffer: In progress... Press [ENTER] to stop.");
+
+    terminalView.println("");
+    terminalView.println("  [INFO]");
+    terminalView.println("    SPI Sniff mode listens passively on the SPI bus.");
+    terminalView.println("    Connect SCK, MOSI, MISO and CS lines to the Bus Pirate.");
+    terminalView.println("    Data is only captured when CS (chip select) is active.");
+    terminalView.println("");
+
+    // Launch SPI slave on the selected line
+    spiService.startSlave(sclk, slaveMisoPin, slaveMosiPin, cs);
+
+    // Log data until user stops
+    const char* tag = sniffMosi ? "[MOSI] " : "[MISO] ";
+    while (true) {
+        char c = terminalInput.readChar();
+        if (c == '\n' || c == '\r') break;
+
+        auto packets = spiService.getSlaveData();
+        for (const auto& packet : packets) {
+            if (packet.empty()) continue;
+            std::stringstream ss;
+            ss << tag;
+            for (uint8_t b : packet) {
+                ss << std::hex << std::uppercase
+                   << std::setw(2) << std::setfill('0') << (int)b << " ";
+            }
+            terminalView.println(ss.str());
+        }
+    }
+
+    terminalView.println("\nSPI Sniffer: Stopping... Please wait.");
+    spiService.stopSlave(sclk, slaveMisoPin, slaveMosiPin, cs);
+    spiService.end();
+    spiService.configure(mosi, miso, sclk, cs, state.getSpiFrequency());
+    terminalView.println("SPI Sniffer: Stopped by user.\n");
 }
 
 /*
@@ -70,10 +130,13 @@ void SpiController::handleEeprom(const TerminalCommand& cmd) {
 Slave
 */
 void SpiController::handleSlave() {
-#ifdef DEVICE_M5STICK
+    #ifdef DEVICE_M5STICK
+
     terminalView.println("SPI Slave: Not supported on M5Stick devices due to shared SPI bus.");
     return;
-#endif
+
+    #endif
+
     spiService.end(); // Stop master mode if active
     
     int sclk = state.getSpiCLKPin();
@@ -105,12 +168,12 @@ void SpiController::handleSlave() {
             }
             terminalView.println(ss.str());
         }
-        delay(1);
     }
-
+    terminalView.println("\nSPI Slave: Stopping... Please wait.");
     spiService.stopSlave(sclk, miso, mosi, cs);
-    spiService.configure(mosi, miso, sclk, cs, state.getSpiFrequency()); // Reconfigure master
-    terminalView.println("SPI Slave: Cancelled by user.");
+    spiService.end();
+    spiService.configure(mosi, miso, sclk, cs, state.getSpiFrequency());
+    terminalView.println("SPI Slave: Stopped by user.\n");
 }
 
 /*
