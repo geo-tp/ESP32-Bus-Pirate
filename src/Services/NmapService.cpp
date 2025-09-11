@@ -329,6 +329,12 @@ static inline const char* nmap_guess_service(uint16_t port, Layer4Protocol proto
     }
     return nullptr;
 }
+
+static inline void columnString(std::string& dest, const std::string& text, size_t width) {
+    dest.append(text);
+    if (text.size() < width) dest.append(width - text.size(), ' ');
+}
+
 void NmapService::scanTarget(const std::string &host, const std::vector<uint16_t> &ports)
 {
     in_addr ip{};
@@ -340,115 +346,118 @@ void NmapService::scanTarget(const std::string &host, const std::vector<uint16_t
     char ipStr[INET_ADDRSTRLEN]{};
     inet_ntop(AF_INET, &ip, ipStr, sizeof(ipStr));
     this->report.append("Nmap scan report for ").append(host).append(" (").append(ipStr).append(")\r\n");
-    // TODO show if host is up + latency?
-    if (icmpService != nullptr){
 
+    if (icmpService != nullptr) {
         #ifndef DEVICE_M5STICK
-
-        icmpService->startPingTask(host, 1, 1000, 200);   
-        while (!icmpService->isPingReady()) 
-            vTaskDelay(pdMS_TO_TICKS(50));
+        icmpService->startPingTask(host, 1, 1000, 200);
+        while (!icmpService->isPingReady()) vTaskDelay(pdMS_TO_TICKS(50));
         if (icmpService->lastRc() == ping_rc_t::ping_ok) {
             this->report.append("Host is up (").append(std::to_string(icmpService->lastMedianMs())).append("ms latency).\r\n");
-        }
-        else {
+        } else {
             this->report.append("Host is down.\r\n");
-            return; // No point in scanning if host is down
+            return;
         }
         #else
-
-        // Using ESP32Ping library to avoid IRAM overflow
         const unsigned long t0 = millis();
         const bool ok = Ping.ping(host.c_str(), 1);
         const unsigned long t1 = millis();
-        if (ok) {
-            this->report.append("Host is up (").append(std::to_string(t1 - t0)).append("ms latency).\r\n");
-        } else {
-            this->report.append("Host is down.\r\n");
-        }
-
+        if (ok) this->report.append("Host is up (").append(std::to_string(t1 - t0)).append("ms latency).\r\n");
+        else { this->report.append("Host is down.\r\n"); return; }
         #endif
-    }
-    else {
-        // TODO what to do?
+    } else {
         this->report.append("Error: ICMP service not available.\r\n");
         return;
     }
 
-    if (this->_options.pingOnly) {
-        return;
-    }
+    if (this->_options.pingOnly) return;
 
-    this->report.append("PORT\tSTATE\tSERVICE\r\n");
+    auto columnString = [](std::string& dst, const std::string& txt, size_t width){
+        dst += txt;
+        if (txt.size() < width) dst.append(width - txt.size(), ' ');
+    };
+
+    size_t portCol = std::string("PORT").size();
+    for (uint16_t p : ports) {
+        size_t len = std::to_string(p).size() + 4;
+        if (len > portCol) portCol = len;
+    }
+    portCol += 2;
+
+    size_t stateCol = std::string("open|filtered").size();
+    stateCol += 2;
+    std::string header;
+    columnString(header, "PORT",  portCol);
+    columnString(header, "STATE", stateCol);
+    header += "SERVICE\r\n";
+    report += header;
 
     int closed_ports = ports.size();
     for (uint16_t p : ports) {
-        std::string line;
+        std::string state;
 
         if (this->layer4Protocol == Layer4Protocol::TCP) {
             int st = tcp_connect_with_timeout(ip, p, CONNECT_TIMEOUT_MS);
             switch (st) {
-                case nmap_rc_enum::TCP_OPEN:  
-                    line = std::to_string(p) + "/tcp open";
+                case nmap_rc_enum::TCP_OPEN:
+                    state = "open";
                     closed_ports--;
                     break;
                 case nmap_rc_enum::TCP_CLOSED:
-                    if (this->verbosity >= 1)
-                        line = std::to_string(p) + "/tcp closed";
+                    if (this->verbosity >= 1) 
+                        state = "closed";
                     break;
                 case nmap_rc_enum::TCP_FILTERED:
-                    line = std::to_string(p) + "/tcp filtered";
+                    state = "filtered";
                     closed_ports--;
                     break;
                 default:
                     if (this->verbosity >= 1)
-                        line = std::to_string(p) + "/tcp error";
+                        state = "error";
                     break;
             }
-        }
-        else if (this->layer4Protocol == Layer4Protocol::UDP) {
+        } else if (this->layer4Protocol == Layer4Protocol::UDP) {
             int st = udp_probe_with_timeout(ip, p, CONNECT_TIMEOUT_MS, nullptr, 0);
             switch (st) {
                 case nmap_rc_enum::UDP_OPEN:
-                    line = std::to_string(p) + "/udp open";
+                    state = "open";
                     closed_ports--;
                     break;
                 case nmap_rc_enum::UDP_CLOSED:
                     if (this->verbosity >= 1)
-                        line = std::to_string(p) + "/udp closed";
+                        state = "closed";
                     break;
                 case nmap_rc_enum::UDP_OPEN_FILTERED:
-                    line = std::to_string(p) + "/udp open|filtered";
+                    state = "open|filtered";
                     closed_ports--;
                     break;
                 default:
-                    if (this->verbosity >= 1)
-                        line = std::to_string(p) + "/udp error";
+                    if (this->verbosity >= 1) state = "error";
                     break;
             }
-        }
-        else {
-            // Not an implemented layer 4 protocol
+        } else {
             return;
         }
 
-        if (!line.empty()) {
-            const bool isTcp = (layer4Protocol == Layer4Protocol::TCP);
+        if (!state.empty()) {
+            std::string row;
+            std::string portField = std::to_string(p) + (layer4Protocol == Layer4Protocol::TCP ? "/tcp" : "/udp");
+            columnString(row, portField, portCol);
+            columnString(row, state,     stateCol);
+
             const char* svc = nmap_guess_service(
                 p,
-                isTcp ? Layer4Protocol::TCP : Layer4Protocol::UDP,
-                isTcp ? TOP100_TCP_MAP : TOP100_UDP_MAP,
-                isTcp ? TOP100_TCP_MAP_COUNT : TOP100_UDP_MAP_COUNT
+                layer4Protocol,
+                (layer4Protocol == Layer4Protocol::TCP) ? TOP100_TCP_MAP : TOP100_UDP_MAP,
+                (layer4Protocol == Layer4Protocol::TCP) ? TOP100_TCP_MAP_COUNT : TOP100_UDP_MAP_COUNT
             );
+            if (svc) row += svc;
 
-            if (svc) line.append("\t").append(svc);
-            this->report.append(line).append("\r\n");
+            report.append(row).append("\r\n");
         }
 
-        // Yield
         vTaskDelay(pdMS_TO_TICKS(SMALL_DELAY_MS));
     }
-    
+
     if (closed_ports > 0)
         this->report.append("Not shown: ").append(std::to_string(closed_ports)).append(" ports\r\n\n");
 }
