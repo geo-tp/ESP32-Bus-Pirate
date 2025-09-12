@@ -7,7 +7,6 @@
 #include <cstring>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-#include <Data/NmapUtils.h>
 #include <unordered_set>
 #include <ESP32Ping.h>
 
@@ -232,7 +231,10 @@ static int tcp_connect_with_timeout(in_addr addr, uint16_t port, int timeout_ms)
     if (errno != EINPROGRESS && errno != EALREADY) {
         int e = errno;
         ::close(s);
-        return (e == ECONNREFUSED) ? nmap_rc_enum::TCP_CLOSED : nmap_rc_enum::OTHER;
+        if (e == ECONNREFUSED || e == ECONNRESET) return nmap_rc_enum::TCP_CLOSED;     // RST
+        if (e == ETIMEDOUT || e == EHOSTUNREACH || e == ENETUNREACH || e == EACCES || e == EPERM)
+            return nmap_rc_enum::TCP_FILTERED;                                         // Silently dropped / blocked
+        return nmap_rc_enum::OTHER;
     }
 
     // Wait to write
@@ -241,27 +243,20 @@ static int tcp_connect_with_timeout(in_addr addr, uint16_t port, int timeout_ms)
     FD_SET(s, &wfds); FD_SET(s, &efds);
 
     struct timeval tv{
-        .tv_sec     = timeout_ms / 1000,
-        .tv_usec    = (timeout_ms % 1000) * 1000
+        .tv_sec  = timeout_ms / 1000,
+        .tv_usec = (timeout_ms % 1000) * 1000
     };
 
     rc = ::select(s + 1, nullptr, &wfds, &efds, &tv);
-    if (rc == 0) {
+    if (rc == 0) {                 // handshake never completed -> should be filtered
         ::close(s);
-        return nmap_rc_enum::TCP_CLOSED;
+        return nmap_rc_enum::TCP_FILTERED;
     }
     if (rc < 0)  {
         ::close(s);
         return nmap_rc_enum::OTHER;
     }
 
-    // Check if both stacks are set
-    if (!FD_ISSET(s, &wfds) && !FD_ISSET(s, &efds)) {
-        ::close(s);
-        return nmap_rc_enum::OTHER;
-    }
-
-    // Check socket error
     int soerr = 0;
     socklen_t len = sizeof(soerr);
     if (getsockopt(s, SOL_SOCKET, SO_ERROR, &soerr, &len) < 0) {
@@ -287,10 +282,8 @@ static int tcp_connect_with_timeout(in_addr addr, uint16_t port, int timeout_ms)
     default:
         return nmap_rc_enum::OTHER;
     }
-
     return nmap_rc_enum::OTHER;
 }
-
 
 static bool resolveIPv4(const std::string& host, in_addr& out)
 {
@@ -322,6 +315,20 @@ static inline void trimWhitespaces(std::string& input_str) {
         input_str.clear();
 }
 
+static inline const char* nmap_guess_service(uint16_t port, Layer4Protocol proto,
+                                             const PortService* tbl, size_t n) {
+    for (size_t i = 0; i < n; ++i) {
+        if (tbl[i].port == port && tbl[i].proto == proto)
+            return tbl[i].service;
+    }
+    return nullptr;
+}
+
+static inline void columnString(std::string& dest, const std::string& text, size_t width) {
+    dest.append(text);
+    if (text.size() < width) dest.append(width - text.size(), ' ');
+}
+
 void NmapService::scanTarget(const std::string &host, const std::vector<uint16_t> &ports)
 {
     in_addr ip{};
@@ -333,105 +340,120 @@ void NmapService::scanTarget(const std::string &host, const std::vector<uint16_t
     char ipStr[INET_ADDRSTRLEN]{};
     inet_ntop(AF_INET, &ip, ipStr, sizeof(ipStr));
     this->report.append("Nmap scan report for ").append(host).append(" (").append(ipStr).append(")\r\n");
-    // TODO show if host is up + latency?
-    if (icmpService != nullptr){
 
+    if (icmpService != nullptr) {
         #ifndef DEVICE_M5STICK
-
-        icmpService->startPingTask(host, 1, 1000, 200);   
-        while (!icmpService->isPingReady()) 
-            vTaskDelay(pdMS_TO_TICKS(50));
+        icmpService->startPingTask(host, 1, 1000, 200);
+        while (!icmpService->isPingReady()) vTaskDelay(pdMS_TO_TICKS(50));
         if (icmpService->lastRc() == ping_rc_t::ping_ok) {
             this->report.append("Host is up (").append(std::to_string(icmpService->lastMedianMs())).append("ms latency).\r\n");
-        }
-        else {
+        } else {
             this->report.append("Host is down.\r\n");
-            return; // No point in scanning if host is down
+            return;
         }
         #else
-
-        // Using ESP32Ping library to avoid IRAM overflow
         const unsigned long t0 = millis();
         const bool ok = Ping.ping(host.c_str(), 1);
         const unsigned long t1 = millis();
-        if (ok) {
-            this->report.append("Host is up (").append(std::to_string(t1 - t0)).append("ms latency).\r\n");
-        } else {
-            this->report.append("Host is down.\r\n");
-        }
-
+        if (ok) this->report.append("Host is up (").append(std::to_string(t1 - t0)).append("ms latency).\r\n");
+        else { this->report.append("Host is down.\r\n"); return; }
         #endif
-    }
-    else {
-        // TODO what to do?
+    } else {
         this->report.append("Error: ICMP service not available.\r\n");
         return;
     }
 
-    if (this->_options.pingOnly) {
-        return;
-    }
+    if (this->_options.pingOnly) return;
 
-    this->report.append("PORT\tSTATE\n"); // TODO SERVICE add
+    auto columnString = [](std::string& dst, const std::string& txt, size_t width){
+        dst += txt;
+        if (txt.size() < width) dst.append(width - txt.size(), ' ');
+    };
+
+    size_t portCol = std::string("PORT").size();
+    for (uint16_t p : ports) {
+        size_t len = std::to_string(p).size() + 4;
+        if (len > portCol) portCol = len;
+    }
+    portCol += 2;
+
+    size_t stateCol = std::string("open|filtered").size();
+    stateCol += 2;
+    std::string header;
+    columnString(header, "PORT",  portCol);
+    columnString(header, "STATE", stateCol);
+    header += "SERVICE\r\n";
+    report += header;
 
     int closed_ports = ports.size();
     for (uint16_t p : ports) {
-        //this->report.append("Scanning port ").append(std::to_string(p)).append("...\r\n");
+        std::string state;
 
         if (this->layer4Protocol == Layer4Protocol::TCP) {
             int st = tcp_connect_with_timeout(ip, p, CONNECT_TIMEOUT_MS);
             switch (st) {
-                case nmap_rc_enum::TCP_OPEN:  
-                    this->report.append(std::to_string(p)).append("/tcp open\r\n"); 
+                case nmap_rc_enum::TCP_OPEN:
+                    state = "open";
                     closed_ports--;
                     break;
                 case nmap_rc_enum::TCP_CLOSED:
-                    if (this->verbosity >= 1)
-                        this->report.append(std::to_string(p)).append("/tcp closed\r\n");
+                    if (this->verbosity >= 1) 
+                        state = "closed";
                     break;
                 case nmap_rc_enum::TCP_FILTERED:
-                    this->report.append(std::to_string(p)).append("/tcp filtered\r\n");
-                    closed_ports--;
-                    break;
-                default: 
-                    if (this->verbosity >= 1)
-                        this->report.append(std::to_string(p)).append("/tcp error\r\n"); break;
-            }
-        }
-        else if (this->layer4Protocol == Layer4Protocol::UDP) {
-            int st = udp_probe_with_timeout(ip, p, CONNECT_TIMEOUT_MS, nullptr, 0);
-
-            // TODO add custom payload per protocol
-            switch (st) {
-                case nmap_rc_enum::UDP_OPEN:
-                    this->report.append(std::to_string(p)).append("/udp open\r\n"); 
-                    closed_ports--;
-                    break;
-                case nmap_rc_enum::UDP_CLOSED:
-                    if (this->verbosity >= 1)
-                        this->report.append(std::to_string(p)).append("/udp closed\r\n");
-                    break;
-                case nmap_rc_enum::UDP_OPEN_FILTERED:
-                    this->report.append(std::to_string(p)).append("/udp open|filtered\r\n");
+                    state = "filtered";
                     closed_ports--;
                     break;
                 default:
                     if (this->verbosity >= 1)
-                        this->report.append(std::to_string(p)).append("/udp error\r\n");
+                        state = "error";
                     break;
             }
-        }
-        else {
-            // Not an implemented layer 4 protocol
+        } else if (this->layer4Protocol == Layer4Protocol::UDP) {
+            int st = udp_probe_with_timeout(ip, p, CONNECT_TIMEOUT_MS, nullptr, 0);
+            switch (st) {
+                case nmap_rc_enum::UDP_OPEN:
+                    state = "open";
+                    closed_ports--;
+                    break;
+                case nmap_rc_enum::UDP_CLOSED:
+                    if (this->verbosity >= 1)
+                        state = "closed";
+                    break;
+                case nmap_rc_enum::UDP_OPEN_FILTERED:
+                    state = "open|filtered";
+                    closed_ports--;
+                    break;
+                default:
+                    if (this->verbosity >= 1) state = "error";
+                    break;
+            }
+        } else {
             return;
         }
-        // Yield
+
+        if (!state.empty()) {
+            std::string row;
+            std::string portField = std::to_string(p) + (layer4Protocol == Layer4Protocol::TCP ? "/tcp" : "/udp");
+            columnString(row, portField, portCol);
+            columnString(row, state,     stateCol);
+
+            const char* svc = nmap_guess_service(
+                p,
+                layer4Protocol,
+                (layer4Protocol == Layer4Protocol::TCP) ? TOP100_TCP_MAP : TOP100_UDP_MAP,
+                (layer4Protocol == Layer4Protocol::TCP) ? TOP100_TCP_MAP_COUNT : TOP100_UDP_MAP_COUNT
+            );
+            if (svc) row += svc;
+
+            report.append(row).append("\r\n");
+        }
+
         vTaskDelay(pdMS_TO_TICKS(SMALL_DELAY_MS));
     }
-    
+
     if (closed_ports > 0)
         this->report.append("Not shown: ").append(std::to_string(closed_ports)).append(" ports\r\n\n");
-
 }
 
 void NmapService::setICMPService(ICMPService* icmpService){
