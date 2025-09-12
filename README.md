@@ -53,6 +53,10 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 
 ![An Espressif 32 S3 dev kit](images/s3-devkit.jpg)
 
+- **M5 Cardputer ADV**
+
+![An M5 Stack Cardputer device](images/cardputer-adv.jpg)
+
 - **M5 Cardputer**
 
 ![An M5 Stack Cardputer device](images/cardputer.jpg)
