@@ -1,6 +1,6 @@
 #include "UserInputManager.h"
 
-std::string UserInputManager::getLine() {
+std::string UserInputManager::getLine(bool onlyNumber /* = false */) {
     std::string result;
     size_t cursorIndex = 0;
 
@@ -15,6 +15,11 @@ std::string UserInputManager::getLine() {
             cursorIndex--;
             result.erase(cursorIndex, 1);
             terminalView.print("\b \b");
+            continue;
+        }
+
+        // Only number
+        if (onlyNumber && !std::isdigit(c)) {
             continue;
         }
 
@@ -307,7 +312,7 @@ int UserInputManager::readValidatedChoiceIndex(const std::string& label, const s
 
     // Ask for index
     terminalView.print("Enter index (default " + std::to_string(defaultIndex + 1) + "): ");
-    std::string input = getLine();
+    std::string input = getLine(true); // only numbers
     input = argTransformer.toLower(argTransformer.filterPrintable(input));
 
     // Default

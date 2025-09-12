@@ -14,7 +14,7 @@ public:
     UserInputManager(ITerminalView& view, IInput& input, ArgTransformer& transformer)
         : terminalView(view), terminalInput(input), argTransformer(transformer) {}
 
-    std::string getLine();
+    std::string getLine(bool onlyNumber = false);
     uint8_t readValidatedUint8(const std::string& label, uint8_t def, uint8_t min, uint8_t max);
     uint8_t readValidatedUint8(const std::string& label, uint8_t defaultVal);
     uint32_t readValidatedUint32(const std::string& label, uint32_t def);
