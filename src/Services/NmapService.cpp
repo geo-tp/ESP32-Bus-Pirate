@@ -231,7 +231,10 @@ static int tcp_connect_with_timeout(in_addr addr, uint16_t port, int timeout_ms)
     if (errno != EINPROGRESS && errno != EALREADY) {
         int e = errno;
         ::close(s);
-        return (e == ECONNREFUSED) ? nmap_rc_enum::TCP_CLOSED : nmap_rc_enum::OTHER;
+        if (e == ECONNREFUSED || e == ECONNRESET) return nmap_rc_enum::TCP_CLOSED;     // RST
+        if (e == ETIMEDOUT || e == EHOSTUNREACH || e == ENETUNREACH || e == EACCES || e == EPERM)
+            return nmap_rc_enum::TCP_FILTERED;                                         // Silently dropped / blocked
+        return nmap_rc_enum::OTHER;
     }
 
     // Wait to write
@@ -240,27 +243,20 @@ static int tcp_connect_with_timeout(in_addr addr, uint16_t port, int timeout_ms)
     FD_SET(s, &wfds); FD_SET(s, &efds);
 
     struct timeval tv{
-        .tv_sec     = timeout_ms / 1000,
-        .tv_usec    = (timeout_ms % 1000) * 1000
+        .tv_sec  = timeout_ms / 1000,
+        .tv_usec = (timeout_ms % 1000) * 1000
     };
 
     rc = ::select(s + 1, nullptr, &wfds, &efds, &tv);
-    if (rc == 0) {
+    if (rc == 0) {                 // handshake never completed -> should be filtered
         ::close(s);
-        return nmap_rc_enum::TCP_CLOSED;
+        return nmap_rc_enum::TCP_FILTERED;
     }
     if (rc < 0)  {
         ::close(s);
         return nmap_rc_enum::OTHER;
     }
 
-    // Check if both stacks are set
-    if (!FD_ISSET(s, &wfds) && !FD_ISSET(s, &efds)) {
-        ::close(s);
-        return nmap_rc_enum::OTHER;
-    }
-
-    // Check socket error
     int soerr = 0;
     socklen_t len = sizeof(soerr);
     if (getsockopt(s, SOL_SOCKET, SO_ERROR, &soerr, &len) < 0) {
@@ -286,10 +282,8 @@ static int tcp_connect_with_timeout(in_addr addr, uint16_t port, int timeout_ms)
     default:
         return nmap_rc_enum::OTHER;
     }
-
     return nmap_rc_enum::OTHER;
 }
-
 
 static bool resolveIPv4(const std::string& host, in_addr& out)
 {
