@@ -59,6 +59,7 @@ void setup() {
 
     deviceView.logo();
     GlobalState& state = GlobalState::getInstance();
+    LittleFsService littleFsService;
 
     // Select the terminal type
     HorizontalSelector selector(deviceView, deviceInput);
@@ -93,7 +94,8 @@ void setup() {
 
             // Build the provider for serial type and run the dispatcher loop
             // too big to fit on the stack anymore, allocated on the heap
-            DependencyProvider* provider = new DependencyProvider(serialView, deviceView, serialInput, deviceInput, usb.usbService, usb.usbController);
+            DependencyProvider* provider = new DependencyProvider(serialView, deviceView, serialInput, deviceInput, 
+                                                                  usb.usbService, usb.usbController, littleFsService);
             ActionDispatcher dispatcher(*provider);
             dispatcher.setup(terminalType, baud);
             dispatcher.run(); // Forever
@@ -107,7 +109,9 @@ void setup() {
             if (httpd_start(&server, &config) != ESP_OK) {
                 return;
             }
-            HttpServer httpServer(server);
+
+            JsonTransformer jsonTransformer;
+            HttpServer httpServer(server, littleFsService, jsonTransformer);
             WebSocketServer wsServer(server);
 
             // Web View/Input
@@ -117,15 +121,16 @@ void setup() {
             delay(6000); // let the server begin
             
             // Setup routes for index and ws
-            httpServer.setupRoutes();
             wsServer.setupRoutes();
+            httpServer.setupRoutes();
 
             // Configure USB
             auto usb = UsbConfigurator::configure(webView, webInput, deviceInput);
 
             // Build the provider for webui type and run the dispatcher loop
             // too big to fit on the stack anymore, allocated on the heap
-            DependencyProvider* provider = new DependencyProvider(webView, deviceView, webInput, deviceInput, usb.usbService, usb.usbController);
+            DependencyProvider* provider = new DependencyProvider(webView, deviceView, webInput, deviceInput, 
+                                                                  usb.usbService, usb.usbController, littleFsService);
             ActionDispatcher dispatcher(*provider);
             
             dispatcher.setup(terminalType, webIp);
