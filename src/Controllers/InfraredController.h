@@ -9,8 +9,10 @@
 #include "Interfaces/ITerminalView.h"
 #include "Interfaces/IInput.h"
 #include "Services/InfraredService.h"
+#include "Services/LittleFsService.h"
 #include "Models/TerminalCommand.h"
 #include "Transformers/ArgTransformer.h"
+#include "Transformers/InfraredRemoteTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
 #include "Shells/UniversalRemoteShell.h"
@@ -19,7 +21,8 @@ class InfraredController {
 public:
     // Constructor
     InfraredController(ITerminalView& view, IInput& terminalInput, 
-                       InfraredService& service, ArgTransformer& ArgTransformer,
+                       InfraredService& service, LittleFsService& littleFsService,
+                       ArgTransformer& argTransformer, InfraredRemoteTransformer& infraredRemoteTransformer,
                        UserInputManager& userInputManager, UniversalRemoteShell& universalRemoteShell);
 
     // Entry point for Infraredcommand dispatch
@@ -34,8 +37,10 @@ private:
     InfraredService& infraredService;
     GlobalState& state = GlobalState::getInstance();
     ArgTransformer& argTransformer;
+    InfraredRemoteTransformer& infraredRemoteTransformer;
     UserInputManager& userInputManager;
     UniversalRemoteShell& universalRemoteShell;
+    LittleFsService& littleFsService;
     bool configured = false;
     uint8_t MAX_IR_FRAMES = 64; // Maximum frames to record
 
@@ -69,6 +74,9 @@ private:
     void handleReplay(const TerminalCommand& command);
     bool recordFrames(std::vector<IRFrame>& tape);
     void playbackFrames(const std::vector<IRFrame>& tape, uint32_t replayCount);
+
+    // Load commands from .ir files (littlefs)
+    void handleLoad(const TerminalCommand& command);
 
     // Show help text
     void handleHelp();

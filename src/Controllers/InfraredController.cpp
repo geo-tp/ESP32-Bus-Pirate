@@ -7,14 +7,18 @@ InfraredController::InfraredController(
     ITerminalView&           view,
     IInput&                  terminalInput,
     InfraredService&         service,
+    LittleFsService&         littleFsService,
     ArgTransformer&          argTransformer,
+    InfraredRemoteTransformer& infraredRemoteTransformer,
     UserInputManager&        userInputManager,
     UniversalRemoteShell&    universalRemoteShell
 )
     : terminalView(view),
       terminalInput(terminalInput),
       infraredService(service),
+      littleFsService(littleFsService),
       argTransformer(argTransformer),
+      infraredRemoteTransformer(infraredRemoteTransformer),
       userInputManager(userInputManager),
       universalRemoteShell(universalRemoteShell)
 {}
@@ -29,6 +33,7 @@ void InfraredController::handleCommand(const TerminalCommand& command) {
     else if (command.getRoot() == "devicebgone")  handleDeviceBgone();
     else if (command.getRoot() == "remote")       handleRemote();
     else if (command.getRoot() == "replay")       handleReplay(command);
+    else if (command.getRoot() == "load")         handleLoad(command);
     else if (command.getRoot() == "setprotocol")  handleSetProtocol();
     else handleHelp();
 }
@@ -312,6 +317,78 @@ void InfraredController::handleSetProtocol() {
 }
 
 /*
+Load
+*/
+void InfraredController::handleLoad(TerminalCommand const& command) {
+    if (!littleFsService.mounted()) {
+        littleFsService.begin();
+        return;
+    }
+
+    // Get IR files from LittleFS
+    auto files = littleFsService.listFiles(/*root*/ "/", ".ir");
+    if (files.empty()) {
+        terminalView.println("INFRARED: No .ir files found in LittleFS root ('/').");
+        return;
+    }
+
+    // Select file
+    terminalView.println("\n=== '.ir' files in LittleFS ===");
+    uint16_t idxFile = userInputManager.readValidatedChoiceIndex("File number", files, 0);
+    const std::string& chosen = files[idxFile];
+
+    // Load file content
+    std::string text;
+    if (!littleFsService.readAll("/" + chosen, text)) {
+        terminalView.println("INFRARED: Failed to read file: " + chosen);
+        return;
+    }
+
+    // Verify format
+    if (!infraredRemoteTransformer.isValidInfraredFile(text)) {
+        terminalView.println("INFRARED: Unrecognized .ir format or empty: " + chosen);
+        return;
+    }
+
+    // Extract commands
+    auto cmds = infraredRemoteTransformer.transformFromFileFormat(text);
+    if (cmds.empty()) {
+        terminalView.println("INFRARED: No commands found in: " + chosen);
+        return;
+    }
+
+    // Cmds names
+    auto cmdStrings = infraredRemoteTransformer.extractFunctionNames(cmds);
+    cmdStrings.push_back("Exit File"); // for exit option
+
+    while (true) {
+        // Select command
+        terminalView.println("\n=== Commands in file '" + chosen + "' ===");
+        uint8_t idxCmd = userInputManager.readValidatedChoiceIndex("Command number", cmdStrings, 0);
+        if (idxCmd == cmdStrings.size()-1) {
+            terminalView.println("Exiting command send...\n");
+            break;
+        }
+
+        // Convert
+        const auto& ir = cmds[idxCmd];
+        uint8_t device = static_cast<uint8_t>(ir.address & 0xFF);
+        uint8_t sub = static_cast<uint8_t>((ir.address >> 8) & 0xFF);
+        auto finalCmd = InfraredCommand(
+            ir.protocol,
+            device,
+            sub,
+            ir.function
+        );
+
+        // Send
+        infraredService.sendInfraredCommand(finalCmd);
+        terminalView.println("\n ✅  Sent command '" + ir.functionName + "' from file '" + chosen + "'");
+    }
+}
+
+
+/*
 Config
 */
 void InfraredController::handleConfig() {
@@ -345,6 +422,7 @@ void InfraredController::handleHelp() {
     terminalView.println("  devicebgone");
     terminalView.println("  remote");
     terminalView.println("  replay");
+    terminalView.println("  load");
     terminalView.println("  config");
 }
 
