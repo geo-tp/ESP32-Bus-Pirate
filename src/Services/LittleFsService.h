@@ -28,6 +28,7 @@ public:
     bool isDir (const std::string& userPath) const;
 
     std::vector<Entry> list(const std::string& userDir = "/") const;
+    std::vector<std::string> listFiles(const std::string& userDir = "/", const std::string& extension = ".ir") const;
 
     bool readAll(const std::string& userPath, std::string& out) const;
     bool readChunks(const std::string& userPath,
