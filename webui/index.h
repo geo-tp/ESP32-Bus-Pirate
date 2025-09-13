@@ -10,19 +10,62 @@ inline const char* index_html = R"rawliteral(
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 </head>
 <body>
+
+  <!-- Main Terminal Area -->
   <main>
+    <!-- Output area -->
     <textarea id="output" readonly></textarea>
+    <!-- Input area -->
     <div class="input-area">
-      <input type="text" id="command" placeholder="Enter command" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
-      <button onclick="sendCommand()">Send</button>
+      <div class="input-wrap">
+        <input type="text" id="command" placeholder="Enter command"
+              autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
+        <button id="files-btn" type="button" title="Manage files">📁 Files</button>
+      </div>
+      <div class="actions">
+        <button onclick="sendCommand()">Send</button>
+      </div>
     </div>
     <h3 id="history-title" style="display: none;">Command History</h3>
     <div id="history" class="history-area"></div>
   </main>
+
+  <!-- WebSocket Lost -->
   <div id="ws-lost-popup" class="popup" style="display: none;">
     <span class="popup-text">Connection lost.</span>
     <a href="#" onclick="location.reload()">Refresh</a>
   </div>
+
+  <!-- File Panel -->
+  <div id="file-panel-overlay" class="fp-overlay" style="display:none;"></div>
+  <div id="file-panel" class="fp" style="display:none;"
+        ondragover="onDropOver(event)"
+        ondragleave="onDropLeave(event)"
+        ondrop="onDrop(event)">
+    <!-- Header -->
+    <div class="fp-header">
+      <h2 id="fp-header-title">📁 LittleFS</h2>
+      <button class="fp-close" type="button" aria-label="Close" onclick="closeFilePanel()">×</button>
+    </div>
+    <!-- Drag Drop -->
+    <div id="dropzone" class="fp-drop"
+         ondragover="onDropOver(event)"
+         ondragleave="onDropLeave(event)"
+         ondrop="onDrop(event)">
+      <p>Drag & drop a file here, or</p>
+      <label class="fp-upload-btn">
+        <input id="file-input" type="file" onchange="onFileInput(event)" />
+        Choose file
+      </label>
+    </div>
+
+    <!-- File list -->
+    <div class="fp-list-header">
+      <span id="fp-space">Loading...</span>
+    </div>
+    <div id="file-list" class="fp-list"></div>
+  </div>
+
   <script src="/scripts.js"></script>
 </body>
 </html>
