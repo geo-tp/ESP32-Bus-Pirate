@@ -45,6 +45,7 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 - Analyze radio signals and frequencies **on every bands**.
 - Near than **50 addressable LEDs protocols** supported.
 - **Ethernet and WiFi** are supported to access networks.
+- Import and export data with the **LittleFS** over HTTP.
 - Web interface with **live terminal**, or a classic **serial CLI**.
 
 ## Supported Devices
@@ -159,7 +160,7 @@ The ESP32 Bus Pirate firmware provides two command-line interface (CLI) modes:
 
 Both interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
 
-![An iPhone screenshot showing Bus Pirate web cli](images/mobile_s.jpg)
+![An iPhone screenshot showing Bus Pirate web cli](images/bus_pirate_mobile.png)
 
 ## Using the ESP32 Bus Pirate to speak UART over WiFi
 ![Using the ESP32 Bus pirate with UART](images/demo2.gif)
