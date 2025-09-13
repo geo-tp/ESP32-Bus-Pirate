@@ -18,16 +18,6 @@ void WebSocketServer::setupRoutes() {
     httpd_register_uri_handler(server, &ws_uri);
 }
 
-
-void WebSocketServer::begin() {
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    config.server_port = 80;
-
-    if (httpd_start(&server, &config) == ESP_OK) {
-        setupRoutes();
-    }
-}
-
 esp_err_t WebSocketServer::wsHandler(httpd_req_t *req) {
     WebSocketServer* self = static_cast<WebSocketServer*>(req->user_ctx);
     

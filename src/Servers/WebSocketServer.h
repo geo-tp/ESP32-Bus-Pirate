@@ -11,7 +11,6 @@
 class WebSocketServer {
 public:
     WebSocketServer(httpd_handle_t sharedServer);
-    void begin();
     void setupRoutes();
 
     char readCharBlocking();
