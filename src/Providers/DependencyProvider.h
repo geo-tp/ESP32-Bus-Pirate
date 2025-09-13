@@ -63,6 +63,7 @@ and injecting shared instances of core components
 #include "Transformers/TerminalCommandTransformer.h"
 #include "Transformers/InstructionTransformer.h"
 #include "Transformers/ArgTransformer.h"
+#include "Transformers/JsonTransformer.h"
 #include "Transformers/WebRequestTransformer.h"
 #include "Managers/CommandHistoryManager.h"
 #include "Managers/BinaryAnalyzeManager.h"
@@ -161,6 +162,7 @@ public:
     ArgTransformer &getArgTransformer();
     WebRequestTransformer &getWebRequestTransformer();
     JsonTransformer &getJsonTransformer();
+    InfraredRemoteTransformer &getInfraredTransformer();
 
     // Managers
     CommandHistoryManager &getCommandHistoryManager();
@@ -199,6 +201,7 @@ private:
     IInput &deviceInput;
     IUsbService &usbService;
     IUsbController &usbController;
+    LittleFsService &littleFsService;
 
     // Services
     SdService sdService;
@@ -231,7 +234,6 @@ private:
     SubGhzService subGhzService;
     RfidService rfidService;
     Rf24Service rf24Service;
-    LittleFsService littleFsService;
 
     // Controllers
     UartController uartController;
@@ -261,6 +263,7 @@ private:
     ArgTransformer argTransformer;
     WebRequestTransformer webRequestTransformer;
     JsonTransformer jsonTransformer;
+    InfraredRemoteTransformer infraredTransformer;
 
     // Managers
     CommandHistoryManager commandHistoryManager;

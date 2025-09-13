@@ -46,6 +46,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       argTransformer(),
       webRequestTransformer(),
       jsonTransformer(),
+      infraredTransformer(),
 
       // Managers
       commandHistoryManager(),
@@ -77,7 +78,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       uartController(terminalView, terminalInput, deviceInput, uartService, sdService, hdUartService, argTransformer, userInputManager, uartAtShell),
       i2cController(terminalView, terminalInput, i2cService, argTransformer, userInputManager, i2cEepromShell),
       oneWireController(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, ibuttonShell, oneWireEepromShell),
-      infraredController(terminalView, terminalInput, infraredService, argTransformer, userInputManager, universalRemoteShell),
+      infraredController(terminalView, terminalInput, infraredService, littleFsService, argTransformer, infraredTransformer, userInputManager, universalRemoteShell),
       utilityController(terminalView, deviceView, terminalInput, pinService, userInputManager, argTransformer, sysInfoShell),
       hdUartController(terminalView, terminalInput, deviceInput, hdUartService, uartService, argTransformer, userInputManager),
       spiController(terminalView, terminalInput, spiService, sdService, argTransformer, userInputManager, binaryAnalyzeManager, sdCardShell, spiFlashShell, spiEepromShell),
