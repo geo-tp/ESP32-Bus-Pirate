@@ -38,6 +38,7 @@ and injecting shared instances of core components
 #include "Services/SubGhzService.h"
 #include "Services/RfidService.h"
 #include "Services/Rf24Service.h"
+#include "Services/LittleFsService.h"
 #include "Controllers/UartController.h"
 #include "Controllers/I2cController.h"
 #include "Controllers/OneWireController.h"
@@ -87,7 +88,8 @@ public:
     DependencyProvider(ITerminalView &terminalView, IDeviceView &deviceView,
                        IInput &terminalInput, IInput &deviceInput,
                        IUsbService &usbService,
-                       IUsbController &usbController);
+                       IUsbController &usbController,
+                       LittleFsService &littleFsService);
 
     // Core Components
     ITerminalView &getTerminalView();
@@ -128,6 +130,7 @@ public:
     SubGhzService &getSubGhzService();
     RfidService &getRfidService();
     Rf24Service &getRf24Service();
+    LittleFsService &getLittleFsService();
 
     // Controllers
     UartController &getUartController();
@@ -228,6 +231,7 @@ private:
     SubGhzService subGhzService;
     RfidService rfidService;
     Rf24Service rf24Service;
+    LittleFsService littleFsService;
 
     // Controllers
     UartController uartController;

@@ -2,13 +2,15 @@
 
 DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView &deviceView,
                                        IInput &terminalInput, IInput &deviceInput,
-                                       IUsbService &usbService, IUsbController &usbController)
+                                       IUsbService &usbService, IUsbController &usbController,
+                                       LittleFsService &littleFsService)
     : terminalView(terminalView),
       deviceView(deviceView),
       terminalInput(terminalInput),
       deviceInput(deviceInput),
       usbService(usbService),
       usbController(usbController),
+      littleFsService(littleFsService),
 
       // Services
       sdService(),
@@ -124,11 +126,13 @@ NmapService &DependencyProvider::getNmapService() { return nmapService; }
 ICMPService &DependencyProvider::getICMPService() { return icmpService; }
 JtagService &DependencyProvider::getJtagService() { return jtagService; }
 CanService &DependencyProvider::getCanService() { return canService; }
+ModbusService &DependencyProvider::getModbusService() { return modbusService; }
 SystemService &DependencyProvider::getSystemService() { return systemService; }
 EthernetService &DependencyProvider::getEthernetService() { return ethernetService; }
 SubGhzService &DependencyProvider::getSubGhzService() { return subGhzService; }
 RfidService &DependencyProvider::getRfidService() { return rfidService; }
 Rf24Service &DependencyProvider::getRf24Service() { return rf24Service; }
+LittleFsService &DependencyProvider::getLittleFsService() { return littleFsService; }
 
 // Controllers
 UartController &DependencyProvider::getUartController() { return uartController; }
@@ -175,6 +179,7 @@ SmartCardShell &DependencyProvider::getSmartCardShell() { return smartCardShell;
 ThreeWireEepromShell &DependencyProvider::getThreeWireEepromShell() { return threeWireEepromShell; }
 IbuttonShell &DependencyProvider::getIbuttonShell() { return ibuttonShell; }
 UartAtShell &DependencyProvider::getUartAtShell() { return uartAtShell; }
+SysInfoShell &DependencyProvider::getSysInfoShell() { return sysInfoShell; }
 
 // Selectors
 HorizontalSelector &DependencyProvider::getHorizontalSelector() { return horizontalSelector; }
