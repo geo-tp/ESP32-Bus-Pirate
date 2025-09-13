@@ -163,7 +163,7 @@ void SysInfoShell::cmdFS() {
         terminalView.println("Used   : " + std::to_string(used  / 1024) + " KB");
         terminalView.println("Free   : " + std::to_string(freeB / 1024) + " KB");
 
-        systemService.littlefsEnd();
+        // systemService.littlefsEnd();
     } else {
         terminalView.println("LittleFS not mounted.");
     }
