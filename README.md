@@ -172,7 +172,7 @@ See [How To Contribute](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Contr
 
 #### ![ESP32 Bus Pirate Firmware](images/logo_square_small.png)
 
-[Images, logo, presentations, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/tree/main/images/assets)
+[Images, logo, presentations, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets)
 
 These visuals can be **freely used in blog posts, documentation, videos, or articles** to help explain and promote the firmware.
 
