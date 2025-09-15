@@ -1,6 +1,6 @@
 # ESP32 Bus Pirate
 
-![ESP32 Bus Pirate Firmware](images/bus_pirate_firmware.png)
+![ESP32 Bus Pirate Firmware](images/logo_protocols_banner_small.png)
 
 
 **ESP32 Bus Pirate** is an open-source firmware that turns your device into a multi-protocol hacker's tool, inspired by the [legendary Bus Pirate](https://buspirate.com/).
@@ -160,14 +160,31 @@ The ESP32 Bus Pirate firmware provides two command-line interface (CLI) modes:
 
 Both interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
 
-![An iPhone screenshot showing Bus Pirate web cli](images/bus_pirate_mobile.png)
+![An iPhone screenshot showing Bus Pirate web cli](images/presentation_mobile.png)
 
 ## Using the ESP32 Bus Pirate to speak UART over WiFi
 ![Using the ESP32 Bus pirate with UART](images/demo2.gif)
 
 ## Contribute
-See [How To Contribute](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Contribute) section, which outlines a simple way to add a new command to any mode.
+See [How To Contribute](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Contribute) section, which outlines a **simple way to add a new command** to any mode.
+
+## Visuals Assets
+
+#### ![ESP32 Bus Pirate Firmware](images/logo_square_small.png)
+
+[Images, logo, presentations, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/tree/main/images/assets)
+
+These visuals can be **freely used in blog posts, documentation, videos, or articles** to help explain and promote the firmware.
+
 
 ## Warning
 > ⚠️ **Voltage Warning**: Devices should only operate at **3.3V** or **5V**.  
-> Do **not** connect peripherals using other voltage levels — doing so may **damage your ESP32**.
+> - Do **not** connect peripherals using other voltage levels — doing so may **damage your ESP32**.
+
+> ⚠️ **Usage Warning**: This firmware is provided for **educational, diagnostic, and interoperability testing purposes only**.
+> - Do not use it to interfere with, probe, or manipulate devices without proper authorization.
+> - Avoid any unauthorized RF transmissions (e.g., sub-GHz) that could violate local regulations or disrupt networks and communications.
+> - The authors are not responsible for any misuse of this software or hardware, including legal consequences resulting from unauthorized access or signal emission.
+> - Always stay within the bounds of your country’s laws and responsible disclosure policies.
+
+
