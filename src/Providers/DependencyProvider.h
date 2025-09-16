@@ -65,6 +65,7 @@ and injecting shared instances of core components
 #include "Transformers/ArgTransformer.h"
 #include "Transformers/JsonTransformer.h"
 #include "Transformers/WebRequestTransformer.h"
+#include "Transformers/SubGhzTransformer.h"
 #include "Managers/CommandHistoryManager.h"
 #include "Managers/BinaryAnalyzeManager.h"
 #include "Managers/UserInputManager.h"
@@ -163,6 +164,7 @@ public:
     WebRequestTransformer &getWebRequestTransformer();
     JsonTransformer &getJsonTransformer();
     InfraredRemoteTransformer &getInfraredTransformer();
+    SubGhzTransformer &getSubGhzTransformer();
 
     // Managers
     CommandHistoryManager &getCommandHistoryManager();
@@ -264,6 +266,7 @@ private:
     WebRequestTransformer webRequestTransformer;
     JsonTransformer jsonTransformer;
     InfraredRemoteTransformer infraredTransformer;
+    SubGhzTransformer subGhzTransformer;
 
     // Managers
     CommandHistoryManager commandHistoryManager;

@@ -47,6 +47,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       webRequestTransformer(),
       jsonTransformer(),
       infraredTransformer(),
+      subGhzTransformer(),
 
       // Managers
       commandHistoryManager(),
@@ -91,7 +92,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager),
       wifiController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell),
       canController(terminalView, terminalInput, userInputManager, canService, argTransformer),
-      subGhzController(terminalView, terminalInput, deviceView, subGhzService, pinService, argTransformer, userInputManager, subGhzAnalyzeManager),
+      subGhzController(terminalView, terminalInput, deviceView, subGhzService, pinService, littleFsService, argTransformer, subGhzTransformer, userInputManager, subGhzAnalyzeManager),
       rfidController(terminalView, terminalInput, rfidService, userInputManager, argTransformer),
       rf24Controller(terminalView, terminalInput, deviceView, rf24Service, pinService, argTransformer, userInputManager),
       ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell)
