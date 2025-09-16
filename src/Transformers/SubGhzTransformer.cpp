@@ -5,38 +5,73 @@
 
 bool SubGhzTransformer::isValidSubGhzFile(const std::string& content) {
     if (content.empty()) return false;
-    // Simple check: presence of key fields Protocol, Preset, Frequency
-    bool hasProto=false, hasPreset=false, hasFreq=false;
-    std::istringstream ss(content);
-    std::string line;
-    while (std::getline(ss, line)) {
-        std::string key, val;
-        if (!parseKeyValueLine(line, key, val)) continue;
-        if (iequals(key, "Protocol")) hasProto = true;
-        else if (iequals(key, "Preset")) hasPreset = true;
-        else if (iequals(key, "Frequency")) hasFreq = true;
+
+    const char* p   = content.data();
+    const char* end = p + content.size();
+
+    // Skip UTF-8 BOM
+    if (end - p >= 3 && (unsigned char)p[0]==0xEF && (unsigned char)p[1]==0xBB && (unsigned char)p[2]==0xBF) {
+        p += 3;
     }
-    return hasProto && hasPreset && hasFreq;
+
+    // Find first line
+    const char* q = p;
+    while (q < end && *q != '\n' && *q != '\r') ++q;
+
+    // Substring to find
+    static constexpr char needle[] = "Filetype: Flipper SubGhz";
+    constexpr size_t nlen = sizeof(needle) - 1;
+
+    if ((size_t)(q - p) < nlen) return false;
+
+    // Search in first line
+    const char* last = q - nlen + 1;
+    for (const char* s = p; s < last; ++s) {
+        size_t i = 0;
+        for (; i < nlen && s[i] == needle[i]; ++i) {}
+        if (i == nlen) return true;
+    }
+    
+    return false;
 }
 
-std::vector<SubGhzFileCommand> SubGhzTransformer::transformFromFileFormat(const std::string& fileContent, const std::string& sourcePath) {
+std::vector<SubGhzFileCommand> SubGhzTransformer::transformFromFileFormat(const std::string& fileContent,
+                                           const std::string& sourcePath) {
     std::vector<SubGhzFileCommand> out;
     if (fileContent.empty()) return out;
 
     std::string protocolStr, presetStr;
     uint32_t frequency = 0;
     uint16_t te = 0;
-    std::vector<int> bitList;
-    std::vector<int> bitRawList;
+
+    // Accumulators
+    std::vector<int> bitList, bitRawList;
     std::vector<uint64_t> keyList;
     std::vector<std::string> rawDataLines; // RAW_Data / Data_RAW
 
-    std::istringstream ss(fileContent);
-    std::string line;
-    while (std::getline(ss, line)) {
-        // Normalize line endings
-        std::string key, val;
-        if (!parseKeyValueLine(line, key, val)) continue;
+    // Buffer to avoid copies
+    const char* p = fileContent.c_str();
+    const char* end = p + fileContent.size();
+
+    while (p < end) {
+        // line boundaries [lineStart, lineEnd)
+        const char* lineStart = p;
+        while (p < end && *p != '\n') ++p;
+        const char* lineEnd = p;
+        if (p < end && *p == '\n') ++p;           // skip '\n'
+        if (lineEnd > lineStart && *(lineEnd-1) == '\r') --lineEnd; // strip '\r'
+
+        // Search for ':'
+        const char* colon = lineStart;
+        while (colon < lineEnd && *colon != ':') ++colon;
+        if (colon == lineEnd) continue; // no "key: value"
+
+        // construct key/value (small strings)
+        std::string key(lineStart, colon - lineStart);
+        std::string val(colon + 1, lineEnd - (colon + 1));
+        trim(key);
+        trim(val);
+        if (key.empty()) continue;
 
         if (iequals(key, "Protocol")) {
             protocolStr = val;
@@ -45,35 +80,35 @@ std::vector<SubGhzFileCommand> SubGhzTransformer::transformFromFileFormat(const 
         } else if (iequals(key, "Frequency")) {
             uint32_t hz=0; if (parseUint32(val, hz)) frequency = hz;
         } else if (iequals(key, "TE")) {
-            uint16_t teval=0; if (parseUint16(val, teval)) te = teval;
+            uint16_t tev=0; if (parseUint16(val, tev)) te = tev;
         } else if (iequals(key, "Bit")) {
-            int b=0; if (parseInt(val, b)) bitList.push_back(b);
+            int v=0; if (parseInt(val, v)) bitList.push_back(v);
         } else if (iequals(key, "Bit_RAW")) {
-            int b=0; if (parseInt(val, b)) bitRawList.push_back(b);
+            int v=0; if (parseInt(val, v)) bitRawList.push_back(v);
         } else if (iequals(key, "Key")) {
             uint64_t k=0; if (parseHexToU64(val, k)) keyList.push_back(k);
         } else if (iequals(key, "RAW_Data") || iequals(key, "Data_RAW")) {
             rawDataLines.push_back(val);
         } else if (iequals(key, "BinRAW")) {
-            std::vector<uint8_t> bs = parseHexByteStream(val);
-            if (!bs.empty()) {
+            auto bytes = parseHexByteStream(val);
+            if (!bytes.empty()) {
                 SubGhzFileCommand cmd;
-                cmd.protocol = SubGhzProtocolEnum::BinRAW;
-                cmd.preset = mapPreset(presetStr);
-                cmd.frequency_hz = frequency;
-                cmd.te_us = te;
-                cmd.bitstream_bytes = std::move(bs);
-                cmd.source_file = sourcePath;
+                cmd.protocol        = SubGhzProtocolEnum::BinRAW;
+                cmd.preset          = mapPreset(presetStr);
+                cmd.frequency_hz    = frequency;
+                cmd.te_us           = te;
+                cmd.bitstream_bytes = std::move(bytes);
+                cmd.source_file     = sourcePath;
                 out.emplace_back(std::move(cmd));
             }
         }
-        // Add more keys if needed (Repeat, Comment, etc.)
     }
 
-    // Create final commands from accumulated standard
+    // Finalizer for accumulated data
     flushAccumulated(protocolStr, presetStr, frequency, te,
                      bitList, bitRawList, keyList, rawDataLines,
                      out, sourcePath);
+
     return out;
 }
 
