@@ -1,95 +1,101 @@
 #include "InfraredRemoteTransformer.h"
 
-
 bool InfraredRemoteTransformer::isValidInfraredFile(const std::string& fileContent) {
-    std::string line;
+    if (fileContent.empty()) return false;
 
-    if (fileContent.empty()) {
-        return false;
-    }
+    const char* p   = fileContent.c_str();
+    const char* end = p + fileContent.size();
 
-    // Split the fileContent into lines
-    std::istringstream stream(fileContent);
-    size_t i = 1;
-    while (std::getline(stream, line) && i < 3) {
-        if (line.find("Filetype:") != 0 && i == 1) {
-            return false;
-        }
-        if (line.find("Version:") != 0 && i == 2) {
-            return false;
-        }
-        i++;
-    }
+    // Find first line
+    const char* line1_start = p;
+    while (p < end && *p != '\n' && *p != '\r') ++p;
+    const char* line1_end = p;
+    // skip
+    if (p < end && (*p == '\r')) ++p;
+    if (p < end && (*p == '\n')) ++p;
+
+    // Substring to find
+    const char k1[] = "Filetype: IR";
+    const size_t k1len = sizeof(k1) - 1;
+
+    if ((size_t)(line1_end - line1_start) < k1len) return false;
+    if (std::memcmp(line1_start, k1, k1len) != 0)  return false;
 
     return true;
 }
 
 std::vector<InfraredFileRemoteCommand> InfraredRemoteTransformer::transformFromFileFormat(const std::string& fileContent) {
     std::vector<InfraredFileRemoteCommand> commands;
-    InfraredFileRemoteCommand command;
-    std::vector<std::string> lines;
-    std::string value;
-    std::string line;
-    int count = 0;
+    if (fileContent.empty()) return commands;
 
-    // Split the fileContent into lines
-    std::istringstream stream(fileContent);
-    while (std::getline(stream, line)) {
-        lines.push_back(line);
-    }
+    InfraredFileRemoteCommand command; 
 
-    // Iterate over each line
-    // Helper lambda to trim whitespace from both ends of a string
-    auto trim = [](const std::string& s) -> std::string {
-        size_t start = s.find_first_not_of(" \t\r\n");
-        size_t end = s.find_last_not_of(" \t\r\n");
-        return (start == std::string::npos) ? "" : s.substr(start, end - start + 1);
+    const auto trim = [](const std::string& s) -> std::string {
+        size_t i = 0, j = s.size();
+        while (i < j && (s[i]==' '||s[i]=='\t'||s[i]=='\r'||s[i]=='\n')) ++i;
+        while (j > i && (s[j-1]==' '||s[j-1]=='\t'||s[j-1]=='\r'||s[j-1]=='\n')) --j;
+        return (i<j) ? s.substr(i, j-i) : std::string();
     };
 
-    for (const auto& line : lines) {
-        value = line.substr(line.find(":") + 1);
-        value = trim(value);
+    const char* p   = fileContent.c_str();
+    const char* end = p + fileContent.size();
 
+    while (p < end) {
+        // Line boundaries [lineStart, lineEnd)
+        const char* lineStart = p;
+        while (p < end && *p != '\n') ++p;
+        const char* lineEnd = p;
+        if (p < end && *p == '\n') ++p;
+        if (lineEnd > lineStart && *(lineEnd-1) == '\r') --lineEnd;
 
-        if (line.find("name:") == 0) {
+        // key:value ?
+        const char* colon = lineStart;
+        while (colon < lineEnd && *colon != ':') ++colon;
+        if (colon == lineEnd) continue;
 
-            // We push the existing command if any
+        // create small key/value strings (only this line)
+        std::string key(lineStart, colon - lineStart);
+        std::string val(colon + 1, lineEnd - (colon + 1));
+        key = trim(key);
+        val = trim(val);
+
+        // prefix tests (equivalent to line.find("xxx:")==0)
+        if (key == "name") {
+            // push previous if complete
             if (!command.functionName.empty()) {
                 commands.push_back(command);
             }
-
-            // We reset command for the new one
-            command = InfraredFileRemoteCommand();
-            command.functionName = value;
+            command = InfraredFileRemoteCommand(); // reset
+            command.functionName = val;
         }
-        if (line.find("type:") == 0 && value == "raw") {
+        else if (key == "type" && val == "raw") {
             command.protocol = InfraredProtocolEnum::RAW;
         }
-        if (line.find("protocol:") == 0) {
-            command.protocol = InfraredProtocolMapper::toEnum(value);
+        else if (key == "protocol") {
+            command.protocol = InfraredProtocolMapper::toEnum(val);
         }
-        if (line.find("address:") == 0) {
-            command.address = convertHexToUint16(value, 2);
+        else if (key == "address") {
+            command.address = convertHexToUint16(val, 2);
         }
-        if (line.find("frequency:") == 0) {
-            command.frequency = std::stoi(value) / 1000; // IRemote needs frequency in KHZ
+        else if (key == "frequency") {
+            // IRemote attend des kHz
+            command.frequency = std::stoi(val) / 1000;
         }
-        if (line.find("command:") == 0) {
-            command.function = convertHexToUint16(value, 1);
+        else if (key == "command") {
+            command.function = convertHexToUint16(val, 1);
         }
-        if (line.find("duty_cycle:") == 0) {
-            command.dutyCycle = std::stof(value);
+        else if (key == "duty_cycle") {
+            command.dutyCycle = static_cast<float>(std::atof(val.c_str()));
         }
-        if (line.find("data:") == 0) {
-            size_t size;
-            uint16_t* rawData = convertDecToUint16Array(value, size);
+        else if (key == "data") {
+            size_t size = 0;
+            uint16_t* rawData = convertDecToUint16Array(val, size);
             command.rawData = rawData;
             command.rawDataSize = size;
         }
-
     }
 
-    // Don't forget to push the last command to the vector
+    // push last
     if (!command.functionName.empty()) {
         commands.push_back(command);
     }

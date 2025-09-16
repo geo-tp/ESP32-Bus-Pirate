@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <cstring>
 #include <cstdint>
 #include <Models/InfraredFileRemoteCommand.h>
 #include <Enums/InfraredProtocolEnum.h>
