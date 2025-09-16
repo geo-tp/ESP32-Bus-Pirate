@@ -97,6 +97,20 @@ std::vector<LittleFsService::Entry> LittleFsService::list(const std::string& use
     return out;
 }
 
+size_t LittleFsService::getFileSize(const std::string& userPath) const {
+    if (!_mounted) return 0;
+
+    std::string p;
+    if (!normalizeUserPath(userPath, p, /*dir=*/false)) return 0;
+
+    fs::File f = LittleFS.open(p.c_str(), "r");
+    if (!f) return 0;
+
+    size_t size = f.size();
+    f.close();
+    return size;
+}
+
 bool LittleFsService::readAll(const std::string& userPath, std::string& out) const {
     if (!_mounted) return false;
     std::string p;

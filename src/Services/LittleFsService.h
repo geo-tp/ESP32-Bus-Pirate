@@ -26,6 +26,7 @@ public:
 
     bool exists(const std::string& userPath) const;
     bool isDir (const std::string& userPath) const;
+    size_t getFileSize(const std::string& userPath) const;
 
     std::vector<Entry> list(const std::string& userDir = "/") const;
     std::vector<std::string> listFiles(const std::string& userDir = "/", const std::string& extension = ".ir") const;
@@ -60,7 +61,6 @@ private:
 
     static void ensureDirSlashes(std::string& p, bool dir);
 
-    // Helpers récursifs
     bool ensureParentDirs(const std::string& userFilePath) const;
     bool rmdirRecursiveImpl(const std::string& userDir);
 };
