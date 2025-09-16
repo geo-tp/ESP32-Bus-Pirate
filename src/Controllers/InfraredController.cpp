@@ -337,6 +337,14 @@ void InfraredController::handleLoad(TerminalCommand const& command) {
     uint16_t idxFile = userInputManager.readValidatedChoiceIndex("File number", files, 0);
     const std::string& chosen = files[idxFile];
 
+    // Check size
+    int MAX_FILE_SIZE = 32 * 1024; // 32 KB
+    auto fileSize = littleFsService.getFileSize("/" + chosen);
+    if (fileSize == 0 || fileSize > MAX_FILE_SIZE) {
+        terminalView.println("INFRARED: File size invalid (>32KB): " + chosen);
+        return;
+    }
+
     // Load file content
     std::string text;
     if (!littleFsService.readAll("/" + chosen, text)) {
