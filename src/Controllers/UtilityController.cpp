@@ -496,7 +496,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  jam                  - Jam selected frequencies");
     terminalView.println("  bruteforce           - Bruteforce 12 bit keys");
     terminalView.println("  trace                - Observe RX signal trace");
-    terminalView.println("  load                 - Load .sub file from FS");
+    terminalView.println("  load                 - Load .sub files from FS");
     terminalView.println("  setfrequency         - Set operating frequency");
     terminalView.println("  config               - Configure CC1101 settings");
 

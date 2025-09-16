@@ -538,28 +538,30 @@ void SubGhzController::handleLoad() {
     int MAX_FILE_SIZE = 32 * 1024; // 32 KB
     auto fileSize = littleFsService.getFileSize("/" + filename);
     if (fileSize == 0 || fileSize > MAX_FILE_SIZE) {
-        terminalView.println("SUBGHZ: File size invalid (>32KB): " + filename + "\n");
+        terminalView.println("\nSUBGHZ: File size invalid (>32KB): " + filename + " (" + std::to_string(fileSize) + " bytes)\n");
         return;
     }
     
+    terminalView.println("\nSUBGHZ: Loading file '" + filename + "' (" + std::to_string(fileSize) + " bytes)...");
+
     // Load file
     std::string fileContent;
     fileContent.reserve(fileSize + 1);
     if (!littleFsService.readAll("/" + filename, fileContent)) {
-        terminalView.println("SUBGHZ: Failed to read " + filename + "\n");
+        terminalView.println("\nSUBGHZ: Failed to read " + filename + "\n");
         return;
     }
 
     // Validate
     if (!subGhzTransformer.isValidSubGhzFile(fileContent)) {
-        terminalView.println("SUBGHZ: Invalid .sub file: " + filename + "\n");
+        terminalView.println("\nSUBGHZ: Invalid .sub file: " + filename + "\n");
         return;
     }
 
     // Parse
     auto frames = subGhzTransformer.transformFromFileFormat(fileContent);
     if (frames.empty()) {
-        terminalView.println("SUBGHZ: Failed to parse .sub file: " + filename + "\n");
+        terminalView.println("\nSUBGHZ: Failed to parse .sub file: " + filename + "\n");
         return; 
     }
 
@@ -579,11 +581,12 @@ void SubGhzController::handleLoad() {
         }
 
         // Send
+        terminalView.println("\n Sending frame #" + std::to_string(idx + 1) + "...");
         const auto& cmd = frames[idx];
         if (subGhzService.send(cmd)) {
-            terminalView.println("\n ✅ Sent frame #" + std::to_string(idx + 1) + ": " + summaries[idx]);
+            terminalView.println(" ✅ " + summaries[idx]);
         } else {
-            terminalView.println("\n ❌ Send failed for frame #" + std::to_string(idx + 1));
+            terminalView.println(" ❌ Send failed for frame #" + std::to_string(idx + 1));
         }
     }
 }
