@@ -16,6 +16,7 @@ void SubGhzController::handleCommand(const TerminalCommand& cmd) {
     else if (root == "bruteforce")   handleBruteforce();
     else if (root == "decode")       handleDecode(cmd);
     else if (root == "trace")        handleTrace();
+    else if (root == "load")         handleLoad();
     else if (root == "config")       handleConfig();
     else                             handleHelp();
 }
@@ -511,6 +512,80 @@ void SubGhzController::handleSweep() {
     }
 
     terminalView.println("\nSUBGHZ Sweep: Stopped by user.\n");
+}
+
+/*
+Load
+*/
+void SubGhzController::handleLoad() {
+    if (!littleFsService.mounted()) {
+        littleFsService.begin();
+    }
+
+    // List .sub files
+    auto files = littleFsService.listFiles(/*root*/ "/", ".sub");
+    if (files.empty()) {
+        terminalView.println("SUBGHZ: No .sub files found in LittleFS root ('/').\n");
+        return;
+    }
+
+    // Select file
+    terminalView.println("\n=== '.sub' files in LittleFS ===");
+    int fileIndex = userInputManager.readValidatedChoiceIndex("File number", files, 0);
+    std::string filename = files[fileIndex];
+
+    // Check size
+    int MAX_FILE_SIZE = 32 * 1024; // 32 KB
+    auto fileSize = littleFsService.getFileSize("/" + filename);
+    if (fileSize == 0 || fileSize > MAX_FILE_SIZE) {
+        terminalView.println("SUBGHZ: File size invalid (>32KB): " + filename + "\n");
+        return;
+    }
+    
+    // Load file
+    std::string fileContent;
+    fileContent.reserve(fileSize + 1);
+    if (!littleFsService.readAll("/" + filename, fileContent)) {
+        terminalView.println("SUBGHZ: Failed to read " + filename + "\n");
+        return;
+    }
+
+    // Validate
+    if (!subGhzTransformer.isValidSubGhzFile(fileContent)) {
+        terminalView.println("SUBGHZ: Invalid .sub file: " + filename + "\n");
+        return;
+    }
+
+    // Parse
+    auto frames = subGhzTransformer.transformFromFileFormat(fileContent);
+    if (frames.empty()) {
+        terminalView.println("SUBGHZ: Failed to parse .sub file: " + filename + "\n");
+        return; 
+    }
+
+    // Get frame names
+    auto summaries = subGhzTransformer.extractSummaries(frames);
+    summaries.push_back("Exit"); // for exit option
+
+    while (true) {
+        // Select frame to send
+        terminalView.println("\n=== Commands in file '" + filename + "' ===");
+        uint16_t idx = userInputManager.readValidatedChoiceIndex("Frame number", summaries, 0);
+
+        // Exit
+        if (idx == summaries.size() - 1) {
+            terminalView.println("Exiting command send...\n");
+            break;
+        }
+
+        // Send
+        const auto& cmd = frames[idx];
+        if (subGhzService.send(cmd)) {
+            terminalView.println("\n ✅ Sent frame #" + std::to_string(idx + 1) + ": " + summaries[idx]);
+        } else {
+            terminalView.println("\n ❌ Send failed for frame #" + std::to_string(idx + 1));
+        }
+    }
 }
 
 /*

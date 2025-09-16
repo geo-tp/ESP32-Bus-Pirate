@@ -11,11 +11,13 @@
 #include "Models/TerminalCommand.h"
 #include "Models/ByteCode.h"
 #include "Transformers/ArgTransformer.h"
+#include "Transformers/SubGhzTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "Managers/SubGhzAnalyzeManager.h"
 #include "States/GlobalState.h"
 #include "Services/SubGhzService.h"
 #include "Services/PinService.h"
+#include "Services/LittleFsService.h"
 #include "Data/SubGhzProtocols.h"
 
 class SubGhzController {
@@ -25,7 +27,9 @@ public:
                      IDeviceView& deviceView,
                      SubGhzService& subGhzService,
                      PinService& pinService,
+                     LittleFsService& littleFsService,
                      ArgTransformer& argTransformer,
+                     SubGhzTransformer& subGhzTransformer,
                      UserInputManager& userInputManager,
                      SubGhzAnalyzeManager& subGhzAnalyzeManager)
     : terminalView(terminalView),
@@ -33,7 +37,9 @@ public:
       deviceView(deviceView),
       subGhzService(subGhzService),
       pinService(pinService),
+      littleFsService(littleFsService),
       argTransformer(argTransformer),
+      subGhzTransformer(subGhzTransformer),
       userInputManager(userInputManager),
       subGhzAnalyzeManager(subGhzAnalyzeManager) {}
 
@@ -74,6 +80,9 @@ private:
     // Bruteforce attack
     void handleBruteforce();
 
+    // Load .sub files
+    void handleLoad();
+
     // Configure CC1101
     void handleConfig();
 
@@ -86,7 +95,9 @@ private:
     IDeviceView& deviceView;
     SubGhzService& subGhzService;
     PinService& pinService;
+    LittleFsService& littleFsService;
     ArgTransformer& argTransformer;
+    SubGhzTransformer& subGhzTransformer;
     UserInputManager& userInputManager;
     SubGhzAnalyzeManager& subGhzAnalyzeManager;
     GlobalState& state = GlobalState::getInstance();
