@@ -8,6 +8,7 @@
 #include "freertos/ringbuf.h"
 #include "ELECHOUSE_CC1101_SRC_DRV.h"
 #include "Data/SugGhzFreqs.h"
+#include "Transformers/SubGhzTransformer.h"
 
 #define RMT_RX_CHANNEL RMT_CHANNEL_6
 #define RMT_TX_CHANNEL RMT_CHANNEL_5
@@ -46,11 +47,18 @@ public:
                       uint32_t tick_per_us = RMT_1US_TICKS);
     bool sendRandomBurst(int pin);
     bool sendRawPulse(int pin, int duration);
+    bool sendRcSwitch_(uint64_t key, uint16_t bits, int te_us, int proto, int repeat);
+    bool sendPrinceton_(uint64_t key, uint16_t bits, int te_us);
+    bool sendBinRaw_(const std::vector<uint8_t>& bytes, int te_us);
+    bool sendTimingsOOK_(const std::vector<int32_t>& timings); 
+    bool sendRawTimings(const std::vector<int32_t>& timings);
+    bool send(const SubGhzFileCommand& cmd);
 
     // Profiles
     bool applyDefaultProfile(float mhz = 433.92f);
     bool applySniffProfile(float mhz);
     bool applyRawSendProfile(float mhz);
+    bool applyPresetByName(const std::string& name, float mhz);
     bool applyScanProfile(float dataRateKbps = 4.8f,
                           float rxBwKhz      = 200.0f,
                           uint8_t modulation = 2,    // 2 = OOK/ASK

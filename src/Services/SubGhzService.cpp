@@ -402,6 +402,217 @@ bool SubGhzService::applyRawSendProfile(float mhz) {
     return true;
 }
 
+bool SubGhzService::applyPresetByName(const std::string& name, float mhz) {
+    if (!isConfigured_) return false;
+    ELECHOUSE_cc1101.setSidle();
+    ELECHOUSE_cc1101.setMHZ(mhz);
+
+    // Default
+    ELECHOUSE_cc1101.setWhiteData(0);
+    ELECHOUSE_cc1101.setCrc(0);
+    ELECHOUSE_cc1101.setCRC_AF(0);
+    ELECHOUSE_cc1101.setAdrChk(0);
+    ELECHOUSE_cc1101.setSyncMode(0);
+
+    if (name == "FuriHalSubGhzPresetOok270Async") {
+        ELECHOUSE_cc1101.setModulation(2); // OOK
+        ELECHOUSE_cc1101.setRxBW(270.0f);
+        ELECHOUSE_cc1101.setDRate(10.0f);
+        ELECHOUSE_cc1101.setPktFormat(3); // async serial
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+    if (name == "FuriHalSubGhzPresetOok650Async") {
+        ELECHOUSE_cc1101.setModulation(2);
+        ELECHOUSE_cc1101.setRxBW(650.0f);
+        ELECHOUSE_cc1101.setDRate(10.0f);
+        ELECHOUSE_cc1101.setPktFormat(3);
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+    if (name == "FuriHalSubGhzPreset2FSKDev238Async") {
+        ELECHOUSE_cc1101.setModulation(0); // 2-FSK
+        ELECHOUSE_cc1101.setDeviation(2.380f);
+        ELECHOUSE_cc1101.setRxBW(238.0f);
+        ELECHOUSE_cc1101.setPktFormat(3);
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+    if (name == "FuriHalSubGhzPreset2FSKDev476Async") {
+        ELECHOUSE_cc1101.setModulation(0);
+        ELECHOUSE_cc1101.setDeviation(47.607f);
+        ELECHOUSE_cc1101.setRxBW(476.0f);
+        ELECHOUSE_cc1101.setPktFormat(3);
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+    if (name == "FuriHalSubGhzPresetMSK99_97KbAsync") {
+        ELECHOUSE_cc1101.setModulation(4); // MSK
+        ELECHOUSE_cc1101.setDeviation(47.607f);
+        ELECHOUSE_cc1101.setDRate(99.97f);
+        ELECHOUSE_cc1101.setPktFormat(3);
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+    if (name == "FuriHalSubGhzPresetGFSK9_99KbAsync") {
+        ELECHOUSE_cc1101.setModulation(1); // GFSK
+        ELECHOUSE_cc1101.setDeviation(19.043f);
+        ELECHOUSE_cc1101.setDRate(9.996f);
+        ELECHOUSE_cc1101.setPktFormat(3);
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+
+    // RcSwitch:
+    char* end=nullptr;
+    long proto = std::strtol(name.c_str(), &end, 10);
+    if (end != name.c_str()) {
+        ELECHOUSE_cc1101.setModulation(2); // OOK
+        ELECHOUSE_cc1101.setRxBW(270.0f);
+        ELECHOUSE_cc1101.setDRate(10.0f);
+        ELECHOUSE_cc1101.setPktFormat(3);
+        ELECHOUSE_cc1101.SetTx();
+        return true;
+    }
+
+    // Fallback: OOK async
+    return applyRawSendProfile(mhz);
+}
+
+bool SubGhzService::sendTimingsOOK_(const std::vector<int32_t>& timings) {
+    if (!startTxBitBang()) return false;
+    int level = 1; // start HIGH
+    for (int32_t us : timings) {
+        gpio_set_level((gpio_num_t)gdo0_, level);
+        if (us > 0) esp_rom_delay_us((uint32_t)us);
+        level ^= 1; // alternate
+    }
+    gpio_set_level((gpio_num_t)gdo0_, 0);
+    stopTxBitBang();
+    return true;
+}
+
+static inline void appendPair(std::vector<int32_t>& v, int hi_us, int lo_us) {
+    if (hi_us>0) v.push_back(hi_us);
+    if (lo_us>0) v.push_back(lo_us);
+}
+
+bool SubGhzService::sendRcSwitch_(uint64_t key, uint16_t bits, int te_us, int proto, int repeat) {
+    if (!bits) return false;
+    if (te_us <= 0) te_us = 350;      // défaut
+    if (repeat <= 0) repeat = 10;
+
+    // Usual protocols
+    int sync_hi=0, sync_lo=0, zero_hi=0, zero_lo=0, one_hi=0, one_lo=0;
+
+    if (proto == 1) {            // 350us, sync 1:31, zero 1:3, one 3:1
+        sync_hi = te_us * 1;  sync_lo = te_us * 31;
+        zero_hi = te_us * 1;  zero_lo = te_us * 3;
+        one_hi  = te_us * 3;  one_lo  = te_us * 1;
+    } else if (proto == 2) {     // 650us, sync 1:10, zero 1:2, one 2:1
+        sync_hi = te_us * 1;  sync_lo = te_us * 10;
+        zero_hi = te_us * 1;  zero_lo = te_us * 2;
+        one_hi  = te_us * 2;  one_lo  = te_us * 1;
+    } else {                     // “11” commonly used: 350us, sync 1:23, zero 1:2, one 2:1
+        proto   = 11;
+        sync_hi = te_us * 1;  sync_lo = te_us * 23;
+        zero_hi = te_us * 1;  zero_lo = te_us * 2;
+        one_hi  = te_us * 2;  one_lo  = te_us * 1;
+    }
+
+    std::vector<int32_t> timings;
+    timings.reserve((bits * 2 + 4) * repeat);
+
+    for (int r = 0; r < repeat; ++r) {
+        // sync
+        appendPair(timings, sync_hi, sync_lo);
+
+        // bits MSB->LSB
+        for (int i = bits - 1; i >= 0; --i) {
+            bool b = (key >> i) & 1ULL;
+            if (b) appendPair(timings, one_hi, one_lo);
+            else   appendPair(timings, zero_hi, zero_lo);
+        }
+        // inter-frame gap
+    }
+
+    return sendTimingsOOK_(timings);
+}
+
+bool SubGhzService::sendPrinceton_(uint64_t key, uint16_t bits, int te_us) {
+    // Canon PT2262: TE≈350us, 1=1h3l, 0=3h1l, sync=1h31l
+    return sendRcSwitch_(key, bits, te_us>0?te_us:350, /*proto*/1, /*repeat*/10);
+}
+
+bool SubGhzService::sendBinRaw_(const std::vector<uint8_t>& bytes, int te_us) {
+    if (bytes.empty()) return false;
+    if (te_us <= 0) te_us = 100; // défaut
+    std::vector<int32_t> timings;
+    timings.reserve(bytes.size() * 8 * 2);
+
+    // NRZ OOK: 1 = HIGH (te), 0 = LOW (te) — we alternate using sendTimingsOOK_
+    // So we build: for each bit → duration and let the alternation handle the level.
+    // For strict NRZ, it's better to control the levels; here we encode in half-periods (H/L).
+    // Simple implementation: “bit=1” = (te,te) starting HIGH, “bit=0” = (te,te) but switch level.
+    // Simpler: enforce alternation as: H:te, L:te for each bit, and force the state with a pre-pulse 0.
+    // Here we start HIGH and encode: bit=1 → H:te,L:te ; bit=0 → L:te,H:te
+    int currentLevel = 1;
+    for (uint8_t b : bytes) {
+        for (int i = 7; i >= 0; --i) {
+            bool one = (b >> i) & 1;
+            if (one) {
+                // H then L
+                if (currentLevel != 1) { timings.push_back(0); currentLevel = 1; } // no-op logic
+                appendPair(timings, te_us, te_us);
+            } else {
+                // L then H
+                if (currentLevel != 0) { timings.push_back(0); currentLevel = 0; }
+                appendPair(timings, te_us, te_us);
+            }
+        }
+    }
+    return sendTimingsOOK_(timings);
+}
+
+bool SubGhzService::sendRawTimings(const std::vector<int32_t>& timings) {
+    return sendTimingsOOK_(timings);
+}
+
+bool SubGhzService::send(const SubGhzFileCommand& cmd) {
+    if (!isConfigured_) return false;
+
+    float mhz = cmd.frequency_hz ? (cmd.frequency_hz / 1e6f) : mhz_;
+    tune(mhz);  // update antenna (selectRfPathFor) and RX
+
+    if (!applyPresetByName(cmd.preset, mhz)) {
+        // fallback async OOK TX
+        if (!applyRawSendProfile(mhz)) return false;
+    }
+
+    // IMPORTANT: in async TX mode, GDO0 = data input -> we bit-bang on gdo0_
+    switch (cmd.protocol) {
+        case SubGhzProtocolEnum::RAW:
+            return sendRawTimings(cmd.raw_timings);
+
+        case SubGhzProtocolEnum::BinRAW:
+            return sendBinRaw_(cmd.bitstream_bytes, cmd.te_us ? cmd.te_us : 100);
+
+        case SubGhzProtocolEnum::RcSwitch: {
+            int proto = 11;
+            char* end=nullptr;
+            long p = std::strtol(cmd.preset.c_str(), &end, 10);
+            if (end != cmd.preset.c_str()) proto = (int)p;
+            int te = cmd.te_us ? cmd.te_us : ((proto==2)?650:350);
+            return sendRcSwitch_(cmd.key, cmd.bits ? cmd.bits : 24, te, proto, /*repeat*/10);
+        }
+
+        case SubGhzProtocolEnum::Princeton:
+            return sendPrinceton_(cmd.key, cmd.bits ? cmd.bits : 24, cmd.te_us ? cmd.te_us : 350);
+
+        default:
+            return false;
+    }
+}
 
 // Tembed S3 CC1101 specific
 
