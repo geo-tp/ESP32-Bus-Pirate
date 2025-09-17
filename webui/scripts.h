@@ -12,6 +12,7 @@ let fsTotalBytes = 0;
 let fsUsedBytes  = 0;
 let isUploading  = false;
 const filePanel = document.getElementById("file-panel");
+const filePanelOverlay = document.getElementById("file-panel-overlay");
 
 /* =========================
    WebSocket / Terminal
@@ -172,10 +173,15 @@ function isValidCommand(cmd) {
 /* =========================
    File Panel
    ========================= */
+  
+function onOverlayClick(e) {
+  if (e.target === filePanelOverlay && !isUploading) closeFilePanel();
+}
 
 function openFilePanel() {
   document.getElementById("file-panel-overlay").style.display = "block";
   document.getElementById("file-panel").style.display = "flex";
+  filePanelOverlay.addEventListener("click", onOverlayClick);
   refreshFileList();
 }
 
