@@ -9,7 +9,8 @@ It supports sniffing, sending, scripting, and interacting with various digital p
 
 Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click. See the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command. See [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts) for a collection of scripts.
 
-![Demo showing the different mode of the ESP32 Bus Pirate](images/demo12.gif)
+![Demo showing the different mode of the ESP32 Bus Pirate](images/help.gif)
+![Demo showing the LittleFS file system](images/littlefs.gif)
 
 ## Features
 
