@@ -48,29 +48,6 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 - Import and export data with the **LittleFS** over HTTP.
 - Web interface with **live terminal**, or a classic **serial CLI**.
 
-## Supported Devices
-
-
-| Device               |                                     | Description                       |
-|-----------------------|------------------------------------------|---------------------------------------------------|
-| **ESP32 S3 Dev Kit**  | ![ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
-| **M5 Cardputer**      | ![Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card                |
-| **M5 Cardputer ADV**  | ![Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU                |
-| **M5 Stick C Plus 2** | ![M5 Stick C Plus 2](/images/m5stick_s.jpg)      | 5 GPIO (Grove, Header), screen, mic, buzzer, IR TX, 3 buttons                     |
-| **M5 StampS3**        | ![M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
-| **M5 AtomS3 Lite**    | ![Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), 1 buttton                     |
-| **LILYGO T-Embed**    | ![LILYGO T-Embed](/images/tembed_s.jpg)          | 9 GPIO (Grove, Header), screen, encoder, speaker, mic, SD card                                           |
-| **LILYGO T-Embed CC1101** | ![LILYGO T-Embed CC1101](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, PN532, IR TX, IR RX                                   |
-| **Seeed Studio Xiao S3** | ![Xiao ESP32-S3](/images/xiaos3_s.jpg)        | 9 GPIO (exposed pins), 1 button        
-
-- **Other ESP32-S3-based Boards**
-
-  - All boards based on the **ESP32-S3 can be supported**, provided they have **8 MB of flash.**
-
-  - You can [**flash the DevKit firmware**](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) **onto any ESP32-S3 board.**
-
-  - Keep in mind that the **default pin mapping in the firmware may not match** your specific board.
-
 ## Getting Started
 
 ![ESP32 Bus Pirate web flasher](images/flasher.jpg)
@@ -118,6 +95,31 @@ You can automate interactions with the ESP32 Bus Pirate using **Python scripts o
 **Examples and ready-to-use scripts** are available in the repository: [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts).
 
 **Including:** Logging data in a file, eeprom and flash dump, interracting with GPIOs, LED animation...
+
+## Supported Devices
+
+
+| Device               |    Image                                 | Description                       |
+|-----------------------|------------------------------------------|---------------------------------------------------|
+| **ESP32 S3 Dev Kit**  | ![ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
+| **M5 Cardputer**      | ![Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card                |
+| **M5 Cardputer ADV**  | ![Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU                |
+| **M5 Stick C Plus 2** | ![M5 Stick C Plus 2](/images/m5stick_s.jpg)      | 5 GPIO (Grove, Header), screen, mic, buzzer, IR TX, 3 buttons                     |
+| **M5 StampS3**        | ![M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
+| **M5 AtomS3 Lite**    | ![Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), IR TX, 1 buttton                     |
+| **LILYGO T-Embed**    | ![LILYGO T-Embed](/images/tembed_s.jpg)          | 9 GPIO (Grove, Header), screen, encoder, speaker, mic, SD card                                           |
+| **LILYGO T-Embed CC1101** | ![LILYGO T-Embed CC1101](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, PN532, IR TX, IR RX                                   |
+| **Seeed Studio Xiao S3** | ![Xiao ESP32-S3](/images/xiaos3_s.jpg)        | 9 GPIO (exposed pins), 1 button        
+
+
+- **Other ESP32-S3-based Boards**
+
+  - All boards based on the **ESP32-S3 can be supported**, provided they have **8 MB of flash.**
+
+  - You can [**flash the DevKit firmware**](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) **onto any ESP32-S3 board.**
+
+  - Keep in mind that the **default pin mapping in the firmware may not match** your specific board.
+
    
 ## ESP32 Bus Pirate on M5 Devices
 ![ESP32 Bus Pirate running on M5 Stack devices](images/m5buspirate_s.jpg)
