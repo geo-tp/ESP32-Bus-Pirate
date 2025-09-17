@@ -768,6 +768,7 @@ void SubGhzController::handleHelp() {
     terminalView.println("  jam");
     terminalView.println("  bruteforce");
     terminalView.println("  trace");
+    terminalView.println("  load");
     terminalView.println("  setfrequency");
     terminalView.println("  config");
 }
