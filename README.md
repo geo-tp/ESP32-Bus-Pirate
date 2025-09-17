@@ -50,41 +50,18 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 
 ## Supported Devices
 
-- **ESP32 S3 Dev Kit**
 
-![An Espressif 32 S3 dev kit](images/s3-devkit.jpg)
-
-- **M5 Cardputer ADV**
-
-![An M5 Stack Cardputer device](images/cardputer-adv.jpg)
-
-- **M5 Cardputer**
-
-![An M5 Stack Cardputer device](images/cardputer.jpg)
-
-- **M5 Stick C Plus 2**
-
-![An M5 Stick C Plus 2 device](images/m5stick.jpg)
-
-- **M5 Atom S3 Lite**
-
-![An M5 Atom S3 Lite device](images/atom.jpg)
-
-- **M5 Stamp S3**
-
-![An M5stampS3 micro controller](images/stamps3.jpg)
-
-- **LILYGO T-Embed**
-
-![A LilyGo T-Embed micro controller](images/tembed.jpg)
-
-- **LILYGO T-Embed CC1101**
-
-![A LilyGo T-Embed micro controller](images/tembedcc1101.jpg)
-
-- **Seeed Studio Xiao S3**
-
-![A Seeed Studio Xiao ESP32-S3 micro controller](images/xiaos3.jpg)
+| Device               |                                     | Description                       |
+|-----------------------|------------------------------------------|---------------------------------------------------|
+| **ESP32 S3 Dev Kit**  | ![ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
+| **M5 Cardputer**      | ![Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card                |
+| **M5 Cardputer ADV**  | ![Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU                |
+| **M5 Stick C Plus 2** | ![M5 Stick C Plus 2](/images/m5stick_s.jpg)      | 5 GPIO (Grove, Header), screen, mic, buzzer, IR TX, 3 buttons                     |
+| **M5 StampS3**        | ![M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
+| **M5 AtomS3 Lite**    | ![Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), 1 buttton                     |
+| **LILYGO T-Embed**    | ![LILYGO T-Embed](/images/tembed_s.jpg)          | 9 GPIO (Grove, Header), screen, encoder, speaker, mic, SD card                                           |
+| **LILYGO T-Embed CC1101** | ![LILYGO T-Embed CC1101](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, PN532, IR TX, IR RX                                   |
+| **Seeed Studio Xiao S3** | ![Xiao ESP32-S3](/images/xiaos3_s.jpg)        | 9 GPIO (exposed pins), 1 button        
 
 - **Other ESP32-S3-based Boards**
 
