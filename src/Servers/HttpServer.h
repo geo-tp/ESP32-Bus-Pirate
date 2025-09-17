@@ -27,4 +27,7 @@ private:
     esp_err_t handleLittlefsDelete(httpd_req_t *req);
     esp_err_t handleLittlefsDownload(httpd_req_t* req);
     esp_err_t handleLittlefsUpload(httpd_req_t* req);
+
+    std::string urlDecode(const char* s);
+    std::string sanitizeUploadFilename(const char* raw);
 };

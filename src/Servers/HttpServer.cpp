@@ -189,6 +189,7 @@ esp_err_t HttpServer::handleLittlefsDelete(httpd_req_t *req) {
 
     // OK
     const char* ok = "{\"ok\":true}";
+
     return httpd_resp_send(req, ok, HTTPD_RESP_USE_STRLEN);
 }
 
@@ -263,7 +264,7 @@ esp_err_t HttpServer::handleLittlefsUpload(httpd_req_t* req) {
         if (httpd_req_get_url_query_str(req, query.data(), query.size()) == ESP_OK) {
             char val[256];
             if (httpd_query_key_value(query.data(), "file", val, sizeof(val)) == ESP_OK) {
-                name = val;
+                name = sanitizeUploadFilename(val);
             }
         }
     }
@@ -304,5 +305,46 @@ esp_err_t HttpServer::handleLittlefsUpload(httpd_req_t* req) {
 
     httpd_resp_set_type(req, "application/json; charset=utf-8");
     httpd_resp_set_hdr(req, "Cache-Control", "no-store");
+
     return httpd_resp_send(req, "{\"ok\":true}", HTTPD_RESP_USE_STRLEN);
+}
+
+std::string HttpServer::urlDecode(const char* s) {
+    // Decode %XX and + to space
+    std::string out;
+    for (const char* p = s; *p; ++p) {
+        if (*p == '+') out.push_back(' ');
+        else if (*p == '%' && std::isxdigit((unsigned char)p[1]) && std::isxdigit((unsigned char)p[2])) {
+            auto hex = [](char c){ c=std::toupper((unsigned char)c); return std::isdigit((unsigned char)c)? c-'0' : c-'A'+10; };
+            out.push_back(char((hex(p[1])<<4) | hex(p[2])));
+            p += 2;
+        } else out.push_back(*p);
+    }
+
+    return out;
+}
+
+std::string HttpServer::sanitizeUploadFilename(const char* raw) {
+    std::string name = urlDecode(raw);
+
+    // Only keep the base name (remove path)
+    if (auto pos = name.find_last_of("/\\"); pos != std::string::npos)
+        name = name.substr(pos + 1);
+
+    // Replace all whitespace (spaces, etc) with _
+    std::string out; out.reserve(name.size());
+    bool prevUnderscore = false;
+    for (unsigned char c : name) {
+        if (std::isspace(c) || c == 0xA0 /*NBSP*/ ) {
+            if (!prevUnderscore) { out.push_back('_'); prevUnderscore = true; }
+        } else {
+            out.push_back((char)c);
+            prevUnderscore = false;
+        }
+    }
+    // trim _ from start and end
+    while (!out.empty() && out.front() == '_') out.erase(out.begin());
+    while (!out.empty() && out.back()  == '_') out.pop_back();
+
+    return out;
 }
