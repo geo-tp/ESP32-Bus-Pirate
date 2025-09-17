@@ -341,27 +341,27 @@ void InfraredController::handleLoad(TerminalCommand const& command) {
     int MAX_FILE_SIZE = 32 * 1024; // 32 KB
     auto fileSize = littleFsService.getFileSize("/" + chosen);
     if (fileSize == 0 || fileSize > MAX_FILE_SIZE) {
-        terminalView.println("INFRARED: File size invalid (>32KB): " + chosen);
+        terminalView.println("\nINFRARED: File size invalid (>32KB): " + chosen);
         return;
     }
 
     // Load file content
     std::string text;
     if (!littleFsService.readAll("/" + chosen, text)) {
-        terminalView.println("INFRARED: Failed to read file: " + chosen);
+        terminalView.println("\nINFRARED: Failed to read file: " + chosen);
         return;
     }
 
     // Verify format
     if (!infraredRemoteTransformer.isValidInfraredFile(text)) {
-        terminalView.println("INFRARED: Unrecognized .ir format or empty: " + chosen);
+        terminalView.println("\nINFRARED: Unrecognized .ir format or empty: " + chosen);
         return;
     }
 
     // Extract commands
     auto cmds = infraredRemoteTransformer.transformFromFileFormat(text);
     if (cmds.empty()) {
-        terminalView.println("INFRARED: No commands found in: " + chosen);
+        terminalView.println("\nINFRARED: No commands found in: " + chosen);
         return;
     }
 
@@ -378,23 +378,11 @@ void InfraredController::handleLoad(TerminalCommand const& command) {
             break;
         }
 
-        // Convert
-        const auto& ir = cmds[idxCmd];
-        uint8_t device = static_cast<uint8_t>(ir.address & 0xFF);
-        uint8_t sub = static_cast<uint8_t>((ir.address >> 8) & 0xFF);
-        auto finalCmd = InfraredCommand(
-            ir.protocol,
-            device,
-            sub,
-            ir.function
-        );
-
         // Send
-        infraredService.sendInfraredCommand(finalCmd);
-        terminalView.println("\n ✅  Sent command '" + ir.functionName + "' from file '" + chosen + "'");
+        infraredService.sendInfraredFileCommand(cmds[idxCmd]);
+        terminalView.println("\n ✅  Sent command '" + cmds[idxCmd].functionName + "' from file '" + chosen + "'");
     }
 }
-
 
 /*
 Config

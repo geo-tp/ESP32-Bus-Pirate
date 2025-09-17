@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <Models/InfraredCommand.h>
+#include <Models/InfraredFileRemoteCommand.h>
 #include <Vendors/MakeHex.h>
 #include "Enums/InfraredProtocolEnum.h"
 
@@ -11,6 +12,7 @@ public:
     void startReceiver();
     void stopReceiver();
     void sendInfraredCommand(InfraredCommand command);
+    void sendInfraredFileCommand(InfraredFileRemoteCommand command);
     InfraredCommand receiveInfraredCommand();
     bool receiveRaw(std::vector<uint16_t>& timings, uint32_t& khz);
     void sendRaw(const std::vector<uint16_t>& timings, uint32_t khz);

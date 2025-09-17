@@ -117,26 +117,17 @@ std::vector<std::string> InfraredRemoteTransformer::extractFunctionNames(
 
 uint16_t InfraredRemoteTransformer::convertHexToUint16(const std::string& hexString, size_t byteLimit) {
     std::istringstream iss(hexString);
-    std::string byteStr;
+    std::string tok;
     uint16_t result = 0;
-    int byteCount = 0;
+    unsigned shift = 0;
+    size_t count = 0;
 
-    // Vector to hold the bytes in reverse order
-    std::vector<uint8_t> bytes;
-
-    // Read each byte from the string and store in the vector
-    while (iss >> byteStr && byteCount < byteLimit) {
-        // Convert the byte string to an integer and store it in the vector
-        uint8_t byte = std::stoul(byteStr, nullptr, 16);
-        bytes.push_back(byte);
-        byteCount++;
+    while (iss >> tok && count < byteLimit) {
+        unsigned v = std::stoul(tok, nullptr, 16) & 0xFFu;
+        result |= static_cast<uint16_t>(v) << shift;
+        shift += 8;
+        ++count;
     }
-
-    // Combine the bytes in reverse order
-    for (int i = byteCount - 1; i >= 0; --i) {
-        result = (result << 8) | bytes[i];
-    }
-
     return result;
 }
 

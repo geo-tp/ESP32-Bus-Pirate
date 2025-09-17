@@ -69,6 +69,25 @@ void InfraredService::sendInfraredCommand(InfraredCommand command) {
     }
 }
 
+void InfraredService::sendInfraredFileCommand(InfraredFileRemoteCommand command) {
+
+    if (command.protocol == InfraredProtocolEnum::RAW) {
+        IrSender.sendRaw(command.rawData, command.rawDataSize, command.frequency);
+        return;
+    }
+
+    uint8_t device = static_cast<uint8_t>(command.address & 0xFF);
+    uint8_t sub = static_cast<uint8_t>((command.address >> 8) & 0xFF);
+    auto finalCmd = InfraredCommand(
+        command.protocol,
+        device,
+            sub,
+            command.function
+        );
+
+    sendInfraredCommand(finalCmd);
+}
+
 InfraredCommand InfraredService::receiveInfraredCommand() {
     InfraredCommand command;
 
