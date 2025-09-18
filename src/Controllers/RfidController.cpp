@@ -329,10 +329,10 @@ void RfidController::handleConfig() {
     bool ok = rfidService.begin();
 
     if (!ok) {
-        terminalView.println("\nRFID: PN532 failed to initialize. Check wiring.\n");
+        terminalView.println("\n ❌ RFID: PN532 failed to initialize. Check wiring.\n");
         configured = false;
     } else {
-        terminalView.println("\nRFID: PN532 module detected and initialized.\n");
+        terminalView.println("\n ✅ RFID: PN532 module detected and initialized.\n");
         configured = true;
     }
 }
