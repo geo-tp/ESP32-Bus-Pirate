@@ -447,9 +447,21 @@ void DioController::handleHelp() {
 
 bool DioController::isPinAllowed(uint8_t pin, const std::string& context) {
     const auto& protectedPins = state.getProtectedPins();
+    
     if (std::find(protectedPins.begin(), protectedPins.end(), pin) != protectedPins.end()) {
         terminalView.println("DIO " + context + ": Pin " + std::to_string(pin) + " is protected and cannot be used.");
         return false;
     }
+
+    if (pin > 48 /* max pin for S3 */) {
+        terminalView.println("DIO " + context + ": Pin " + std::to_string(pin) + " is out of range (0-48).");
+        return false;
+    }
+
+    if (pin < 0) {
+        terminalView.println("DIO " + context + ": Pin " + std::to_string(pin) + " is invalid.");
+        return false;
+    }
+
     return true;
 }
