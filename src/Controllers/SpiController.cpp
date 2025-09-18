@@ -180,16 +180,33 @@ void SpiController::handleSlave() {
 SD Card
 */
 void SpiController::handleSdCard() {
+    uint8_t cs, clk, miso, mosi;
+    cs = state.getSpiCSPin();
+    clk = state.getSpiCLKPin();
+    miso = state.getSpiMISOPin();
+    mosi = state.getSpiMOSIPin();
+
+    // Internal SD card slot
+    if (state.getHasInternalSdCard()) {
+        auto confirm = userInputManager.readYesNo("Use internal SD card slot?", true);
+        if (confirm) {
+            cs = state.getSdCardCsPin();
+            clk = state.getSdCardClkPin();
+            miso = state.getSdCardMisoPin();
+            mosi = state.getSdCardMosiPin();
+        }
+    }
+
     terminalView.println("SD Card: Mounting...");
     delay(500);
 
     // Configure
     spiService.end();
     bool success = sdService.configure(
-        state.getSpiCLKPin(),
-        state.getSpiMISOPin(),
-        state.getSpiMOSIPin(),
-        state.getSpiCSPin()
+        clk,
+        miso,
+        mosi,
+        cs
     );
 
     if (!success) {
