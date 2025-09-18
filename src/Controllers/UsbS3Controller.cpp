@@ -205,8 +205,14 @@ Stick
 */
 void UsbS3Controller::handleUsbStick() {
     terminalView.println("USB Stick: Starting... USB Drive can take 30sec to appear");
-    usbService.storageBegin(state.getSpiCSPin(), state.getSpiCLKPin(), 
-                            state.getSpiMISOPin(), state.getSpiMOSIPin());
+    usbService.storageBegin(state.getSdCardCsPin(), state.getSdCardClkPin(),
+                            state.getSdCardMisoPin(), state.getSdCardMosiPin());
+
+    if (usbService.isStorageActive()) {
+        terminalView.println("\n ✅ USB Stick configured. Mounting drive... (Can take up to 30 sec)\n");
+    } else {
+        terminalView.println("\n ❌ USB Stick configuration failed. No SD card detected.\n");
+    }
 }
 
 /*
@@ -216,26 +222,29 @@ void UsbS3Controller::handleConfig() {
     terminalView.println("");
     terminalView.println("USB Configuration:");
 
-    const auto& forbidden = state.getProtectedPins();
+    auto confirm = userInputManager.readYesNo("Configure SD card pins for USB?", false);
 
-    uint8_t cs = userInputManager.readValidatedPinNumber("SD Card CS pin", state.getSpiCSPin(), forbidden);
-    state.setSpiCSPin(cs);
-
-    uint8_t clk = userInputManager.readValidatedPinNumber("SD Card CLK pin", state.getSpiCLKPin(), forbidden);
-    state.setSpiCLKPin(clk);
-
-    uint8_t miso = userInputManager.readValidatedPinNumber("SD Card MISO pin", state.getSpiMISOPin(), forbidden);
-    state.setSpiMISOPin(miso);
-
-    uint8_t mosi = userInputManager.readValidatedPinNumber("SD Card MOSI pin", state.getSpiMOSIPin(), forbidden);
-    state.setSpiMOSIPin(mosi);
+    if (confirm) {
+        const auto& forbidden = state.getProtectedPins();
+    
+        uint8_t cs = userInputManager.readValidatedPinNumber("SD Card CS pin", state.getSdCardCsPin(), forbidden);
+        state.setSdCardCsPin(cs);
+    
+        uint8_t clk = userInputManager.readValidatedPinNumber("SD Card CLK pin", state.getSdCardClkPin(), forbidden);
+        state.setSdCardClkPin(clk);
+    
+        uint8_t miso = userInputManager.readValidatedPinNumber("SD Card MISO pin", state.getSdCardMisoPin(), forbidden);
+        state.setSdCardMisoPin(miso);
+    
+        uint8_t mosi = userInputManager.readValidatedPinNumber("SD Card MOSI pin", state.getSdCardMosiPin(), forbidden);
+        state.setSdCardMosiPin(mosi);
+    }
 
     terminalView.println("USB Configured.");
     terminalView.println("\n[WARNING] If you're using USB Serial terminal mode,");
     terminalView.println("          using USB commands may interrupt the session.");
     terminalView.println("          Use Web UI or restart if connection is lost.\n");
 }
-
 
 /*
 Reset
