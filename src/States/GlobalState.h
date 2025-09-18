@@ -149,6 +149,14 @@ private:
     // JTAG Default Pin
     std::vector<uint8_t> jtagScanPins = { 1, 3, 5, 7, 9 };
 
+    // SD Card Default Configuration
+    uint8_t sdCardCsPin = 12;
+    uint8_t sdCardClkPin = 40;
+    uint8_t sdCardMisoPin = 39;
+    uint8_t sdCardMosiPin = 14;
+    uint32_t sdCardFrequency = 20000000; // 20 MHz
+    bool hasInternalSdCard = false;
+
     // SD Card File Limits
     size_t fileCountLimit = 512;
     size_t fileCacheLimit = 64;
@@ -386,6 +394,20 @@ public:
     void setRfidSdaPin(uint8_t pin) { rfidSdaPin = pin; }
     void setRfidSclPin(uint8_t pin) { rfidSclPin = pin; }
 
+    // SD Card
+    uint8_t getSdCardCsPin() const { return sdCardCsPin; }
+    uint8_t getSdCardClkPin() const { return sdCardClkPin; }
+    uint8_t getSdCardMisoPin() const { return sdCardMisoPin; }
+    uint8_t getSdCardMosiPin() const { return sdCardMosiPin; }
+    uint32_t getSdCardFrequency() const { return sdCardFrequency; }
+    bool getHasInternalSdCard() const { return hasInternalSdCard; }
+
+    void setSdCardCsPin(uint8_t pin) { sdCardCsPin = pin; }
+    void setSdCardClkPin(uint8_t pin) { sdCardClkPin = pin; }
+    void setSdCardMisoPin(uint8_t pin) { sdCardMisoPin = pin; }
+    void setSdCardMosiPin(uint8_t pin) { sdCardMosiPin = pin; }
+    void setSdCardFrequency(uint32_t freq) { sdCardFrequency = freq; }
+
     // SD File Limits
     size_t getFileCountLimit() const { return fileCountLimit; }
     size_t getFileCacheLimit() const { return fileCacheLimit; }
@@ -569,6 +591,27 @@ public:
         #endif
         #ifdef SUBGHZ_SI_PIN
             rf24MosiPin = SUBGHZ_SI_PIN;
+        #endif
+        #ifdef SDCARD_CS_PIN
+            hasInternalSdCard = true;
+            sdCardCsPin = SDCARD_CS_PIN;
+        #else 
+            sdCardCsPin = spiCSPin;
+        #endif
+        #ifdef SDCARD_CLK_PIN
+            sdCardClkPin = SDCARD_CLK_PIN;
+        #else 
+            sdCardClkPin = spiCLKPin;
+        #endif
+        #ifdef SDCARD_MISO_PIN
+            sdCardMisoPin = SDCARD_MISO_PIN;
+        #else
+            sdCardMisoPin = spiMISOPin;
+        #endif
+        #ifdef SDCARD_MOSI_PIN
+            sdCardMosiPin = SDCARD_MOSI_PIN;
+        #else
+            sdCardMosiPin = spiMOSIPin;
         #endif
 
         #ifdef PROTECTED_PINS
