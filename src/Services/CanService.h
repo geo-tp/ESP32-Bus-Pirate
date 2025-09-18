@@ -29,6 +29,7 @@ public:
     void setMask(uint32_t mask);
 
     std::string getStatus();
+    bool probe();
     
 private:
     CAN_SPEED resolveBitrate(uint32_t kbps);

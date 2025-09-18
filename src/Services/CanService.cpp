@@ -189,3 +189,38 @@ uint32_t CanService::closestSupportedBitrate(uint32_t kbps) {
 
     return best;
 }
+
+bool CanService::probe() {
+    // Loopback test
+    if (mcp2515.setLoopbackMode() != MCP2515::ERROR_OK) return false;
+
+    // Prepare a test frame
+    struct can_frame f{};
+    f.can_id  = 0x123;
+    f.can_dlc = 2;
+    f.data[0] = 0xAA;
+    f.data[1] = 0xAA;
+
+    // Send a test frame
+    if (mcp2515.sendMessage(&f) != MCP2515::ERROR_OK) {
+        mcp2515.setNormalMode();
+        return false;
+    }
+
+    // Receive it back
+    unsigned long t0 = millis();
+    while (millis() - t0 < 20) {
+        if (mcp2515.checkReceive()) {
+            struct can_frame rx{};
+            if (mcp2515.readMessage(&rx) == MCP2515::ERROR_OK &&
+                rx.can_id == f.can_id && rx.can_dlc == f.can_dlc &&
+                rx.data[0] == f.data[0] && rx.data[1] == f.data[1]) {
+                mcp2515.setNormalMode();
+                return true; // CAN bus OK, we received what we sent
+            }
+        }
+        delay(1);
+    }
+    mcp2515.setNormalMode();
+    return false;
+}

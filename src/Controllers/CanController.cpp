@@ -197,8 +197,16 @@ void CanController::handleConfig() {
         terminalView.println("⚠️  Requested bitrate " + std::to_string(kbps) + " kbps is not supported. Using " + std::to_string(adjusted) + " kbps instead.");
     }
 
+    // Apply configuration
     canService.configure(cs, sck, so, si, kbps);
-    terminalView.println("CAN configured.\n");
+
+    // Test MCP2515 responsiveness
+    auto probeOk = canService.probe();
+    if (!probeOk) {
+        terminalView.println("\n ❌ MCP2515 CAN configuration failed. Please check your wiring.\n");
+        return;
+    }
+    terminalView.println("\n ✅ MCP2515 CAN configured.\n");
 }
 
 /*
