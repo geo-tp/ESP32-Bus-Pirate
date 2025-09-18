@@ -1,6 +1,5 @@
 #include "HttpServer.h"
 
-
 void HttpServer::setupRoutes() {
     // Page HTML
     static httpd_uri_t root_uri;
@@ -327,24 +326,41 @@ std::string HttpServer::urlDecode(const char* s) {
 std::string HttpServer::sanitizeUploadFilename(const char* raw) {
     std::string name = urlDecode(raw);
 
-    // Only keep the base name (remove path)
-    if (auto pos = name.find_last_of("/\\"); pos != std::string::npos)
-        name = name.substr(pos + 1);
-
-    // Replace all whitespace (spaces, etc) with _
-    std::string out; out.reserve(name.size());
+    // space to underscore
+    std::string tmp; tmp.reserve(name.size());
     bool prevUnderscore = false;
     for (unsigned char c : name) {
-        if (std::isspace(c) || c == 0xA0 /*NBSP*/ ) {
-            if (!prevUnderscore) { out.push_back('_'); prevUnderscore = true; }
+        if (std::isspace(c) || c == 0xA0 /*NBSP*/) {
+            if (!prevUnderscore) { tmp.push_back('_'); prevUnderscore = true; }
         } else {
-            out.push_back((char)c);
+            tmp.push_back((char)c);
             prevUnderscore = false;
         }
     }
-    // trim _ from start and end
-    while (!out.empty() && out.front() == '_') out.erase(out.begin());
-    while (!out.empty() && out.back()  == '_') out.pop_back();
 
-    return out;
+    // only a-z A-Z 0-9 . _ -
+    std::string safe; safe.reserve(tmp.size());
+    prevUnderscore = false;
+    for (unsigned char c : tmp) {
+        bool ok = (c >= 'A' && c <= 'Z') ||
+                  (c >= 'a' && c <= 'z') ||
+                  (c >= '0' && c <= '9') ||
+                  c == '.' || c == '_' || c == '-';
+        char outc = ok ? (char)c : '_';
+        if (outc == '_' && prevUnderscore) continue; // avoid double __
+        safe.push_back(outc);
+        prevUnderscore = (outc == '_');
+    }
+
+    // limit length
+    const size_t MAX_BASE = 100;
+    if (safe.size() > MAX_BASE) safe.resize(MAX_BASE);
+    
+    // timestamp if empty
+    if (safe.empty()) {
+        safe = "file_" + std::to_string(millis());
+    }
+
+    return safe;
 }
+
