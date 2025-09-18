@@ -11,6 +11,7 @@
 #include "driver/spi_master.h"
 #include "lwip/ip4_addr.h"
 #include <Arduino.h>
+#include <SPI.h>
 
 class EthernetService {
 public:
@@ -21,7 +22,7 @@ public:
 
     // Configure the W5500
     bool configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8_t pinMISO, int8_t pinMOSI, uint8_t pinIRQ, uint32_t spiHz, const std::array<uint8_t,6>& chosenMac);
-
+    
     // Reset the W5500
     void hardReset();
 
@@ -51,6 +52,7 @@ private:
     static bool s_stackInited;
 
     spi_device_handle_t _spi;
+    spi_host_device_t _spiHost = SPI3_HOST;
     esp_eth_handle_t    _eth;
     esp_netif_t*        _netif;
     esp_eth_netif_glue_handle_t _glue;

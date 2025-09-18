@@ -125,12 +125,12 @@ void EthernetController::handleConfig() {
         mac
     );
 
-    if (!confirm) {
-        terminalView.println("Ethernet configuration failed. Check connections on W5500");
+    if (confirm) {
+        terminalView.println("\n ✅ W5500 Ethernet configured.\n");
         return;
     }
 
-    terminalView.println("Ethernet configured.");
+    terminalView.println("\n ❌ W5500 Ethernet configuration failed. Check your wiring.\n");
 }
 
 /*

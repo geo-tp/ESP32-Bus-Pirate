@@ -49,20 +49,25 @@ void EthernetService::ensureStacksInited() {
 }
 
 bool EthernetService::configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8_t pinMISO, int8_t pinMOSI, uint8_t pinIRQ, uint32_t spiHz, const std::array<uint8_t,6>& chosenMac) {
-    _pinRST = pinRST;
-    _pinIRQ = pinIRQ;
-
     #ifdef DEVICE_M5STICK
         ESP_LOGE(TAG, "M5Stick not supported");
         return false;
     #else
+    
+    if (_configured) {
+        return true; // already configured
+    }
+
+    _pinRST = pinRST;
+    _pinIRQ = pinIRQ;
+
     ensureStacksInited();
 
     // Service ISR GPIO
     static bool s_isr = false;
     if (!s_isr) {
         esp_err_t e = gpio_install_isr_service(0);
-        if (e != ESP_OK) { LOG_ERR("gpio_install_isr_service", e); return false; }
+        // Not a problem if already installed
     }
 
     // Bus SPI
@@ -72,8 +77,13 @@ bool EthernetService::configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8
     buscfg.sclk_io_num = pinSCK;
     buscfg.quadwp_io_num = -1;
     buscfg.quadhd_io_num = -1;
-    esp_err_t e1 = spi_bus_initialize(SPI3_HOST, &buscfg, SPI_DMA_CH_AUTO);
-    if (e1 != ESP_OK) { LOG_ERR("falied init spi bus", e1); return false; }
+
+    #ifdef DEVICE_CARDPUTER
+        _spiHost = SPI2_HOST;
+    #endif
+
+    esp_err_t e1 = spi_bus_initialize(_spiHost, &buscfg, SPI_DMA_CH_AUTO);
+    if (e1 != ESP_OK) { LOG_ERR("failed init spi bus", e1); return false; }
 
     // Device config
     spi_device_interface_config_t devcfg_final{};
@@ -86,7 +96,7 @@ bool EthernetService::configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8
     devcfg_final.queue_size = 4;
 
     // Add device
-    esp_err_t eDev = spi_bus_add_device(SPI3_HOST, &devcfg_final, &_spi);
+    esp_err_t eDev = spi_bus_add_device(_spiHost, &devcfg_final, &_spi);
     if (eDev != ESP_OK) { LOG_ERR("spi_bus_add_device(final)", eDev); return false; }
 
     // MAC/PHY W5500
@@ -337,15 +347,4 @@ static bool _w5500_spi_write(spi_device_handle_t dev, uint16_t addr, uint8_t bsb
     t.length = 8 * sizeof(tx);
     t.tx_buffer = tx;
     return (spi_device_transmit(dev, &t) == ESP_OK);
-}
-
-// low level SPI helpers to probe W5500 before driver install
-static bool _spi_set_speed(spi_device_handle_t& dev, int csPin, int hz) {
-    if (dev) { spi_bus_remove_device(dev); dev = nullptr; }
-    spi_device_interface_config_t devcfg{};
-    devcfg.mode = 0;
-    devcfg.clock_speed_hz = hz; 
-    devcfg.spics_io_num = csPin;
-    devcfg.queue_size = 4;
-    return spi_bus_add_device(SPI3_HOST, &devcfg, &dev) == ESP_OK;
 }
