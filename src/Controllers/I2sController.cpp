@@ -232,28 +232,32 @@ void I2sController::handleTestSpeaker() {
     }
     delay(800);
 
-    // Config for PCM playback
-    i2sService.configureOutput(
-        state.getI2sBclkPin(),
-        state.getI2sLrckPin(),
-        state.getI2sDataPin(),
-        12000,
-        16
-    );
+    #ifndef DEVICE_M5STICK
+        // No flash space on M5Stick for this
 
-    // PCM Playback test
-    terminalView.println("  PCM playback...");
-    i2sService.playPcm(PcmSoundtestComplete, sizeof(PcmSoundtestComplete));
-
-    // Restaure config
-    i2sService.configureOutput(
-        state.getI2sBclkPin(),
-        state.getI2sLrckPin(),
-        state.getI2sDataPin(),
-        state.getI2sSampleRate(),
-        state.getI2sBitsPerSample()
-    );
-
+        // Config for PCM playback
+        i2sService.configureOutput(
+            state.getI2sBclkPin(),
+            state.getI2sLrckPin(),
+            state.getI2sDataPin(),
+            12000,
+            16
+        );
+        
+        // PCM Playback test
+        terminalView.println("  PCM playback...");
+        i2sService.playPcm(PcmSoundtestComplete, sizeof(PcmSoundtestComplete));
+        
+        // Restaure config
+        i2sService.configureOutput(
+            state.getI2sBclkPin(),
+            state.getI2sLrckPin(),
+            state.getI2sDataPin(),
+            state.getI2sSampleRate(),
+            state.getI2sBitsPerSample()
+        );
+    #endif
+    
     terminalView.println("\nI2S Speaker Test: Done.");
 }
 
