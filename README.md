@@ -1,16 +1,16 @@
 # ESP32 Bus Pirate
 
-![ESP32 Bus Pirate Firmware](images/logo_protocols_banner_small.png)
+![Logo banner of the ESP32 Bus Pirate firmware](images/logo_protocols_banner_small.png)
 
 
 **ESP32 Bus Pirate** is an open-source firmware that turns your device into a multi-protocol hacker's tool, inspired by the [legendary Bus Pirate](https://buspirate.com/).
 
-It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It can also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz, RFID.
+It supports sniffing, sending, scripting, and interacting with various digital protocols (I2C, UART, 1-Wire, SPI, etc.) via a serial terminal or web-based CLI. It also communicates with radio protocols like Bluetooth, Wi-Fi, Sub-GHz and RFID.
 
-Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click. See the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command. See [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts) for a collection of scripts.
+Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to install the firmware in one click. See the [Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) for step-by-step guides on every mode and command. Check [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts) for a collection of scripts.
 
-![Demo showing the different mode of the ESP32 Bus Pirate](images/help.gif)
-![Demo showing the LittleFS file system](images/littlefs.gif)
+![Demo showing the different mode of the ESP32 Bus Pirate firmware](images/help.gif)
+![Demo showing the LittleFS file system of the ESP32 Bus Pirate firmware](images/littlefs.gif)
 
 ## Features
 
@@ -36,9 +36,9 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
    - [RF24](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/21-RF24) (scan, sniff)
 
 
-- **Protocol sniffers** for I2C, Wi-Fi, Bluetooth, 1Wire, 2wire, CAN, SubGhz.
+- **Protocol sniffers** for I2C, SPI, 1Wire, 2wire, CAN, Wi-Fi, Bluetooth, SubGhz.
 - Baudrate **auto-detection**, AT commands and various tools for UART.
-- Registers manipulation, **eeprom dump tools**, identify devices for I2C.
+- Registers manipulation, **EEPROM dump tools**, identify devices for I2C.
 - Read all sort of **EEPROM, Flash** and various others tools for SPI.
 - Scripting using **Bus Pirate-style bytecode** instructions or **Python**.
 - Device-B-Gone command with more than **80 supported INFRARED protocols**.
@@ -46,35 +46,34 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 - Analyze radio signals and frequencies **on every bands**.
 - Near than **50 addressable LEDs protocols** supported.
 - **Ethernet and WiFi** are supported to access networks.
-- Import and export data with the **LittleFS** over HTTP.
-- Web interface with **live terminal**, or a classic **serial CLI**.
+- Import and export data with the **LittleFS over HTTP.**
 
 ## Supported Devices
 
 
 | Device               |                                     | Description                       |
 |-----------------------|------------------------------------------|---------------------------------------------------|
-| **ESP32 S3 Dev Kit**  | ![ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
-| **M5 Cardputer**      | ![Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card                |
-| **M5 Cardputer ADV**  | ![Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU                |
-| **M5 Stick C Plus 2** | ![M5 Stick C Plus 2](/images/m5stick_s.jpg)      | 5 GPIO (Grove, Header), screen, mic, buzzer, IR TX, 3 buttons                     |
-| **M5 StampS3**        | ![M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
-| **M5 AtomS3 Lite**    | ![Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), IR TX, 1 buttton                     |
-| **LILYGO T-Embed**    | ![LILYGO T-Embed](/images/tembed_s.jpg)          | 9 GPIO (Grove, Header), screen, encoder, speaker, mic, SD card                                           |
-| **LILYGO T-Embed CC1101** | ![LILYGO T-Embed CC1101](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, PN532, IR TX, IR RX                                   |
-| **Seeed Studio Xiao S3** | ![Xiao ESP32-S3](/images/xiaos3_s.jpg)        | 9 GPIO (exposed pins), 1 button        
+| **ESP32 S3 Dev Kit**  | ![Photo of the ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
+| **M5 Cardputer**      | ![Photo of the M5 Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card                |
+| **M5 Cardputer ADV**  | ![Photo of the M5 Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU                |
+| **M5 Stick C Plus 2** | ![Photo of the M5 Stick C Plus 2](/images/m5stick_s.jpg)      | 5 GPIO (Grove, Header), screen, mic, buzzer, IR TX, IMU, 3 buttons                     |
+| **M5 StampS3**        | ![Photo of the M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
+| **M5 AtomS3 Lite**    | ![Photo of the M5 Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), IR TX, 1 buttton                     |
+| **LILYGO T-Embed**    | ![Photo of the LILYGO T-Embed](/images/tembed_s.jpg)          | 9 GPIO (Grove, Header), screen, encoder, speaker, mic, SD card                                           |
+| **LILYGO T-Embed CC1101** | ![Photo of the LILYGO T-Embed CC1101](/images/tembedcc1101_s.jpg) | 4 GPIO (2x Qwiic), screen, encoder, speaker, mic, SD Card, CC1101, PN532, IR TX, IR RX                                   |
+| **Seeed Studio Xiao S3** | ![Photo of the Seeed Studio Xiao ESP32-S3](/images/xiaos3_s.jpg)        | 9 GPIO (exposed pins), 1 button        
 
 - **Other ESP32-S3-based Boards**
 
-  - All boards based on the **ESP32-S3 can be supported**, provided they have **8 MB of flash.**
+  - All boards based on the **ESP32-S3 can be supported**, provided they have at least **8 MB of flash.**
 
-  - You can **flash the DevKit firmware onto any ESP32-S3 board.**
+  - You can **flash the s3 dev-kit firmware onto any ESP32-S3 board.**
 
   - Keep in mind that the **default pin mapping in the firmware may not match** your specific board.
 
 ## Getting Started
 
-![ESP32 Bus Pirate web flasher](images/flasher.jpg)
+![Banner of the ESP32 Bus Pirate web flasher](images/flasher.jpg)
 
 1. 🔧 Flash the firmware  
    - Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to burn the firmware directly from a web browser.
@@ -92,11 +91,10 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
    sniff
    ...
     ```
-   See detailed explanations about [Terminal Commands](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) and how each one works.
 
 ## Wiki
 
-![ESP32 Bus Pirate Wiki](images/bus_pirate_wiki.png)
+![Banner of the ESP32 Bus Pirate Wiki page](images/bus_pirate_wiki.png)
 
 📚 Visit the **[Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki)** for detailed documentation on every mode and command.
 
@@ -105,26 +103,24 @@ Includes:
 - [Mode overviews](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki) - Browse supported modes.
 - [Instruction syntax](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Instructions) - Master the instructions.
 - [Serial setup](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Serial) - Serial access via USB.
-- [Python scripting examples](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Python) - Automate tasks using Python.
-
 
 The wiki is the best place to learn how everything works.
 
 ## Scripting
 
-![ESP32 Bus Pirate Scripts](images/bus_pirate_scripts.png)
+![Banner of the ESP32 Bus Pirate Scripts page](images/bus_pirate_scripts.png)
 
-You can automate interactions with the ESP32 Bus Pirate using **Python scripts over serial.**
+🛠️ You can [automate interactions with the ESP32 Bus Pirate](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Python) using **Python scripts over serial.**
 
 **Examples and ready-to-use scripts** are available in the repository: [ESP32 Bus Pirate Scripts](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts).
 
 **Including:** Logging data in a file, eeprom and flash dump, interracting with GPIOs, LED animation...
    
 ## ESP32 Bus Pirate on M5 Devices
-![ESP32 Bus Pirate running on M5 Stack devices](images/m5buspirate_s.jpg)
+![A photo of the ESP32 Bus Pirate firmware running on M5 Stack devices](images/m5buspirate_s.jpg)
 
 ## ESP32 Bus Pirate on T-Embed
-![ESP32 Bus Pirate running on M5 Stack devices](images/tembedbuspirate_s.jpg)
+![A photo of the ESP32 Bus Pirate firmware running on Lilygo device](images/tembedbuspirate_s.jpg)
 
 ## Web & Serial Interfaces
 
@@ -132,27 +128,26 @@ The ESP32 Bus Pirate firmware provides two command-line interface (CLI) modes:
 
 | Interface         | Advantages                                                                 | Ideal for...                          |
 |------------------|-----------------------------------------------------------------------------|----------------------------------------|
-| **Web Interface** | - Accessible from any browser<br>- Works over Wi-Fi<br>- No cables needed | Quick tests, demos, headless setups   |
+| **Web Interface** | - Accessible from any browser<br>- PC, tablets, mobiles<br>- Works over Wi-Fi<br>- No cables needed | Quick tests, demos, headless setups   |
 | **Serial Interface** | - Faster performance<br>- Instant responsiveness<br>- Handles large data smoothly | Intensive sessions, frequent interactions |
 
 
 Both interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
 
-![An iPhone screenshot showing Bus Pirate web cli](images/presentation_mobile.png)
+## Mobile Web Interface over WiFi
+![An iPhone screenshot showing the Bus Pirate firmware web interface](images/presentation_mobile.png)
 
 ## Using the ESP32 Bus Pirate to speak UART over WiFi
-![Using the ESP32 Bus pirate with UART](images/demo2.gif)
+![A demo Using the ESP32 Bus pirate firmware with UART](images/demo2.gif)
 
 ## Contribute
 See [How To Contribute](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Contribute) section, which outlines a **simple way to add a new command** to any mode.
 
 ## Visuals Assets
 
-#### ![ESP32 Bus Pirate Firmware](images/logo_square_small.png)
+#### ![Small logo of the ESP32 Bus Pirate firmware](images/logo_square_small.png)
 
-[Images, logo, presentations, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets)
-
-These visuals can be **freely used in blog posts, documentation, videos, or articles** to help explain and promote the firmware.
+See [images, logo, presentations, photo, video, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets). These visuals can be **freely used in blog posts, documentation, videos, or articles** to help explain and promote the firmware.
 
 
 ## Warning
