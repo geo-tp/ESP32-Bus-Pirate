@@ -67,6 +67,7 @@ private:
         const std::vector<int>& bitRawList,
         const std::vector<uint64_t>& keyList,
         const std::vector<std::string>& rawDataLines,
+        const std::vector<uint8_t>&     binRawBytes,
         std::vector<SubGhzFileCommand>& out,
         const std::string& sourcePath
     );
