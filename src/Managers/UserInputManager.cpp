@@ -7,6 +7,16 @@ std::string UserInputManager::getLine(bool onlyNumber /* = false */) {
     while (true) {
         char c = terminalInput.handler();
 
+        if (c == CARDPUTER_SPECIAL_ARROW_UP) {
+            terminalView.print(std::string(1, CARDPUTER_SPECIAL_ARROW_UP));
+            continue;
+        }
+
+        if (c == CARDPUTER_SPECIAL_ARROW_DOWN) {
+            terminalView.print(std::string(1, CARDPUTER_SPECIAL_ARROW_DOWN));
+            continue;
+        }
+
         // Enter
         if (c == '\r' || c == '\n') break;
 
@@ -101,6 +111,16 @@ uint8_t UserInputManager::readModeNumber() {
 
     while (true) {
         char c = terminalInput.handler();
+
+        if (c == CARDPUTER_SPECIAL_ARROW_UP) {
+            terminalView.print(std::string(1, CARDPUTER_SPECIAL_ARROW_UP));
+            continue;
+        }
+
+        if (c == CARDPUTER_SPECIAL_ARROW_DOWN) {
+            terminalView.print(std::string(1, CARDPUTER_SPECIAL_ARROW_DOWN));
+            continue;
+        }
 
         // Enter
         if (c == '\r' || c == '\n') {
