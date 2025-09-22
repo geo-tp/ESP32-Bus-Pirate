@@ -628,9 +628,12 @@ void SubGhzController::handleConfig() {
     if (!isConfigured) {
         terminalView.println("\n ❌ Failed to detect CC1101 module. Check wiring.\n");
     } else {
-        terminalView.println("\n[INFO] For SubGHz features, use **USB Serial** connection.");
-        terminalView.println("       It offers lower latency and more reliable logging.");
-        terminalView.println("       The WiFi Web UI can introduce delays and miss pulses.\n");
+
+        if (state.getTerminalMode() != TerminalTypeEnum::Standalone) {
+            terminalView.println("\n[INFO] For SubGHz features, use **USB Serial** connection.");
+            terminalView.println("       It offers lower latency and more reliable logging.");
+            terminalView.println("       The WiFi Web UI can introduce delays and miss pulses.\n");
+        }
         
         // Apply settings
         subGhzService.tune(freq);

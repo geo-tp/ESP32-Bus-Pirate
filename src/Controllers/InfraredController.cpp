@@ -292,8 +292,16 @@ void InfraredController::handleSetProtocol() {
             break;
         }
 
+        if (c == CARDPUTER_SPECIAL_ARROW_DOWN || 
+            c == CARDPUTER_SPECIAL_ARROW_UP) {
+            terminalView.print(std::string(1, c));
+            continue;
+        }        
+
         if (std::isdigit(c)) {
-            inputStr += c;
+            if (c != CARDPUTER_SPECIAL_ARROW_DOWN || c != CARDPUTER_SPECIAL_ARROW_UP) {
+                inputStr += c;
+            }
             terminalView.print(std::string(1, c));
         } else {
             terminalView.println("\nInvalid input: only digits allowed.");

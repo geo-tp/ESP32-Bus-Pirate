@@ -7,6 +7,7 @@
 #include "Transformers/ArgTransformer.h"
 #include "Models/TerminalCommand.h"
 #include "Managers/UserInputManager.h"
+#include "States/GlobalState.h"
 
 class BluetoothController {
 public:
@@ -32,6 +33,7 @@ private:
     BluetoothService& bluetoothService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     
     // Scan for BT devices

@@ -53,7 +53,7 @@ void ThreeWireController::handleHelp() {
 Config
 */
 void ThreeWireController::handleConfig() {
-    terminalView.println("\n3WIRE Configuration:");
+    terminalView.println("3WIRE Configuration:");
     
     // Pins
     const auto& forbidden = state.getProtectedPins();

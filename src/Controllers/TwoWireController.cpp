@@ -131,7 +131,7 @@ void TwoWireController::handleSmartCard(const TerminalCommand& cmd) {
 Configuration
 */
 void TwoWireController::handleConfig() {
-    terminalView.println("\nConfigure 2WIRE Pins:");
+    terminalView.println("2WIRE Configuration:");
     const auto& forbidden = state.getProtectedPins();
 
     uint8_t clk = userInputManager.readValidatedPinNumber("CLK pin", state.getTwoWireClkPin(), forbidden);

@@ -511,7 +511,6 @@ void UartController::handleXmodemReceive(const std::string& path) {
 Config
 */
 void UartController::handleConfig() {
-    terminalView.println("");
     terminalView.println("UART Configuration:");
 
     const auto& forbidden = state.getProtectedPins();
@@ -542,7 +541,7 @@ void UartController::handleConfig() {
     state.setUartConfig(config);
     uartService.configure(baud, config, rxPin, txPin, inverted);
 
-    terminalView.println("UART configuration applied.");
+    terminalView.println("UART configured.");
     terminalView.println("");
 }
 

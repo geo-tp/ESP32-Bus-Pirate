@@ -67,7 +67,7 @@ void HdUartController::handleBridge() {
 Config
 */
 void HdUartController::handleConfig() {
-    terminalView.println("\nHDUART Configuration:");
+    terminalView.println("HDUART Configuration:");
 
     const auto& forbidden = state.getProtectedPins();
 

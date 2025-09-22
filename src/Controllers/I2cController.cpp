@@ -259,7 +259,7 @@ void I2cController::handleRead(const TerminalCommand& cmd) {
 Config
 */
 void I2cController::handleConfig() {
-    terminalView.println("\nI2C Configuration:");
+    terminalView.println("I2C Configuration:");
 
     const auto& forbidden = state.getProtectedPins();
 

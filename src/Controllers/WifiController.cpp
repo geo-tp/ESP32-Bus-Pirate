@@ -461,6 +461,8 @@ Config
 */
 void WifiController::handleConfig()
 {
+    if (state.getTerminalMode() == TerminalTypeEnum::Standalone) return;
+
     terminalView.println("[WARNING] If you're connected via Web CLI,");
     terminalView.println("          executing Wi-Fi commands may cause ");
     terminalView.println("          the terminal session to disconnect.");

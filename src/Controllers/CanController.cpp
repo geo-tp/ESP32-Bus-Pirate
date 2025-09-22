@@ -166,7 +166,7 @@ Configure the CAN controller
 */
 void CanController::handleConfig() {
 
-    terminalView.println("\nCAN Configuration:");
+    terminalView.println("CAN Configuration:");
     terminalView.println("\nMake sure you are using an MCP2515 CAN module.\n");
     
     const auto& forbidden = state.getProtectedPins();

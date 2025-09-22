@@ -348,7 +348,6 @@ void OneWireController::handleIbutton(const TerminalCommand& command) {
 Config
 */
 void OneWireController::handleConfig() {
-    terminalView.println("");
     terminalView.println("OneWire Configuration:");
 
     const auto& forbidden = state.getProtectedPins();
@@ -367,9 +366,11 @@ Sniff
 void OneWireController::handleSniff() {
     terminalView.println("OneWire Sniff: Oberserving data line... Press [ENTER] to stop.\n");
 
-    terminalView.println("  [INFO] This feature uses very fast timing.");
-    terminalView.println("         The Web CLI may miss some signals,");
-    terminalView.println("         use Serial CLI for best results.\n");
+    if (state.getTerminalMode() != TerminalTypeEnum::Standalone) {
+        terminalView.println("  [INFO] This feature uses very fast timing.");
+        terminalView.println("         The Web CLI may miss some signals,");
+        terminalView.println("         use Serial CLI for best results.\n");
+    }
 
     // Init the pin to read passively
     uint8_t pin = state.getOneWirePin();

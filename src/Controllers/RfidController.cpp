@@ -314,7 +314,7 @@ void RfidController::handleClone(const TerminalCommand&) {
 Config
 */
 void RfidController::handleConfig() {
-    terminalView.println("\nRFID Configuration:");
+    terminalView.println("RFID Configuration:");
 
     const auto& forbidden = state.getProtectedPins();
 

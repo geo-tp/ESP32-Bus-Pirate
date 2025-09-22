@@ -183,13 +183,17 @@ Keyboard Bridge
 void BluetoothController::handleKeyboardBridge() {
     terminalView.println("Bluetooth Keyboard Bridge: Sending all keys to BLE HID.");
 
-    terminalView.println("\n[WARNING] If the BLE device is plugged on the same host as");
-    terminalView.println("          the terminal, it may cause looping issues with ENTER.");
-    terminalView.println("          (That makes no sense to bridge your keyboard on the same host)\n");
+    bool sameHost = false;
+    if (state.getTerminalMode() != TerminalTypeEnum::Standalone) {
 
-    const bool sameHost = userInputManager.readYesNo("Are you connected on the same host? (y/n)", true);
-    if (sameHost) {
-        terminalView.println("Same host, ENTER key will not be sent to BLE HID.");
+        terminalView.println("\n[WARNING] If the BLE device is plugged on the same host as");
+        terminalView.println("          the terminal, it may cause looping issues with ENTER.");
+        terminalView.println("          (That makes no sense to bridge your keyboard on the same host)\n");
+    
+        sameHost = userInputManager.readYesNo("Are you connected on the same host? (y/n)", true);
+        if (sameHost) {
+            terminalView.println("Same host, ENTER key will not be sent to BLE HID.");
+        }
     }
 
     terminalView.println("Bluetooth Keyboard: Bridge started.. Press [ANY ESP32 BUTTON] to stop.");

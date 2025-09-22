@@ -244,7 +244,7 @@ void SpiController::handleHelp() {
 Config
 */
 void SpiController::handleConfig() {
-    terminalView.println("\nSPI Configuration:");
+    terminalView.println("SPI Configuration:");
 
     const auto& forbidden = state.getProtectedPins();
 

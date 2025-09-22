@@ -183,7 +183,7 @@ void LedController::handleReset(const TerminalCommand& cmd) {
 Config
 */
 void LedController::handleConfig() {
-    terminalView.println("\nLED Configuration:");
+    terminalView.println("LED Configuration:");
     
     // Get default
     const auto& forbidden = state.getProtectedPins();

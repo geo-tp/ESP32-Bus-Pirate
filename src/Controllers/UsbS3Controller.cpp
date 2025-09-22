@@ -65,16 +65,18 @@ void UsbS3Controller::handleKeyboardBridge() {
     terminalView.println("USB Keyboard Bridge: Sending all keys to USB HID.");
     usbService.keyboardBegin();
 
-    terminalView.println("\n[WARNING] If the USB device is plugged on the same host as");
-    terminalView.println("          the terminal, it may cause looping issues with ENTER.");
-    terminalView.println("          (That makes no sense to bridge your keyboard on the same host)\n");
-
-
-    auto sameHost = userInputManager.readYesNo("Are you connected on the same host? (y/n)", true);
-
-    if (sameHost) {
-        terminalView.println("Same host, ENTER key will not be sent to USB HID.");
-    }
+    auto sameHost = false;
+    if (state.getTerminalMode() != TerminalTypeEnum::Standalone) {
+        terminalView.println("\n[WARNING] If the USB device is plugged on the same host as");
+        terminalView.println("          the terminal, it may cause looping issues with ENTER.");
+        terminalView.println("          (That makes no sense to bridge your keyboard on the same host)\n");
+        
+        sameHost = userInputManager.readYesNo("Are you connected on the same host? (y/n)", true);
+    
+        if (sameHost) {
+            terminalView.println("Same host, ENTER key will not be sent to USB HID.");
+        }
+    }    
 
     terminalView.println("USB Keyboard: Bridge started.. Press [ANY ESP32 BUTTON] to stop.");
 
@@ -219,7 +221,6 @@ void UsbS3Controller::handleUsbStick() {
 Config
 */
 void UsbS3Controller::handleConfig() {
-    terminalView.println("");
     terminalView.println("USB Configuration:");
 
     auto confirm = userInputManager.readYesNo("Configure SD card pins for USB?", false);
@@ -239,8 +240,13 @@ void UsbS3Controller::handleConfig() {
         uint8_t mosi = userInputManager.readValidatedPinNumber("SD Card MOSI pin", state.getSdCardMosiPin(), forbidden);
         state.setSdCardMosiPin(mosi);
     }
-
     terminalView.println("USB Configured.");
+
+    if (state.getTerminalMode() == TerminalTypeEnum::Standalone) {
+        terminalView.println("");
+        return;
+    };
+
     terminalView.println("\n[WARNING] If you're using USB Serial terminal mode,");
     terminalView.println("          using USB commands may interrupt the session.");
     terminalView.println("          Use Web UI or restart if connection is lost.\n");
