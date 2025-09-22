@@ -10,5 +10,7 @@
 #define KEY_ARROW_DOWN '.'
 #define KEY_ARROW_LEFT ','
 #define KEY_ARROW_RIGHT '/'
+#define CARDPUTER_SPECIAL_ARROW_UP '^'
+#define CARDPUTER_SPECIAL_ARROW_DOWN '`'
 
 #endif // INPUT_KEYS_H
