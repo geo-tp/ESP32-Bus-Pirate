@@ -31,8 +31,6 @@ int HorizontalSelector::select(
                 break;
             case KEY_OK:
                 return currentIndex;
-            case KEY_ESC_CUSTOM:
-                return -1;
             default:
                 break;
         }
