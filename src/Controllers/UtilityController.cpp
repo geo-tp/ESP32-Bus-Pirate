@@ -527,8 +527,13 @@ void UtilityController::handleHelp() {
 
 bool UtilityController::isGlobalCommand(const TerminalCommand& cmd) {
     std::string root = cmd.getRoot();
-    return (root == "help"  || root == "h" || root == "?" ||
-            root == "mode"  || root == "m" || root == "l" ||
+
+    // Help is not available in standalone mode, too big to print it
+    if (state.getTerminalMode() != TerminalTypeEnum::Standalone) {
+        if (root == "help" || root == "h" || root == "?") return true;
+    }
+
+    return (root == "mode"  || root == "m" || root == "l" ||
             root == "logic" || root == "P" || root == "p") || 
             root == "system";
 }
