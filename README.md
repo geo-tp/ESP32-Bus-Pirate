@@ -54,8 +54,8 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 | Device               |                                     | Description                       |
 |-----------------------|------------------------------------------|---------------------------------------------------|
 | **ESP32 S3 Dev Kit**  | ![Photo of the ESP32 S3 Dev Kit](/images/s3-devkit_s.jpg)     | More than 20 available GPIO, 1 button |
-| **M5 Cardputer**      | ![Photo of the M5 Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card                |
-| **M5 Cardputer ADV**  | ![Photo of the M5 Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU                |
+| **M5 Cardputer**      | ![Photo of the M5 Cardputer](/images/cardputer_s.png)            | 2 GPIO (Grove), screen, keyboard, mic, speaker, IR TX, SD card, [standalone mode](#standalone-mode-for-the-cardputer)            |
+| **M5 Cardputer ADV**  | ![Photo of the M5 Cardputer ADV](/images/cardputer-adv_s.jpg)    | 12 GPIO (Grove, Header), screen, keyboard, mic, speaker, IR TX, SD card, IMU, [standalone mode](#standalone-mode-for-the-cardputer)                  |
 | **M5 Stick C Plus 2** | ![Photo of the M5 Stick C Plus 2](/images/m5stick_s.jpg)      | 5 GPIO (Grove, Header), screen, mic, buzzer, IR TX, IMU, 3 buttons                     |
 | **M5 StampS3**        | ![Photo of the M5 StampS3](/images/stamps3_s.jpg)             | 9 GPIO (exposed pins), 1 button                       |
 | **M5 AtomS3 Lite**    | ![Photo of the M5 Atom S3 Lite](/images/atom_s.jpg)            | 8 GPIO (Grove, Header), IR TX, 1 buttton                     |
@@ -122,20 +122,24 @@ The wiki is the best place to learn how everything works.
 ## ESP32 Bus Pirate on T-Embed
 ![A photo of the ESP32 Bus Pirate firmware running on Lilygo device](images/tembedbuspirate_s.jpg)
 
-## Web & Serial Interfaces
+## Command-Line Interfaces
 
-The ESP32 Bus Pirate firmware provides two command-line interface (CLI) modes:
+The ESP32 Bus Pirate firmware provides three command-line interface (CLI) modes:
 
 | Interface         | Advantages                                                                 | Ideal for...                          |
 |------------------|-----------------------------------------------------------------------------|----------------------------------------|
 | **Web Interface** | - Accessible from any browser<br>- PC, tablets, mobiles<br>- Works over Wi-Fi<br>- No cables needed | Quick tests, demos, headless setups   |
 | **Serial Interface** | - Faster performance<br>- Instant responsiveness<br>- Handles large data smoothly | Intensive sessions, frequent interactions |
+| **Standalone** | - Only for the Cardputer<br>- On device keyboard<br>- On device screen | Portable sessions, Quick tests |
 
 
-Both interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
+All interfaces share the same command structure and can be used interchangeably ([more details](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/00-Terminal)).
 
 ## Mobile Web Interface over WiFi
 ![An iPhone screenshot showing the Bus Pirate firmware web interface](images/presentation_mobile.png)
+
+## Standalone Mode for the Cardputer
+![A Cardputer running the ESP32 Bus pirate in standalone mode](images/standalonemode_s.png)
 
 ## Using the ESP32 Bus Pirate to speak UART over WiFi
 ![A demo Using the ESP32 Bus pirate firmware with UART](images/demo2.gif)
