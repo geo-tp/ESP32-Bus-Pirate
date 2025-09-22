@@ -545,38 +545,69 @@ bool SubGhzService::sendPrinceton_(uint64_t key, uint16_t bits, int te_us) {
     return sendRcSwitch_(key, bits, te_us>0?te_us:350, /*proto*/1, /*repeat*/10);
 }
 
-bool SubGhzService::sendBinRaw_(const std::vector<uint8_t>& bytes, int te_us) {
+bool SubGhzService::sendBinRaw_(const std::vector<uint8_t>& bytes,
+                                int te_us,
+                                int bits /*ignored in ref mode*/,
+                                bool /*msb_first unused in ref mode*/,
+                                bool /*invert unused in ref mode*/) {
     if (bytes.empty()) return false;
-    if (te_us <= 0) te_us = 100; // défaut
-    std::vector<int32_t> timings;
-    timings.reserve(bytes.size() * 8 * 2);
+    if (te_us <= 0) te_us = 100;
 
-    // NRZ OOK: 1 = HIGH (te), 0 = LOW (te) — we alternate using sendTimingsOOK_
-    // So we build: for each bit → duration and let the alternation handle the level.
-    // For strict NRZ, it's better to control the levels; here we encode in half-periods (H/L).
-    // Simple implementation: “bit=1” = (te,te) starting HIGH, “bit=0” = (te,te) but switch level.
-    // Simpler: enforce alternation as: H:te, L:te for each bit, and force the state with a pre-pulse 0.
-    // Here we start HIGH and encode: bit=1 → H:te,L:te ; bit=0 → L:te,H:te
-    int currentLevel = 1;
-    for (uint8_t b : bytes) {
-        for (int i = 7; i >= 0; --i) {
-            bool one = (b >> i) & 1;
-            if (one) {
-                // H then L
-                if (currentLevel != 1) { timings.push_back(0); currentLevel = 1; } // no-op logic
-                appendPair(timings, te_us, te_us);
-            } else {
-                // L then H
-                if (currentLevel != 0) { timings.push_back(0); currentLevel = 0; }
-                appendPair(timings, te_us, te_us);
-            }
+    // Impl. de référence : idle LOW, envoi depuis la FIN de la chaîne binaire,
+    // donc: parcourir les octets à rebours, et dans chaque octet LSB->MSB.
+    const int total_bits = int(bytes.size()) * 8;
+    // // Si tu veux respecter "Bit:", décommente:
+    // int limit_bits = (bits > 0 && bits < total_bits) ? bits : total_bits;
+    const int limit_bits = total_bits; // référence = envoie tout
+
+    if (!startTxBitBang()) return false;
+
+    // Idle bas
+    gpio_set_level((gpio_num_t)gdo0_, 0);
+
+    int sent = 0;
+
+    // Octets depuis la fin
+    for (int bi = int(bytes.size()) - 1; bi >= 0 && sent < limit_bits; --bi) {
+        uint8_t b = bytes[bi];
+
+        // Bits LSB -> MSB
+        for (int i = 0; i < 8 && sent < limit_bits; ++i, ++sent) {
+            bool one = (b >> i) & 0x01; // LSB-first
+            gpio_set_level((gpio_num_t)gdo0_, one ? 1 : 0);
+            esp_rom_delay_us((uint32_t)te_us);
         }
     }
-    return sendTimingsOOK_(timings);
+
+    // Idle bas en fin de trame
+    gpio_set_level((gpio_num_t)gdo0_, 0);
+
+    stopTxBitBang();
+    return true;
 }
 
 bool SubGhzService::sendRawTimings(const std::vector<int32_t>& timings) {
-    return sendTimingsOOK_(timings);
+    return sendTimingsRawSigned_(timings);
+}
+
+bool SubGhzService::sendTimingsRawSigned_(const std::vector<int32_t>& timings) {
+    if (!startTxBitBang()) return false;
+
+    // Idle LOW
+    gpio_set_level((gpio_num_t)gdo0_, 0);
+
+    for (int32_t t : timings) {
+        if (t == 0) continue;
+        bool high = (t > 0);
+        uint32_t us = (uint32_t)(high ? t : -t);
+        gpio_set_level((gpio_num_t)gdo0_, high ? 1 : 0);
+        if (us) esp_rom_delay_us(us);
+    }
+
+    // Return to idle LOW
+    gpio_set_level((gpio_num_t)gdo0_, 0);
+    stopTxBitBang();
+    return true;
 }
 
 bool SubGhzService::send(const SubGhzFileCommand& cmd) {
@@ -595,8 +626,12 @@ bool SubGhzService::send(const SubGhzFileCommand& cmd) {
         case SubGhzProtocolEnum::RAW:
             return sendRawTimings(cmd.raw_timings);
 
-        case SubGhzProtocolEnum::BinRAW:
-            return sendBinRaw_(cmd.bitstream_bytes, cmd.te_us ? cmd.te_us : 100);
+        case SubGhzProtocolEnum::BinRAW: {
+            const int te = cmd.te_us ? cmd.te_us : 100;
+            const int total_bits = int(cmd.bitstream_bytes.size()) * 8;
+            return sendBinRaw_(cmd.bitstream_bytes, te, total_bits,
+                            /*msb_first*/false, /*invert*/false);
+        }
 
         case SubGhzProtocolEnum::RcSwitch: {
             int proto = 11;
@@ -610,8 +645,14 @@ bool SubGhzService::send(const SubGhzFileCommand& cmd) {
         case SubGhzProtocolEnum::Princeton:
             return sendPrinceton_(cmd.key, cmd.bits ? cmd.bits : 24, cmd.te_us ? cmd.te_us : 350);
 
-        default:
-            return false;
+        default: {
+            // Fallback CAME/HOLTEK/NICE/unk like RcSwitch(11)
+            // TE 270 µs, 10 rep
+            if (!cmd.key) return false;
+            const int te   = cmd.te_us ? cmd.te_us : 270;
+            const int bits = cmd.bits  ? cmd.bits  : 24;
+            return sendRcSwitch_(cmd.key, bits, te, /*proto*/11, /*repeat*/10);
+        }
     }
 }
 

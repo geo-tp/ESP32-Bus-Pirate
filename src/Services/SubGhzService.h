@@ -49,9 +49,10 @@ public:
     bool sendRawPulse(int pin, int duration);
     bool sendRcSwitch_(uint64_t key, uint16_t bits, int te_us, int proto, int repeat);
     bool sendPrinceton_(uint64_t key, uint16_t bits, int te_us);
-    bool sendBinRaw_(const std::vector<uint8_t>& bytes, int te_us);
+    bool sendBinRaw_(const std::vector<uint8_t>& bytes, int te_us, int bits, bool msb_first = true, bool invert = false);
     bool sendTimingsOOK_(const std::vector<int32_t>& timings); 
     bool sendRawTimings(const std::vector<int32_t>& timings);
+    bool sendTimingsRawSigned_(const std::vector<int32_t>& timings);
     bool send(const SubGhzFileCommand& cmd);
 
     // Profiles
