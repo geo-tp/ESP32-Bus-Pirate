@@ -5,6 +5,7 @@
 #include <Views/WebTerminalView.h>
 #include <Views/NoScreenDeviceView.h>
 #include <Views/TembedDeviceView.h>
+#include <Views/CardputerTerminalView.h>
 #include <Inputs/SerialTerminalInput.h>
 #include <Inputs/CardputerInput.h>
 #include <Inputs/StickInput.h>
@@ -65,6 +66,7 @@ void setup() {
     HorizontalSelector selector(deviceView, deviceInput);
     TerminalTypeConfigurator configurator(selector);
     TerminalTypeEnum terminalType = configurator.configure();
+    state.setTerminalMode(terminalType);
     std::string webIp = "0.0.0.0";
 
     // Configure Wi-Fi if needed
@@ -137,6 +139,27 @@ void setup() {
             dispatcher.run(); // Forever
             break;
         }
+
+        #ifdef DEVICE_CARDPUTER
+        case TerminalTypeEnum::Standalone: 
+            // Cardputer all in one
+            CardputerTerminalView standaloneView; // cardputer screen as terminal
+            CardputerInput standaloneInput; // cardputer keyboard for command input
+            standaloneView.initialize();
+            NoScreenDeviceView deviceView; // no screen for the pinout view (used as terminal)
+            S3DevKitInput deviceInput; // the G0 button of the cardputer
+
+            // Configure USB
+            auto usb = UsbConfigurator::configure(standaloneView, standaloneInput, deviceInput);
+
+            // Build the provider for cardputer standalone and run the dispatcher loop
+            DependencyProvider* provider = new DependencyProvider(standaloneView, deviceView, standaloneInput, deviceInput, 
+                                                                usb.usbService, usb.usbController, littleFsService);
+            ActionDispatcher dispatcher(*provider);
+            dispatcher.setup(terminalType, "standalone");
+            dispatcher.run(); // Forever
+            break;
+        #endif
     }
 }
 
