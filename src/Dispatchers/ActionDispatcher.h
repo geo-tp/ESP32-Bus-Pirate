@@ -41,6 +41,9 @@ private:
     // Handle ANSI escape sequences (arrows, etc.)
     bool handleEscapeSequence(char c, std::string& inputLine, size_t& cursorIndex, const std::string& mode);
 
+    // Handle Cardputer arrows
+    bool handleCardputerEscapeSequence(char c, std::string& inputLine);
+
     // Handle backspace logic
     bool handleBackspace(char c, std::string& inputLine, size_t& cursorIndex, const std::string& mode);
 

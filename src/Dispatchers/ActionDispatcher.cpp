@@ -92,6 +92,10 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
     // Mode specific command
     switch (state.getCurrentMode()) {
         case ModeEnum::HIZ:
+            if (state.getTerminalMode() == TerminalTypeEnum::Standalone) {
+                provider.getTerminalView().println("Type 'mode' to select a mode.");
+                return;
+            }
             provider.getTerminalView().println("Type 'help' or 'mode'");
             break;
         case ModeEnum::OneWire:
@@ -226,11 +230,27 @@ std::string ActionDispatcher::getUserAction() {
         char c = provider.getTerminalInput().readChar();
         if (c == KEY_NONE) continue;
 
+        if (handleCardputerEscapeSequence(c, inputLine)) continue;
         if (handleEscapeSequence(c, inputLine, cursorIndex, mode)) continue;
         if (handleEnterKey(c, inputLine)) return inputLine;
         if (handleBackspace(c, inputLine, cursorIndex, mode)) continue;
         if (handlePrintableChar(c, inputLine, cursorIndex, mode));
     }
+}
+
+/*
+User Action: Cardputer Special Arrows
+*/
+bool ActionDispatcher::handleCardputerEscapeSequence(char c, std::string& inputLine) {
+    if (c == CARDPUTER_SPECIAL_ARROW_UP) {
+        provider.getTerminalView().print(std::string(1, CARDPUTER_SPECIAL_ARROW_UP));
+    } else if (c == CARDPUTER_SPECIAL_ARROW_DOWN) {
+        provider.getTerminalView().print(std::string(1, CARDPUTER_SPECIAL_ARROW_DOWN));
+    } else {
+        return false;
+    }
+
+    return true;
 }
 
 /*
