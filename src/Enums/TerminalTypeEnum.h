@@ -5,6 +5,7 @@ enum class TerminalTypeEnum {
     Serial,
     WiFiAp,
     WiFiClient,
+    Standalone,
     None
 };
 
@@ -15,6 +16,7 @@ public:
             case TerminalTypeEnum::Serial:      return "USB Serial";
             case TerminalTypeEnum::WiFiAp:      return "WiFi AP";
             case TerminalTypeEnum::WiFiClient:  return "WiFi Web";
+            case TerminalTypeEnum::Standalone:   return "Standalone";
             case TerminalTypeEnum::None:        return "None";
             default:                            return "Unknown";
         }
