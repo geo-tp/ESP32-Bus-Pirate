@@ -8,12 +8,15 @@ char CardputerInput::handler() {
         // Update keyboard state
         M5Cardputer.update();
         
-        if (M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) {
-            delay(50);
+        Keyboard_Class::KeysState status = M5Cardputer.Keyboard.keysState();
+        
+        // Special arrows for scrolling, can be long pressed
+        if (!status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) {
+            delay(50); // debounce
             return CARDPUTER_SPECIAL_ARROW_UP;
-        }    
-        if (M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) {
-            delay(50);
+        }
+        if (!status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) {
+            delay(50); // debounce
             return CARDPUTER_SPECIAL_ARROW_DOWN;
         }
     
@@ -24,9 +27,7 @@ char CardputerInput::handler() {
         if (!M5Cardputer.Keyboard.isPressed()) {
             continue;
         }
-    
-        Keyboard_Class::KeysState status = M5Cardputer.Keyboard.keysState();
-    
+        
         if (status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) return KEY_ARROW_UP;
         if (status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) return KEY_ARROW_DOWN;
         if (status.enter) return KEY_OK;
@@ -60,13 +61,14 @@ void CardputerInput::waitPress() {
 
 char CardputerInput::readChar() {
     M5Cardputer.update();
+    Keyboard_Class::KeysState status = M5Cardputer.Keyboard.keysState();
     
     // Special arrows for scrolling, can be long pressed
-    if (M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) {
+    if (!status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) {
         delay(50); // debounce
         return CARDPUTER_SPECIAL_ARROW_UP;
     }
-    if (M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) {
+    if (!status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) {
         delay(50); // debounce
         return CARDPUTER_SPECIAL_ARROW_DOWN;
     }
@@ -74,8 +76,6 @@ char CardputerInput::readChar() {
     // State change
     if (!M5Cardputer.Keyboard.isChange()) return KEY_NONE;
     if (!M5Cardputer.Keyboard.isPressed()) return KEY_NONE;
-    
-    Keyboard_Class::KeysState status = M5Cardputer.Keyboard.keysState();
     
     if (status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) return KEY_ARROW_UP;
     if (status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) return KEY_ARROW_DOWN;
