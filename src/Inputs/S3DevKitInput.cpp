@@ -1,5 +1,3 @@
-#ifdef DEVICE_S3DEVKIT
-
 #include "S3DevKitInput.h"
 #include "InputKeys.h"
 
@@ -33,5 +31,3 @@ void S3DevKitInput::waitPress() {
         delay(5);
     }
 }
-
-#endif
