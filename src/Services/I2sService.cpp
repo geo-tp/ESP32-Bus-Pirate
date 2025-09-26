@@ -1,6 +1,10 @@
 #include "I2sService.h"
 #include "math.h"
 
+#ifdef DEVICE_CARDPUTER
+    #include <M5Unified.h>
+#endif
+
 void I2sService::configureOutput(uint8_t bclk, uint8_t lrck, uint8_t dout, uint32_t sampleRate, uint8_t bits) {
     if (initialized) {
         i2s_driver_uninstall(port);
@@ -10,6 +14,11 @@ void I2sService::configureOutput(uint8_t bclk, uint8_t lrck, uint8_t dout, uint3
         if (prevLrck != GPIO_NUM_NC) gpio_matrix_out(prevLrck, SIG_GPIO_OUT_IDX, false, false);
         if (prevDout != GPIO_NUM_NC) gpio_matrix_out(prevDout, SIG_GPIO_OUT_IDX, false, false);
     }
+
+    #ifdef DEVICE_CARDPUTER
+        M5.Mic.end();
+        M5.Speaker.begin();
+    #endif
 
     i2s_config_t config = {
         .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX),
@@ -54,6 +63,11 @@ void I2sService::configureInput(uint8_t bclk, uint8_t lrck, uint8_t din, uint32_
     if (initialized) {
         i2s_driver_uninstall(port);
     }
+
+    #ifdef DEVICE_CARDPUTER
+        M5.Speaker.end();
+        M5.Mic.begin();
+    #endif
 
     i2s_config_t config = {
         .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX),
