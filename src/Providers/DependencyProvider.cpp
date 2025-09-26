@@ -56,7 +56,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       subGhzAnalyzeManager(),
 
       // Shells
-      sdCardShell(sdService, terminalView, terminalInput, argTransformer),
+      sdCardShell(sdService, terminalView, terminalInput, argTransformer, userInputManager),
       spiFlashShell(spiService, terminalView, terminalInput, argTransformer, userInputManager, binaryAnalyzeManager),
       spiEepromShell(spiService, terminalView, terminalInput, argTransformer, userInputManager, binaryAnalyzeManager),
       smartCardShell(twoWireService, terminalView, terminalInput, argTransformer, userInputManager),

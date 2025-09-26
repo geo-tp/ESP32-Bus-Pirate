@@ -1,14 +1,14 @@
 #include "SdCardShell.h"
 
-SdCardShell::SdCardShell(SdService& sdService, ITerminalView& view, IInput& input, ArgTransformer& argTransformer)
-    : sd(sdService), terminalView(view), terminalInput(input), currentDir("/"), argTransformer(argTransformer) {}
+SdCardShell::SdCardShell(SdService& sdService, ITerminalView& view, IInput& input, ArgTransformer& argTransformer, UserInputManager& userInputManager)
+    : sd(sdService), terminalView(view), terminalInput(input), currentDir("/"), argTransformer(argTransformer), userInputManager(userInputManager) {}
 
 void SdCardShell::run() {
     terminalView.println("- SD Shell: Type 'help' for commands. Type 'exit' to quit.");
 
     while (true) {
         terminalView.print(currentDir + " $ ");
-        std::string input = readLine();
+        std::string input = userInputManager.getLine();
 
         if (input.empty()) continue;
         if (input == "exit") break;
@@ -246,76 +246,6 @@ void SdCardShell::cmdEcho(std::istringstream& iss) {
         sd.removeCachedPath(currentDir);
     } else {
         terminalView.println("Failed to write to: " + filename);
-    }
-}
-
-std::string SdCardShell::readLine() {
-    std::string line;
-    size_t cursorIndex = 0;
-
-    while (true) {
-        char c = terminalInput.readChar();
-        if (c == KEY_NONE) continue;
-
-        // ENTER
-        if (c == '\n' || c == '\r') {
-            terminalView.println("");
-            commandHistoryManager.add(line);
-            return line;
-        }
-
-        // BACKSPACE
-        if (c == '\b' || c == 127) {
-            if (cursorIndex == 0) continue;
-            cursorIndex--;
-            line.erase(cursorIndex, 1);
-
-            terminalView.print("\r" + currentDir + " $ " + line + " \033[K");
-            size_t moveBack = line.length() - cursorIndex;
-            for (size_t i = 0; i <= moveBack; ++i) {
-                terminalView.print("\x1B[D");
-            }
-            continue;
-        }
-
-        // ESCAPE SEQUENCE
-        if (c == '\x1B') {
-            if (terminalInput.readChar() == '[') {
-                char next = terminalInput.readChar();
-                if (next == 'A') {
-                    line = commandHistoryManager.up();
-                    cursorIndex = line.length();
-                    terminalView.print("\r" + currentDir + " $ " + line + "\033[K");
-                } else if (next == 'B') {
-                    line = commandHistoryManager.down();
-                    cursorIndex = line.length();
-                    terminalView.print("\r" + currentDir + " $ " + line + "\033[K");
-                } else if (next == 'C') {  // RIGHT
-                    if (cursorIndex < line.length()) {
-                        cursorIndex++;
-                        terminalView.print("\x1B[C");
-                    }
-                } else if (next == 'D') {  // LEFT
-                    if (cursorIndex > 0) {
-                        cursorIndex--;
-                        terminalView.print("\x1B[D");
-                    }
-                }
-            }
-            continue;
-        }
-
-        // Printable
-        if (isprint(c)) {
-            line.insert(cursorIndex, 1, c);
-            cursorIndex++;
-
-            terminalView.print("\r" + currentDir + " $ " + line + "\033[K");
-            size_t moveBack = line.length() - cursorIndex;
-            for (size_t i = 0; i < moveBack; ++i) {
-                terminalView.print("\x1B[D");
-            }
-        }
     }
 }
 

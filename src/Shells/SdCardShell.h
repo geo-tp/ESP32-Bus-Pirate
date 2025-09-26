@@ -7,10 +7,11 @@
 #include "Interfaces/IInput.h"
 #include "Transformers/ArgTransformer.h"
 #include "Managers/CommandHistoryManager.h"
+#include "Managers/UserInputManager.h"
 
 class SdCardShell {
 public:
-    SdCardShell(SdService& sdService, ITerminalView& view, IInput& input,  ArgTransformer& argTransformer);
+    SdCardShell(SdService& sdService, ITerminalView& view, IInput& input,  ArgTransformer& argTransformer, UserInputManager& userInputManager);
     void run();
 
 private:
@@ -20,6 +21,7 @@ private:
     ArgTransformer& argTransformer;
     std::string currentDir;
     CommandHistoryManager commandHistoryManager;
+    UserInputManager& userInputManager;
 
     void executeCommand(const std::string& input);
 
@@ -32,9 +34,6 @@ private:
     void cmdCat(std::istringstream& iss);
     void cmdEcho(std::istringstream& iss);
     void cmdHelp();
-
-    // Input reader
-    std::string readLine();
 
     // Path utils
     std::string normalizePath(const std::string& path);
