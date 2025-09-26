@@ -6,6 +6,7 @@
 #include <Views/NoScreenDeviceView.h>
 #include <Views/TembedDeviceView.h>
 #include <Views/CardputerTerminalView.h>
+#include <Views/CardputerDeviceView.h>
 #include <Inputs/SerialTerminalInput.h>
 #include <Inputs/CardputerInput.h>
 #include <Inputs/StickInput.h>
@@ -23,6 +24,35 @@
 #include <Config/UsbConfigurator.h>
 #include <Enums/TerminalTypeEnum.h>
 #include <States/GlobalState.h>
+
+/*
+This file initializes the device (M5Stick / Cardputer / StampS3 / T-Embed / S3 DevKit),
+selects the terminal mode (Serial, Wi-Fi Client/AP, Standalone Cardputer),
+and then launches the main loop through the ActionDispatcher.
+
+- Terminal View: the interface where the user SEES and INTERACTS with the CLI.
+    * SerialTerminalView    -> text terminal via USB serial (COM/tty).
+    * WebTerminalView       -> text terminal in a browser (via WebSocket).
+    * CardputerTerminalView -> Cardputer LCD acts as the terminal screen.
+
+- Device View: the interface for device’s screen (if any).
+    * M5DeviceView, TembedDeviceView, CardputerDeviceView, NoScreenDeviceView, etc.
+    * Used for UI elements like mode, pinout mapping, or logic traces.
+
+- Terminal Input: how the user TYPES commands into the system.
+    * SerialTerminalInput  -> keyboard input over USB serial.
+    * WebTerminalInput     -> keystrokes/events from a browser WebSocket.
+
+- Device Input: physical buttons on the device.
+    * StickInput, TembedInput, StampS3Input, S3DevKitInput -> button/encoders.
+
+- ActionDispatcher: the central loop that reads user actions,
+  dispatches them to controllers/services, and keeps the system running.
+
+- DependencyProvider: constructs and wires together the correct Views,
+  Inputs, Services, and Controllers based on the current configuration.
+*/
+
 
 void setup() {    
     #if DEVICE_M5STICK
@@ -146,7 +176,7 @@ void setup() {
             CardputerTerminalView standaloneView; // cardputer screen as terminal
             CardputerInput standaloneInput; // cardputer keyboard for command input
             standaloneView.initialize();
-            NoScreenDeviceView deviceView; // no screen for the pinout view (used as terminal)
+            CardputerDeviceView deviceView; // used for logic analyzer only
             S3DevKitInput deviceInput; // the G0 button of the cardputer
 
             // Configure USB
