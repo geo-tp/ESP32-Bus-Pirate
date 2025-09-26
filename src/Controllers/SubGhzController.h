@@ -18,6 +18,7 @@
 #include "Services/SubGhzService.h"
 #include "Services/PinService.h"
 #include "Services/LittleFsService.h"
+#include "Services/I2sService.h"
 #include "Data/SubGhzProtocols.h"
 
 class SubGhzController {
@@ -27,6 +28,7 @@ public:
                      IDeviceView& deviceView,
                      SubGhzService& subGhzService,
                      PinService& pinService,
+                     I2sService& i2sService,
                      LittleFsService& littleFsService,
                      ArgTransformer& argTransformer,
                      SubGhzTransformer& subGhzTransformer,
@@ -37,6 +39,7 @@ public:
       deviceView(deviceView),
       subGhzService(subGhzService),
       pinService(pinService),
+      i2sService(i2sService),
       littleFsService(littleFsService),
       argTransformer(argTransformer),
       subGhzTransformer(subGhzTransformer),
@@ -83,6 +86,9 @@ private:
     // Load .sub files
     void handleLoad();
 
+    // Convert RSSI to audio
+    void handleListen();
+
     // Configure CC1101
     void handleConfig();
 
@@ -95,6 +101,7 @@ private:
     IDeviceView& deviceView;
     SubGhzService& subGhzService;
     PinService& pinService;
+    I2sService& i2sService;
     LittleFsService& littleFsService;
     ArgTransformer& argTransformer;
     SubGhzTransformer& subGhzTransformer;

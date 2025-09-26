@@ -16,6 +16,7 @@ void SubGhzController::handleCommand(const TerminalCommand& cmd) {
     else if (root == "bruteforce")   handleBruteforce();
     else if (root == "decode")       handleDecode(cmd);
     else if (root == "trace")        handleTrace();
+    else if (root == "listen")       handleListen();
     else if (root == "load")         handleLoad();
     else if (root == "config")       handleConfig();
     else                             handleHelp();
@@ -592,6 +593,64 @@ void SubGhzController::handleLoad() {
 }
 
 /*
+Listen
+*/
+void SubGhzController::handleListen() {
+    // Params
+    float mhz = userInputManager.readValidatedFloat("Enter frequency (MHz):", state.getSubGhzFrequency(), 0.0f, 1000.0f);
+    int   rssiGate = userInputManager.readValidatedInt("RSSI gate (dBm):", -65, -127, 0);
+    state.setSubGhzFrequency(mhz);
+
+    // Radio init
+    if (!subGhzService.applySniffProfile(mhz)) {
+        terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
+        return;
+    }
+    subGhzService.tune(mhz);
+
+    // I2S init with configured pins
+    i2sService.configureOutput(
+        state.getI2sBclkPin(), state.getI2sLrckPin(), state.getI2sDataPin(),
+        state.getI2sSampleRate(), state.getI2sBitsPerSample()
+    );
+
+    terminalView.println("\nSUBGHZ: RSSI to Audio mapping @ " + argTransformer.toFixed2(mhz) +
+                         " MHz... Press [ENTER] to stop.\n");
+
+    terminalView.println("[INFO] Using I2S configured pins for audio output.\n");
+
+    // Mapping params
+    const int fMin = 800;      // Hz for weak signals
+    const int fMax = 12000;    // Hz for strong signals
+    const int toneMs = 1;      // short sound
+    const int refreshUs = 200; // 5 kHz update rate
+
+    while (true) {
+        // Stop on ENTER
+        char c = terminalInput.readChar();
+        if (c == '\n' || c == '\r') break;
+
+        // Get RSSI
+        int rssi = subGhzService.measurePeakRssi(1);
+        if (rssi >= rssiGate) {
+            float norm = (rssi + 120.0f) / 120.0f; // normalize dbm
+            if (norm < 0) norm = 0;
+            if (norm > 1) norm = 1;
+            int freqHz = fMin + (int)(norm * (fMax - fMin));
+
+            // Play the tone on I2S configured pins
+            i2sService.playTone(state.getI2sSampleRate(),
+                                (uint16_t)freqHz,
+                                (uint16_t)toneMs);
+        }
+
+        delayMicroseconds(refreshUs);
+    }
+
+    subGhzService.tune(mhz);
+}
+
+/*
 Config CC1101
 */
 void SubGhzController::handleConfig() {
@@ -772,6 +831,7 @@ void SubGhzController::handleHelp() {
     terminalView.println("  bruteforce");
     terminalView.println("  trace");
     terminalView.println("  load");
+    terminalView.println("  listen");
     terminalView.println("  setfrequency");
     terminalView.println("  config");
 }

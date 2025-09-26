@@ -497,6 +497,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  bruteforce           - Bruteforce 12 bit keys");
     terminalView.println("  trace                - Observe RX signal trace");
     terminalView.println("  load                 - Load .sub files from FS");
+    terminalView.println("  listen               - RSSI to audio mapping");
     terminalView.println("  setfrequency         - Set operating frequency");
     terminalView.println("  config               - Configure CC1101 settings");
 
