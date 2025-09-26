@@ -73,7 +73,7 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 
 ## Getting Started
 
-![Banner of the ESP32 Bus Pirate web flasher](images/flasher.jpg)
+[![Banner of the ESP32 Bus Pirate web flasher](images/flasher.jpg)](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/)
 
 1. 🔧 Flash the firmware  
    - Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/) to burn the firmware directly from a web browser.
@@ -94,7 +94,7 @@ Use the [ESP32 Bus Pirate Web Flasher](https://geo-tp.github.io/ESP32-Bus-Pirate
 
 ## Wiki
 
-![Banner of the ESP32 Bus Pirate Wiki page](images/bus_pirate_wiki.png)
+[![Banner of the ESP32 Bus Pirate Wiki page](images/bus_pirate_wiki.png)](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/)
 
 📚 Visit the **[Wiki](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki)** for detailed documentation on every mode and command.
 
@@ -108,7 +108,7 @@ The wiki is the best place to learn how everything works.
 
 ## Scripting
 
-![Banner of the ESP32 Bus Pirate Scripts page](images/bus_pirate_scripts.png)
+[![Banner of the ESP32 Bus Pirate Scripts page](images/bus_pirate_scripts.png)](https://github.com/geo-tp/ESP32-Bus-Pirate-Scripts/)
 
 🛠️ You can [automate interactions with the ESP32 Bus Pirate](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Python) using **Python scripts over serial.**
 
@@ -149,7 +149,7 @@ See [How To Contribute](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Contr
 
 ## Visuals Assets
 
-#### ![Small logo of the ESP32 Bus Pirate firmware](images/logo_square_small.png)
+#### [![Small logo of the ESP32 Bus Pirate firmware](images/logo_square_small.png)](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets)
 
 See [images, logo, presentations, photo, video, illustrations](https://github.com/geo-tp/ESP32-Bus-Pirate/wiki/99-Visual-Assets). These visuals can be **freely used in blog posts, documentation, videos, or articles** to help explain and promote the firmware.
 
