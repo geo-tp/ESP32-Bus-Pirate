@@ -290,11 +290,6 @@ void CardputerTerminalView::ansiFeed(char c) {
                 csiParamAcc = -1;
                 return;
             } else {
-                if (c == 'K' && padBeforeErase && curCol > 0) {
-                    // Erase " " before K if last char was space
-                    curCol--;
-                    lines[curRow][curCol] = ' '; 
-                }
                 padBeforeErase = false;
                 csiParams.push_back(csiParamAcc < 0 ? 0 : csiParamAcc);
                 ansiFinalizeCSI(c);
@@ -307,19 +302,23 @@ void CardputerTerminalView::ansiFeed(char c) {
 
 // --------------------- Rendering ---------------------
 
-void CardputerTerminalView::renderAll() {
-    auto drawLine = [&](const std::string& s, int16_t y) {
-        size_t end = s.size();
-        while (end > 0 && s[end - 1] == ' ') --end;
-        if (spriteReady) {
-            termSprite.setCursor(originX, y);
-            if (end > 0) termSprite.printf("%.*s", (int)end, s.c_str());
-        } else {
-            M5Cardputer.Display.setCursor(originX, y);
-            if (end > 0) M5Cardputer.Display.printf("%.*s", (int)end, s.c_str());
-        }
-    };
+void CardputerTerminalView::drawLine(const std::string& s, int16_t y, bool keepTrailingSpaces) {
+    size_t end = s.size();
 
+    if (!keepTrailingSpaces) {
+        while (end > 0 && s[end - 1] == ' ') --end;
+    }
+
+    if (spriteReady) {
+        termSprite.setCursor(originX, y);
+        termSprite.printf("%.*s", (int)end, s.c_str());
+    } else {
+        M5Cardputer.Display.setCursor(originX, y);
+        M5Cardputer.Display.printf("%.*s", (int)end, s.c_str());
+    }
+}
+
+void CardputerTerminalView::renderAll() {
     if (spriteReady) {
         termSprite.fillScreen(0);
         termSprite.setTextColor(1);
@@ -340,24 +339,32 @@ void CardputerTerminalView::renderAll() {
     int startIdx      = endIdx - (rows - 1);
     if (startIdx < 0) startIdx = 0;
 
+    // Render lines
     int16_t y = originY;
     for (int i = 0; i < rows; ++i) {
         int idx = startIdx + i;
+
+        bool isActiveBufferLine =
+            (scrollOffset == 0) && (idx >= H) && ((idx - H) == curRow);
+
         if (idx < H) {
-            drawLine(history[idx], y);
+            // History lines -> trim
+            drawLine(history[idx], y, /*keepTrailingSpaces=*/false);
         } else {
             int li = idx - H;
-            if (li >= 0 && li < rows) drawLine(lines[li], y);
+            if (li >= 0 && li < rows) {
+                // Active buffer line, keep trailing spaces
+                drawLine(lines[li], y, /*keepTrailingSpaces=*/isActiveBufferLine);
+            }
         }
         y += charH;
     }
 
-    // Cursor
     if (scrollOffset == 0) {
         int16_t cx = originX + curCol * charW;
         int16_t cy = originY + curRow * charH + charH - 2;
-        if (spriteReady) termSprite.drawLine(cx, cy, cx + charW - 1, cy, 1);
-        else M5Cardputer.Display.drawLine(cx, cy, cx + charW - 1, cy, TEXT_COLOR);
+        if (spriteReady) termSprite.fillRect(cx, cy, charW, 2, 1);
+        else M5Cardputer.Display.fillRect(cx, cy, charW, 2, TEXT_COLOR);
     }
 
     if (spriteReady) termSprite.pushSprite(0, 0);

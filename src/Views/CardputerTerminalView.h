@@ -56,6 +56,7 @@ private:
     void ansiFinalizeCSI(char final);
 
     // Rendering
+    void drawLine(const std::string& s, int16_t y, bool keepIfContent);
     void renderAll();
     void maybeRender();
     void recomputeMetrics();
