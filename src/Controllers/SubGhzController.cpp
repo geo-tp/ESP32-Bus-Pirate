@@ -232,7 +232,7 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
             }
             delay(3);
         }
-        confirm = userInputManager.readYesNo("SUBGHZ Replay: Done. Run again?", false);
+        confirm = userInputManager.readYesNo("SUBGHZ Replay: Done. Run again?", true);
     }
 
     terminalView.println(okAll ? "SUBGHZ Replay Done without error.\n" : "SUBGHZ Replay: Done with errors.\n");

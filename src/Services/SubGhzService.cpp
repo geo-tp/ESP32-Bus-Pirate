@@ -211,31 +211,32 @@ std::vector<rmt_item32_t> SubGhzService::readRawFrame() {
     return frame;
 }
 
-bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items, uint32_t tick_per_us) {
+bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items, uint32_t /*tick_per_us_ignored*/) {
     if (!isConfigured_ || items.empty()) return false;
 
-    // Output
-    if (!startTxBitBang()) return false;
 
-    // tick to us
-    auto ticks_to_us = [tick_per_us](uint32_t ticks) -> uint32_t {
-        if (!tick_per_us) return 0;
-        return (ticks + (tick_per_us/2)) / tick_per_us;
-    };
+    if (!startTxBitBang()) return false;  // configure gdo0_
 
-    // Bit bang seq
+    // Stabilisation
+    gpio_set_level((gpio_num_t)pin, 0);
+    esp_rom_delay_us(200);
+
     for (const auto& it : items) {
+        // phase 0
         gpio_set_level((gpio_num_t)pin, it.level0 ? 1 : 0);
-        uint32_t us0 = ticks_to_us(it.duration0);
+        uint32_t us0 = it.duration0;
         if (us0) esp_rom_delay_us(us0);
 
+        // phase 1
         gpio_set_level((gpio_num_t)pin, it.level1 ? 1 : 0);
-        uint32_t us1 = ticks_to_us(it.duration1);
+        uint32_t us1 = it.duration1;
         if (us1) esp_rom_delay_us(us1);
     }
 
-    // Reset
+    // Stop
     gpio_set_level((gpio_num_t)pin, 0);
+    esp_rom_delay_us(200);
+
     return true;
 }
 
