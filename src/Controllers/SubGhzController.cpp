@@ -178,9 +178,12 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
         return;
     }
 
+    // Gap between each frame for emmitting
+    auto gap = userInputManager.readValidatedInt("Inter-frame gap (ms):", 100, 0, 10000);
+
     // Start sniffer
     if (!subGhzService.startRawSniffer(state.getSubGhzGdoPin())) {
-        terminalView.println("Failed to start raw sniffer.");
+        terminalView.println("SUBGHZ: Failed to start raw sniffer.");
         return;
     }
 
@@ -198,44 +201,47 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
 
         // Read frame
         auto items = subGhzService.readRawFrame();
-        if (!items.empty()) {
-            frames.push_back(std::move(items));
-            terminalView.println(" [Frame " + std::to_string(frames.size()) + " captured]");
+        if (items.size() < 5) { // Most likely noise
+            continue;
         }
+        frames.push_back(std::move(items));
+        terminalView.println(" [Frame " + std::to_string(frames.size()) + " captured]");
     }
 
     subGhzService.stopRawSniffer();
-    terminalView.println("\nSUBGHZ Replay: Captured " + std::to_string(frames.size()) + " frame(s).");
+    terminalView.println("\nSUBGHZ: Captured " + std::to_string(frames.size()) + " frame(s).");
 
     if (frames.empty()) {
-        terminalView.println("Nothing to replay.\n");
+        terminalView.println("SUBGHZ: Nothing to replay.\n");
         return;
     }
 
     // Profil TX + sender
     if (!subGhzService.applyRawSendProfile(f)) {
-        terminalView.println("Failed to apply TX profile.");
+        terminalView.println("SUBGHZ: Failed to apply TX profile.");
         return;
     }
 
     // Start sending frames
-    terminalView.print("SUBGHZ Replay: In progress...");
+    terminalView.print("SUBGHZ: Replay in progress...\n");
     bool okAll = true;
     auto gdo = state.getSubGhzGdoPin();
     bool confirm = true;
     while (confirm) {
         for (size_t i = 0; i < frames.size(); ++i) {
             if (!subGhzService.sendRawFrame(gdo, frames[i])) {
-                terminalView.println("SUBGHZ Replay: Failed at frame " + std::to_string(i + 1));
+                terminalView.println(" ❌ Failed at frame " + std::to_string(i + 1));
                 okAll = false;
                 break;
+            } else {
+                terminalView.println(" ✅ Sent frame " + std::to_string(i + 1) + " ... (" + std::to_string(gap) + "ms gap) ");
             }
-            delay(3);
+            delay(gap); // inter frame gap
         }
-        confirm = userInputManager.readYesNo("SUBGHZ Replay: Done. Run again?", true);
+        confirm = userInputManager.readYesNo("SUBGHZ: Replay done. Run again?", true);
     }
 
-    terminalView.println(okAll ? "SUBGHZ Replay Done without error.\n" : "SUBGHZ Replay: Done with errors.\n");
+    terminalView.println(okAll ? "SUBGHZ: Replay done without error.\n" : "SUBGHZ: Replay done with errors.\n");
     subGhzService.stopTxBitBang(); // ensure stopped
 }
 
