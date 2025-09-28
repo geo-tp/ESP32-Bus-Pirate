@@ -16,6 +16,7 @@ void DioController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "read")   handleReadPin(cmd); 
     else if (cmd.getRoot() == "set")    handleSetPin(cmd);
     else if (cmd.getRoot() == "pullup") handlePullup(cmd);
+    else if (cmd.getRoot() == "pulldown") handlePulldown(cmd);
     else if (cmd.getRoot() == "pwm")    handlePwm(cmd);
     else if (cmd.getRoot() == "toggle") handleTogglePin(cmd);
     else if (cmd.getRoot() == "pulse")  handlePulse(cmd);
@@ -100,6 +101,22 @@ void DioController::handlePullup(const TerminalCommand& cmd) {
     pinService.setInputPullup(pin);
 
     terminalView.println("DIO Pullup: Set on pin " + std::to_string(pin));
+}
+
+/*
+Pulldown
+*/
+void DioController::handlePulldown(const TerminalCommand& cmd) {
+    if (cmd.getSubcommand().empty() || !argTransformer.isValidNumber(cmd.getSubcommand())) {
+        terminalView.println("Usage: pulldown <pin>");
+        return;
+    }
+
+    int pin = argTransformer.toUint8(cmd.getSubcommand());
+    if (!isPinAllowed(pin, "Pulldown")) return;
+    pinService.setInputPullDown(pin);
+
+    terminalView.println("DIO Pulldown: Set on pin " + std::to_string(pin));
 }
 
 /*
@@ -436,6 +453,7 @@ void DioController::handleHelp() {
     terminalView.println("  read <pin>");
     terminalView.println("  set <pin> <H/L/I/O>");
     terminalView.println("  pullup <pin>");
+    terminalView.println("  pulldown <pin>");
     terminalView.println("  pwm <pin> <freq> <duty>");
     terminalView.println("  servo <pin> <angle>");
     terminalView.println("  measure <pin> [ms]");

@@ -9,6 +9,10 @@ void PinService::setInputPullup(uint8_t pin) {
     pinMode(pin, INPUT_PULLUP);
 }
 
+void PinService::setInputPullDown(uint8_t pin) {
+    pinMode(pin, INPUT_PULLDOWN);
+}
+
 void PinService::setOutput(uint8_t pin) {
     pinMode(pin, OUTPUT);
 }

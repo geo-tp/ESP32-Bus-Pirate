@@ -33,6 +33,9 @@ private:
     // Enable internal pull-up resistor
     void handlePullup(const TerminalCommand& cmd);
 
+    // Enable internal pull-down resistor
+    void handlePulldown(const TerminalCommand& cmd);
+
     // Start pin state sniffing
     void handleSniff(const TerminalCommand& cmd);
 
