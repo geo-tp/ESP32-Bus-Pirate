@@ -108,7 +108,7 @@ private:
 
     // Scrollback
     std::deque<std::string> history;
-    size_t historyMax = 512;   //  512 lines max
+    size_t historyMax = 256;
     int scrollOffset = 0;
     bool padBeforeErase = false;
 
