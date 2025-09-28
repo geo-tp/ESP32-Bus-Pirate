@@ -43,15 +43,15 @@ void SubGhzController::handleSniff(const TerminalCommand&) {
             break;
         }
 
-        auto raw = subGhzService.readRawPulses();
-        for (auto &line : raw) {
-            count++;
+        auto [line, pulseCount] = subGhzService.readRawPulses();
+        if (pulseCount > 8) { // ignore too short frames, likely noise
+            count += pulseCount;
             terminalView.println(line);
         }
     }
     subGhzService.stopRawSniffer();
 
-    terminalView.println("\nSUBGHZ Sniff: Stopped by user. " + std::to_string(count) + " frames\n");
+    terminalView.println("\nSUBGHZ Sniff: Stopped by user. " + std::to_string(count) + " pulses\n");
 }
 
 /*
@@ -172,14 +172,14 @@ Replay
 void SubGhzController::handleReplay(const TerminalCommand&) {
     const float f = state.getSubGhzFrequency();
 
+    // Gap between each frame for emmitting
+    auto gap = userInputManager.readValidatedInt("Inter-frame gap (ms):", 100, 0, 10000);
+
     // Set profile to read frames
     if (!subGhzService.applySniffProfile(f)) {
         terminalView.println("SUBGHZ: Not detected. Run 'config' first.");
         return;
     }
-
-    // Gap between each frame for emmitting
-    auto gap = userInputManager.readValidatedInt("Inter-frame gap (ms):", 100, 0, 10000);
 
     // Start sniffer
     if (!subGhzService.startRawSniffer(state.getSubGhzGdoPin())) {
@@ -223,7 +223,7 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
     }
 
     // Start sending frames
-    terminalView.print("SUBGHZ: Replay in progress...\n");
+    terminalView.print("SUBGHZ: Replay in progress...\r\n");
     bool okAll = true;
     auto gdo = state.getSubGhzGdoPin();
     bool confirm = true;
@@ -395,7 +395,7 @@ void SubGhzController::handleDecode(const TerminalCommand&) {
 
         // Read and analyze frame
         frame = subGhzService.readRawFrame();
-        if (!frame.empty()) {
+        if (!frame.empty() && frame.size() >= 5) {
             auto result = subGhzAnalyzeManager.analyzeFrame(frame);
             terminalView.println(result);
         }

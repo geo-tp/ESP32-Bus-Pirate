@@ -141,7 +141,7 @@ bool SubGhzService::startRawSniffer(int pin) {
 
     // Install RMT driver
     if (rmt_config(&rxconfig) != ESP_OK) return false;
-    if (rmt_driver_install(rxconfig.channel, 16 * 1024, 0) != ESP_OK) return false;
+    if (rmt_driver_install(rxconfig.channel, 8192, 0) != ESP_OK) return false;
 
     // Get ring buffer handle
     if (rmt_get_ringbuf_handle(rxconfig.channel, &rb_) != ESP_OK) return false;
@@ -157,14 +157,12 @@ void SubGhzService::stopRawSniffer() {
     ELECHOUSE_cc1101.setSidle();
 }
 
-std::vector<std::string> SubGhzService::readRawPulses() {
-    std::vector<std::string> result;
-    if (!rb_) return result;
+std::pair<std::string, size_t> SubGhzService::readRawPulses() {
+    if (!rb_) return {"", 0};
 
-    // Receive raw pulses from RMT
     size_t rx_size = 0;
     rmt_item32_t* item = (rmt_item32_t*) xRingbufferReceive(rb_, &rx_size, 0);
-    if (!item) return result;
+    if (!item) return {"", 0};
 
     size_t n = rx_size / sizeof(rmt_item32_t);
     uint32_t totalDuration = 0;
@@ -173,27 +171,21 @@ std::vector<std::string> SubGhzService::readRawPulses() {
         totalDuration += item[i].duration1;
     }
 
-    // Header
     std::ostringstream oss;
-    oss << "[raw " << n << " pulses | freq=" << mhz_ << " MHz | dur=" 
-        << totalDuration << " ticks]\r\n";
+    oss << "[raw " << n << " pulses | freq=" << mhz_
+        << " MHz | dur=" << totalDuration << " ticks]\r\n";
 
-    // Pulse details
     int col = 0;
     for (size_t i = 0; i < n; i++) {
         oss << (item[i].level0 ? 'H' : 'L') << ":" << item[i].duration0
             << " | "
             << (item[i].level1 ? 'H' : 'L') << ":" << item[i].duration1
             << "   ";
-
         if (++col % 4 == 0) oss << "\r\n";
     }
-
     oss << "\n\r";
 
-    result.push_back(oss.str());
-    vRingbufferReturnItem(rb_, (void*)item);
-    return result;
+    return {oss.str(), n};
 }
 
 std::vector<rmt_item32_t> SubGhzService::readRawFrame() {
@@ -211,32 +203,31 @@ std::vector<rmt_item32_t> SubGhzService::readRawFrame() {
     return frame;
 }
 
-bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items, uint32_t /*tick_per_us_ignored*/) {
+bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items, uint32_t tick_per_us) {
     if (!isConfigured_ || items.empty()) return false;
 
+    // Output
+    if (!startTxBitBang()) return false;
 
-    if (!startTxBitBang()) return false;  // configure gdo0_
+    // tick to us
+    auto ticks_to_us = [tick_per_us](uint32_t ticks) -> uint32_t {
+        if (!tick_per_us) return 0;
+        return (ticks + (tick_per_us/2)) / tick_per_us;
+    };
 
-    // Stabilisation
-    gpio_set_level((gpio_num_t)pin, 0);
-    esp_rom_delay_us(200);
-
+    // Bit bang seq
     for (const auto& it : items) {
-        // phase 0
         gpio_set_level((gpio_num_t)pin, it.level0 ? 1 : 0);
-        uint32_t us0 = it.duration0;
+        uint32_t us0 = ticks_to_us(it.duration0);
         if (us0) esp_rom_delay_us(us0);
 
-        // phase 1
         gpio_set_level((gpio_num_t)pin, it.level1 ? 1 : 0);
-        uint32_t us1 = it.duration1;
+        uint32_t us1 = ticks_to_us(it.duration1);
         if (us1) esp_rom_delay_us(us1);
     }
 
-    // Stop
+    // Reset
     gpio_set_level((gpio_num_t)pin, 0);
-    esp_rom_delay_us(200);
-
     return true;
 }
 

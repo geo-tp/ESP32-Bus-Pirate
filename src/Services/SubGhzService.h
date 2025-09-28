@@ -35,7 +35,7 @@ public:
 
     // RMT raw sniffer
     bool startRawSniffer(int pin);
-    std::vector<std::string> readRawPulses();
+    std::pair<std::string, size_t> readRawPulses();
     std::vector<rmt_item32_t> readRawFrame();
     void stopRawSniffer();
 
