@@ -150,8 +150,25 @@ bool SubGhzService::startRawSniffer(int pin) {
     return true;
 }
 
+bool SubGhzService::isSnifferOverflowing() const {
+    if (!rb_) return false;
+    size_t freeBytes = xRingbufferGetCurFreeSize(rb_);
+    return freeBytes < 128;
+}
+
+void SubGhzService::drainSniffer() {
+    if (!rb_) return;
+    while (true) {
+        size_t rx_size = 0;
+        rmt_item32_t* item = (rmt_item32_t*) xRingbufferReceive(rb_, &rx_size, 0);
+        if (!item) break;
+        vRingbufferReturnItem(rb_, (void*)item);
+    }
+}
+
 void SubGhzService::stopRawSniffer() {
     rmt_rx_stop(RMT_RX_CHANNEL);
+    drainSniffer();
     rmt_driver_uninstall(RMT_RX_CHANNEL);
     rb_ = nullptr;
     ELECHOUSE_cc1101.setSidle();
@@ -185,6 +202,7 @@ std::pair<std::string, size_t> SubGhzService::readRawPulses() {
     }
     oss << "\n\r";
 
+    vRingbufferReturnItem(rb_, (void*)item); // Free memory
     return {oss.str(), n};
 }
 

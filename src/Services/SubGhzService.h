@@ -15,6 +15,7 @@
 #define RMT_CLK_DIV 80
 #define RMT_1US_TICKS (80000000 / RMT_CLK_DIV / 1000000)
 #define RMT_1MS_TICKS (RMT_1US_TICKS * 1000)
+#define RMT_BUFFER_SIZE 8192
 
 #define TEMBED_CC1101_SW0 48
 #define TEMBED_CC1101_SW1 47
@@ -37,6 +38,8 @@ public:
     bool startRawSniffer(int pin);
     std::pair<std::string, size_t> readRawPulses();
     std::vector<rmt_item32_t> readRawFrame();
+    bool isSnifferOverflowing() const;
+    void drainSniffer();
     void stopRawSniffer();
 
     // Raw send

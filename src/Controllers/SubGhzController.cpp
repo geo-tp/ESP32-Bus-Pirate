@@ -48,6 +48,11 @@ void SubGhzController::handleSniff(const TerminalCommand&) {
             count += pulseCount;
             terminalView.println(line);
         }
+
+        if (subGhzService.isSnifferOverflowing()) {
+            terminalView.println("\n[WARNING] SUBGHZ Sniffer: Overflow detected! Draining buffer...\n");
+            subGhzService.drainSniffer();
+        }
     }
     subGhzService.stopRawSniffer();
 
@@ -206,6 +211,11 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
         }
         frames.push_back(std::move(items));
         terminalView.println(" [Frame " + std::to_string(frames.size()) + " captured]");
+
+        if (subGhzService.isSnifferOverflowing()) {
+            terminalView.println("\n[WARNING] SUBGHZ Sniffer: Overflow detected! Draining buffer...\n");
+            subGhzService.drainSniffer();
+        }
     }
 
     subGhzService.stopRawSniffer();
@@ -398,6 +408,11 @@ void SubGhzController::handleDecode(const TerminalCommand&) {
         if (!frame.empty() && frame.size() >= 5) {
             auto result = subGhzAnalyzeManager.analyzeFrame(frame);
             terminalView.println(result);
+        }
+
+        if (subGhzService.isSnifferOverflowing()) {
+            terminalView.println("\n[WARNING] SUBGHZ Sniffer: Overflow detected! Draining buffer...\n");
+            subGhzService.drainSniffer();
         }
     }
 
