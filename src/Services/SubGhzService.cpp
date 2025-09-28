@@ -141,7 +141,7 @@ bool SubGhzService::startRawSniffer(int pin) {
 
     // Install RMT driver
     if (rmt_config(&rxconfig) != ESP_OK) return false;
-    if (rmt_driver_install(rxconfig.channel, 8192, 0) != ESP_OK) return false;
+    if (rmt_driver_install(rxconfig.channel, RMT_BUFFER_SIZE, 0) != ESP_OK) return false;
 
     // Get ring buffer handle
     if (rmt_get_ringbuf_handle(rxconfig.channel, &rb_) != ESP_OK) return false;
