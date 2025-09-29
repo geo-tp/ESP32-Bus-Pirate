@@ -85,13 +85,9 @@ void I2cController::handleScan() {
 Sniff
 */    
 void I2cController::handleSniff() {
-    terminalView.println("I2C Sniffer: Listening... Press [ENTER] to stop.\n");
+    terminalView.println("I2C Sniffer: Listening on SCL/SDA... Press [ENTER] to stop.\n");
     i2c_sniffer_begin(state.getI2cSclPin(), state.getI2cSdaPin()); // dont need freq to work
     i2c_sniffer_setup();
-
-    terminalView.println("  [INFO] I2C sniffer mode is experimental.");
-    terminalView.println("         It may crash or freeze the firmware");
-    terminalView.println("         if the data stream is too fast or continuous.\n");
 
     std::string line;
 
@@ -104,13 +100,13 @@ void I2cController::handleSniff() {
 
             if (c == '\n') {
                 line += "  ";
-                terminalView.print(line);
+                terminalView.println(line);
                 line.clear();
             } else {
                 line += c;
             }
         }
-        delay(5);
+        delayMicroseconds(100);
     }
 
     i2c_sniffer_reset_buffer();
