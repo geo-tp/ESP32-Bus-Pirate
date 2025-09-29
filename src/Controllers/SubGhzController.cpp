@@ -665,6 +665,8 @@ void SubGhzController::handleListen() {
 
         delayMicroseconds(refreshUs);
     }
+
+    terminalView.println("\nSUBGHZ Listen: Stopped by user.\n");
 }
 
 /*
