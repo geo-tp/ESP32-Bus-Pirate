@@ -40,7 +40,7 @@ void DioController::handleReadPin(const TerminalCommand& cmd) {
     uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
     if (!isPinAllowed(pin, "Read")) return;
     int value = pinService.read(pin);
-    terminalView.println("Pin " + std::to_string(pin) + " = " + std::to_string(value));
+    terminalView.println("Pin " + std::to_string(pin) + " = " + std::to_string(value) + (value ? " (HIGH)" : " (LOW)"));
 }
 
 /*
@@ -72,17 +72,19 @@ void DioController::handleSetPin(const TerminalCommand& cmd) {
             terminalView.println("DIO Set: Pin " + std::to_string(pin) + " set to OUTPUT");
             break;
         case 'H':
+        case '1':
             pinService.setOutput(pin);
             pinService.setHigh(pin);
             terminalView.println("DIO Set: Pin " + std::to_string(pin) + " set to HIGH");
             break;
         case 'L':
+        case '0':
             pinService.setOutput(pin);
             pinService.setLow(pin);
             terminalView.println("DIO Set: Pin " + std::to_string(pin) + " set to LOW");
             break;
         default:
-            terminalView.println("Unknown command. Use I, O, H, or L.");
+            terminalView.println("Unknown command. Use I, O, H (1), or L (0).");
             break;
     }
 }
