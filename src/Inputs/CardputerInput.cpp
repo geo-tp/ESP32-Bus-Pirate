@@ -76,20 +76,23 @@ char CardputerInput::readChar() {
     // State change
     if (!M5Cardputer.Keyboard.isChange()) return KEY_NONE;
     if (!M5Cardputer.Keyboard.isPressed()) return KEY_NONE;
-    
+
+    // ; . keys inversed
     if (status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_UP)) return KEY_ARROW_UP;
     if (status.fn && M5Cardputer.Keyboard.isKeyPressed(KEY_ARROW_DOWN)) return KEY_ARROW_DOWN;
+
     if (status.enter) return KEY_OK;
     if (status.del) return KEY_DEL;
+    if (status.tab) return KEY_TAB_CUSTOM;
 
     for (auto c : status.word) {
-        delay(50); // debounce
+        delay(5); // debounce
         
         // Issue with %, the only key that requires 2 inputs to display
         if (c == '%') {
             return '5'; 
         }
-        return c; // retourner le premier char saisi
+        return c; // return first char pressed
     }
 
     return KEY_NONE;

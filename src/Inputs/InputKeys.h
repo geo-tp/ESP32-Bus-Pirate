@@ -10,6 +10,7 @@
 #define KEY_ARROW_DOWN '.'
 #define KEY_ARROW_LEFT ','
 #define KEY_ARROW_RIGHT '/'
+#define KEY_TAB_CUSTOM '\t'
 #define CARDPUTER_SPECIAL_ARROW_UP '^'
 #define CARDPUTER_SPECIAL_ARROW_DOWN '`'
 
