@@ -112,10 +112,21 @@ void UsbS3Controller::handleMouseMove(const TerminalCommand& cmd) {
     // mouse move x y
     if (cmd.getSubcommand() == "move") {
         auto args = argTransformer.splitArgs(cmd.getArgs());
+        if (args.size() < 2 ||
+            argTransformer.isValidSignedNumber(args[0]) == false ||
+            argTransformer.isValidSignedNumber(args[1]) == false) {
+            terminalView.println("Usage: mouse move <x> <y>");
+            return;
+        }
         x = argTransformer.toClampedInt8(args[0]);
         y = argTransformer.toClampedInt8(args[1]);
     // mouse x y
     } else {
+        if (argTransformer.isValidSignedNumber(cmd.getSubcommand()) == false ||
+            argTransformer.isValidSignedNumber(cmd.getArgs()) == false) {
+            terminalView.println("Usage: mouse <x> <y>");
+            return;
+        }
         x = argTransformer.toClampedInt8(cmd.getSubcommand());
         y = argTransformer.toClampedInt8(cmd.getArgs());
     }
@@ -139,6 +150,14 @@ void UsbS3Controller::handleMouseClick() {
 Mouse
 */
 void UsbS3Controller::handleMouse(const TerminalCommand& cmd)  {
+    
+    if (cmd.getSubcommand().empty()) {
+        terminalView.println("Usage: mouse <x> <y>");
+        terminalView.println("       mouse click");
+        terminalView.println("       mouse jiggle [ms]");
+        return;
+    }
+
     terminalView.println("USB Mouse: Configuring HID...");
     usbService.mouseBegin();
     terminalView.println("USB Mouse: Initialize HID...");
