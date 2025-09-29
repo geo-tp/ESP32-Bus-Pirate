@@ -42,7 +42,7 @@ private:
     bool handleEscapeSequence(char c, std::string& inputLine, size_t& cursorIndex, const std::string& mode);
 
     // Handle Cardputer arrows
-    bool handleCardputerEscapeSequence(char c, std::string& inputLine);
+    bool handleCardputerEscapeSequence(char c, size_t& cursorIndex, std::string& inputLine, const std::string& mode);
 
     // Handle backspace logic
     bool handleBackspace(char c, std::string& inputLine, size_t& cursorIndex, const std::string& mode);

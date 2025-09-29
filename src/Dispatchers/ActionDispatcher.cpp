@@ -230,7 +230,7 @@ std::string ActionDispatcher::getUserAction() {
         char c = provider.getTerminalInput().readChar();
         if (c == KEY_NONE) continue;
 
-        if (handleCardputerEscapeSequence(c, inputLine)) continue;
+        if (handleCardputerEscapeSequence(c, cursorIndex, inputLine, mode)) continue;
         if (handleEscapeSequence(c, inputLine, cursorIndex, mode)) continue;
         if (handleEnterKey(c, inputLine)) return inputLine;
         if (handleBackspace(c, inputLine, cursorIndex, mode)) continue;
@@ -239,13 +239,31 @@ std::string ActionDispatcher::getUserAction() {
 }
 
 /*
-User Action: Cardputer Special Arrows
+User Action: Cardputer Special Arrows, standalone mode only
 */
-bool ActionDispatcher::handleCardputerEscapeSequence(char c, std::string& inputLine) {
+bool ActionDispatcher::handleCardputerEscapeSequence(char c, size_t& cursorIndex, std::string& inputLine, const std::string& mode) {
+    if (state.getTerminalMode() != TerminalTypeEnum::Standalone) {
+        return false;
+    }
+
     if (c == CARDPUTER_SPECIAL_ARROW_UP) {
         provider.getTerminalView().print(std::string(1, CARDPUTER_SPECIAL_ARROW_UP));
     } else if (c == CARDPUTER_SPECIAL_ARROW_DOWN) {
         provider.getTerminalView().print(std::string(1, CARDPUTER_SPECIAL_ARROW_DOWN));
+    } else if (c == '\t') {
+        if (c != '\t') return false;
+
+        // Clear current line
+        inputLine.clear();
+
+        // Recall previous command from history
+        inputLine = provider.getCommandHistoryManager().up();
+
+        // Move cursor to end and redraw
+        cursorIndex = inputLine.length();
+        provider.getTerminalView().print("\r" + mode + "> " + inputLine + "\033[K");
+
+        return true;
     } else {
         return false;
     }
