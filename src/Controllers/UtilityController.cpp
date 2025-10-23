@@ -238,6 +238,9 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
             lastCheck = millis();
             char c = terminalInput.readChar();
             if (c == '\r' || c == '\n') {
+                // fdufnews 2025/10/22 added to manage drawLogicTrace() for NoScreenDevice
+                if (state.getTerminalMode() == TerminalTypeEnum::Serial)
+                    terminalView.print("\n\n\n\n\r"); // 4 lines down to place cursor just under the logic trace
                 terminalView.println("Logic Analyzer: Stopped by user.");
                 break;
             }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Arduino.h>
 #include "Interfaces/IDeviceView.h"
 #include <iostream>
 #include <SPI.h>
