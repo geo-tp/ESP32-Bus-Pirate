@@ -238,6 +238,9 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
             lastCheck = millis();
             char c = terminalInput.readChar();
             if (c == '\r' || c == '\n') {
+                // fdufnews 2025/10/24 added to restore cursor position when leaving
+                if (state.getTerminalMode() == TerminalTypeEnum::Serial)
+                    terminalView.print("\n\n\n\n\r"); // 4 lines down to place cursor just under the logic trace
                 terminalView.println("Logic Analyzer: Stopped by user.");
                 break;
             }
@@ -247,6 +250,21 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
         if (buffer.size() >= 240) {
             buffer.resize(240);
             deviceView.drawLogicTrace(pin, buffer);
+
+            // fdufnews 2025/10/24 added a poor man's drawLogicTrace() on terminal
+            // draw logic trace on 3 consecutive lines in order to be compatible with small 80x25 terminal window
+            if (state.getTerminalMode() == TerminalTypeEnum::Serial){
+                terminalView.println("Logic trace");
+                uint8_t pos = 0;
+                for(size_t i = 0; i < buffer.size(); i++, pos++){
+                    if(pos > 79){
+                        pos = 0;
+                        terminalView.println("");
+                    }
+                    terminalView.print(buffer[i]?"-":"_");
+                }
+                terminalView.print("\r\x1b[3A");  // Up 3 lines to put cursor at the correct place for the next draw
+            }
             buffer.clear();
         }
 
