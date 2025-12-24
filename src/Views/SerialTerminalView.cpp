@@ -12,14 +12,33 @@ void SerialTerminalView::welcome(TerminalTypeEnum& terminalType, std::string& te
     GlobalState& state = GlobalState::getInstance();
     std::string version = state.getVersion();
 
+    Serial.println("   ____              _ __  _           _       ");
+    Serial.println("  | __ ) _   _ ___  | '_ \\(_)_ __ __ _| |_ ___ ");
+    Serial.println("  |  _ \\| | | / __| | |_) | | '__/ _` | __/ _ \\");
+    Serial.println("  | |_) | |_| \\__ \\ | .__/| | | | (_| | ||  __/");
+    Serial.println("  |____/ \\__,_|___/ |_|   |_|_|  \\__,_|\\__\\___|");
+    Serial.println();
+    Serial.println("             ESP32 SWISS ARMY KNIFE");
+/*
     Serial.println("");
+    Serial.println("   ____ ____ _ __   ___ ___   ____              _ __  _           _       ");
+    Serial.println("  |  __/ ___| '_ \\ |__ |__ | | __ ) _   _ ___  | '_ \\(_)_ __ __ _| |_ ___ ");
+    Serial.println("  | |__\\____| |_) |  / / / | |  _ \\| | | / __| | |_) | | '__/ _` | __/ _ \\");
+    Serial.println("  | |__ ___ \\ .__/  _\\ \\/ /  | |_) | |_| \\__ \\ | .__/| | | | (_| | ||  __/");
+    Serial.println("  |____|____/_|    |___|___| |____/ \\__,_|___/ |_|   |_|_|  \\__,_|\\__\\___|");
+    Serial.println();
+    Serial.println("SNIFFING, SCRIPTING, AND INTERACTING WITH VARIOUS DIGITAL AND RADIO PROTOCOLS");
+*/ 
+/*
     Serial.println("  ____                    _           _       ");
     Serial.println(" | __ ) _   _ ___   _ __ (_)_ __ __ _| |_ ___ ");
     Serial.println(" |  _ \\| | | / __| | '_ \\| | '__/ _` | __/ _ \\");
     Serial.println(" | |_) | |_| \\__ \\ | |_) | | | | (_| | ||  __/");
     Serial.println(" |____/ \\__,_|___/ | .__/|_|_|  \\__,_|\\__\\___|");
     Serial.println("                   |_|                        ");
-    Serial.printf("    Version %s           Ready to board\n", version.c_str());
+    */
+    Serial.println();
+    Serial.printf("     Version %s           Ready to board\n", version.c_str());
     Serial.println("");
     Serial.println(" Type 'mode' to start or 'help' for commands");
     Serial.println("");
