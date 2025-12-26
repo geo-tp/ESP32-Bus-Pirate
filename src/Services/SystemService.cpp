@@ -376,7 +376,7 @@ std::string SystemService::getNvsEntries() const {
     }
 
     // Largeurs fixes (monospace-friendly)
-    constexpr size_t W_NS  = 12;
+    constexpr size_t W_NS  = 16;
     constexpr size_t W_KEY = 20;
 
     appendLine(out, padRight("NS", W_NS) + " " + padRight("KEY", W_KEY) + " TYPE");

@@ -158,7 +158,7 @@ String selectWifiNetwork(TFT_eSPI& tft) {
 }
 
 String enterText(const String& label, TFT_eSPI& tft) {
-    const String charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_ .@#<";
+     const String charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_ .@!#$%^&*()=+{}[]|\\:;\"'<>,?/~\x08\x0D";
     int index = 0;
     String text = "";
 
@@ -173,15 +173,15 @@ String enterText(const String& label, TFT_eSPI& tft) {
         char currentChar = charset[index];
 
         String alias;
-        if (currentChar == '<') {
+        if (currentChar == '\x08') {
             alias = "<-";
-        } else if (currentChar == '#') {
+        } else if (currentChar == '\x0D') {
             alias = "OK";
         } else {
             alias = String(currentChar);
         }
 
-        String charDisplay = (currentChar == '#' || currentChar == '<')
+        String charDisplay = (currentChar == '\x08' || currentChar == '\x0D')
                              ? "[" + alias + "]"
                              : alias;
         String display = text + charDisplay;
@@ -198,9 +198,9 @@ String enterText(const String& label, TFT_eSPI& tft) {
         } else if (key == KEY_ARROW_LEFT) {
             index = (index + 1) % charset.length();
         } else if (key == KEY_OK) {
-            if (currentChar == '<') {
+            if (currentChar == '\x08') {
                 if (!text.isEmpty()) text.remove(text.length() - 1);
-            } else if (currentChar == '#') {
+            } else if (currentChar == '\x0D') {
                 return text;
             } else {
                 text += currentChar;
