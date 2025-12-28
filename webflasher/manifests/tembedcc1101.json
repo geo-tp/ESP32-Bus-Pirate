@@ -1,12 +1,12 @@
 {
   "name": "ESP32 Bus Pirate - T-Embed CC1101",
-  "version": "1.1",
+  "version": "1.2",
   "new_install_prompt_erase": false,
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/firmwares/bus_pirate_11_tembedcc1101.bin", "offset": 0 }
+        { "path": "https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/firmwares/bus_pirate_12_tembedcc1101.bin", "offset": 0 }
       ]
     }
   ]

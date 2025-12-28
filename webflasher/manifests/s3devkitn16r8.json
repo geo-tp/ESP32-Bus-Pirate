@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 Bus Pirate - ESP32-S3 N16R8",
+  "version": "1.2",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/firmwares/bus_pirate_12_s3devkitn16r8.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
