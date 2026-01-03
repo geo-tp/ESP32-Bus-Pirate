@@ -20,7 +20,8 @@ public:
     void loading() override {}
 
     // Only this one is implemented
-    void drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer) override;
+    void drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) override;
+    void drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) override;
 };
 
 #endif // DEVICE_CARDPUTER

@@ -29,6 +29,7 @@ void UtilityController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "P")                                               handleEnablePullups();
     else if (cmd.getRoot() == "p")                                               handleDisablePullups();
     else if (cmd.getRoot() == "logic")                                           handleLogicAnalyzer(cmd);
+    else if (cmd.getRoot() == "analogic")                                        handleAnalogic(cmd);
     else if (cmd.getRoot() == "system")                                          handleSystem();
     else {
         terminalView.println("Unknown command. Try 'help'.");
@@ -207,6 +208,11 @@ void UtilityController::handleEnablePullups() {
 Logic
 */
 void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
+
+    uint16_t tDelay = 500;
+    uint16_t inc = 100; // tDelay will be decremented/incremented by inc
+    uint8_t step = 1; // step of the trace display kind of a zoom
+
     if (cmd.getSubcommand().empty() || !argTransformer.isValidNumber(cmd.getSubcommand())) {
         terminalView.println("Usage: logic <pin>");
         return;
@@ -214,19 +220,24 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
 
     // Verify protected pin
     uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
+    /*
     auto forbidden = state.getProtectedPins();
     if (std::find(forbidden.begin(), forbidden.end(), pin) != forbidden.end()) {
         terminalView.println("Logic Analyzer: This pin is protected or reserved.");
         return;
     }
-
+*/
+    if (state.isPinProtected(pin)) {
+        terminalView.println("Logic Analyzer: This pin is protected or reserved.");
+        return;
+    }
     terminalView.println("\nLogic Analyzer: Monitoring pin " + std::to_string(pin) + "... Press [ENTER] to stop.");
     terminalView.println("Displaying waveform on the ESP32 screen...\n");
 
 
     pinService.setInput(pin);
     std::vector<uint8_t> buffer;
-    buffer.reserve(240); // 240 samples
+    buffer.reserve(320); // 320 samples
 
     unsigned long lastCheck = millis();
     deviceView.clear();
@@ -244,32 +255,147 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
                 terminalView.println("Logic Analyzer: Stopped by user.");
                 break;
             }
+            if (c == 's'){
+                if (tDelay > inc){
+                    tDelay -= inc;
+                    terminalView.println("delay : " + std::to_string(tDelay) + "\n");
+                }
+            };
+            if (c == 'S'){
+                if (tDelay < 10000){
+                    tDelay += inc;
+                    terminalView.println("delay : " + std::to_string(tDelay) + "\n");
+                }
+            };
+            if (c == 'z'){
+                if (step > 1){
+                    step--;
+                    terminalView.println("step : " + std::to_string(step) + "\n");
+                }
+            };
+            if (c == 'Z'){
+                if (step < 4){
+                    step++;
+                    terminalView.println("step : " + std::to_string(step) + "\n");
+                }
+            };
         }
 
         // Draw
-        if (buffer.size() >= 240) {
-            buffer.resize(240);
-            deviceView.drawLogicTrace(pin, buffer);
+        if (buffer.size() >= 320) {
+            buffer.resize(320);
+            deviceView.drawLogicTrace(pin, buffer, step);
 
-            // fdufnews 2025/10/24 added a poor man's drawLogicTrace() on terminal
-            // draw logic trace on 3 consecutive lines in order to be compatible with small 80x25 terminal window
+            // The poor man's drawLogicTrace() on terminal
+            // draws a 132 samples sub part of the buffer to speed up the things
             if (state.getTerminalMode() == TerminalTypeEnum::Serial){
                 terminalView.println("Logic trace");
                 uint8_t pos = 0;
-                for(size_t i = 0; i < buffer.size(); i++, pos++){
-                    if(pos > 79){
-                        pos = 0;
-                        terminalView.println("");
-                    }
-                    terminalView.print(buffer[i]?"-":"_");
+                for(size_t i = 0; i < 132; i++, pos++){
+                     terminalView.print(buffer[i]?"-":"_");
                 }
-                terminalView.print("\r\x1b[3A");  // Up 3 lines to put cursor at the correct place for the next draw
+                terminalView.print("\r\x1b[A");  // Up 1 line to put cursor at the correct place for the next draw
             }
             buffer.clear();
         }
 
         buffer.push_back(pinService.read(pin));
-        delayMicroseconds(500);
+        delayMicroseconds(tDelay);
+    }
+}
+
+/*
+Analogic
+*/
+void UtilityController::handleAnalogic(const TerminalCommand& cmd) {
+    uint16_t tDelay = 500;
+    uint16_t inc = 100; // tDelay will be decremented/incremented by inc
+    uint8_t step = 1; // step of the trace display kind of a zoom
+
+    if (cmd.getSubcommand().empty() || !argTransformer.isValidNumber(cmd.getSubcommand())) {
+        terminalView.println("Usage: analogic <pin>");
+        return;
+    }
+
+    // Verify protected pin
+    uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
+    if (state.isPinProtected(pin)) {
+        terminalView.println("Logic Analyzer: This pin is protected or reserved.");
+        return;
+    }
+    if (!state.isPinAnalog(pin)){
+        terminalView.println("Logic Analyzer: This pin is not an analog one");
+        return;
+    };
+
+    terminalView.println("\nAnalog plotter: Monitoring pin " + std::to_string(pin) + "... Press [ENTER] to stop.");
+    terminalView.println("Displaying waveform on the ESP32 screen...\n");
+
+
+    pinService.setInput(pin);
+    std::vector<uint8_t> buffer;
+    buffer.reserve(320); // 320 samples
+
+    unsigned long lastCheck = millis();
+    deviceView.clear();
+    deviceView.topBar("Analog plotter", false, false);
+    int count = 0;
+    while (true) {
+        // Enter press
+        if (millis() - lastCheck > 10) {
+            lastCheck = millis();
+            char c = terminalInput.readChar();
+            if (c == '\r' || c == '\n') {
+                terminalView.println("Analog plotter: Stopped by user.");
+                break;
+            }
+            if (c == 's'){
+                if (tDelay > inc){
+                    tDelay -= inc;
+                    terminalView.println("\ndelay : " + std::to_string(tDelay) + "\n");
+                }
+            };
+            if (c == 'S'){
+                if (tDelay < 10000){
+                    tDelay += inc;
+                    terminalView.println("\ndelay : " + std::to_string(tDelay) + "\n");
+                }
+            };
+            if (c == 'z'){
+                if (step > 1){
+                    step--;
+                    terminalView.println("\nstep : " + std::to_string(step) + "\n");
+                }
+            };
+            if (c == 'Z'){
+                if (step < 4){
+                    step++;
+                    terminalView.println("\nstep : " + std::to_string(step) + "\n");
+                }
+            };
+            count++;
+            if (count > 50){
+                int raw = pinService.readAnalog(pin);
+                float voltage = (raw / 4095.0f) * 3.3f;
+
+                std::ostringstream oss;
+                oss << "   Analog pin " << static_cast<int>(pin)
+                    << ": " << raw
+                    << " (" << voltage << " V)";
+                terminalView.println(oss.str());
+                count = 0;
+            }
+        }
+
+        // Draw
+        if (buffer.size() >= 320) {
+            buffer.resize(320);
+            deviceView.drawAnalogicTrace(pin, buffer, step);
+            buffer.clear();
+        }
+
+        buffer.push_back(pinService.readAnalog(pin) >> 4); // convert the readAnalog() value to a uint8_t (4096 ==> 256)
+        delayMicroseconds(tDelay);
     }
 }
 
@@ -293,6 +419,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  system               - Show system infos");
     terminalView.println("  mode <name>          - Set active mode");
     terminalView.println("  logic <pin>          - Logic analyzer");
+    terminalView.println("  analogic <pin>       - Analogic plotter");
     terminalView.println("  P                    - Enable pull-up");
     terminalView.println("  p                    - Disable pull-up");
 
@@ -554,6 +681,6 @@ bool UtilityController::isGlobalCommand(const TerminalCommand& cmd) {
     }
 
     return (root == "mode"  || root == "m" || root == "l" ||
-            root == "logic" || root == "P" || root == "p") || 
+            root == "logic" || root == "analogic" || root == "P" || root == "p") || 
             root == "system";
 }
