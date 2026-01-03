@@ -82,11 +82,11 @@ void TembedDeviceView::clear() {
     tft.fillScreen(TFT_BLACK);
 }
 
-void TembedDeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer) {
+void TembedDeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {
     const int canvasWidth = 320;
     const int canvasHeight = 80;
     const int logicCenterY = canvasHeight / 2;
-    const int step = 4;
+    //const int step = 1;
 
     canvas.setColorDepth(8);
     canvas.createSprite(canvasWidth, canvasHeight);
@@ -107,12 +107,47 @@ void TembedDeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& b
         int y1 = prev ? logicCenterY - 15 : logicCenterY + 15;
         int y2 = curr ? logicCenterY - 15 : logicCenterY + 15;
 
-        canvas.drawLine(x, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE );
+        if (curr != prev){
+            canvas.drawLine(x, y1, x + step, y1, prev ? TFT_GREEN : TFT_WHITE );
+            canvas.drawLine(x + step, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE );
+        } else {
+            canvas.drawLine(x, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE );
+        }
         x += step;
         if (x > canvasWidth - step) break;
     }
 
     canvas.pushSprite(0, 50);
+    canvas.deleteSprite();
+}
+
+void TembedDeviceView::drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {
+    const int canvasWidth = 320;
+    const int canvasHeight = 135;
+
+    canvas.setColorDepth(8);
+    canvas.createSprite(canvasWidth, canvasHeight);
+    canvas.fillSprite(TFT_BLACK);
+
+    // Pin num
+    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
+    canvas.setTextSize(1);
+    canvas.setCursor(10, 0);
+    canvas.print("Pin ");
+    canvas.print(pin);
+
+    // Trace
+    int x = 10;
+    for (size_t i = 1; i < buffer.size(); ++i) {
+        
+        uint8_t prev = canvasHeight - 1 - (buffer[i - 1] >> 1);
+        uint8_t curr = canvasHeight - 1 - (buffer[i] >> 1);
+        canvas.drawLine(x, prev, x + step, curr, TFT_GREEN);      
+        x += step;
+        if (x > canvasWidth - step) break;
+    }
+
+    canvas.pushSprite(0, 35);
     canvas.deleteSprite();
 }
 

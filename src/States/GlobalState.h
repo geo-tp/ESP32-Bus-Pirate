@@ -434,6 +434,10 @@ public:
         return std::find(protectedPins.begin(), protectedPins.end(), pin) != protectedPins.end();
     }
 
+    bool isPinAnalog(uint8_t pin) const {
+        return ((pin > 0) && (pin < 19));
+    }
+
     // Constructor
     GlobalState() {
         #ifdef LED_PIN

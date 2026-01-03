@@ -35,8 +35,11 @@ public:
     // Process mode change command and return new mode
     ModeEnum handleModeChangeCommand(const TerminalCommand& cmd);
 
-    // Loic Analyzer on device screen
+    // Logic Analyzer on device screen
     void handleLogicAnalyzer(const TerminalCommand& cmd);
+
+    // Analogic plotter on device screen
+    void handleAnalogic(const TerminalCommand& cmd);
 
     // Check if a command is a global utility command
     bool isGlobalCommand(const TerminalCommand& cmd);
