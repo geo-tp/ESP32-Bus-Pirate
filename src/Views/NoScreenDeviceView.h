@@ -14,6 +14,7 @@ public:
     void loading() override;
     void clear() override;
     void drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) override;
+    void drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) override;
     void setRotation(uint8_t rotation) override;
     void topBar(const std::string& title, bool submenu, bool searchBar) override;
     void horizontalSelection(

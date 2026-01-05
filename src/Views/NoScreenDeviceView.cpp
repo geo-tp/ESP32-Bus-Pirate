@@ -1,4 +1,4 @@
-#include "Views/NoScreenDeviceView.h"
+#include "NoScreenDeviceView.h"
 
 void NoScreenDeviceView::initialize() {}
 
@@ -17,6 +17,8 @@ void NoScreenDeviceView::loading() {}
 void NoScreenDeviceView::clear() {}
 
 void NoScreenDeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {}
+
+void NoScreenDeviceView::drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {}
 
 void NoScreenDeviceView::setRotation(uint8_t rotation) {}
 

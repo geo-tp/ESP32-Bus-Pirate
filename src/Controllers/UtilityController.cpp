@@ -374,7 +374,7 @@ void UtilityController::handleAnalogic(const TerminalCommand& cmd) {
                 }
             };
             count++;
-            if (count > 50){
+            if ((count > 50) && (state.getTerminalMode() != TerminalTypeEnum::Standalone)){
                 int raw = pinService.readAnalog(pin);
                 float voltage = (raw / 4095.0f) * 3.3f;
 
@@ -514,7 +514,6 @@ void UtilityController::handleHelp() {
     terminalView.println("  pwm <pin> freq <dut> - Set PWM on pin");
     terminalView.println("  toggle <pin> <ms>    - Toggle pin periodically");
     terminalView.println("  measure <pin> [ms]   - Calculate frequency");
-    terminalView.println("  analog <pin>         - Read analog value");
     terminalView.println("  reset <pin>          - Reset to default");
 
     terminalView.println("");
