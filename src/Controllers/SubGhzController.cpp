@@ -464,7 +464,7 @@ void SubGhzController::handleTrace() {
         // Render
         if (buffer.size() >= 240) {
             buffer.resize(240);
-            deviceView.drawLogicTrace(gdo, buffer);
+            deviceView.drawLogicTrace(gdo, buffer, 1);
             buffer.clear();
         }
 

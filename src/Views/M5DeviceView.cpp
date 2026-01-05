@@ -263,7 +263,7 @@ void M5DeviceView::loading() {
     M5.Lcd.drawString("Loading...", 75, 60);
 }
 
-void M5DeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer) {
+void M5DeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {
     static constexpr int canvasWidth = 240;
     static constexpr int canvasHeight = 65;
     static constexpr int midY = canvasHeight / 2;
@@ -275,14 +275,21 @@ void M5DeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffe
     canvas.fillSprite(BACKGROUND_COLOR);
 
     // Trace
+    int x0 = 0;
     for (size_t i = 1; i < buffer.size() && i < canvasWidth; ++i) {
-        int x0 = i - 1;
-        int x1 = i;
-        int amplitude = 20;
-        int y0 = buffer[i - 1] ? midY - amplitude : midY + amplitude;
-        int y1 = buffer[i]     ? midY - amplitude : midY + amplitude;
+        uint8_t prev = buffer[i - 1];
+        uint8_t curr = buffer[i];
+        int y1 = prev ? midY - 20 : midY + 20;
+        int y2 = curr ? midY - 20 : midY + 20;
 
-        canvas.drawLine(x0, y0, x1, y1, PRIMARY_COLOR);
+        if (curr != prev){
+            canvas.drawLine(x0, y1, x0 + step, y1, PRIMARY_COLOR );
+            canvas.drawLine(x0 + step, y1, x0 + step, y2, PRIMARY_COLOR );
+        } else {
+            canvas.drawLine(x0, y1, x0 + step, y2, PRIMARY_COLOR );
+        }
+        x0 += step;
+        if (x0 > canvasWidth - step) break;
     }
 
     // Pin num
@@ -295,5 +302,33 @@ void M5DeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffe
 
     canvas.deleteSprite();
 }
+
+void M5DeviceView::drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {
+    static constexpr int canvasWidth = 240;
+    static constexpr int canvasHeight = 65;
+
+    M5Canvas canvas(&M5.Lcd);
+    canvas.setColorDepth(8);
+    canvas.createSprite(canvasWidth, canvasHeight);
+    canvas.fillSprite(BACKGROUND_COLOR);
+
+    // Trace
+    int x = 0;
+    for (size_t i = 1; i < buffer.size() && i < canvasWidth; i ++) {
+        
+        uint8_t prev = canvasHeight - 1 - (buffer[i - 1] >> 2);
+        uint8_t curr = canvasHeight - 1 - (buffer[i] >> 2);
+        canvas.drawLine(x, prev, x + step, curr, PRIMARY_COLOR);      
+        x += step;
+        if (x > canvasWidth - step) break;
+    }
+
+    // Pin num
+    canvas.drawString("Pin " + String(pin), 5, 0);
+
+    canvas.pushSprite(0, 35);
+    canvas.deleteSprite();
+}
+
 
 #endif

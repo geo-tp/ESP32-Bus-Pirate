@@ -48,9 +48,6 @@ private:
     // Toggle pin state every ms
     void handleTogglePin(const TerminalCommand& cmd);
 
-    // Read analog value from a pin
-    void handleAnalog(const TerminalCommand& cmd);
-
     // Edge count on a pin
     void handleMeasure(const TerminalCommand& cmd);
 

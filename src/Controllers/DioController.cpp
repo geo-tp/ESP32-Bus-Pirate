@@ -20,7 +20,6 @@ void DioController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "pwm")    handlePwm(cmd);
     else if (cmd.getRoot() == "toggle") handleTogglePin(cmd);
     else if (cmd.getRoot() == "pulse")  handlePulse(cmd);
-    else if (cmd.getRoot() == "analog") handleAnalog(cmd);
     else if (cmd.getRoot() == "measure") handleMeasure(cmd);
     else if (cmd.getRoot() == "servo")  handleServo(cmd);
     else if (cmd.getRoot() == "reset")  handleResetPin(cmd);
@@ -159,52 +158,6 @@ void DioController::handleSniff(const TerminalCommand& cmd) {
                 : "HIGH -> LOW";
             terminalView.println("Pin " + std::to_string(pin) + ": " + transition);
             last = current;
-        }
-    }
-}
-
-/*
-Analog
-*/
-void DioController::handleAnalog(const TerminalCommand& cmd) {
-    if (cmd.getSubcommand().empty() || !argTransformer.isValidNumber(cmd.getSubcommand())) {
-        terminalView.println("Usage: analog <pin>");
-        return;
-    }
-
-    uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
-    if (!isPinAllowed(pin, "Analog")) return;
-
-    terminalView.println("DIO Analog: Pin " + std::to_string(pin) + " ... Press [ENTER] to stop\n");
-
-    unsigned long lastSample = millis() + 1000; // start immediately
-    unsigned long lastCheck = millis();
-
-    while (true) {
-        unsigned long now = millis();
-
-        // Check [ENTER] every 10 ms
-        if (now - lastCheck > 10) {
-            lastCheck = now;
-            char c = terminalInput.readChar();
-            if (c == '\r' || c == '\n') {
-                terminalView.println("\nDIO Analog: Stopped by user.");
-                break;
-            }
-        }
-
-        // Sample every 1000 ms
-        if (now - lastSample >= 1000) {
-            lastSample = now;
-
-            int raw = pinService.readAnalog(pin);
-            float voltage = (raw / 4095.0f) * 3.3f;
-
-            std::ostringstream oss;
-            oss << "   Analog pin " << static_cast<int>(pin)
-                << ": " << raw
-                << " (" << voltage << " V)";
-            terminalView.println(oss.str());
         }
     }
 }
@@ -461,7 +414,6 @@ void DioController::handleHelp() {
     terminalView.println("  measure <pin> [ms]");
     terminalView.println("  pulse <pin> <us>");
     terminalView.println("  toggle <pin> <ms>");
-    terminalView.println("  analog <pin>");
     terminalView.println("  reset <pin>");
 }
 
