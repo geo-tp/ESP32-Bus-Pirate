@@ -131,7 +131,24 @@ void DioController::handleSniff(const TerminalCommand& cmd) {
 
     uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
     if (!isPinAllowed(pin, "Sniff")) return;
-    pinService.setInput(pin);
+    PinService::pullType pull =  pinService.getPullType(pin);
+    
+    switch (pull)
+    {
+    case PinService::NOPULL:
+        pinService.setInput(pin);
+        break;
+    case PinService::PULL_UP:
+        pinService.setInputPullup(pin);
+        break;
+    case PinService::PULL_DOWN:
+        pinService.setInputPullDown(pin);
+        break;
+    
+    default:
+        break;
+    }
+    
 
     terminalView.println("DIO Sniff: Pin " + std::to_string(pin) + "... Press [ENTER] to stop");
     

@@ -3,14 +3,17 @@
 
 void PinService::setInput(uint8_t pin) {
     pinMode(pin, INPUT);
+    pullState[pin] = NOPULL;
 }
 
 void PinService::setInputPullup(uint8_t pin) {
     pinMode(pin, INPUT_PULLUP);
+    pullState[pin] = PULL_UP;
 }
 
 void PinService::setInputPullDown(uint8_t pin) {
     pinMode(pin, INPUT_PULLDOWN);
+    pullState[pin] = PULL_DOWN;
 }
 
 void PinService::setOutput(uint8_t pin) {
@@ -32,14 +35,22 @@ bool PinService::read(uint8_t pin) {
 }
 
 void PinService::togglePullup(uint8_t pin) {
-    bool enabled = pullupState[pin]; // default false if not set
+    pullType enabled = pullState[pin];
 
-    if (enabled) {
+    if (enabled == PULL_UP) {
         setInput(pin);
-        pullupState[pin] = false;
     } else {
         setInputPullup(pin);
-        pullupState[pin] = true;
+    }
+}
+
+void PinService::togglePullDown(uint8_t pin) {
+    pullType enabled = pullState[pin];
+
+    if (enabled == PULL_DOWN) {
+        setInput(pin);
+    } else {
+        setInputPullDown(pin);
     }
 }
 
@@ -106,4 +117,8 @@ bool PinService::isPwmFeasible(uint32_t freq, uint8_t resolutionBits) {
 
     uint32_t divParam = (uint32_t)(baseClkHz / denom);
     return (divParam >= 1 && divParam <= maxDivParam);
+}
+
+PinService::pullType PinService::getPullType(uint8_t pin){
+    return(pullState[pin]);
 }
