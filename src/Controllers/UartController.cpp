@@ -116,13 +116,7 @@ void UartController::handleRead() {
 AT Command shell
 */
 void UartController::handleAtCommand(const TerminalCommand& cmd) {
-    #ifdef DEVICE_M5STICK
-        terminalView.println("UART AT: No flash space available on M5Stick for AT command shell.");
-        return;
-        
-    #else 
         uartAtShell.run();
-    #endif
 }
 
 /*
