@@ -55,8 +55,8 @@ and then launches the main loop through the ActionDispatcher.
 
 
 void setup() {    
-    #if DEVICE_M5STICK
-        // Setup the M5stickCplus2
+    #if defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
+        // Setup the Stick
         #include <M5Unified.h>
         auto cfg = M5.config();
         M5.begin(cfg);

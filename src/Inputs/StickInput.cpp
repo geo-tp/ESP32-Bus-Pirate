@@ -1,4 +1,4 @@
-#ifdef DEVICE_M5STICK
+#if defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
 
 #include "StickInput.h"
 
