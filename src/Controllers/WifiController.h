@@ -26,6 +26,9 @@ public:
     // Ensure WiFi is configured before any action
     void ensureConfigured();
 
+    // Build current connection state
+    std::vector<std::string> buildWiFiLines();
+
 private:
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;

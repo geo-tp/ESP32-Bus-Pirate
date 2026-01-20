@@ -31,6 +31,42 @@ void WifiController::handleCommand(const TerminalCommand &cmd)
     else handleHelp();
 }
 
+std::vector<std::string> WifiController::buildWiFiLines() {
+    std::vector<std::string> lines;
+    lines.reserve(4);
+
+    int mode   = wifiService.getWifiModeRaw();
+    int status = wifiService.getWifiStatusRaw();
+
+    // MODE
+    lines.push_back(
+        std::string("MODE ") + WifiService::wifiModeToStr(mode)
+    );
+
+    // Disconnection
+    if (status != WL_CONNECTED) {
+        lines.push_back("WIFI DISCONNECTED");
+        return lines;
+    }
+
+    // Connected
+    lines.push_back("WIFI CONNECTED");
+
+    // STA IP
+    std::string staIp = wifiService.getLocalIP();
+    if (!staIp.empty())
+        lines.push_back(staIp);
+
+    // SSID
+    std::string ssid = wifiService.getSsid();
+    if (!ssid.empty()) {
+        std::string nameLimited = ssid.length() > 15 ? ssid.substr(0, 15) + "..." : ssid;
+        lines.push_back(nameLimited);
+    }
+
+    return lines;
+}
+
 /*
 Connect
 */
