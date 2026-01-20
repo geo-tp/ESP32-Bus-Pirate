@@ -39,6 +39,7 @@ void UartController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "spam") handleSpam(cmd);
     else if (cmd.getRoot() == "glitch") handleGlitch();
     else if (cmd.getRoot() == "xmodem") handleXmodem(cmd);
+    else if (cmd.getRoot() == "swap") handleSwap();
     else if (cmd.getRoot() == "config") handleConfig();
     else handleHelp();
 }
@@ -555,6 +556,7 @@ void UartController::handleHelp() {
     terminalView.println("  glitch");
     terminalView.println("  xmodem recv <dest path>");
     terminalView.println("  xmodem send <file path>");
+    terminalView.println("  swap");
     terminalView.println("  config");
     terminalView.println("  raw instructions, ['AT' D:100 r:128]");
     terminalView.println("");
@@ -565,6 +567,33 @@ Glitch
 */
 void UartController::handleGlitch() {
     terminalView.println("Uart Glicher: Not Yet Implemented");
+}
+
+/* 
+Swap pins
+*/
+void UartController::handleSwap() {
+    uint8_t rx = state.getUartRxPin();
+    uint8_t tx = state.getUartTxPin();
+
+    // Swap in state
+    state.setUartRxPin(tx);
+    state.setUartTxPin(rx);
+
+    // Reconfigure UART with swapped pins
+    uartService.end();
+
+    uint32_t baud = state.getUartBaudRate();
+    uint32_t config = state.getUartConfig();
+    bool inverted = state.isUartInverted();
+
+    uartService.configure(baud, config, state.getUartRxPin(), state.getUartTxPin(), inverted);
+
+    terminalView.println(
+        "UART Swap: RX/TX swapped. RX=" + std::to_string(state.getUartRxPin()) +
+        " TX=" + std::to_string(state.getUartTxPin())
+    );
+    terminalView.println("");
 }
 
 /*

@@ -62,6 +62,9 @@ private:
     // Send glitch pattern over uart
     void handleGlitch();
 
+    // Swap RX and TX pins
+    void handleSwap();
+
     // Scan to find the right baudrate
     void handleScan();
 
