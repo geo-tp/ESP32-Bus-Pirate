@@ -122,3 +122,14 @@ bool PinService::isPwmFeasible(uint32_t freq, uint8_t resolutionBits) {
 PinService::pullType PinService::getPullType(uint8_t pin){
     return(pullState[pin]);
 }
+
+std::vector<uint8_t> PinService::getConfiguredPullPins() {
+    std::vector<uint8_t> pins;
+    pins.reserve(pullState.size());
+
+    for (const auto& entry : pullState) {
+        pins.push_back(entry.first);
+    }
+
+    return pins;
+}

@@ -471,3 +471,37 @@ bool DioController::isPinAllowed(uint8_t pin, const std::string& context) {
 
     return true;
 }
+
+std::vector<std::string> DioController::buildPullConfigLines() {
+    std::vector<std::string> lines;
+
+    auto pins = pinService.getConfiguredPullPins();
+    std::sort(pins.begin(), pins.end());
+
+    size_t total = 0;
+
+    for (uint8_t pin : pins) {
+        auto pull = pinService.getPullType(pin);
+
+        if (pull == PinService::PULL_UP) {
+            lines.push_back("GPIO " + std::to_string(pin) + " PULLUP");
+        } 
+        else if (pull == PinService::PULL_DOWN) {
+            lines.push_back("GPIO " + std::to_string(pin) + " PULLDOWN");
+        } else {
+            continue;
+        }
+
+        ++total;
+
+        // Limit to 4 displayable lines
+        if (lines.size() == 4) {
+            if (pins.size() > total) {
+                lines.back() += " ...";
+            }
+            break;
+        }
+    }
+
+    return lines;
+}
