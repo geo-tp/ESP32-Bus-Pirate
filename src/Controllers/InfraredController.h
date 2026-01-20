@@ -60,10 +60,7 @@ private:
 
     // Receive IR commands
     void handleReceive();
-
-    // Print raw IR frames
-    void handleRaw();
-
+    
     // Send "device-b-gone" style power-off signals
     void handleDeviceBgone();
 

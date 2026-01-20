@@ -439,6 +439,9 @@ void InfraredController::handleConfig() {
     terminalView.println("Infrared configured.\n");
 }
 
+/*
+Jam
+*/
 void InfraredController::handleJam() {
     // Mode
     std::vector<std::string> modes = infraredService.getJamModeStrings();
@@ -471,7 +474,6 @@ void InfraredController::handleJam() {
 
         infraredService.sendJam(midx, khz, sweepIdx, density);
         bursts++;
-        delayMicroseconds(100);
     }
 }
 
