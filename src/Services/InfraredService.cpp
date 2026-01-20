@@ -227,10 +227,6 @@ bool InfraredService::receiveRaw(std::vector<uint16_t>& timings, uint32_t& khz) 
     for (uint16_t i = 1; i < raw->rawlen; i++) {
         // Convert ticks to microseconds
         uint32_t us = static_cast<uint32_t>(raw->rawbuf[i]) * MICROS_PER_TICK;
-
-        // sendRaw takes uint16_t (max ~65 ms). Cap if too large.
-        if (us > 0xFFFFu) us = 0xFFFFu;
-
         timings.push_back(static_cast<uint16_t>(us));
     }
 
@@ -247,6 +243,59 @@ void InfraredService::sendRaw(const std::vector<uint16_t>& timings, uint32_t khz
     delete[] buf;
 }
 
+void InfraredService::sendJam(uint8_t modeIndex,
+                                 uint16_t khz,
+                                 uint32_t& sweepIndex,
+                                 uint8_t density) {
+
+    // Burst pattern
+    static std::vector<uint16_t> pat;
+    uint16_t halfPeriodUs = 500 / khz;
+    if (halfPeriodUs < 1) halfPeriodUs = 1;
+
+    if (pat.empty()) {
+        pat.reserve(80);
+        for (int i = 0; i < 40; ++i) {
+            pat.push_back(halfPeriodUs);
+            pat.push_back(halfPeriodUs);
+        }
+    }
+
+    auto mode = static_cast<JamMode>(modeIndex);
+
+    // Delay shrinks as density grows
+    const uint16_t interBurstDelayUs = 100 / density + 2;
+    const uint8_t sweepCount = sizeof(carrierKhz) / sizeof(carrierKhz[0]);
+
+    for (uint8_t b = 0; b < density; ++b) {
+
+        uint16_t f = khz;
+
+        if (mode == JamMode::SWEEP) {
+            f = carrierKhz[sweepIndex++ % sweepCount];
+            sendRaw(pat, f);
+        }
+        else if (mode == JamMode::CARRIER) {
+            sendRaw(pat, khz);
+        }
+        else { // RANDOM
+            std::vector<uint16_t> rnd;
+            rnd.reserve(30);
+            for (int i = 0; i < 30; ++i) {
+                rnd.push_back((uint16_t)random(5, 1001));
+            }
+
+            // Occasionally vary frequency
+            if (random(10) < 3) {
+                f = carrierKhz[random(0, sweepCount)];
+            }
+
+            sendRaw(rnd, f);
+        }
+
+        delayMicroseconds(interBurstDelayUs);
+    }
+}
 
 uint16_t InfraredService::getKaseikyoVendorIdCode(const std::string& input) {
     std::string lowerInput = input;
@@ -265,4 +314,18 @@ uint16_t InfraredService::getKaseikyoVendorIdCode(const std::string& input) {
     } else {
         return PANASONIC_VENDOR_ID_CODE; // default
     }
+}
+
+std::vector<std::string> InfraredService::getCarrierStrings() {
+    std::vector<std::string> out;
+    out.reserve(sizeof(carrierKhz) / sizeof(carrierKhz[0]));
+
+    for (uint16_t f : carrierKhz) {
+        out.push_back(std::to_string(f));
+    }
+    return out;
+}
+
+std::vector<std::string> InfraredService::getJamModeStrings() {
+    return {"carrier", "sweep", "random"};
 }
