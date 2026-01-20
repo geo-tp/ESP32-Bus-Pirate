@@ -200,7 +200,7 @@ void M5DeviceView::noMapping() {
     M5.Lcd.drawRoundRect(10, 28, M5.Lcd.width() - 20, 97, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
 
     // Description
-    std::string map = "No mapping defined";
+    std::string map = "Nothing to display";
     M5.Lcd.setTextSize(1.5);
     M5.Lcd.setTextColor(TEXT_COLOR);
     int16_t titleX = (M5.Lcd.width() - M5.Lcd.textWidth(map.c_str())) / 2;

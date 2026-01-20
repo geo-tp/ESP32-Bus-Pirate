@@ -333,7 +333,7 @@ void TembedDeviceView::show(PinoutConfig& config) {
 
         canvas.setTextColor(TFT_WHITE);
         canvas.setTextFont(2);
-        canvas.drawString("No mapping defined", 100, 85);
+        canvas.drawString("Nothing to display", 100, 85);
         canvas.pushSprite(0, 0);
         canvas.deleteSprite();
         return;
