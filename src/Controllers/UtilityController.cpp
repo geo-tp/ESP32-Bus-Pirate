@@ -454,6 +454,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  xmodem <send> <path> - Send file via XMODEM");
     terminalView.println("  xmodem <recv> <path> - Receive file via XMODEM");
     terminalView.println("  config               - Configure settings");
+    terminalView.println("  swap                 - Swap RX and TX pins");
     terminalView.println("  ['Hello'] [r:64]...  - Instruction syntax");
  
     terminalView.println("");
@@ -477,6 +478,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  monitor <addr> [ms]  - Monitor register changes");
     terminalView.println("  eeprom [addr]        - I2C EEPROM operations");
     terminalView.println("  recover              - Attempt bus recovery");
+    terminalView.println("  swap                 - Swap SDA and SCL pins");
     terminalView.println("  config               - Configure settings");
     terminalView.println("  [0x13 0x4B 0x1]      - Instruction syntax");
 
