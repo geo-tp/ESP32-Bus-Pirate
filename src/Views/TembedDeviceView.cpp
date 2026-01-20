@@ -2,7 +2,7 @@
 
 #include "TembedDeviceView.h"
 #include <Arduino.h>
-
+#include "Data/WelcomeScreen.h"
 
 TembedDeviceView::TembedDeviceView() {
     pinMode(PIN_POWER_ON, OUTPUT);
@@ -41,21 +41,16 @@ void TembedDeviceView::initialize() {
 void TembedDeviceView::logo() {
     clear();
 
-    // Rect
-    tft.fillRoundRect(60, 55, 200, 60, 8, DARK_GREY_RECT);
-
-    // Border
-    tft.drawRoundRect(60, 55, 200, 60, 8, TFT_GREEN);
-
-    // Titre
-    tft.setTextColor(TFT_GREEN, DARK_GREY_RECT);
-    drawCenterText("Bus Pirate", 80, 4.5);
+    // TODO: Color are not correct, with or without setSwapBytes
+    tft.setSwapBytes(true);
+    tft.pushImage(40, 30, WELCOME_IMAGE_WIDTH, WELCOME_IMAGE_HEIGHT, WelcomeScreen);
+    tft.setSwapBytes(false);
 
     // Sub
     tft.setTextColor(TFT_WHITE, DARK_GREY_RECT);
     GlobalState& state = GlobalState::getInstance();
-    auto version = "Version " + state.getVersion() + " - Geo";
-    drawCenterText(version.c_str(), 100, 1.9);
+    auto version = "ESP32 Bus Pirate - " + state.getVersion();
+    drawCenterText(version.c_str(), 130, 1.9);
 
     delay(3000);
 }
