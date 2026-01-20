@@ -17,6 +17,9 @@ public:
     // Entry point to handle a DIO command
     void handleCommand(const TerminalCommand& cmd);
 
+    // Build GPIO and pull configuration lines
+    std::vector<std::string> buildPullConfigLines();
+
 private:
     ITerminalView& terminalView;
     IInput& terminalInput;

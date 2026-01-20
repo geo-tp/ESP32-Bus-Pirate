@@ -136,6 +136,7 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
             break;
         case ModeEnum::WiFi:
             provider.getWifiController().handleCommand(cmd);
+            setCurrentMode(state.getCurrentMode()); // Rerender pinout view after WiFi commands
             break;
         case ModeEnum::JTAG:
             provider.getJtagController().handleCommand(cmd);
@@ -161,7 +162,8 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
     }
 
    // Handled in specific mode, we need to rerender the pinout view
-   if (cmd.getRoot() == "config" || cmd.getRoot() == "setprotocol" || cmd.getRoot() == "trace") {
+   if (cmd.getRoot() == "config" || cmd.getRoot() == "setprotocol" || cmd.getRoot() == "trace"
+       || cmd.getRoot() == "pullup" || cmd.getRoot() == "pulldown" || cmd.getRoot() == "reset") {
         setCurrentMode(state.getCurrentMode());
    } 
 }
@@ -421,8 +423,17 @@ void ActionDispatcher::setCurrentMode(ModeEnum newMode) {
             break;
         case ModeEnum::ThreeWire:
             provider.getThreeWireController().ensureConfigured();
-            config.setMappings({"DATA GPIOX","CLK GPIOX","ENABLE GPIOX"}); // TODO
+            config.setMappings({
+                "CS GPIO " + std::to_string(state.getThreeWireCsPin()),
+                "SK GPIO " + std::to_string(state.getThreeWireSkPin()),
+                "DI GPIO " + std::to_string(state.getThreeWireDiPin()),
+                "DO GPIO " + std::to_string(state.getThreeWireDoPin())
+            });
             break;
+        case ModeEnum::DIO: {
+            config.setMappings(provider.getDioController().buildPullConfigLines());
+            break;
+        }
         case ModeEnum::LED:
             provider.getLedController().ensureConfigured();
             config.setMappings({
@@ -448,6 +459,7 @@ void ActionDispatcher::setCurrentMode(ModeEnum newMode) {
             break;
         case ModeEnum::WiFi:
             provider.getWifiController().ensureConfigured();
+            config.setMappings(provider.getWifiController().buildWiFiLines());
             break;
         case ModeEnum::JTAG: {
             provider.getJtagController().ensureConfigured();

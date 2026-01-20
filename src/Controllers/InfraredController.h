@@ -61,6 +61,9 @@ private:
     // Receive IR commands
     void handleReceive();
 
+    // Print raw IR frames
+    void handleRaw();
+
     // Send "device-b-gone" style power-off signals
     void handleDeviceBgone();
 
@@ -77,6 +80,9 @@ private:
 
     // Load commands from .ir files (littlefs)
     void handleLoad(const TerminalCommand& command);
+
+    // Send IR jamming signals
+    void handleJam();
 
     // Show help text
     void handleHelp();

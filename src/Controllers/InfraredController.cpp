@@ -34,6 +34,7 @@ void InfraredController::handleCommand(const TerminalCommand& command) {
     else if (command.getRoot() == "remote")       handleRemote();
     else if (command.getRoot() == "replay")       handleReplay(command);
     else if (command.getRoot() == "load")         handleLoad(command);
+    else if (command.getRoot() == "jam")          handleJam();
     else if (command.getRoot() == "setprotocol")  handleSetProtocol();
     else handleHelp();
 }
@@ -78,31 +79,54 @@ void InfraredController::handleSend(const TerminalCommand& command) {
 Receive
 */
 void InfraredController::handleReceive() {
-    terminalView.println("Receiving infrared signal...Press [ENTER] to cancel.");
-    terminalView.println("");
+    bool decode = userInputManager.readYesNo("Decode infrared signal?", true);
+
+    terminalView.println("INFRARED Receive: Waiting for signal...");
+    terminalView.println("Press [ENTER] to stop.\n");
     
     infraredService.startReceiver();
+
     while (true) {
-        // Check Enter press
+        // Stop on ENTER
         char c = terminalInput.readChar();
         if (c == '\r' || c == '\n') {
-            terminalView.println("INFRARED Receive: Cancelled by user.");
-            return;
+            terminalView.println("\nINFRARED Receive: Stopped by user.");
+            break;
         }
 
-        // Try receive and decode signal
-        InfraredCommand cmd = infraredService.receiveInfraredCommand();
-        if (cmd.getProtocol() != RAW) {
-            terminalView.println("");
-            terminalView.println("Infrared signal received:");
-            terminalView.println("  Protocol : " + InfraredProtocolMapper::toString(cmd.getProtocol()));
-            terminalView.println("  Device   : " + std::to_string(cmd.getDevice()));
-            terminalView.println("  SubDev   : " + std::to_string(cmd.getSubdevice()));
-            terminalView.println("  Command  : " + std::to_string(cmd.getFunction()));
-            terminalView.println("");
-            terminalView.println("INFRARED Receive: Waiting for next signal or press [ENTER] to exit.");
+        if (decode) {
+            // Decode signal
+            InfraredCommand cmd = infraredService.receiveInfraredCommand();
+            if (cmd.getProtocol() != RAW) {
+                terminalView.println("");
+                terminalView.println("Infrared signal received:");
+                terminalView.println("  Protocol : " + InfraredProtocolMapper::toString(cmd.getProtocol()));
+                terminalView.println("  Device   : " + std::to_string(cmd.getDevice()));
+                terminalView.println("  SubDev   : " + std::to_string(cmd.getSubdevice()));
+                terminalView.println("  Command  : " + std::to_string(cmd.getFunction()));
+                terminalView.println("");
+                terminalView.println("INFRARED Receive: Waiting for next signal or press [ENTER] to exit.");
+            }
+        } else {
+            // Raw mode
+            std::vector<uint16_t> timings;
+            uint32_t khz = 0;
+
+            if (infraredService.receiveRaw(timings, khz)) {
+                terminalView.println("\nRAW Timings: ");
+
+                bool mark = true;
+                for (uint16_t t : timings) {
+                    terminalView.print(mark ? "+" : "-");
+                    terminalView.print(std::to_string(t));
+                    terminalView.print(" ");
+                    mark = !mark;
+                }
+                terminalView.println("");
+            }
         }
     }
+
     infraredService.stopReceiver();
 }
 
@@ -415,6 +439,42 @@ void InfraredController::handleConfig() {
     terminalView.println("Infrared configured.\n");
 }
 
+void InfraredController::handleJam() {
+    // Mode
+    std::vector<std::string> modes = infraredService.getJamModeStrings();
+    uint16_t midx = userInputManager.readValidatedChoiceIndex("Select Jam Mode", modes, 0);
+
+    // kHz
+    uint16_t khz = 38;
+    if (modes[midx] == "carrier") {
+        std::vector<std::string> khzChoices = infraredService.getCarrierStrings();
+        uint16_t kidx = userInputManager.readValidatedChoiceIndex("Select Carrier kHz", khzChoices, 3);
+        khz = (uint16_t)std::stoi(khzChoices[kidx]);
+    }
+
+    // density
+    uint8_t density =  userInputManager.readValidatedInt("Density (1-20)", 10, 1, 20);
+
+    terminalView.println("\nINFRARED Jam: Sending random signals...");
+    terminalView.println("Press [ENTER] to stop.");
+
+    uint32_t sweepIdx = 0;
+    uint32_t bursts = 0;
+
+    while (true) {
+        // Stop ENTER
+        char c = terminalInput.readChar();
+        if (c == '\r' || c == '\n') {
+            terminalView.println("\nINFRARED Jam: Stopped by user.");
+            break;
+        }
+
+        infraredService.sendJam(midx, khz, sweepIdx, density);
+        bursts++;
+        delayMicroseconds(100);
+    }
+}
+
 /*
 Help
 */
@@ -427,6 +487,7 @@ void InfraredController::handleHelp() {
     terminalView.println("  remote");
     terminalView.println("  replay");
     terminalView.println("  load");
+    terminalView.println("  jam");
     terminalView.println("  config");
 }
 

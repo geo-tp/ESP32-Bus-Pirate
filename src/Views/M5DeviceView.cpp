@@ -1,7 +1,7 @@
-#if defined(DEVICE_CARDPUTER) || defined(DEVICE_M5STICK)
+#if defined(DEVICE_CARDPUTER) || defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
 
 #include "M5DeviceView.h"
-
+#include "Data/WelcomeScreen.h"
 
 void M5DeviceView::initialize() {
     M5.Lcd.fillScreen(BACKGROUND_COLOR);
@@ -23,19 +23,14 @@ void M5DeviceView::logo() {
     clear();
 
     GlobalState& state = GlobalState::getInstance();
+    M5.Lcd.setSwapBytes(true);
+    M5.Lcd.pushImage(0, 0, WELCOME_IMAGE_WIDTH, WELCOME_IMAGE_HEIGHT, WelcomeScreen);
+    M5.Lcd.setSwapBytes(false);
 
-    M5.Lcd.fillRoundRect(8, 40, 220, 60, DEFAULT_ROUND_RECT, RECT_COLOR_DARK);
-    M5.Lcd.drawRoundRect(8, 40, 220, 60, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
-
-    M5.Lcd.setTextSize(3);
-    M5.Lcd.setTextColor(PRIMARY_COLOR);
-    M5.Lcd.setCursor(31, 49);
-    M5.Lcd.printf("Bus Pirate");
-
-    M5.Lcd.setTextSize(1.6);
-    M5.Lcd.setCursor(43, 80);
+    M5.Lcd.setTextSize(1.5);
+    M5.Lcd.setCursor(22, 107);
     M5.Lcd.setTextColor(TEXT_COLOR);
-    M5.Lcd.printf("Version %s - Geo", state.getVersion().c_str());
+    M5.Lcd.printf("ESP32 Bus Pirate - %s", state.getVersion().c_str());
 
     delay(3000);
 }
@@ -200,7 +195,7 @@ void M5DeviceView::noMapping() {
     M5.Lcd.drawRoundRect(10, 28, M5.Lcd.width() - 20, 97, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
 
     // Description
-    std::string map = "No mapping defined";
+    std::string map = "Nothing to display";
     M5.Lcd.setTextSize(1.5);
     M5.Lcd.setTextColor(TEXT_COLOR);
     int16_t titleX = (M5.Lcd.width() - M5.Lcd.textWidth(map.c_str())) / 2;

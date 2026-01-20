@@ -289,7 +289,7 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
             // The poor man's drawLogicTrace() on terminal
             // draws a 132 samples sub part of the buffer to speed up the things
             if (state.getTerminalMode() == TerminalTypeEnum::Serial){
-                terminalView.println("Logic trace");
+                terminalView.println("");
                 uint8_t pos = 0;
                 for(size_t i = 0; i < 132; i++, pos++){
                      terminalView.print(buffer[i]?"-":"_");
@@ -320,15 +320,15 @@ void UtilityController::handleAnalogic(const TerminalCommand& cmd) {
     // Verify protected pin
     uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
     if (state.isPinProtected(pin)) {
-        terminalView.println("Logic Analyzer: This pin is protected or reserved.");
+        terminalView.println("Analogic: This pin is protected or reserved.");
         return;
     }
     if (!state.isPinAnalog(pin)){
-        terminalView.println("Logic Analyzer: This pin is not an analog one");
+        terminalView.println("Analogic: This pin is not an analog one");
         return;
     };
 
-    terminalView.println("\nAnalog plotter: Monitoring pin " + std::to_string(pin) + "... Press [ENTER] to stop.");
+    terminalView.println("\nAnalogic: Monitoring pin " + std::to_string(pin) + "... Press [ENTER] to stop.");
     terminalView.println("Displaying waveform on the ESP32 screen...\n");
 
 
@@ -346,7 +346,7 @@ void UtilityController::handleAnalogic(const TerminalCommand& cmd) {
             lastCheck = millis();
             char c = terminalInput.readChar();
             if (c == '\r' || c == '\n') {
-                terminalView.println("Analog plotter: Stopped by user.");
+                terminalView.println("\nAnalogic: Stopped by user.");
                 break;
             }
             if (c == 's'){
@@ -454,6 +454,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  xmodem <send> <path> - Send file via XMODEM");
     terminalView.println("  xmodem <recv> <path> - Receive file via XMODEM");
     terminalView.println("  config               - Configure settings");
+    terminalView.println("  swap                 - Swap RX and TX pins");
     terminalView.println("  ['Hello'] [r:64]...  - Instruction syntax");
  
     terminalView.println("");
@@ -477,6 +478,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  monitor <addr> [ms]  - Monitor register changes");
     terminalView.println("  eeprom [addr]        - I2C EEPROM operations");
     terminalView.println("  recover              - Attempt bus recovery");
+    terminalView.println("  swap                 - Swap SDA and SCL pins");
     terminalView.println("  config               - Configure settings");
     terminalView.println("  [0x13 0x4B 0x1]      - Instruction syntax");
 
@@ -537,8 +539,9 @@ void UtilityController::handleHelp() {
     terminalView.println("  setprotocol          - Set IR protocol type");
     terminalView.println("  devicebgone          - OFF devices blast");
     terminalView.println("  remote               - Universal remote commands");
-    terminalView.println("  load                 - Load .ir files from FS");
     terminalView.println("  replay [count]       - Replay recorded IR frames");
+    terminalView.println("  load                 - Load .ir files from FS");
+    terminalView.println("  jam                  - Send random IR signals");
     terminalView.println("  config               - Configure settings");
 
     terminalView.println("");

@@ -1,6 +1,6 @@
 #pragma one
 
-#ifdef DEVICE_M5STICK
+#if defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
 
 #define NVS_SSID_KEY "ssid"
 #define NVS_PASS_KEY "pass"

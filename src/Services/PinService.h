@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <unordered_map>
+#include <vector>
 
 class PinService {
 public:
@@ -19,6 +20,7 @@ public:
     void setServoAngle(uint8_t pin, uint8_t angle);
     typedef enum  pullType { NOPULL = 0, PULL_UP, PULL_DOWN}  pullType;
     pullType getPullType(uint8_t pin);
+    std::vector<uint8_t> getConfiguredPullPins();
 private:
     bool isPwmFeasible(uint32_t freq, uint8_t resolutionBits);
     std::unordered_map<uint8_t, pullType> pullState; 

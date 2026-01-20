@@ -66,6 +66,9 @@ private:
     // Configure I2C parameters
     void handleConfig();
 
+    // Swap SDA and SCL pins
+    void handleSwap();
+
     // Monitor I2C device registers
     void handleMonitor(const TerminalCommand& cmd);
 
