@@ -36,6 +36,7 @@ void I2cController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "eeprom") handleEeprom(cmd);
     else if (cmd.getRoot() == "recover") handleRecover();
     else if (cmd.getRoot() == "monitor") handleMonitor(cmd);
+    else if (cmd.getRoot() == "swap") handleSwap();
     else if (cmd.getRoot() == "config") handleConfig();
     else handleHelp();
 }
@@ -784,8 +785,30 @@ void I2cController::handleHelp() {
     terminalView.println("  recover");
     terminalView.println("  monitor <addr> [delay_ms]");
     terminalView.println("  eeprom [addr]");
+    terminalView.println("  swap");
     terminalView.println("  config");
     terminalView.println("  raw instructions, e.g: [0x13 0x4B r:8]");
+}
+
+/*
+Swap SDA and SCL pins
+*/
+void I2cController::handleSwap() {
+    uint8_t sda = state.getI2cSdaPin();
+    uint8_t scl = state.getI2cSclPin();
+
+    // Swap in state
+    state.setI2cSdaPin(scl);
+    state.setI2cSclPin(sda);
+
+    // Reconfigure I2C with swapped pins
+    i2cService.configure(state.getI2cSdaPin(), state.getI2cSclPin(), state.getI2cFrequency());
+
+    terminalView.println(
+        "I2C Swap: SDA/SCL swapped. SDA=" + std::to_string(state.getI2cSdaPin()) +
+        " SCL=" + std::to_string(state.getI2cSclPin())
+    );
+    terminalView.println("");
 }
 
 /*
