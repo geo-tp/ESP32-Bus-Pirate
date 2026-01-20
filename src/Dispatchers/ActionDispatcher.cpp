@@ -163,7 +163,8 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
 
    // Handled in specific mode, we need to rerender the pinout view
    if (cmd.getRoot() == "config" || cmd.getRoot() == "setprotocol" || cmd.getRoot() == "trace"
-       || cmd.getRoot() == "pullup" || cmd.getRoot() == "pulldown" || cmd.getRoot() == "reset") {
+       || cmd.getRoot() == "pullup" || cmd.getRoot() == "pulldown" || cmd.getRoot() == "reset"
+       || cmd.getRoot() == "swap") {
         setCurrentMode(state.getCurrentMode());
    } 
 }
