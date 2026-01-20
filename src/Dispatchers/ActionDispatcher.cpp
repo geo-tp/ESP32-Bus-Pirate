@@ -421,7 +421,12 @@ void ActionDispatcher::setCurrentMode(ModeEnum newMode) {
             break;
         case ModeEnum::ThreeWire:
             provider.getThreeWireController().ensureConfigured();
-            config.setMappings({"DATA GPIOX","CLK GPIOX","ENABLE GPIOX"}); // TODO
+            config.setMappings({
+                "CS GPIO " + std::to_string(state.getThreeWireCsPin()),
+                "SK GPIO " + std::to_string(state.getThreeWireSkPin()),
+                "DI GPIO " + std::to_string(state.getThreeWireDiPin()),
+                "DO GPIO " + std::to_string(state.getThreeWireDoPin())
+            });
             break;
         case ModeEnum::LED:
             provider.getLedController().ensureConfigured();
