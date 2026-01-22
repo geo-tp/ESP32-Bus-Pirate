@@ -33,6 +33,7 @@ void InfraredController::handleCommand(const TerminalCommand& command) {
     else if (command.getRoot() == "devicebgone")  handleDeviceBgone();
     else if (command.getRoot() == "remote")       handleRemote();
     else if (command.getRoot() == "replay")       handleReplay(command);
+    else if (command.getRoot() == "record")       handleRecord();
     else if (command.getRoot() == "load")         handleLoad(command);
     else if (command.getRoot() == "jam")          handleJam();
     else if (command.getRoot() == "setprotocol")  handleSetProtocol();
@@ -195,6 +196,131 @@ void InfraredController::handleReplay(const TerminalCommand& command) {
 
     // Playback frames
     playbackFrames(tape, replayCount);
+}
+
+void InfraredController::handleRecord() {
+
+    // Mount LittleFS
+    if (!littleFsService.mounted()) {
+        littleFsService.begin();
+        if (!littleFsService.mounted()) {
+            terminalView.println("INFRARED Record: LittleFS not mounted. Aborting.");
+            return;
+        } else {
+            terminalView.println("INFRARED Record: LittleFS mounted.");
+        }
+    }
+
+    // Space check: need at least 8 kb free
+    constexpr size_t MIN_FREE_BYTES = 8 * 1024;
+    size_t free = littleFsService.freeBytes();
+    if (free < MIN_FREE_BYTES) {
+        terminalView.println(
+            "INFRARED Record: Not enough LittleFS space. Need >= 8KB free, have " +
+            std::to_string(free) + " bytes."
+        );
+        return;
+    }
+
+    // Record decoded commands
+    std::vector<InfraredFileRemoteCommand> cmds;
+    cmds.reserve(64);
+
+    terminalView.println("\nINFRARED Record: Waiting for frames (max 64)... Press [ENTER] to stop.\n");
+
+    infraredService.startReceiver();
+
+    while (true) {
+        // Stop ENTER
+        char c = terminalInput.readChar();
+        if (c == '\r' || c == '\n') {
+            terminalView.println("\nINFRARED Record: Stopped.");
+            break;
+        }
+
+        if (cmds.size() >= 64) {
+            terminalView.println("\nINFRARED Record: Reached maximum of 64 saved commands, stopping.\n");
+            break;
+        }
+
+        InfraredCommand decoded = infraredService.receiveInfraredCommand();
+
+        // ignore RAW / invalid
+        if (decoded.getProtocol() == RAW) {
+            continue;
+        }
+
+        terminalView.println("");
+        terminalView.println("Infrared signal received:");
+        terminalView.println("  Protocol : " + InfraredProtocolMapper::toString(decoded.getProtocol()));
+        terminalView.println("  Device   : " + std::to_string(decoded.getDevice()));
+        terminalView.println("  SubDev   : " + std::to_string(decoded.getSubdevice()));
+        terminalView.println("  Command  : " + std::to_string(decoded.getFunction()));
+        terminalView.println("");
+
+        // Save the command ?
+        if (!userInputManager.readYesNo("Save this command?", true)) {
+            terminalView.println("\nSkipped. Press [ENTER] to stop or wait for next signal...\n");
+            continue;
+        }
+
+        // If yes, Ask function name
+        std::string defFunc = "cmd_" + std::to_string(cmds.size() + 1);
+        std::string funcName = userInputManager.readSanitizedString("Enter function name", defFunc, false);
+        if (funcName.empty()) funcName = defFunc;
+
+        // Build cmd
+        InfraredFileRemoteCommand cmd;
+        cmd.functionName = funcName;
+        cmd.protocol     = decoded.getProtocol();
+
+        // Address
+        uint8_t device = static_cast<uint8_t>(decoded.getDevice() & 0xFF);
+        uint8_t sub    = static_cast<uint8_t>((decoded.getSubdevice() < 0 ? 0 : decoded.getSubdevice()) & 0xFF);
+        cmd.address     = (static_cast<uint16_t>(sub) << 8) | device;
+
+        cmd.function    = static_cast<uint8_t>(decoded.getFunction() & 0xFF);
+
+        // Unused for non-RAW
+        cmd.rawData = nullptr;
+        cmd.rawDataSize = 0;
+        cmd.frequency = 0;
+        cmd.dutyCycle = 0.0f;
+
+        cmds.push_back(cmd);
+
+        terminalView.println("\n✅ Saved '" + funcName + "'\n");
+        terminalView.println("INFRARED Record: Waiting for next signal... Press [ENTER] to stop and save.\n");
+    }
+
+    infraredService.stopReceiver();
+
+    if (cmds.empty()) {
+        terminalView.println("INFRARED Record: No commands saved.\n");
+        return;
+    }
+
+    // Ask filename
+    std::string defName = "ir_record_" + std::to_string(millis() % 1000000); // court
+    std::string fileBase = userInputManager.readSanitizedString("Enter file name", defName, false);
+    if (fileBase.empty()) fileBase = defName;
+
+    std::string path = "/" + fileBase;
+    if (path.size() < 4 || path.substr(path.size() - 3) != ".ir") {
+        path += ".ir";
+    }
+
+    // Serialize to file format
+    std::string text = infraredRemoteTransformer.transformToFileFormat(fileBase, cmds);
+
+    // Write to LittleFS
+    if (!littleFsService.write(path, text)) {
+        terminalView.println("INFRARED Record: Failed to write: " + path);
+        return;
+    }
+
+    terminalView.println("\n✅ INFRARED Record: Saved file: " + path);
+    terminalView.println("Use 'load' command or connect to Web Terminal to get the file.\n");
 }
 
 bool InfraredController::recordFrames(std::vector<IRFrame>& tape) {
@@ -488,6 +614,7 @@ void InfraredController::handleHelp() {
     terminalView.println("  devicebgone");
     terminalView.println("  remote");
     terminalView.println("  replay");
+    terminalView.println("  record");
     terminalView.println("  load");
     terminalView.println("  jam");
     terminalView.println("  config");

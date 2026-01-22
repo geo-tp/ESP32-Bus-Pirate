@@ -78,6 +78,9 @@ private:
     // Load commands from .ir files (littlefs)
     void handleLoad(const TerminalCommand& command);
 
+    // Record raw IR frames to littlefs
+    void handleRecord();
+
     // Send IR jamming signals
     void handleJam();
 
