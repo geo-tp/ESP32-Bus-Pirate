@@ -70,7 +70,7 @@ std::string UserInputManager::readSanitizedString(const std::string& label,
             else if (!onlyLetter && std::isdigit(uc)) {
                 out.push_back(c);
             }
-            else if (!onlyLetter && c == '_') {
+            else if (!onlyLetter && (c == '_' || c == '+' || c == '-')) {
                 out.push_back(c);
             }
             // ignore others
