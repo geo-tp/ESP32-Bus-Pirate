@@ -23,14 +23,31 @@ void M5DeviceView::logo() {
     clear();
 
     GlobalState& state = GlobalState::getInstance();
+
+    // img  
     M5.Lcd.setSwapBytes(true);
     M5.Lcd.pushImage(0, 0, WELCOME_IMAGE_WIDTH, WELCOME_IMAGE_HEIGHT, WelcomeScreen);
     M5.Lcd.setSwapBytes(false);
 
+    // Box
+    int boxX = 10;
+    int boxY = 99;  // 102 - 3
+    int boxW = M5.Lcd.width() - 20;
+    int boxH = 26;
+
+    M5.Lcd.fillRoundRect(boxX, boxY, boxW, boxH, DEFAULT_ROUND_RECT, RECT_COLOR_DARK);
+    M5.Lcd.drawRoundRect(boxX, boxY, boxW, boxH, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+
+    // Text
     M5.Lcd.setTextSize(1.5);
-    M5.Lcd.setCursor(22, 107);
     M5.Lcd.setTextColor(TEXT_COLOR);
-    M5.Lcd.printf("ESP32 Bus Pirate - %s", state.getVersion().c_str());
+
+    auto text = "ESP32 Bus Pirate - " + state.getVersion();
+    int textX = (M5.Lcd.width() - M5.Lcd.textWidth(text.c_str())) / 2;
+    int textY = boxY + 7;  // alignement vertical
+
+    M5.Lcd.setCursor(textX, textY);
+    M5.Lcd.print(text.c_str());
 
     delay(3000);
 }
