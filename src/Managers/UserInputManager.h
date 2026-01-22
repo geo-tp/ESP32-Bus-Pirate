@@ -15,6 +15,7 @@ public:
         : terminalView(view), terminalInput(input), argTransformer(transformer) {}
 
     std::string getLine(bool onlyNumber = false);
+    std::string readSanitizedString(const std::string& label, const std::string& def, bool onlyLetter = false);    
     uint8_t readValidatedUint8(const std::string& label, uint8_t def, uint8_t min, uint8_t max);
     uint8_t readValidatedUint8(const std::string& label, uint8_t defaultVal);
     uint32_t readValidatedUint32(const std::string& label, uint32_t def);

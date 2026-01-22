@@ -45,6 +45,48 @@ std::string UserInputManager::getLine(bool onlyNumber /* = false */) {
     return result;
 }
 
+std::string UserInputManager::readSanitizedString(const std::string& label,
+                                                  const std::string& def,
+                                                  bool onlyLetter /* = false */)
+{
+    while (true) {
+        terminalView.print(label + " [" + def + "]: ");
+        std::string input = getLine(false);
+
+        // ENTER ret default
+        if (input.empty()) {
+            return def;
+        }
+
+        std::string out;
+        out.reserve(input.size());
+
+        for (char c : input) {
+            unsigned char uc = static_cast<unsigned char>(c);
+
+            if (std::isalpha(uc)) {
+                out.push_back(c);
+            }
+            else if (!onlyLetter && std::isdigit(uc)) {
+                out.push_back(c);
+            }
+            else if (!onlyLetter && c == '_') {
+                out.push_back(c);
+            }
+            // ignore others
+        }
+
+        // all filtered out ?
+        if (out.empty()) {
+            terminalView.println("Invalid input. Allowed: letters" +
+                                 std::string(onlyLetter ? "" : ", digits, '_'"));
+            continue;
+        }
+
+        return out;
+    }
+}
+
 uint8_t UserInputManager::readValidatedUint8(const std::string& label, uint8_t def, uint8_t min, uint8_t max) {
     while (true) {
         terminalView.print(label + " [" + std::to_string(def) + "]: ");
