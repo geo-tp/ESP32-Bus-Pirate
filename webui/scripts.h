@@ -120,7 +120,7 @@ window.addEventListener("DOMContentLoaded", function () {
  | |_) | |_| \\__ \\ | |_) | | | | (_| | ||  __/
  |____/ \\__,_|___/ | .__/|_|_|  \\__,_|\\__\\___|
                    |_|                        
-     Version 1.2           Ready to board
+     Version 1.3           Ready to board
 
  Type 'mode' to start or 'help' for commands
 
