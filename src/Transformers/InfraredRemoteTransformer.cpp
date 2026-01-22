@@ -1,4 +1,9 @@
 #include "InfraredRemoteTransformer.h"
+#include <sstream>
+#include <iomanip>
+#include <string>
+#include <vector>
+#include <cstdint>
 
 bool InfraredRemoteTransformer::isValidInfraredFile(const std::string& fileContent) {
     if (fileContent.empty()) return false;
@@ -103,6 +108,48 @@ std::vector<InfraredFileRemoteCommand> InfraredRemoteTransformer::transformFromF
     return commands;
 }
 
+std::string InfraredRemoteTransformer::transformToFileFormat(const std::string fileName, const std::vector<InfraredFileRemoteCommand>& cmds) {
+    std::ostringstream out;
+
+    out << "Filetype: IR\n";
+    out << "Version: 1\n\n";
+
+    out << "#\n";
+    out << "# ";
+    out << fileName;
+    out << "\n#\n\n";
+
+    for (size_t i = 0; i < cmds.size(); ++i) {
+        const auto& c = cmds[i];
+
+        out << "name: " << c.functionName << "\n";
+
+        if (c.protocol == InfraredProtocolEnum::RAW) {
+            out << "type: raw\n";
+
+            out << "frequency: " << (static_cast<int>(c.frequency) * 1000) << "\n";
+
+            out << "duty_cycle: " << c.dutyCycle << "\n";
+
+            out << "data: ";
+            for (size_t k = 0; k < c.rawDataSize; ++k) {
+                if (k) out << ' ';
+                out << static_cast<unsigned>(c.rawData[k]);
+            }
+            out << "\n";
+        } else {
+            out << "type: " << "parsed\n";
+            out << "protocol: " << InfraredProtocolMapper::toString(c.protocol) << "\n";
+            out << "address: " << toHexBytesLE(c.address, 2) << "\n";
+            out << "command: " << toHexBytesLE(c.function, 1) << "\n";
+        }
+
+        if (i + 1 < cmds.size()) out << "\n";
+    }
+
+    return out.str();
+}
+
 std::vector<std::string> InfraredRemoteTransformer::extractFunctionNames(
     const std::vector<InfraredFileRemoteCommand>& cmds) 
 {
@@ -151,4 +198,20 @@ uint16_t* InfraredRemoteTransformer::convertDecToUint16Array(const std::string& 
     }
 
     return resultArray;
+}
+
+std::string InfraredRemoteTransformer::hexByte(uint8_t b) {
+    std::ostringstream oss;
+    oss << std::uppercase << std::hex << std::setfill('0')
+        << std::setw(2) << static_cast<unsigned>(b);
+    return oss.str();
+}
+
+std::string InfraredRemoteTransformer::toHexBytesLE(uint16_t v, size_t byteCount) {
+    uint8_t lo = static_cast<uint8_t>(v & 0xFFu);
+    uint8_t hi = static_cast<uint8_t>((v >> 8) & 0xFFu);
+
+    std::ostringstream oss;
+    oss << InfraredRemoteTransformer::hexByte(lo) << " " << InfraredRemoteTransformer::hexByte(hi);
+    return oss.str();
 }
