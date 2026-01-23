@@ -44,6 +44,7 @@ void GuideShell::cmdQuickStart() {
     terminalView.println("Modes:");
     terminalView.println("  Select the mode to work with");
     terminalView.println("  You can type 'mode' or 'm'.");
+    terminalView.println("");
 
     terminalView.println("Command syntax:");
     terminalView.println("  <arg>  required argument");
