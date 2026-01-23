@@ -48,6 +48,7 @@ public:
     void sclSdaGlitch(uint8_t sclPin, uint8_t sdaPin);
     void randomClockPulseNoise(uint8_t sclPin, uint8_t sdaPin, uint32_t freqHz);
     void glitchAckInjection(uint8_t address, uint32_t freqHz, uint8_t sclPin, uint8_t sdaPin);
+    void injectRandomGlitch(uint8_t sclPin, uint8_t sdaPin, uint32_t freqHz);
 
     // Instructions
     std::string executeByteCode(const std::vector<ByteCode>& bytecodes);

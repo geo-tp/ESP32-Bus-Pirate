@@ -445,16 +445,16 @@ void I2cService::glitchAckInjection(uint8_t address, uint32_t freqHz, uint8_t sc
 }
 
 void I2cService::sclSdaGlitch(uint8_t scl, uint8_t sda) {
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 20; ++i) {
         i2cBitBangSetOutput(scl);
         i2cBitBangSetLevel(scl, 0);
         i2cBitBangSetOutput(sda);
         i2cBitBangSetLevel(sda, 0);
-        delay(100);
+        delayMicroseconds(5 + (esp_random() % 10));  // 5–15 µs
 
         i2cBitBangSetInput(scl);
         i2cBitBangSetInput(sda);
-        delay(50);
+        delayMicroseconds(5 + (esp_random() % 10));
     }
 }
 
@@ -468,6 +468,26 @@ void I2cService::randomClockPulseNoise(uint8_t scl, uint8_t sda, uint32_t freqHz
         i2cBitBangSetLevel(scl, random(2));
         i2cBitBangSetLevel(sda, random(2));
         delayMicroseconds(random(d));
+    }
+}
+
+void I2cService::injectRandomGlitch(uint8_t scl, uint8_t sda, uint32_t freqHz) {
+    if (freqHz == 0) freqHz = 100000;
+
+    switch (esp_random() % 3) {
+
+        case 0:
+            randomClockPulseNoise(scl, sda, freqHz);
+            break;
+
+        case 1:
+            sclSdaGlitch(scl, sda);
+            break;
+
+        case 2:
+            // Reserved address, no real device targeted
+            rapidStartStop(0x7F, freqHz, scl, sda);
+            break;
     }
 }
 
