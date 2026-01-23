@@ -10,7 +10,8 @@ UtilityController::UtilityController(
     PinService& pinService,
     UserInputManager& userInputManager,
     ArgTransformer& argTransformer,
-    SysInfoShell& sysInfoShell
+    SysInfoShell& sysInfoShell,
+    GuideShell& guideShell
 )
     : terminalView(terminalView),
       deviceView(deviceView),
@@ -18,7 +19,8 @@ UtilityController::UtilityController(
       pinService(pinService),
       userInputManager(userInputManager),
       argTransformer(argTransformer),
-      sysInfoShell(sysInfoShell)
+      sysInfoShell(sysInfoShell),
+      guideShell(guideShell)
 {}
 
 /*
@@ -31,6 +33,8 @@ void UtilityController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "logic")                                           handleLogicAnalyzer(cmd);
     else if (cmd.getRoot() == "analogic")                                        handleAnalogic(cmd);
     else if (cmd.getRoot() == "system")                                          handleSystem();
+    else if (cmd.getRoot() == "guide")                                           handleGuide();
+    else if (cmd.getRoot() == "man")                                             handleGuide();
     else {
         terminalView.println("Unknown command. Try 'help'.");
     }
@@ -407,6 +411,13 @@ void UtilityController::handleSystem() {
 }
 
 /*
+Firmware Guide (man)
+*/
+void UtilityController::handleGuide() {
+    guideShell.run();
+}
+
+/*
 Help
 */
 void UtilityController::handleHelp() {
@@ -416,6 +427,7 @@ void UtilityController::handleHelp() {
 
     terminalView.println(" General:");
     terminalView.println("  help                 - Show this help");
+    terminalView.println("  man                  - Show firmware guide");
     terminalView.println("  system               - Show system infos");
     terminalView.println("  mode <name>          - Set active mode");
     terminalView.println("  logic <pin>          - Logic analyzer");
@@ -475,6 +487,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  dump <addr> [len]    - Read all registers");
     terminalView.println("  glitch <addr>        - Run attack sequence");
     terminalView.println("  flood <addr>         - Saturate target I/O");
+    terminalView.println("  jam                  - Jam I2C bus with noise");
     terminalView.println("  monitor <addr> [ms]  - Monitor register changes");
     terminalView.println("  eeprom [addr]        - I2C EEPROM operations");
     terminalView.println("  recover              - Attempt bus recovery");
@@ -513,9 +526,10 @@ void UtilityController::handleHelp() {
     terminalView.println("  pulldown <pin>       - Set pin pulldown");
     terminalView.println("  pulse <pin> <us>     - Send pulse on pin");
     terminalView.println("  servo <pin> <angle>  - Set servo angle");
-    terminalView.println("  pwm <pin> freq <dut> - Set PWM on pin");
+    terminalView.println("  pwm <pin freq duty%> - Set PWM on pin");
     terminalView.println("  toggle <pin> <ms>    - Toggle pin periodically");
     terminalView.println("  measure <pin> [ms]   - Calculate frequency");
+    terminalView.println("  jam <pin> [min max]  - Random high/low states");
     terminalView.println("  reset <pin>          - Reset to default");
 
     terminalView.println("");
@@ -685,5 +699,5 @@ bool UtilityController::isGlobalCommand(const TerminalCommand& cmd) {
 
     return (root == "mode"  || root == "m" || root == "l" ||
             root == "logic" || root == "analogic" || root == "P" || root == "p") || 
-            root == "system";
+            root == "system" || root == "guide" || root == "man";
 }

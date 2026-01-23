@@ -15,6 +15,7 @@
 #include "Managers/UserInputManager.h"
 #include "Transformers/ArgTransformer.h"
 #include "Shells/SysInfoShell.h"
+#include "Shells/GuideShell.h"
 
 class UtilityController {
 public:
@@ -26,7 +27,8 @@ public:
         PinService& pinService, 
         UserInputManager& userInputManager, 
         ArgTransformer& argTransformer,
-        SysInfoShell& sysInfoShell
+        SysInfoShell& sysInfoShell,
+        GuideShell& guideShell
     );
 
     // Entry point for global utility commands
@@ -60,6 +62,9 @@ private:
     // System information
     void handleSystem();
 
+    // Firmware guide
+    void handleGuide();
+
     ITerminalView& terminalView;
     IDeviceView& deviceView;
     IInput& terminalInput;
@@ -67,5 +72,6 @@ private:
     UserInputManager& userInputManager;
     ArgTransformer& argTransformer;
     SysInfoShell& sysInfoShell;
+    GuideShell& guideShell;
     GlobalState& state = GlobalState::getInstance();
 };
