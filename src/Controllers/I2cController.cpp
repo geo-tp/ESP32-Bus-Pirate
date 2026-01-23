@@ -33,6 +33,7 @@ void I2cController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "slave") handleSlave(cmd);
     else if (cmd.getRoot() == "glitch") handleGlitch(cmd);
     else if (cmd.getRoot() == "flood") handleFlood(cmd);
+    else if (cmd.getRoot() == "jam") handleJam();
     else if (cmd.getRoot() == "eeprom") handleEeprom(cmd);
     else if (cmd.getRoot() == "recover") handleRecover();
     else if (cmd.getRoot() == "monitor") handleMonitor(cmd);
@@ -667,6 +668,34 @@ void I2cController::handleFlood(const TerminalCommand& cmd) {
 }
 
 /*
+Jam
+*/
+void I2cController::handleJam() {
+    uint8_t scl = state.getI2cSclPin();
+    uint8_t sda = state.getI2cSdaPin();
+    uint32_t freqHz = state.getI2cFrequency();
+
+    terminalView.println("I2C Jam: Perturbing bus SCL/SDA... Press [ENTER] to stop.\n");
+
+    // Release I2C bus
+    i2cService.end();
+
+    while (true) {
+        char key = terminalInput.readChar();
+        if (key == '\r' || key == '\n') break;
+
+        i2cService.injectRandomGlitch(scl, sda, freqHz);
+    }
+
+    // Try recovering bus after jamming
+    i2cService.i2cBitBangRecoverBus(scl, sda, freqHz);
+
+    // Reconfigure I2C
+    ensureConfigured();
+    terminalView.println("\nI2C Jam: Stopped by user.\n");
+}
+
+/*
 Monitor
 */
 void I2cController::handleMonitor(const TerminalCommand& cmd) {
@@ -781,6 +810,7 @@ void I2cController::handleHelp() {
     terminalView.println("  write <addr> <reg> <val>");
     terminalView.println("  dump <addr> [len]");
     terminalView.println("  glitch <addr>");
+    terminalView.println("  jam");
     terminalView.println("  flood <addr>");
     terminalView.println("  recover");
     terminalView.println("  monitor <addr> [delay_ms]");

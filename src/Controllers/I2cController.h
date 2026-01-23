@@ -62,6 +62,9 @@ private:
 
     // Flood an I2C device with commands
     void handleFlood(const TerminalCommand& cmd);
+    
+    // Jam the I2C bus with noise
+    void handleJam();
 
     // Configure I2C parameters
     void handleConfig();
