@@ -82,6 +82,7 @@ and injecting shared instances of core components
 #include "Shells/SysInfoShell.h"
 #include "Shells/ModbusShell.h"
 #include "Shells/OneWireEepromShell.h"
+#include "Shells/GuideShell.h"
 #include "Config/TerminalTypeConfigurator.h"
 
 class DependencyProvider
@@ -184,7 +185,8 @@ public:
     UartAtShell &getUartAtShell();
     SysInfoShell &getSysInfoShell();
     ModbusShell &getModbusShell();
-    OneWireEepromShell &getOneWireEepromShell();
+    OneWireEepromShell &getOneWireEepromShell();    
+    GuideShell &getGuideShell();
 
     // Selectors
     HorizontalSelector &getHorizontalSelector();
@@ -287,6 +289,7 @@ private:
     SysInfoShell sysInfoShell;
     ModbusShell modbusShell;
     OneWireEepromShell oneWireEepromShell;
+    GuideShell guideShell;
 
     // Selectors
     HorizontalSelector horizontalSelector;
