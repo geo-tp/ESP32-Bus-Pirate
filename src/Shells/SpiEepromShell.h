@@ -33,7 +33,7 @@ private:
     uint16_t pageSize = 64; // default
     std::string eepromModel;
 
-    const std::vector<std::string> actions = {
+    inline static const char* actions[] = {
         " 🔍 Probe EEPROM",
         " 📊 Analyze EEPROM",
         " 📖 Read bytes",
@@ -44,7 +44,9 @@ private:
         " 🚪 Exit Shell"
     };
 
-    std::vector<std::string> models = {
+    static constexpr size_t actionsCount = sizeof(actions) / sizeof(actions[0]);
+
+    inline static const char* models[] = {
         " 25X010 | 128 B  | 8 B page   | 1 B addr | blk: 0b | max 10 MHz",
         " 25X020 | 256 B  | 8 B page   | 1 B addr | blk: 0b | max 10 MHz",
         " 25X040 | 512 B  | 8 B page   | 1 B addr | blk: 1b | max 10 MHz",
@@ -60,7 +62,8 @@ private:
         "25XM02 | 256 KB | 256 B page | 3 B addr | blk: 0b | max 5 MHz",
         "25XM04 | 512 KB | 256 B page | 3 B addr | blk: 0b | max 8 MHz"
     };
-    
+    static constexpr size_t modelsCount = sizeof(models) / sizeof(models[0]);
+
     std::vector<uint32_t> memoryLengths = {
         128,      // 25X010
         256,      // 25X020

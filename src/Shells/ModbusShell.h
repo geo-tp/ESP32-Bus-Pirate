@@ -58,7 +58,7 @@ private:
     
     ModbusService::Reply _reply;
 
-    const std::vector<std::string> actions = {
+    inline static const char* actions[] = {
         " 📖 Read Holding (FC03)",
         " ✏️  Write Holding (FC06/FC16)",
         " 📘 Read Input (FC04)",
@@ -70,4 +70,6 @@ private:
         " 🔌 Change Target",
         "🚪 Exit Shell"
     };
+
+    static constexpr size_t actionsCount = sizeof(actions) / sizeof(actions[0]);
 };

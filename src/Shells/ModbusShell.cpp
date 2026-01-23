@@ -32,7 +32,7 @@ void ModbusShell::run(const std::string& host, uint16_t port) {
     bool start = true;
     while (start) {
         printHeader();
-        auto choice = userInputManager.readValidatedChoiceIndex("Select a modbus action", actions, 0);
+        auto choice = userInputManager.readValidatedChoiceIndex("Select a modbus action", actions, actionsCount, 0);
 
         switch (choice) {
             case 0: cmdReadHolding();         break;

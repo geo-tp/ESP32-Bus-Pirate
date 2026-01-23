@@ -19,7 +19,7 @@ SpiEepromShell::SpiEepromShell(
 
 void SpiEepromShell::run() {
     // Select EEPROM model
-    int selectedModelIndex = userInputManager.readValidatedChoiceIndex("\nSelect EEPROM type", models, 0);
+    int selectedModelIndex = userInputManager.readValidatedChoiceIndex("\nSelect EEPROM type", models, modelsCount, 0);
     if (selectedModelIndex < 0) {
         terminalView.println("Invalid selection. Aborting.\n");
         return;
@@ -51,7 +51,7 @@ void SpiEepromShell::run() {
         terminalView.println("\n=== SPI EEPROM Shell ===");
 
         // Select action
-        int index = userInputManager.readValidatedChoiceIndex("Select EEPROM action", actions, 0);
+        int index = userInputManager.readValidatedChoiceIndex("Select EEPROM action", actions, actionsCount, 0);
 
         // Quit
         if (index == -1 || actions[index] == " 🚪 Exit Shell") {

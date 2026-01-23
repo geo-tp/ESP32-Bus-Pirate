@@ -20,7 +20,7 @@ void SysInfoShell::run() {
     while (loop) {
         terminalView.println("\n=== System Shell ===");
 
-        int choice = userInputManager.readValidatedChoiceIndex("Select action", actions);
+        int choice = userInputManager.readValidatedChoiceIndex("Select action", actions, actions.size() - 1);
 
         switch (choice) {
             case 0: cmdSummary(); break;

@@ -17,7 +17,7 @@ I2cEepromShell::I2cEepromShell(
 void I2cEepromShell::run(uint8_t addr) {
 
     // Select EEPROM model
-    int selectedModelIndex = userInputManager.readValidatedChoiceIndex("\nSelect EEPROM type", models, 0);
+    int selectedModelIndex = userInputManager.readValidatedChoiceIndex("\nSelect EEPROM type", kModels, kModelsCount, 0);
     
     // Initialize EEPROM
     uint16_t selectedType = memoryLengths[selectedModelIndex];
@@ -27,8 +27,10 @@ void I2cEepromShell::run(uint8_t addr) {
     }
     
     // Set variables
-    terminalView.println("\n✅ EEPROM initialized:" + models[selectedModelIndex]);
-    selectedModel = models[selectedModelIndex];
+    terminalView.println(
+        std::string("\n✅ EEPROM initialized: ") + kModels[selectedModelIndex]
+    );
+    selectedModel = kModels[selectedModelIndex];
     selectedLength = memoryLengths[selectedModelIndex];
     selectedI2cAddress = addr;
     initialized = true;
@@ -36,8 +38,8 @@ void I2cEepromShell::run(uint8_t addr) {
     while (true) {
         // Select action
         terminalView.println("\n=== I2C EEPROM Shell ===");
-        int index = userInputManager.readValidatedChoiceIndex("Select an EEPROM action", actions, 0);
-        if (index == -1 || actions[index] == " 🚪 Exit Shell") {
+        int index = userInputManager.readValidatedChoiceIndex("Select an EEPROM action", kActions, kActionsCount, kActionsCount - 1);
+        if (index == -1 || kActions[index] == " 🚪 Exit Shell") {
             terminalView.println("Exiting EEPROM shell...\n");
             break;
         }
