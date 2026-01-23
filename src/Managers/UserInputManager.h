@@ -47,4 +47,6 @@ private:
     ITerminalView& terminalView;
     IInput& terminalInput;
     ArgTransformer& argTransformer;
+
+    const size_t MAX_ALLOWED_INPUT_LENGTH = 256;
 };

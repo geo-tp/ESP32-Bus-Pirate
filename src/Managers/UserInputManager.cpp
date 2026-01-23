@@ -28,6 +28,10 @@ std::string UserInputManager::getLine(bool onlyNumber /* = false */) {
             continue;
         }
 
+        if (result.size() >= MAX_ALLOWED_INPUT_LENGTH) {
+            continue;
+        }
+
         // Only number
         if (onlyNumber && !std::isdigit(c)) {
             continue;
