@@ -428,6 +428,46 @@ int UserInputManager::readValidatedChoiceIndex(const std::string& label,
     return readValidatedChoiceIndex(label, strChoices, defaultIndex);
 }
 
+int UserInputManager::readValidatedChoiceIndex(const std::string& label,
+                                               const char* const* choices,
+                                               size_t count,
+                                               int defaultIndex)
+{
+    if (!choices || count == 0) {
+        terminalView.println("❌ No choices available.");
+        return -1;
+    }
+
+    if (defaultIndex < 0 || defaultIndex >= (int)count) {
+        defaultIndex = 0;
+    }
+
+    terminalView.println(label + ":");
+    for (size_t i = 0; i < count; ++i) {
+        const char* s = choices[i] ? choices[i] : "";
+        const bool isDef = ((int)i == defaultIndex);
+
+        terminalView.println(
+            "  [" + std::to_string(i + 1) + "] " +
+            std::string(isDef ? "* " : "  ") +
+            s
+        );
+    }
+
+    terminalView.print("Enter index (default " + std::to_string(defaultIndex + 1) + "): ");
+    std::string input = getLine(true); // only numbers
+
+    if (input.empty()) return defaultIndex;
+
+    int idx = 0;
+    if (!argTransformer.parseInt(input, idx) || idx < 1 || idx > (int)count) {
+        terminalView.println("❌ Invalid choice. Using default.");
+        return defaultIndex;
+    }
+
+    return idx - 1;
+}
+
 float UserInputManager::readValidatedFloat(const std::string& label,
                                            float def,
                                            float min,
@@ -449,3 +489,4 @@ float UserInputManager::readValidatedFloat(const std::string& label,
         terminalView.println("Invalid input. Must be " + std::to_string(min) + " .. " + std::to_string(max));
     }
 }
+

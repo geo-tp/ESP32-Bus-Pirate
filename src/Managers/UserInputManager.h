@@ -42,6 +42,7 @@ public:
     int readValidatedChoiceIndex(const std::string& label, const std::vector<std::string>& choices, int defaultIndex = 0);
     int readValidatedChoiceIndex(const std::string& label, const std::vector<int>& choices, int defaultIndex);
     int readValidatedChoiceIndex(const std::string& label, const std::vector<float>& choices, int defaultIndex);
+    int readValidatedChoiceIndex(const std::string& label, const char* const* choices, size_t count, int defaultIndex);
 private:
     ITerminalView& terminalView;
     IInput& terminalInput;
