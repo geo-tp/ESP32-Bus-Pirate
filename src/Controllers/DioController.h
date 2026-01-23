@@ -60,6 +60,9 @@ private:
     // Send a given ms pulse to a pin
     void handlePulse(const TerminalCommand& cmd);
 
+    // Jam pin with random high/low states
+    void handleJamPin(const TerminalCommand& cmd);
+
     // Display DIO help info
     void handleHelp();
 

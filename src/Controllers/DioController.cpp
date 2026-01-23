@@ -22,6 +22,7 @@ void DioController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "pulse")  handlePulse(cmd);
     else if (cmd.getRoot() == "measure") handleMeasure(cmd);
     else if (cmd.getRoot() == "servo")  handleServo(cmd);
+    else if (cmd.getRoot() == "jam")    handleJamPin(cmd);
     else if (cmd.getRoot() == "reset")  handleResetPin(cmd);
     else                                handleHelp();
     
@@ -434,6 +435,66 @@ void DioController::handlePulse(const TerminalCommand& cmd) {
 }
 
 /*
+Jam
+*/
+void DioController::handleJamPin(const TerminalCommand& cmd) {
+
+    auto args = argTransformer.splitArgs(cmd.getArgs());
+    uint32_t minUs = 5;
+    uint32_t maxUs = 100;
+
+    if (cmd.getSubcommand().empty() || !argTransformer.isValidNumber(cmd.getSubcommand())) {
+        terminalView.println("Usage: jam <pin> [min_us] [max_us]");
+        return;
+    }
+
+    uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
+    if (!isPinAllowed(pin, "Jam")) return;
+
+
+    if (args.size() >= 1 && argTransformer.isValidNumber(args[0])) {
+        minUs = argTransformer.toUint32(args[0]);
+    }
+    if (args.size() >= 2 && argTransformer.isValidNumber(args[1])) {
+        maxUs = argTransformer.toUint32(args[1]);
+    }
+
+    if (minUs < 1) minUs = 1;
+    if (maxUs < minUs) maxUs = minUs;
+
+    pinService.setOutput(pin);
+
+    terminalView.println("DIO Jam: Pin " + std::to_string(pin) +
+                         " random toggle [" + std::to_string(minUs) + ".." + std::to_string(maxUs) +
+                         "] us... Press [ENTER] to stop.");
+    terminalView.println("");
+
+    bool state = false;
+    unsigned long lastCheck = millis();
+
+    while (true) {
+        // check ENTER press every 10ms
+        if (millis() - lastCheck > 10) {
+            lastCheck = millis();
+            char c = terminalInput.readChar();
+            if (c == '\r' || c == '\n') {
+                terminalView.println("DIO Jam: Stopped by user.");
+                break;
+            }
+        }
+
+        state = !state;
+        if (state) pinService.setHigh(pin);
+        else       pinService.setLow(pin);
+
+        // random delay between minUs and maxUs
+        uint32_t span = (maxUs - minUs);
+        uint32_t waitUs = minUs + (span ? (esp_random() % (span + 1)) : 0);
+        delayMicroseconds(waitUs);
+    }
+}
+
+/*
 Help
 */
 void DioController::handleHelp() {
@@ -448,6 +509,7 @@ void DioController::handleHelp() {
     terminalView.println("  measure <pin> [ms]");
     terminalView.println("  pulse <pin> <us>");
     terminalView.println("  toggle <pin> <ms>");
+    terminalView.println("  jam <pin> [min_us] [max_us]");
     terminalView.println("  reset <pin>");
 }
 
