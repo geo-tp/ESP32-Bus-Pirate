@@ -13,11 +13,13 @@ GuideShell::GuideShell(ITerminalView& tv,
 
 void GuideShell::run() {
     bool loop = true;
+    std::vector<std::string> actionsVector(actions, actions + actionsCount);
+    
     while (loop) {
         terminalView.println("\n=== Guide Shell ===");
         int choice = userInputManager.readValidatedChoiceIndex(
             "Select a topic:",
-            std::vector<std::string>(actions, actions + actionsCount),
+            actionsVector,
             static_cast<int>(actionsCount) - 1
         );
 
