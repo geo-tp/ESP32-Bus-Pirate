@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 Bus Pirate - Sticks3",
+  "version": "1.3",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "https://geo-tp.github.io/ESP32-Bus-Pirate/webflasher/firmwares/bus_pirate_13_sticks3.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
