@@ -6,7 +6,7 @@
 #define TFT_WIDTH  170
 #define TFT_HEIGHT 320
 
-//#define TFT_RGB_ORDER TFT_RGB  // Colour order Red-Green-Blue
+#define TFT_RGB_ORDER TFT_RGB  // Colour order Red-Green-Blue
 //#define TFT_RGB_ORDER TFT_BGR  // Colour order Blue-Green-Red
 
 #define TFT_INVERSION_ON
