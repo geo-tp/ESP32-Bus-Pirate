@@ -41,13 +41,13 @@ void TembedDeviceView::initialize() {
 void TembedDeviceView::logo() {
     clear();
 
-    // TODO: Color are not correct, with or without setSwapBytes
+    // Logo
     tft.setSwapBytes(true);
     tft.pushImage(40, 30, WELCOME_IMAGE_WIDTH, WELCOME_IMAGE_HEIGHT, WelcomeScreen);
     tft.setSwapBytes(false);
 
     // Sub
-    tft.setTextColor(TFT_WHITE, DARK_GREY_RECT);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     GlobalState& state = GlobalState::getInstance();
     auto version = "ESP32 Bus Pirate - " + state.getVersion();
     drawCenterText(version.c_str(), 130, 1.9);
