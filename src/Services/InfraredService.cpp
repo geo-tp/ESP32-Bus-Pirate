@@ -136,6 +136,7 @@ InfraredCommand InfraredService::receiveInfraredCommand() {
         case BOSEWAVE:
         case BANG_OLUFSEN:
             command.setProtocol(BOSE);
+            break;
 
         case RC6:
             command.setProtocol(_RC6);
