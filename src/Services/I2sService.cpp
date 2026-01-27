@@ -1,7 +1,7 @@
 #include "I2sService.h"
 #include "math.h"
 
-#ifdef DEVICE_CARDPUTER
+#if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
     #include <M5Unified.h>
 #endif
 
@@ -15,7 +15,7 @@ void I2sService::configureOutput(uint8_t bclk, uint8_t lrck, uint8_t dout, uint3
         if (prevDout != GPIO_NUM_NC) gpio_matrix_out(prevDout, SIG_GPIO_OUT_IDX, false, false);
     }
 
-    #ifdef DEVICE_CARDPUTER
+    #if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
         M5.Mic.end();
         M5.Speaker.begin();
     #endif
@@ -64,7 +64,7 @@ void I2sService::configureInput(uint8_t bclk, uint8_t lrck, uint8_t din, uint32_
         i2s_driver_uninstall(port);
     }
 
-    #ifdef DEVICE_CARDPUTER
+    #if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
         M5.Speaker.end();
         M5.Mic.begin();
     #endif
