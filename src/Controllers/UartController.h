@@ -65,8 +65,11 @@ private:
     // Swap RX and TX pins
     void handleSwap();
 
-    // Scan to find the right baudrate
+    // Scan for active UART pins
     void handleScan();
+
+    // Find the right baudrate
+    void handleAutoBaud();
 
     // Spam given input every given ms
     void handleSpam(const TerminalCommand& cmd);
@@ -82,9 +85,6 @@ private:
 
     // Scan a baudrate
     bool scanAtBaudrate(int baud);
-
-    // Check Enter press
-    bool checkScanCancelled();
 
     // Send next probe to get a UART response
     void sendNextProbe(size_t& probeIndex);

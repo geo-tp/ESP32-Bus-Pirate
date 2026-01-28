@@ -455,7 +455,8 @@ void UtilityController::handleHelp() {
 
     terminalView.println("");
     terminalView.println(" 3. UART:");
-    terminalView.println("  scan                 - Auto baud detect");
+    terminalView.println("  scan                 - Scan UART lines activity");
+    terminalView.println("  autobaud             - Detect baud rate on RX");
     terminalView.println("  ping                 - Send and expect reply");
     terminalView.println("  read                 - Read at current baud");
     terminalView.println("  write <text>         - Send at current baud");

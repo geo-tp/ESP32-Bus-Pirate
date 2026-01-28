@@ -1,4 +1,5 @@
 #include "UartController.h"
+#include <map>
 
 /*
 Constructor
@@ -30,7 +31,8 @@ UartController::UartController(
 Entry point for command
 */
 void UartController::handleCommand(const TerminalCommand& cmd) {
-    if (cmd.getRoot() == "scan") handleScan();
+    if (cmd.getRoot() == "autobaud") handleAutoBaud();
+    else if (cmd.getRoot() == "scan") handleScan();
     else if (cmd.getRoot() == "ping") handlePing();
     else if (cmd.getRoot() == "read") handleRead();
     else if (cmd.getRoot() == "write") handleWrite(cmd);
@@ -184,15 +186,96 @@ void UartController::handlePing() {
 Scan
 */
 void UartController::handleScan() {
-    terminalView.println("UART Scan: in progress... Press [ENTER] to cancel");
+    // Default pins to scan
+    std::vector<uint8_t> defaultPins = state.getJtagScanPins();
+
+    // Protected pins to avoid
+    const std::vector<uint8_t> protectedPins = state.getProtectedPins();
+
+    // Ask user for pin group
+    std::vector<uint8_t> selectedPins = userInputManager.readValidatedPinGroup(
+        "GPIOs to scan for UART",
+        defaultPins,
+        protectedPins
+    );
+
+    // Limit selection to 8 pins max
+    if (selectedPins.size() > 8) {
+        terminalView.println("Too many pins selected, limiting to first 8.");
+        selectedPins.resize(8);
+    }
+    
+    // Accumulateur for activity
+    std::map<uint8_t, UartService::PinActivity> accum;
+
+    terminalView.println("UART Scan: Measuring edges on pins... Press [ENTER] to stop.\n");
+    terminalView.println("[INFO]");
+    terminalView.println("  The UART scan passively monitors GPIO pins to detect");
+    terminalView.println("  UART-like electrical activity (edges and timings).");
+    terminalView.println("  Pins showing activity are potential UART lines.");
+    terminalView.println("");
+    delay(300); // since the loop below is fast, the message above may not be seen without delay
+    
+    unsigned long lastPrint = millis();
+    while (true) {
+
+        // Stop if ENTER pressed
+        char key = terminalInput.readChar();
+        if (key == '\r' || key == '\n') {
+            terminalView.println("UART Scan: Stopped by user.");
+            break;
+        }
+
+        // Measure activity for selected pins
+        auto results = uartService.scanUartActivity(selectedPins, 30, 10, true);
+
+        // Accumulate
+        for (auto& r : results) {
+            auto& a = accum[r.pin];
+            a.pin = r.pin;
+            a.edges += r.edges;
+            a.edgesPerSec += r.edgesPerSec;   // rough sum
+            if (r.approxBaud != 0)
+                a.approxBaud = r.approxBaud; // keep last valid
+        }
+
+        // Periodic accumulated report
+        unsigned long now = millis();
+        if (now - lastPrint >= 1000) {
+            lastPrint = now;
+
+            terminalView.println("Active pins:");
+
+            if (accum.empty()) {
+                terminalView.println("  (none)");
+            } else {
+                for (auto& [pin, r] : accum) {
+                    terminalView.println(
+                        "  GPIO " + std::to_string(pin) +
+                        " | edges=" + std::to_string(r.edges) +
+                        " | approxBaud=" + std::to_string(r.approxBaud)
+                    );
+                }
+            }
+
+            terminalView.println("");
+            accum.clear();
+        }
+    }
+}
+
+/*
+Autobaud
+*/
+void UartController::handleAutoBaud() {
+    terminalView.println("UART Autobaud: in progress... Press [ENTER] to cancel");
     terminalView.println("");
     terminalView.println("[INFO]");
-    terminalView.println("  The UART scanner attempts to detect the correct baudrate");
+    terminalView.println("  The UART autobaud attempts to detect the correct baudrate");
     terminalView.println("  by iteratively switching speeds, sending predefined probes");
     terminalView.println("");
 
     uartService.clearUartBuffer();
-    scanCancelled = false;
 
     for (int baud : baudrates) {
         if (scanCancelled) return;
@@ -200,15 +283,15 @@ void UartController::handleScan() {
             state.setUartBaudRate(baud);
             uartService.switchBaudrate(baud);
             terminalView.println("");
-            terminalView.println("UART Scan: Setting baudrate to UART config.");
-            terminalView.println("UART Scan: Baudrate detected " + std::to_string(baud));
+            terminalView.println("UART Autobaud: Setting baudrate to UART config.");
+            terminalView.println("UART Autobaud: Baudrate detected " + std::to_string(baud));
             terminalView.println("");
             return;
         }
     }
 
     uartService.switchBaudrate(state.getUartBaudRate()); // restore previous
-    terminalView.println("Uart Scan: No device detected.");
+    terminalView.println("UART Autobaud: No device detected.");
     terminalView.println("");
 }
 
@@ -224,7 +307,14 @@ bool UartController::scanAtBaudrate(int baud) {
     unsigned long start = millis();
 
     while (millis() - start < 1500) {
-        if (checkScanCancelled()) return false;
+        char key = terminalInput.readChar();
+        if (key == '\r' || key == '\n') {
+            terminalView.println("\nUART Autobaud: Stopped by user.");
+            uartService.switchBaudrate(state.getUartBaudRate()); // restore previous
+            scanCancelled = true;
+            break;
+        }
+
         sendNextProbe(probeIndex);
         updateResponse(response, asciiCount, maxResponseSize);
 
@@ -239,17 +329,6 @@ bool UartController::scanAtBaudrate(int baud) {
         delay(10);
     }
 
-    return false;
-}
-
-bool UartController::checkScanCancelled() {
-    char key = terminalInput.readChar();
-    if (key == '\r' || key == '\n') {
-        terminalView.println("UART Scan: Cancelled by user.");
-        uartService.switchBaudrate(state.getUartBaudRate()); // restore previous
-        scanCancelled = true;
-        return true;
-    }
     return false;
 }
 
@@ -547,6 +626,7 @@ void UartController::handleHelp() {
     terminalView.println("");
     terminalView.println("Unknown UART command. Usage:");
     terminalView.println("  scan");
+    terminalView.println("  autobaud");
     terminalView.println("  ping");
     terminalView.println("  read");
     terminalView.println("  write <text>");
