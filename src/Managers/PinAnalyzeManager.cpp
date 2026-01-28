@@ -7,6 +7,10 @@ PinAnalyzeManager::PinAnalyzeManager(PinService& pinService)
 : pinService(pinService) {}
 
 void PinAnalyzeManager::begin(uint8_t pin_) {
+    end(); // clean up if rebeginning
+    pulseRing = new uint32_t[PULSE_RING];
+    riseUs    = new uint32_t[RISE_RING];
+
     pin = pin_;
     pinService.setInput(pin);
 
@@ -35,6 +39,18 @@ void PinAnalyzeManager::begin(uint8_t pin_) {
     riseHead = 0;
     lastRiseUs = 0;
     lastHighPulseUs = 0;
+}
+
+void PinAnalyzeManager::end() {
+    if (pulseRing) {
+        delete[] pulseRing;
+        pulseRing = nullptr;
+    }
+
+    if (riseUs) {
+        delete[] riseUs;
+        riseUs = nullptr;
+    }
 }
 
 bool PinAnalyzeManager::shouldReport(unsigned long nowMs) const {

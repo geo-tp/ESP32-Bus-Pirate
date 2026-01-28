@@ -59,6 +59,7 @@ public:
     explicit PinAnalyzeManager(PinService& pinService);
 
     void begin(uint8_t pin);
+    void end();
     void sample(); 
     bool shouldReport(unsigned long nowMs) const; 
     Report buildReport(bool doPullTest);
@@ -93,14 +94,14 @@ private:
 
     // Pulse ring buffer
     static constexpr int PULSE_RING = 256;
-    uint32_t pulseRing[PULSE_RING];
+    uint32_t *pulseRing = nullptr;
     uint16_t pulseCount = 0; 
     uint16_t pulseHead = 0;    // next index to write
     uint32_t basePulseUs = 0;
 
     // Rising-edge based
     static constexpr int RISE_RING = 64;
-    uint32_t riseUs[RISE_RING];
+    uint32_t *riseUs = nullptr;
     uint16_t riseCount = 0;
     uint16_t riseHead = 0;
     uint32_t lastRiseUs = 0;
