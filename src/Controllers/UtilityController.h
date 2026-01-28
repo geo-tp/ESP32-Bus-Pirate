@@ -13,10 +13,10 @@
 #include "Enums/ModeEnum.h"
 #include "Services/PinService.h"
 #include "Managers/UserInputManager.h"
+#include "Managers/PinAnalyzeManager.h"
 #include "Transformers/ArgTransformer.h"
 #include "Shells/SysInfoShell.h"
 #include "Shells/GuideShell.h"
-
 class UtilityController {
 public:
     // Constructor
@@ -25,7 +25,8 @@ public:
         IDeviceView& deviceView, 
         IInput& terminalInput, 
         PinService& pinService, 
-        UserInputManager& userInputManager, 
+        UserInputManager& userInputManager,
+        PinAnalyzeManager& pinAnalyzeManager,
         ArgTransformer& argTransformer,
         SysInfoShell& sysInfoShell,
         GuideShell& guideShell
@@ -65,11 +66,15 @@ private:
     // Firmware guide
     void handleGuide();
 
+    // Pin diagnostic with periodic report
+    void handleWizard(const TerminalCommand& cmd);
+
     ITerminalView& terminalView;
     IDeviceView& deviceView;
     IInput& terminalInput;
     PinService& pinService;
     UserInputManager& userInputManager;
+    PinAnalyzeManager& pinAnalyzeManager;
     ArgTransformer& argTransformer;
     SysInfoShell& sysInfoShell;
     GuideShell& guideShell;

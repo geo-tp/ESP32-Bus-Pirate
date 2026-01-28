@@ -9,6 +9,7 @@ UtilityController::UtilityController(
     IInput& terminalInput,
     PinService& pinService,
     UserInputManager& userInputManager,
+    PinAnalyzeManager& pinAnalyzeManager,
     ArgTransformer& argTransformer,
     SysInfoShell& sysInfoShell,
     GuideShell& guideShell
@@ -18,6 +19,7 @@ UtilityController::UtilityController(
       terminalInput(terminalInput),
       pinService(pinService),
       userInputManager(userInputManager),
+      pinAnalyzeManager(pinAnalyzeManager),
       argTransformer(argTransformer),
       sysInfoShell(sysInfoShell),
       guideShell(guideShell)
@@ -35,6 +37,7 @@ void UtilityController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "system")                                          handleSystem();
     else if (cmd.getRoot() == "guide")                                           handleGuide();
     else if (cmd.getRoot() == "man")                                             handleGuide();
+    else if (cmd.getRoot() == "wizard")                                          handleWizard(cmd);
     else {
         terminalView.println("Unknown command. Try 'help'.");
     }
@@ -418,6 +421,48 @@ void UtilityController::handleGuide() {
 }
 
 /*
+Wizard
+*/
+void UtilityController::handleWizard(const TerminalCommand& cmd) {
+    // Validate pin argument
+    if (cmd.getSubcommand().empty() || !argTransformer.isValidNumber(cmd.getSubcommand())) {
+        terminalView.println("Usage: wizard <pin>");
+        return;
+    }
+
+    // Verify protected pin
+    uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
+    if (state.isPinProtected(pin)) {
+        terminalView.println("Wizard: This pin is protected or reserved.");
+        return;
+    }
+
+    terminalView.println("\nWizard: Please wait, analyzing pin " + std::to_string(pin) + "... Press [ENTER] to stop.\n");
+    pinAnalyzeManager.begin(pin);
+    const bool doPullTest = false; // TODO: add argument to enable pull test if needed
+
+    while (true) {
+        // Check for ENTER press to stop
+        char key = terminalInput.readChar();
+        if (key == '\r' || key == '\n') {
+            terminalView.println("\nWizard: Stopped by user.");
+            break;
+        }
+
+        // Sample pin
+        pinAnalyzeManager.sample();
+
+        // Check if it's time to report and report activity
+        if (pinAnalyzeManager.shouldReport(millis())) {
+            auto report = pinAnalyzeManager.buildReport(doPullTest);
+            terminalView.print(pinAnalyzeManager.formatWizardReport(pin, report));
+            pinAnalyzeManager.resetWindow();
+            terminalView.println("Wizard: Analyzing pin " + std::to_string(pin) + "... Press [ENTER] to stop.\n");
+        }
+    }
+}
+
+/*
 Help
 */
 void UtilityController::handleHelp() {
@@ -432,6 +477,7 @@ void UtilityController::handleHelp() {
     terminalView.println("  mode <name>          - Set active mode");
     terminalView.println("  logic <pin>          - Logic analyzer");
     terminalView.println("  analogic <pin>       - Analogic plotter");
+    terminalView.println("  wizard <pin>         - Pin activity analyzer");
     terminalView.println("  P                    - Enable pull-up");
     terminalView.println("  p                    - Disable pull-up");
 
@@ -700,5 +746,5 @@ bool UtilityController::isGlobalCommand(const TerminalCommand& cmd) {
 
     return (root == "mode"  || root == "m" || root == "l" ||
             root == "logic" || root == "analogic" || root == "P" || root == "p") || 
-            root == "system" || root == "guide" || root == "man";
+            root == "system" || root == "guide" || root == "man" || root == "wizard";
 }
