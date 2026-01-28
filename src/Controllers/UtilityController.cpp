@@ -460,6 +460,9 @@ void UtilityController::handleWizard(const TerminalCommand& cmd) {
             terminalView.println("Wizard: Analyzing pin " + std::to_string(pin) + "... Press [ENTER] to stop.\n");
         }
     }
+
+    // Cleanup buffers
+    pinAnalyzeManager.end();
 }
 
 /*
