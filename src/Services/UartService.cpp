@@ -291,3 +291,85 @@ bool UartService::xmodemReceiveToFile(File& file) {
     currentFile = nullptr;
     return ok;
 }
+
+void IRAM_ATTR UartService::onGpioEdge(void* arg) {
+    uint32_t pin = (uint32_t)arg;
+
+    uint32_t now = micros();
+    if (lastEdgeTimeUs != 0 && intervalCount < 64) {
+        edgeIntervals[intervalCount++] = now - lastEdgeTimeUs;
+    }
+    lastEdgeTimeUs = now;
+
+    if (pin < 50) {
+        edgeCounts[pin]++;
+    }
+}
+
+UartService::PinActivity UartService::measureUartActivity(uint8_t pin, uint32_t windowMs, bool pullup) {
+    edgeCounts[pin] = 0;
+    lastEdgeTimeUs = 0;
+    intervalCount = 0;
+
+    // Configure GPIO
+    gpio_config_t io = {};
+    io.intr_type = GPIO_INTR_ANYEDGE;
+    io.mode = GPIO_MODE_INPUT;
+    io.pin_bit_mask = (1ULL << pin);
+    io.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io.pull_up_en = pullup ? GPIO_PULLUP_ENABLE : GPIO_PULLUP_DISABLE;
+    gpio_config(&io);
+
+    // Attach ISR and measure
+    gpio_isr_handler_add((gpio_num_t)pin, &UartService::onGpioEdge, (void*)pin);
+    uint32_t start = millis();
+    while ((millis() - start) < windowMs) {
+        delay(1);
+    }
+    gpio_isr_handler_remove((gpio_num_t)pin);
+
+    // Calculate edges per second
+    uint32_t edges = edgeCounts[pin];
+    float eps = (windowMs > 0) ? (edges * 1000.0f / windowMs) : 0.0f;
+
+    // Baud estimating
+    uint32_t approxBaud = 0;
+    if (intervalCount > 8) {
+        std::vector<uint32_t> tmp(edgeIntervals, edgeIntervals + intervalCount);
+        std::sort(tmp.begin(), tmp.end());
+        uint32_t med = tmp[tmp.size() / 2];   // microseconds
+
+        if (med > 0) {
+            approxBaud = 1000000UL / med;
+
+            if (approxBaud < 1200 || approxBaud > 1000000) {
+                approxBaud = 0;
+            } else {
+                approxBaud = (approxBaud / 100) * 100;
+            }
+        }
+    }
+
+    return { pin, edges, eps, approxBaud };
+}
+
+std::vector<UartService::PinActivity> UartService::scanUartActivity(const std::vector<uint8_t>& pins,
+                                                                    uint32_t windowMs,
+                                                                    uint32_t minEdges,
+                                                                    bool pullup) {
+    std::vector<PinActivity> out;
+    out.reserve(pins.size());
+
+    for (auto pin : pins) {
+        auto r = measureUartActivity(pin, windowMs, pullup);
+        if (r.edges >= minEdges) {
+            out.push_back(r);
+        }
+    }
+
+    std::sort(out.begin(), out.end(), [](const PinActivity& a, const PinActivity& b) {
+        return a.edges > b.edges;
+    });
+
+    return out;
+}

@@ -15,6 +15,13 @@
 
 class UartService {
 public:
+    struct PinActivity {
+        uint8_t pin;
+        uint32_t edges;
+        float edgesPerSec;
+        uint32_t approxBaud;
+    };
+
     void configure(unsigned long baud, uint32_t config, uint8_t rx, uint8_t tx, bool inverted);
     void print(const std::string& msg);
     void println(const std::string& msg);
@@ -41,6 +48,11 @@ public:
     void setXmodemCrc(bool enabled);
     int32_t getXmodemBlockSize() const;
     int8_t getXmodemIdSize() const;
+    PinActivity measureUartActivity(uint8_t pin, uint32_t windowMs = 100, bool pullup = true);
+    std::vector<PinActivity> scanUartActivity(const std::vector<uint8_t>& pins,
+                                              uint32_t windowMs = 100,
+                                              uint32_t minEdges = 10,
+                                              bool pullup = true);
 
 private:
     XModem xmodem;
@@ -48,4 +60,10 @@ private:
     int32_t xmodemBlockSize = 128;
     int8_t xmodemIdSize = 1;
     XModem::ProtocolType xmodemProtocol = XModem::ProtocolType::CRC_XMODEM;
+
+    static void IRAM_ATTR onGpioEdge(void* arg);
+    inline static volatile uint32_t edgeCounts[50] = {0};
+    inline static volatile uint32_t lastEdgeTimeUs = 0;
+    inline static volatile uint32_t edgeIntervals[64] = {0};
+    inline static volatile uint8_t intervalCount = 0;
 };
