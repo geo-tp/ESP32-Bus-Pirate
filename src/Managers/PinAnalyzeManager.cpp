@@ -666,10 +666,13 @@ std::string PinAnalyzeManager::formatWizardReport(uint8_t pin, const Report& r) 
         line(std::string("The line stayed mostly ") + (startLevel ? "HIGH." : "LOW."));
         line("This looks idle. If unexpected, check wiring.");
     } else {
-        // Sspeed summary
-        if (r.approxHz < 10.f)       line("Activity is slow.");
-        else if (r.approxHz < 1000.f) line("Activity is moderate.");
-        else                          line("Activity is fast.");
+        // Speed summary based on observed edges/sec
+        if (r.edgesPerSec < 10)             line("Activity is very slow.");
+        else if (r.edgesPerSec < 1000)      line("Activity is slow.");
+        else if (r.edgesPerSec < 20000)     line("Activity is moderate.");
+        else if (r.edgesPerSec < 200000)    line("Activity is fast.");
+        else if (r.edgesPerSec < 450000)    line("Activity is very fast.");
+        else                                line("Activity is at sampling limits.");
 
         // Top guesses
         {
