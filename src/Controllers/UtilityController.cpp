@@ -450,7 +450,9 @@ void UtilityController::handleWizard(const TerminalCommand& cmd) {
         }
 
         // Sample pin
-        pinAnalyzeManager.sample();
+        for (int i = 0; i < 2048; i++) {
+            pinAnalyzeManager.sample();
+        }
 
         // Check if it's time to report and report activity
         if (pinAnalyzeManager.shouldReport(millis())) {
