@@ -63,6 +63,7 @@ void setup() {
         M5DeviceView deviceView;
         deviceView.setRotation(3);
         StickInput deviceInput;
+        M5.Power.setExtOutput(false);
     #elif DEVICE_CARDPUTER
         // Setup the Cardputer
         #include <M5Unified.h>
