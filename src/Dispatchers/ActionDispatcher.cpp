@@ -82,8 +82,8 @@ void ActionDispatcher::dispatchCommand(const TerminalCommand& cmd) {
     // Global command (help, logic, mode, P, p...)
     if (provider.getUtilityController().isGlobalCommand(cmd)) {
         provider.getUtilityController().handleCommand(cmd);
-        if (cmd.getRoot() == "logic"){
-            // hack to rerender the pinout view after logic analyzer cmd
+        if (cmd.getRoot() == "logic" || cmd.getRoot() == "analogic") {
+            // hack to rerender the pinout view after logic/analogic cmd
             setCurrentMode(state.getCurrentMode());
         } 
         return;
