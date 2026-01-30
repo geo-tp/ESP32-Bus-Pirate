@@ -196,6 +196,14 @@ void M5DeviceView::setRotation(uint8_t rotation) {
     M5.Lcd.setRotation(rotation);
 }
 
+void M5DeviceView::setBrightness(uint8_t brightness) {
+    M5.Lcd.setBrightness(brightness);
+}
+
+uint8_t M5DeviceView::getBrightness() {
+    return M5.Lcd.getBrightness();
+}
+
 void M5DeviceView::showModeName(std::string& mode, int y) {
     auto modeName = "Mode: " + mode;
     int16_t titleX = (M5.Lcd.width() - M5.Lcd.textWidth(modeName.c_str())) / 2;

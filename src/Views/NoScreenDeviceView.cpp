@@ -22,6 +22,12 @@ void NoScreenDeviceView::drawAnalogicTrace(uint8_t pin, const std::vector<uint8_
 
 void NoScreenDeviceView::setRotation(uint8_t rotation) {}
 
+void NoScreenDeviceView::setBrightness(uint8_t brightness) {}
+
+uint8_t NoScreenDeviceView::getBrightness() {
+    return 0;
+}
+
 void NoScreenDeviceView::topBar(const std::string& title, bool submenu, bool searchBar) {}
 
 void NoScreenDeviceView::horizontalSelection(

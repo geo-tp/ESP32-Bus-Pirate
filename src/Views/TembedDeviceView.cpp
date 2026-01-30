@@ -150,6 +150,14 @@ void TembedDeviceView::setRotation(uint8_t rotation) {
     tft.setRotation(rotation);
 }
 
+void TembedDeviceView::setBrightness(uint8_t brightness) {
+    tft.setBrightness(brightness);
+}
+
+uint8_t TembedDeviceView::getBrightness() {
+    return tft.getBrightness();
+}   
+
 void TembedDeviceView::topBar(const std::string& title, bool submenu, bool searchBar) {
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.setTextSize(2);

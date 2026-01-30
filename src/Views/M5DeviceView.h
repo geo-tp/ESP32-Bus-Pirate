@@ -33,6 +33,8 @@ public:
     void loading() override;
     void clear() override;
     void setRotation(uint8_t rotation);
+    void setBrightness(uint8_t brightness) override;
+    uint8_t getBrightness() override;
     void topBar(const std::string& title, bool submenu, bool searchBar) override;
     void drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) override;
     void drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) override;
