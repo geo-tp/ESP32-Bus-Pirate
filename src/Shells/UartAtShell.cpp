@@ -91,7 +91,7 @@ bool UartAtShell::selectMode(AtMode& outMode) {
     items.emplace_back(kExitLabel);
 
     // Sélection
-    int index = userInputManager.readValidatedChoiceIndex("Select AT mode", items, 0);
+    int index = userInputManager.readValidatedChoiceIndex("Select AT mode", items, items.size() - 1);
     if (index < 0) return false;
 
     const std::size_t uindex = static_cast<std::size_t>(index);
@@ -118,7 +118,7 @@ bool UartAtShell::selectAction(AtActionSlice actions, const AtActionItem*& outAc
     // Option "Back"
     items.push_back(i > 9 ? "↩️   Back" : " ↩️   Back");
 
-    int index = userInputManager.readValidatedChoiceIndex("Select command", items, 0);
+    int index = userInputManager.readValidatedChoiceIndex("Select command", items, items.size() - 1);
     if (index < 0) return false;
 
     if (static_cast<std::size_t>(index) == actions.size) {
