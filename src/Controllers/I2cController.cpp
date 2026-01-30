@@ -167,39 +167,50 @@ Write
 void I2cController::handleWrite(const TerminalCommand& cmd) {
     auto args = argTransformer.splitArgs(cmd.getArgs());
 
-    if (args.size() < 2) {
-        terminalView.println("Usage: write <addr> <reg> <val>");
+    // addr
+    if (cmd.getSubcommand().empty()) {
+        terminalView.println("Usage: write <addr> [reg] [val]");
         return;
     }
 
-    // Args
     const std::string& addrStr = cmd.getSubcommand();
-    const std::string& regStr = args[0];
-    const std::string& valStr = args[1];
 
-    // Verify inputs
-    if (!argTransformer.isValidNumber(addrStr) ||
-        !argTransformer.isValidNumber(regStr) ||
-        !argTransformer.isValidNumber(valStr)) {
-        terminalView.println("Error: Invalid argument. Use decimal or 0x-prefixed hex values.");
+    if (!argTransformer.isValidNumber(addrStr)) {
+        terminalView.println("Error: Invalid address. Use decimal or 0x-prefixed hex.");
         return;
     }
 
-    // Parse input
     uint8_t addr = argTransformer.parseHexOrDec(addrStr);
-    uint8_t reg  = argTransformer.parseHexOrDec(regStr);
-    uint8_t val  = argTransformer.parseHexOrDec(valStr);
+
+    // reg
+    uint8_t reg = 0;
+    if (args.size() >= 1) {
+        if (!argTransformer.isValidNumber(args[0])) {
+            terminalView.println("Error: Invalid register. Use decimal or 0x-prefixed hex.");
+            return;
+        }
+        reg = argTransformer.parseHexOrDec(args[0]);
+    } else {
+        reg = (uint8_t)userInputManager.readValidatedUint32("Register (e.g. 0x00)", 0);
+    }
+
+    // val
+    uint8_t val = 0;
+    if (args.size() >= 2) {
+        if (!argTransformer.isValidNumber(args[1])) {
+            terminalView.println("Error: Invalid value. Use decimal or 0x-prefixed hex.");
+            return;
+        }
+        val = argTransformer.parseHexOrDec(args[1]);
+    } else {
+        val = (uint8_t)userInputManager.readValidatedUint32("Value (e.g. 0x1E)", 0);
+    }
 
     // Ping addr
     i2cService.beginTransmission(addr);
     uint8_t pingResult = i2cService.endTransmission();
-    
-    // Check ping
     if (pingResult != 0) {
-        std::stringstream error;
-        error << "I2C Ping: 0x" << std::hex << std::uppercase << (int)addr
-              << " No response. Aborting write.";
-        terminalView.println(error.str());
+        terminalView.println("I2C Ping: 0x" + argTransformer.toHex(addr) + " no response. Aborting write.");
         return;
     }
 
@@ -207,33 +218,49 @@ void I2cController::handleWrite(const TerminalCommand& cmd) {
     i2cService.beginTransmission(addr);
     i2cService.write(reg);
     i2cService.write(val);
-    i2cService.endTransmission();
+    i2cService.endTransmission(true);
 
-    terminalView.println("I2C Write: Data Sent.");
+    terminalView.println(
+        "I2C Write: 0x" + argTransformer.toHex(val) +
+        " -> reg 0x" + argTransformer.toHex(reg) +
+        " @ dev 0x" + argTransformer.toHex(addr) + "."
+    );
 }
 
 /*
 Read
 */
 void I2cController::handleRead(const TerminalCommand& cmd) {
+    // addr 
     if (cmd.getSubcommand().empty()) {
-        terminalView.println("Usage: read <addr> <reg>");
+        terminalView.println("Usage: read <addr> [reg]");
         return;
     }
 
-    if (!argTransformer.isValidNumber(cmd.getSubcommand()) ||
-        !argTransformer.isValidNumber(cmd.getArgs())) {
-        terminalView.println("Error: Invalid argument. Use decimal or 0x-prefixed hex values.");
+    const std::string& addrStr = cmd.getSubcommand();
+    if (!argTransformer.isValidNumber(addrStr)) {
+        terminalView.println("Error: Invalid address. Use decimal or 0x-prefixed hex.");
         return;
     }
 
-    uint8_t addr = argTransformer.parseHexOrDec(cmd.getSubcommand());
-    uint8_t reg  = argTransformer.parseHexOrDec(cmd.getArgs());
+    uint8_t addr = argTransformer.parseHexOrDec(addrStr);
+
+    // reg
+    uint8_t reg = 0;
+    if (!cmd.getArgs().empty()) {
+        if (!argTransformer.isValidNumber(cmd.getArgs())) {
+            terminalView.println("Error: Invalid register. Use decimal or 0x-prefixed hex.");
+            return;
+        }
+        reg = argTransformer.parseHexOrDec(cmd.getArgs());
+    } else {
+        reg = (uint8_t)userInputManager.readValidatedUint32("Register (e.g. 0x00)", 0);
+    }
 
     // Check I2C device presence
     i2cService.beginTransmission(addr);
     if (i2cService.endTransmission()) {
-        terminalView.println("I2C Read: No device found at " + cmd.getSubcommand());
+        terminalView.println("I2C Read: No device found at 0x" + argTransformer.toHex(addr));
         return;
     }
 
@@ -244,10 +271,13 @@ void I2cController::handleRead(const TerminalCommand& cmd) {
 
     i2cService.requestFrom(addr, 1);
     if (i2cService.available()) {
-        int value = i2cService.read();
-        std::stringstream ss;
-        ss << "0x" << std::hex << std::uppercase << value;
-        terminalView.println("Read: " + ss.str());
+        uint8_t value = (uint8_t)i2cService.read();
+        terminalView.println(
+            "I2C Read: 0x" + argTransformer.toHex(value) +
+            " (" + std::to_string((int)value) + ")" +
+            " from reg 0x" + argTransformer.toHex(reg) +
+            " @ dev 0x" + argTransformer.toHex(addr) + "."
+        );
     } else {
         terminalView.println("I2C Read: No data available.");
     }
@@ -806,8 +836,8 @@ void I2cController::handleHelp() {
     terminalView.println("  identify <addr>");
     terminalView.println("  sniff");
     terminalView.println("  slave <addr>");
-    terminalView.println("  read <addr> <reg>");
-    terminalView.println("  write <addr> <reg> <val>");
+    terminalView.println("  read <addr> [reg]");
+    terminalView.println("  write <addr> [reg] [val]");
     terminalView.println("  dump <addr> [len]");
     terminalView.println("  glitch <addr>");
     terminalView.println("  jam");

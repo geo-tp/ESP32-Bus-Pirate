@@ -534,8 +534,8 @@ void UtilityController::handleHelp() {
     terminalView.println("  identify <addr>      - Identify device");
     terminalView.println("  sniff                - View traffic");
     terminalView.println("  slave <addr>         - Emulate I2C device");
-    terminalView.println("  read <addr> <reg>    - Read register");
-    terminalView.println("  write <a> <r> <val>  - Write register");
+    terminalView.println("  read <addr> [reg]    - Read register");
+    terminalView.println("  write <a> [r] [val]  - Write register");
     terminalView.println("  dump <addr> [len]    - Read all registers");
     terminalView.println("  glitch <addr>        - Run attack sequence");
     terminalView.println("  flood <addr>         - Saturate target I/O");
