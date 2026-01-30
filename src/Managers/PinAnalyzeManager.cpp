@@ -234,8 +234,7 @@ const char* PinAnalyzeManager::kindToStr(SignalKind k) {
         case SignalKind::Clock: return "Clock";
         case SignalKind::PWM: return "PWM";
         case SignalKind::Servo: return "Servo";
-        case SignalKind::UartLike: return "UART-like";
-        case SignalKind::OneWireLike: return "1-Wire-like";
+        case SignalKind::DataLike: return "Data-like";
         case SignalKind::BurstData: return "Burst data";
         default: return "Unknown";
     }
@@ -351,7 +350,7 @@ PinAnalyzeManager::Guess PinAnalyzeManager::detectServo(const std::vector<uint32
     return g;
 }
 
-PinAnalyzeManager::Guess PinAnalyzeManager::detectUartLike(const std::vector<uint32_t>& pulses, uint32_t baseT) const {
+PinAnalyzeManager::Guess PinAnalyzeManager::detectDataLike(const std::vector<uint32_t>& pulses, uint32_t baseT) const {
     Guess g;
     if (pulses.size() < 30 || baseT < 2 || baseT > 2000) return g;
 
@@ -384,37 +383,10 @@ PinAnalyzeManager::Guess PinAnalyzeManager::detectUartLike(const std::vector<uin
         int conf = (int)(40 + score * 60);
         if (baud < 1200 || baud > 2000000) conf = (int)(conf * 0.7f);
 
-        g.kind = SignalKind::UartLike;
+        g.kind = SignalKind::DataLike;
         g.confidencePct = clampInt(conf, 0, 95);
         g.note = "Timings match a bit-time";
         g.extra = "baud~" + std::to_string(baud);
-        return g;
-    }
-
-    return g;
-}
-
-PinAnalyzeManager::Guess PinAnalyzeManager::detectOneWireLike(const std::vector<uint32_t>& pulses) const {
-    Guess g;
-    if (pulses.size() < 20) return g;
-
-    int near60 = 0;
-    int near480 = 0;
-    int total = 0;
-
-    for (auto p : pulses) {
-        total++;
-        if (p >= 40 && p <= 90) near60++;
-        if (p >= 350 && p <= 650) near480++;
-    }
-
-    float s60 = (float)near60 / (float)total;
-    float s480 = (float)near480 / (float)total;
-
-    if (s60 > 0.25f && s480 > 0.02f) {
-        g.kind = SignalKind::OneWireLike;
-        g.confidencePct = 70;
-        g.note = "~60 us slots and occasional ~480 us pulses.";
         return g;
     }
 
@@ -435,74 +407,6 @@ PinAnalyzeManager::Guess PinAnalyzeManager::detectBurstData(int bursts_, uint32_
         return g;
     }
 
-    return g;
-}
-
-PinAnalyzeManager::Guess PinAnalyzeManager::detectI2cLike(
-    const std::vector<uint32_t>& pulses,
-    float approxHz, float dutyPct, float jitterPct,
-    int bursts_, uint32_t edges_,
-    const Guess& uartGuess
-) const {
-    Guess g;
-    if (edges_ < 30) return g;                 // too little
-    if (bursts_ < 2) return g;                 // I2C usually bursty
-    if (dutyPct < 55.f) return g;              // idle high / pull-up bias
-    if (approxHz < 5000.f || approxHz > 2000000.f) return g; // plausible range
-
-    // Clock stability: I2C can jitter a bit
-    int score = 0;
-
-    // burstiness is key
-    score += 30;
-    if (bursts_ >= 4) score += 10;
-
-    // idle high
-    score += 15;
-    if (dutyPct >= 75.f) score += 5;
-
-    // jitter: if very stable it's good, if extremely unstable it's suspicious
-    if (jitterPct < 15.f) score += 20;
-    else if (jitterPct < 35.f) score += 10;
-    else if (jitterPct > 80.f) score -= 15;
-
-    // Pulse distribution: SCL tends to have many similar short pulses
-    // We check if a large fraction of pulses are close to the median short pulse.
-    if (!pulses.empty()) {
-        std::vector<uint32_t> tmp = pulses;
-        uint32_t med = medianOf(tmp);
-        if (med > 0) {
-            int close = 0, total = 0;
-            float tol = med * 0.25f;
-            for (auto p : pulses) {
-                if (p < 2) continue;
-                // consider only reasonably short pulses (active region)
-                if (p > med * 8) continue;
-                total++;
-                if (fabsf((float)p - (float)med) <= tol) close++;
-            }
-            if (total > 20) {
-                float r = (float)close / (float)total;
-                if (r > 0.60f) score += 15;
-                else if (r > 0.40f) score += 8;
-            }
-        }
-    }
-
-    // If UART detection is strong, reduce I2C confidence a bit (SDA can look like UART)
-    if (uartGuess.kind == SignalKind::UartLike && uartGuess.confidencePct >= 70) {
-        score -= 20;
-    } else if (uartGuess.kind == SignalKind::UartLike && uartGuess.confidencePct >= 50) {
-        score -= 10;
-    }
-
-    score = clampInt(score, 0, 90);
-    if (score < 45) return g;
-
-    g.kind = SignalKind::I2cLike;
-    g.confidencePct = score;
-    g.note = "Idle-high bias and clock-like timing.";
-    g.extra = "clk~" + std::to_string((int)(approxHz + 0.5f)) + "Hz bursts~" + std::to_string(bursts_);
     return g;
 }
 
@@ -613,14 +517,8 @@ PinAnalyzeManager::Report PinAnalyzeManager::buildReport(bool doPullTest) {
     auto gServo = detectServo(risePeriods, {});
     if (gServo.confidencePct) guesses.push_back(gServo);
 
-    auto gUart = detectUartLike(pulses, r.basePulseUs);
-    if (gUart.confidencePct) guesses.push_back(gUart);
-
-    auto gI2c = detectI2cLike(pulses, r.approxHz, r.dutyPct, r.jitterPct, r.bursts, r.edges, gUart);
-    if (gI2c.confidencePct) guesses.push_back(gI2c);
-
-    auto g1w = detectOneWireLike(pulses);
-    if (g1w.confidencePct) guesses.push_back(g1w);
+    auto gData = detectDataLike(pulses, r.basePulseUs);
+    if (gData.confidencePct) guesses.push_back(gData);
 
     auto gBurst = detectBurstData(bursts, r.edges, r.approxHz, r.jitterPct);
     if (gBurst.confidencePct) guesses.push_back(gBurst);

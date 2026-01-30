@@ -15,10 +15,8 @@ public:
         Clock,
         PWM,
         Servo,
-        UartLike,
-        OneWireLike,
+        DataLike,
         BurstData,
-        I2cLike,
         Unknown
     };
 
@@ -124,12 +122,8 @@ private:
     Guess detectNoiseOrFloating(const std::vector<uint32_t>& pulses, float jitterPct, uint32_t minPulseUs, uint32_t edges) const;
     Guess detectClockPwm(float approxHz, float dutyPct, float jitterPct, uint32_t edges) const;
     Guess detectServo(const std::vector<uint32_t>& risePeriods, const std::vector<uint32_t>& highPulses) const;
-    Guess detectUartLike(const std::vector<uint32_t>& pulses, uint32_t baseT) const;
-    Guess detectOneWireLike(const std::vector<uint32_t>& pulses) const;
+    Guess detectDataLike(const std::vector<uint32_t>& pulses, uint32_t baseT) const;
     Guess detectBurstData(int bursts, uint32_t edges, float approxHz, float jitterPct) const;
-    Guess detectI2cLike(const std::vector<uint32_t>& pulses,
-                        float approxHz, float dutyPct, float jitterPct,
-                        int bursts, uint32_t edges, const Guess& uartGuess) const;
 
     // Pull tests
     std::string runPullTest();
