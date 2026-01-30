@@ -4,6 +4,7 @@
 #include <esp_system.h> 
 #include "Interfaces/ITerminalView.h"
 #include "Interfaces/IInput.h"
+#include "Interfaces/IDeviceView.h"
 #include "Managers/UserInputManager.h"
 #include "Transformers/ArgTransformer.h"
 #include "Services/SystemService.h"
@@ -14,6 +15,7 @@ class SysInfoShell {
 public:
     SysInfoShell(ITerminalView& terminalView,
                  IInput& terminalInput,
+                 IDeviceView& deviceView,
                  UserInputManager& userInputManager,
                  ArgTransformer& argTransformer,
                  SystemService& systemService,
@@ -25,11 +27,11 @@ private:
     std::vector<std::string> actions = {
         " 📊 System summary",
         " 📟 Hardware info",
-        " 🗄️  Memory",
+        " 📦 Memory",
+        " 📺 Screen",
         " 🧩 Partitions",
-        " 🗂️  LittleFS",
-        " 🧰 NVS stats",
-        " 📒 NVS entries",
+        " 📁 LittleFS",
+        " 🧰 NVS",
         " 🌐 Network",
         " 🔄 Reboot",
         "🚪 Exit"
@@ -68,13 +70,15 @@ private:
     void cmdHardwareInfo();
     void cmdMemory();
     void cmdPartitions();
+    void cmdScreen();   
     void cmdFS();
-    void cmdNVS(bool listEntries);
+    void cmdNVS();
     void cmdNet();
     void cmdReboot(bool hard = false);
 
     ITerminalView&     terminalView;
     IInput&            terminalInput;
+    IDeviceView&       deviceView;
     UserInputManager&  userInputManager;
     ArgTransformer&    argTransformer;
     SystemService&     systemService;

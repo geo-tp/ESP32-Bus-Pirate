@@ -4,12 +4,14 @@
 
 SysInfoShell::SysInfoShell(ITerminalView& tv,
                            IInput& in,
+                           IDeviceView& deviceView,
                            UserInputManager& uim,
                            ArgTransformer& at,
                            SystemService& sys,
                            WifiService& wifi)
     : terminalView(tv)
     , terminalInput(in)
+    , deviceView(deviceView)
     , userInputManager(uim)
     , argTransformer(at)
     , systemService(sys)
@@ -26,10 +28,10 @@ void SysInfoShell::run() {
             case 0: cmdSummary(); break;
             case 1: cmdHardwareInfo(); break;
             case 2: cmdMemory(); break;
-            case 3: cmdPartitions(); break;
-            case 4: cmdFS(); break;
-            case 5: cmdNVS(false); break;
-            case 6: cmdNVS(true); break;
+            case 3: cmdScreen(); break;
+            case 4: cmdPartitions(); break;
+            case 5: cmdFS(); break;
+            case 6: cmdNVS(); break;
             case 7: cmdNet(); break;
             case 8: cmdReboot(); break;
             case 9: // Exit
@@ -46,6 +48,7 @@ void SysInfoShell::cmdSummary() {
     terminalView.println("\n=== System Summary ===");
     terminalView.println("Model         : " + systemService.getChipModel());
     terminalView.println("Uptime        : " + std::to_string(systemService.getUptimeSeconds()) + " s");
+    terminalView.println("Screen        : " + std::to_string((deviceView.getBrightness() * 100) / 255) + " % brightness");
     
     const int rr = systemService.getResetReason();
     terminalView.println(std::string("Reset reason  : ") + resetReasonToStr(rr) + " (" + std::to_string(rr) + ")");
@@ -147,6 +150,32 @@ void SysInfoShell::cmdMemory() {
     terminalView.println("Max alloc PSRAM   : " + std::to_string(systemService.getPsramMaxAlloc() / 1024) + " KB");
 }
 
+void SysInfoShell::cmdScreen() {
+    terminalView.println("\n=== Device Screen ===");
+
+    uint8_t brightness = deviceView.getBrightness();
+
+    // Normalize to percent
+    uint8_t percent = static_cast<uint8_t>((brightness * 100) / 255);
+    terminalView.println("Brightness : current " + std::to_string(percent) + " %");
+
+    // Ask user new value
+    uint8_t newPercent = userInputManager.readValidatedUint8(
+        "Set brightness (0-100%)",
+        percent,
+        0,
+        100
+    );
+
+    // Convert
+    uint8_t newBrightness = static_cast<uint8_t>((newPercent * 255) / 100);
+
+    deviceView.setBrightness(newBrightness);
+
+    terminalView.println("Brightness updated to " +
+                         std::to_string(newPercent) + " %");
+}
+
 void SysInfoShell::cmdPartitions() {
     terminalView.println("\n=== Partitions ===");
     terminalView.println(systemService.getPartitions());
@@ -169,14 +198,10 @@ void SysInfoShell::cmdFS() {
     }
 }
 
-void SysInfoShell::cmdNVS(bool listEntries) {
-    terminalView.println("\n=== NVS ===");
-    if (listEntries) {
-        terminalView.println(systemService.getNvsEntries());
-        return;
-    }
-    
+void SysInfoShell::cmdNVS() {
+    terminalView.println("\n=== Non Volatile Storage ===");
     terminalView.println(systemService.getNvsStats());
+    terminalView.println(systemService.getNvsEntries());
 }
 
 void SysInfoShell::cmdNet() {
