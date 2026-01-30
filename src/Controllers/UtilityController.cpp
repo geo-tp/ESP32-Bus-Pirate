@@ -539,10 +539,11 @@ void UtilityController::handleHelp() {
     terminalView.println("  dump <addr> [len]    - Read all registers");
     terminalView.println("  glitch <addr>        - Run attack sequence");
     terminalView.println("  flood <addr>         - Saturate target I/O");
-    terminalView.println("  jam                  - Jam I2C bus with noise");
+    terminalView.println("  health <addr>        - Perform timing test");
     terminalView.println("  monitor <addr> [ms]  - Monitor register changes");
     terminalView.println("  eeprom [addr]        - I2C EEPROM operations");
     terminalView.println("  recover              - Attempt bus recovery");
+    terminalView.println("  jam                  - Jam I2C bus with noise");
     terminalView.println("  swap                 - Swap SDA and SCL pins");
     terminalView.println("  config               - Configure settings");
     terminalView.println("  [0x13 0x4B 0x1]      - Instruction syntax");
