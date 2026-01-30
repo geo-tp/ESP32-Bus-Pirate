@@ -228,7 +228,7 @@ void DioController::handleMeasure(const TerminalCommand& cmd) {
     auto args = argTransformer.splitArgs(cmd.getArgs());
 
     if (cmd.getSubcommand().empty()) {
-        terminalView.println("Usage: edgecount <pin> [duration_ms]");
+        terminalView.println("Usage: measure <pin> [duration_ms]");
         return;
     }
 
@@ -248,7 +248,7 @@ void DioController::handleMeasure(const TerminalCommand& cmd) {
         }
     }
 
-    terminalView.println("DIO EdgeCount: Sampling pin " + std::to_string(pin) +
+    terminalView.println("DIO Measure: Sampling pin " + std::to_string(pin) +
                          " for " + std::to_string(durationMs) + " ms...");
 
     PinService::pullType pull =  pinService.getPullType(pin);
