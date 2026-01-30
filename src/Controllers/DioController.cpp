@@ -132,49 +132,47 @@ void DioController::handleSniff(const TerminalCommand& cmd) {
 
     uint8_t pin = argTransformer.toUint8(cmd.getSubcommand());
     if (!isPinAllowed(pin, "Sniff")) return;
-    PinService::pullType pull =  pinService.getPullType(pin);
-    
-    switch (pull)
-    {
-    case PinService::NOPULL:
-        pinService.setInput(pin);
-        break;
-    case PinService::PULL_UP:
-        pinService.setInputPullup(pin);
-        break;
-    case PinService::PULL_DOWN:
-        pinService.setInputPullDown(pin);
-        break;
-    
-    default:
-        break;
-    }
-    
+
+    // Apply existing pull config
+    PinService::pullType pull = pinService.getPullType(pin);
+    if (pull == PinService::PULL_UP)       pinService.setInputPullup(pin);
+    else if (pull == PinService::PULL_DOWN) pinService.setInputPullDown(pin);
+    else                                   pinService.setInput(pin);
 
     terminalView.println("DIO Sniff: Pin " + std::to_string(pin) + "... Press [ENTER] to stop");
-    
-    int last = pinService.read(pin);
-    terminalView.println("Initial state: " + std::to_string(last));
+    uint8_t last = pinService.read(pin);
+    terminalView.println("\nInitial state: " + std::string(last ? "HIGH" : "LOW"));
+    terminalView.println("");
 
-    unsigned long lastCheck = millis();
+    uint32_t lastEdgeUs = micros();
+    uint32_t lastKeyPollMs = millis();
+
     while (true) {
-        // check ENTER press
-        if (millis() - lastCheck > 10) {
-            lastCheck = millis();
+        // check ENTER every 10ms
+        if (millis() - lastKeyPollMs > 10) {
+            lastKeyPollMs = millis();
             char c = terminalInput.readChar();
             if (c == '\r' || c == '\n') {
-                terminalView.println("DIO Sniff: Stopped.");
+                terminalView.println("\nDIO Sniff: Stopped.");
                 break;
             }
         }
 
-        // check pin state
         int current = pinService.read(pin);
         if (current != last) {
+            uint32_t nowUs = micros();
+            uint32_t dtUs = nowUs - lastEdgeUs;
+            lastEdgeUs = nowUs;
+
             std::string transition = (last == 0 && current == 1)
                 ? "LOW  -> HIGH"
-                : "HIGH -> LOW";
-            terminalView.println("Pin " + std::to_string(pin) + ": " + transition);
+                : "HIGH -> LOW ";
+
+            terminalView.println(
+                "Pin " + std::to_string(pin) + ": " + transition +
+                " | delta=" + std::to_string(dtUs) + "us"
+            );
+
             last = current;
         }
     }
