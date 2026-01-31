@@ -106,11 +106,11 @@ void GuideShell::cmdExamples() {
 
     terminalView.println("[UART] Serial target:");
     terminalView.println("  mode uart");
-    terminalView.println("  scan                (auto baud)");
+    terminalView.println("  scan");
+    terminalView.println("  autobaud");
     terminalView.println("  write \"AT\"");
     terminalView.println("  read");
     terminalView.println("  spam Hello 1000");
-    terminalView.println("  xmodem send /f.txt  (send file)");
     terminalView.println("");
 
     terminalView.println("Note:");
