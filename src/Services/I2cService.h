@@ -18,6 +18,8 @@ public:
     bool available() const;
     bool end() const;
     bool isReadableDevice(uint8_t addr, uint8_t startReg);
+    bool ping(uint8_t addr, bool sendStop = true, uint32_t* outDtUs = nullptr);
+    bool readReg(uint8_t addr, uint8_t reg, uint8_t* outVal, uint32_t* outDtUs = nullptr);
 
     // I2C Bit bang
     void i2cBitBangDelay(uint32_t delayUs);
@@ -82,6 +84,5 @@ private:
     ExternalEEPROM eeprom;
     static void onSlaveReceive(int len);
     static void onSlaveRequest();
-
-
+    bool probeReadableReg(uint8_t addr, uint8_t reg);
 };

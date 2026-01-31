@@ -573,3 +573,52 @@ bool I2cService::eepromIsConnected() {
 bool I2cService::eepromIsBusy() {
     return eeprom.isBusy();
 }
+
+bool I2cService::ping(uint8_t addr, bool sendStop, uint32_t* outDtUs) {
+    uint32_t t0 = micros();
+    beginTransmission(addr);
+    uint8_t r = endTransmission(sendStop);
+    uint32_t dt = micros() - t0;
+
+    if (outDtUs) *outDtUs = dt;
+    return (r == 0);
+}
+
+bool I2cService::readReg(uint8_t addr, uint8_t reg, uint8_t* outVal, uint32_t* outDtUs) {
+    uint32_t t0 = micros();
+    bool ok = false;
+
+    beginTransmission(addr);
+    write(reg);
+
+    if (endTransmission(false) == 0) {
+        if (requestFrom(addr, (uint8_t)1, true) == 1 && available()) {
+            int v = read();
+            if (v >= 0) {
+                if (outVal) *outVal = (uint8_t)v;
+                ok = true;
+            }
+        }
+    }
+
+    // flush
+    while (available()) (void)read();
+
+    uint32_t dt = micros() - t0;
+    if (outDtUs) *outDtUs = dt;
+
+    return ok;
+}
+
+bool I2cService::probeReadableReg(uint8_t addr, uint8_t reg) {
+    beginTransmission(addr);
+    write(reg);
+    if (endTransmission(false) != 0) return false;
+
+    uint8_t received = requestFrom(addr, (uint8_t)1, true);
+    if (received != 1 || !available()) return false;
+
+    (void)read(); // flush 1
+    while (available()) (void)read();
+    return true;
+}
