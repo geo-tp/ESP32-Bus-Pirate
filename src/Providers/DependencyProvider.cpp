@@ -70,6 +70,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       modbusShell(terminalView, terminalInput, argTransformer, userInputManager, modbusService),
       oneWireEepromShell(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, binaryAnalyzeManager),
       guideShell(terminalView, terminalInput, userInputManager),
+      helpShell(terminalView, terminalInput, userInputManager),
 
       // Selectors
       horizontalSelector(deviceView, deviceInput),
@@ -82,7 +83,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       i2cController(terminalView, terminalInput, i2cService, argTransformer, userInputManager, i2cEepromShell),
       oneWireController(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, ibuttonShell, oneWireEepromShell),
       infraredController(terminalView, terminalInput, infraredService, littleFsService, argTransformer, infraredTransformer, userInputManager, universalRemoteShell),
-      utilityController(terminalView, deviceView, terminalInput, pinService, userInputManager, pinAnalyzeManager, argTransformer, sysInfoShell, guideShell),
+      utilityController(terminalView, deviceView, terminalInput, pinService, userInputManager, pinAnalyzeManager, argTransformer, sysInfoShell, guideShell, helpShell),
       hdUartController(terminalView, terminalInput, deviceInput, hdUartService, uartService, argTransformer, userInputManager),
       spiController(terminalView, terminalInput, spiService, sdService, argTransformer, userInputManager, binaryAnalyzeManager, sdCardShell, spiFlashShell, spiEepromShell),
       jtagController(terminalView, terminalInput, jtagService, userInputManager),

@@ -84,6 +84,7 @@ and injecting shared instances of core components
 #include "Shells/ModbusShell.h"
 #include "Shells/OneWireEepromShell.h"
 #include "Shells/GuideShell.h"
+#include "Shells/HelpShell.h"
 #include "Config/TerminalTypeConfigurator.h"
 
 class DependencyProvider
@@ -189,6 +190,7 @@ public:
     ModbusShell &getModbusShell();
     OneWireEepromShell &getOneWireEepromShell();    
     GuideShell &getGuideShell();
+    HelpShell &getHelpShell();
 
     // Selectors
     HorizontalSelector &getHorizontalSelector();
@@ -293,6 +295,7 @@ private:
     ModbusShell modbusShell;
     OneWireEepromShell oneWireEepromShell;
     GuideShell guideShell;
+    HelpShell helpShell;
 
     // Selectors
     HorizontalSelector horizontalSelector;
