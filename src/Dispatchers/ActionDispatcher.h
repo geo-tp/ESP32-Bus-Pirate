@@ -41,6 +41,9 @@ private:
     // Handle ANSI escape sequences (arrows, etc.)
     bool handleEscapeSequence(char c, std::string& inputLine, size_t& cursorIndex, const std::string& mode);
 
+    // Handle Tab key for autocompletion
+    bool handleTabCompletion(char c, std::string& inputLine, size_t& cursorIndex, const std::string& mode);
+
     // Handle Cardputer arrows
     bool handleCardputerEscapeSequence(char c, size_t& cursorIndex, std::string& inputLine, const std::string& mode);
 

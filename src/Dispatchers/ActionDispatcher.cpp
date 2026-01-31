@@ -1,4 +1,5 @@
 #include "ActionDispatcher.h"
+#include "Data/AutoCompleteWords.h"
 
 /*
 Constructor
@@ -236,6 +237,7 @@ std::string ActionDispatcher::getUserAction() {
         if (handleEnterKey(c, inputLine)) return inputLine;
         if (handleBackspace(c, inputLine, cursorIndex, mode)) continue;
         if (handlePrintableChar(c, inputLine, cursorIndex, mode));
+        if (handleTabCompletion(c, inputLine, cursorIndex, mode));
     }
 }
 
@@ -318,6 +320,42 @@ bool ActionDispatcher::handleEnterKey(char c, const std::string& inputLine) {
 
     provider.getTerminalView().println("");
     provider.getCommandHistoryManager().add(inputLine);
+    return true;
+}
+
+bool ActionDispatcher::handleTabCompletion(char c,
+                                           std::string& inputLine,
+                                           size_t& cursorIndex,
+                                           const std::string& mode) {
+    if (c != '\t') return false;
+
+    // prefix up to cursor
+    std::string prefix = inputLine.substr(0, cursorIndex);
+
+    // history autocomplete
+    std::string suggestion =
+        provider.getCommandHistoryManager().autocomplete(prefix);
+
+    // fallback dictionary autocomplete
+    if (suggestion.empty()) {
+        for (size_t i = 0; autoCompleteWords[i] != nullptr; ++i) {
+            std::string w(autoCompleteWords[i]);
+
+            if (w.size() >= prefix.size() &&
+                w.compare(0, prefix.size(), prefix) == 0) {
+                suggestion = w;
+                break;
+            }
+        }
+    }
+
+    // apply suggestion
+    if (!suggestion.empty()) {
+        inputLine = suggestion;
+        cursorIndex = inputLine.length();
+        provider.getTerminalView().print("\r" + mode + "> " + inputLine + "\033[K");
+    }
+
     return true;
 }
 
