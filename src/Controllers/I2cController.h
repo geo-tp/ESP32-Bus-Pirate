@@ -30,6 +30,30 @@ public:
     void ensureConfigured();
     
 private:
+    struct Stats {
+        int tries = 0;
+        int ok = 0;
+        int nack = 0;
+        uint32_t minUs = 0xFFFFFFFF;
+        uint32_t maxUs = 0;
+        uint32_t sumUs = 0;
+
+        void add(bool success, uint32_t dt) {
+            tries++;
+            if (success) {
+                ok++;
+                sumUs += dt;
+                if (dt < minUs) minUs = dt;
+                if (dt > maxUs) maxUs = dt;
+            } else {
+                nack++;
+            }
+        }
+
+        uint32_t avgUs() const { return (ok > 0) ? (sumUs / (uint32_t)ok) : 0; }
+        uint32_t jitterUs() const { return (ok > 0) ? (maxUs - minUs) : 0; }
+    };
+
     ITerminalView& terminalView;
     IInput& terminalInput;
     I2cService& i2cService;
@@ -90,6 +114,9 @@ private:
     // Perform health timing test
     void handleHealth(const TerminalCommand& cmd);
 
+    // Discover devices and identify them
+    void handleDiscover();
+
     // Dump I2C registers content
     void handleDump(const TerminalCommand& cmd);
     void performRegisterRead(uint8_t addr, uint16_t, uint16_t len,
@@ -98,4 +125,5 @@ private:
                         std::vector<uint8_t>& values, std::vector<bool>& valid);
     void printHexDump(uint16_t, uint16_t len,
                     const std::vector<uint8_t>& values, const std::vector<bool>& valid);
+    std::string identifyToString(uint8_t address, bool includeHeader = false);
 };

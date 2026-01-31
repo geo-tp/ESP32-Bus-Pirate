@@ -24,6 +24,7 @@ Entry point to handle I2C command
 */
 void I2cController::handleCommand(const TerminalCommand& cmd) {
     if (cmd.getRoot() == "scan") handleScan();
+    else if (cmd.getRoot() == "discover") handleDiscover();
     else if (cmd.getRoot() == "sniff") handleSniff();
     else if (cmd.getRoot() == "ping") handlePing(cmd);
     else if (cmd.getRoot() == "identify") handleIdentify(cmd);
@@ -543,34 +544,13 @@ void I2cController::printHexDump(uint16_t start, uint16_t len,
 Identify
 */
 void I2cController::handleIdentify(const TerminalCommand& cmd) {
-    // Validate subcommand
     if (!argTransformer.isValidNumber(cmd.getSubcommand())) {
         terminalView.println("Usage: identify <addr>");
         return;
     }
 
-    // Parse I2C address
     uint8_t address = argTransformer.parseHexOrDec(cmd.getSubcommand());
-    uint16_t start = 0x00;
-    uint16_t len = 256;
-
-    std::stringstream ss;
-    ss << "\n\r 📟 I2C 0x" + argTransformer.toHex(address) + " Identification Result\n";
-
-    // Search for known addresses
-    bool matchFound = false;
-    for (size_t i = 0; i < i2cknownAddressesCount; ++i) {
-        if (i2cKnownAddresses[i].address == address) {
-            matchFound = true;
-            ss << "\r  ➤ Could be: - [" << i2cKnownAddresses[i].type << "] " << i2cKnownAddresses[i].component << "\n";
-        }
-    }
-
-    if (!matchFound) {
-        ss << "\r  ➤ No match found for address 0x" << argTransformer.toHex(address) << "\n";
-    }
-
-    terminalView.println(ss.str());
+    terminalView.println(identifyToString(address, true));
 }
 
 /*
@@ -833,6 +813,7 @@ Help
 void I2cController::handleHelp() {
     terminalView.println("Unknown I2C command. Usage:");
     terminalView.println("  scan");
+    terminalView.println("  discover");
     terminalView.println("  ping <addr>");
     terminalView.println("  identify <addr>");
     terminalView.println("  sniff");
@@ -886,30 +867,6 @@ void I2cController::handleHealth(const TerminalCommand& cmd) {
     uint8_t addr = argTransformer.parseHexOrDec(cmd.getSubcommand());
     terminalView.println("I2C Health: Analyzing @ 0x" + argTransformer.toHex(addr) + "... Press [ENTER] to stop.\n");
 
-    struct Stats {
-        int tries = 0;
-        int ok = 0;
-        int nack = 0;
-        uint32_t minUs = 0xFFFFFFFF;
-        uint32_t maxUs = 0;
-        uint32_t sumUs = 0;
-
-        void add(bool success, uint32_t dt) {
-            tries++;
-            if (success) {
-                ok++;
-                sumUs += dt;
-                if (dt < minUs) minUs = dt;
-                if (dt > maxUs) maxUs = dt;
-            } else {
-                nack++;
-            }
-        }
-
-        uint32_t avgUs() const { return (ok > 0) ? (sumUs / (uint32_t)ok) : 0; }
-        uint32_t jitterUs() const { return (ok > 0) ? (maxUs - minUs) : 0; }
-    };
-
     auto stoppedByUser = [&]() -> bool {
         char key = terminalInput.readChar();
         return (key == '\r' || key == '\n');
@@ -955,7 +912,6 @@ void I2cController::handleHealth(const TerminalCommand& cmd) {
     /* REGISTER READ ANALYZE */
     terminalView.println("[Register read probe]");
 
-    // Probe support by trying a single read of reg 0x00
     uint8_t probeVal = 0;
     uint32_t probeDt = 0;
     bool regSupported = i2cService.readReg(addr, 0x00, &probeVal, &probeDt);
@@ -966,7 +922,6 @@ void I2cController::handleHealth(const TerminalCommand& cmd) {
     Stats rd;
 
     if (regSupported) {
-        // Include the probe result in stats (optional, but coherent)
         rd.add(true, probeDt);
 
         for (int i = 1; i < READ_TRIES; ++i) {
@@ -1028,6 +983,120 @@ void I2cController::handleHealth(const TerminalCommand& cmd) {
     }
 
     terminalView.println("");
+}
+
+void I2cController::handleDiscover() {
+    auto stoppedByUser = [&]() -> bool {
+        char key = terminalInput.readChar();
+        return (key == '\r' || key == '\n');
+    };
+
+    terminalView.println("I2C Discover: scanning bus... Press [ENTER] to stop.\n");
+
+    /* SCAN */
+    std::vector<uint8_t> found;
+    found.reserve(16);
+
+    for (uint8_t addr = 1; addr < 0x7F; ++addr) {
+        if (stoppedByUser()) {
+            terminalView.println("\nI2C Discover: Stopped by user.");
+            return;
+        }
+
+        uint32_t dt = 0;
+        bool ok = i2cService.ping(addr, true, &dt);
+        if (ok) {
+            found.push_back(addr);
+        }
+        delay(1);
+    }
+
+    if (found.empty()) {
+        terminalView.println("No I2C device detected.\n");
+        return;
+    }
+
+    terminalView.println("Found " + std::to_string((int)found.size()) + " device(s):");
+    for (auto a : found) {
+        terminalView.println("  - 0x" + argTransformer.toHex(a));
+    }
+    terminalView.println("");
+
+    /* IDENTIFY */
+    const int PING_TRIES = 50;
+
+    for (size_t idx = 0; idx < found.size(); ++idx) {
+        uint8_t addr = found[idx];
+
+        if (stoppedByUser()) {
+            terminalView.println("\nI2C Discover: Stopped by user.");
+            return;
+        }
+
+        terminalView.println("[" + std::to_string((int)(idx + 1)) + "/" +
+                             std::to_string((int)found.size()) + "] Device @ 0x" +
+                             argTransformer.toHex(addr));
+
+        std::string info = identifyToString(addr, false);
+        terminalView.println(info);
+
+        // Ping timing
+        // Warmup
+        uint32_t warmDt = 0;
+        (void)i2cService.ping(addr, true, &warmDt);
+        delay(1);
+
+        Stats s;
+        for (int i = 0; i < PING_TRIES; ++i) {
+            if (stoppedByUser()) {
+                terminalView.println("\nI2C Discover: Stopped by user.");
+                return;
+            }
+
+            uint32_t dt = 0;
+            bool ok = i2cService.ping(addr, true, &dt);
+            s.add(ok, dt);
+            delay(1);
+        }
+
+        terminalView.println("  Ping timing (" + std::to_string(PING_TRIES) + "x):");
+        terminalView.println("    Ok: " + std::to_string(s.ok) + "  Nack: " + std::to_string(s.nack));
+        if (s.ok > 0) {
+            terminalView.println("    Min: " + std::to_string(s.minUs) + " µs  Avg: " +
+                                 std::to_string(s.avgUs()) + " µs  Max: " +
+                                 std::to_string(s.maxUs) + " µs");
+            terminalView.println("    Jitter: " + std::to_string(s.jitterUs()) + " µs");
+        } else {
+            terminalView.println("    ❌ No ACK during timing run");
+        }
+
+        terminalView.println("");
+    }
+
+    terminalView.println("I2C Discover: done.\n");
+}
+
+std::string I2cController::identifyToString(uint8_t address, bool includeHeader) {
+    std::stringstream ss;
+
+    if (includeHeader) {
+        ss << "\n\r 📟 I2C 0x" + argTransformer.toHex(address) + " Identification Result\n";
+    }
+
+    bool matchFound = false;
+    for (size_t i = 0; i < i2cknownAddressesCount; ++i) {
+        if (i2cKnownAddresses[i].address == address) {
+            matchFound = true;
+            ss << "\r  ➤ Could be: - [" << i2cKnownAddresses[i].type << "] "
+               << i2cKnownAddresses[i].component << "\n";
+        }
+    }
+
+    if (!matchFound) {
+        ss << "\r  ➤ No match found for address 0x" << argTransformer.toHex(address) << "\n";
+    }
+
+    return ss.str();
 }
 
 /*

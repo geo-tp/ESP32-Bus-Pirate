@@ -530,6 +530,7 @@ void UtilityController::handleHelp() {
     terminalView.println("");
     terminalView.println(" 5. I2C:");
     terminalView.println("  scan                 - Find devices");
+    terminalView.println("  discover             - Report on devices");
     terminalView.println("  ping <addr>          - Check ACK");
     terminalView.println("  identify <addr>      - Identify device");
     terminalView.println("  sniff                - View traffic");
