@@ -10,7 +10,7 @@ static const char* const autoCompleteWords[] = {
     "autobaud","bridge","at","spam","glitch","xmodem","swap",
 
     // --- I2C ---
-    "discover","identify","slave","dump","flood","health","monitor",
+    "discovery","identify","slave","dump","flood","health","monitor",
     "recover","jam",
 
     // --- SPI ---
@@ -35,7 +35,7 @@ static const char* const autoCompleteWords[] = {
     "pair","spoof","status","server",
 
     // --- WIFI ---
-    "connect","discovery","probe","deauth","disconnect","ap",
+    "connect","probe","deauth","disconnect","ap",
     "ssh","telnet","nc","nmap","modbus",
     "http","lookup","webui",
 

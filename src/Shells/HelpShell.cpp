@@ -166,7 +166,7 @@ void HelpShell::cmdI2c() {
     printHeader("I2C");
     static const char* const lines[] = {
         "scan                 - Find devices",
-        "discover             - Report on devices",
+        "discovey             - Report on devices",
         "ping <addr>          - Check ACK",
         "identify <addr>      - Identify device",
         "sniff                - View traffic",

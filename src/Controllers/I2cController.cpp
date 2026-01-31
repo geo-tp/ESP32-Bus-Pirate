@@ -26,7 +26,7 @@ Entry point to handle I2C command
 */
 void I2cController::handleCommand(const TerminalCommand& cmd) {
     if (cmd.getRoot() == "scan") handleScan();
-    else if (cmd.getRoot() == "discover") handleDiscover();
+    else if (cmd.getRoot() == "discovery") handleDiscover();
     else if (cmd.getRoot() == "sniff") handleSniff();
     else if (cmd.getRoot() == "ping") handlePing(cmd);
     else if (cmd.getRoot() == "identify") handleIdentify(cmd);
