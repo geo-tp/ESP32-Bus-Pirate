@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -33,34 +33,44 @@ enum class ModeEnum {
 
 class ModeEnumMapper {
 public:
+    inline static const std::map<ModeEnum, std::string> map = {
+        {ModeEnum::None,       "None"},
+        {ModeEnum::HIZ,        "HIZ"},
+        {ModeEnum::OneWire,    "1WIRE"},
+        {ModeEnum::UART,       "UART"},
+        {ModeEnum::HDUART,     "HDUART"},
+        {ModeEnum::I2C,        "I2C"},
+        {ModeEnum::SPI,        "SPI"},
+        {ModeEnum::TwoWire,    "2WIRE"},
+        {ModeEnum::ThreeWire,  "3WIRE"},
+        {ModeEnum::DIO,        "DIO"},
+        {ModeEnum::LED,        "LED"},
+        {ModeEnum::Infrared,   "INFRARED"},
+        {ModeEnum::USB,        "USB"},
+        {ModeEnum::Bluetooth,  "BLUETOOTH"},
+        {ModeEnum::WiFi,       "WIFI"},
+        {ModeEnum::JTAG,       "JTAG"},
+        {ModeEnum::I2S,        "I2S"},
+        {ModeEnum::CAN_,        "CAN"},
+        {ModeEnum::ETHERNET,   "ETHERNET"},
+        {ModeEnum::SUBGHZ,     "SUBGHZ"},
+        {ModeEnum::RFID,       "RFID"},
+        {ModeEnum::RF24_,       "RF24"}
+    };
+
     static std::string toString(ModeEnum proto) {
-        static const std::unordered_map<ModeEnum, std::string> map = {
-            {ModeEnum::None,       "None"},
-            {ModeEnum::HIZ,        "HIZ"},
-            {ModeEnum::OneWire,    "1WIRE"},
-            {ModeEnum::UART,       "UART"},
-            {ModeEnum::HDUART,     "HDUART"},
-            {ModeEnum::I2C,        "I2C"},
-            {ModeEnum::SPI,        "SPI"},
-            {ModeEnum::TwoWire,    "2WIRE"},
-            {ModeEnum::ThreeWire,  "3WIRE"},
-            {ModeEnum::DIO,        "DIO"},
-            {ModeEnum::LED,        "LED"},
-            {ModeEnum::Infrared,   "INFRARED"},
-            {ModeEnum::USB,        "USB"},
-            {ModeEnum::Bluetooth,  "BLUETOOTH"},
-            {ModeEnum::WiFi,       "WIFI"},
-            {ModeEnum::JTAG,       "JTAG"},
-            {ModeEnum::I2S,        "I2S"},
-            {ModeEnum::CAN_,        "CAN"},
-            {ModeEnum::ETHERNET,   "ETHERNET"},
-            {ModeEnum::SUBGHZ,     "SUBGHZ"},
-            {ModeEnum::RFID,       "RFID"},
-            {ModeEnum::RF24_,       "RF24"}
-        };
 
         auto it = map.find(proto);
         return it != map.end() ? it->second : "Unknown Protocol";
+    }
+
+    static std::vector<ModeEnum> getProtocols() {
+        std::vector<ModeEnum> out;
+        for (auto& kv : map) {
+            if (kv.first != ModeEnum::None)
+                out.push_back(kv.first);
+        }
+        return out;
     }
 
     static std::vector<std::string> getProtocolNames(const std::vector<ModeEnum>& protocols) {
@@ -71,38 +81,21 @@ public:
         return names;
     }
 
-    static ModeEnum fromString(const std::string& name) {
-        static const std::unordered_map<std::string, ModeEnum> reverseMap = {
-            {"HIZ",        ModeEnum::HIZ},
-            {"1WIRE",      ModeEnum::OneWire},
-            {"UART",       ModeEnum::UART},
-            {"HDUART",     ModeEnum::HDUART},
-            {"I2C",        ModeEnum::I2C},
-            {"SPI",        ModeEnum::SPI},
-            {"2WIRE",      ModeEnum::TwoWire},
-            {"3WIRE",      ModeEnum::ThreeWire},
-            {"DIO",        ModeEnum::DIO},
-            {"LED",        ModeEnum::LED},
-            {"INFRARED",   ModeEnum::Infrared},
-            {"USB",        ModeEnum::USB},
-            {"BLUETOOTH",  ModeEnum::Bluetooth},
-            {"WIFI",       ModeEnum::WiFi},
-            {"JTAG",       ModeEnum::JTAG},
-            {"I2S",        ModeEnum::I2S},
-            {"CAN",        ModeEnum::CAN_},
-            {"ETHERNET",   ModeEnum::ETHERNET},
-            {"SUBGHZ",     ModeEnum::SUBGHZ},
-            {"RFID",       ModeEnum::RFID},
-            {"RF24",       ModeEnum::RF24_}
-        };
-
-        std::string upper;
-        upper.reserve(name.size());
-        for (char c : name) {
-            upper += std::toupper(static_cast<unsigned char>(c));
+    static std::string toUpper(std::string s) {
+        for (char& c : s) {
+            c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
         }
+        return s;
+    }
 
-        auto it = reverseMap.find(upper);
-        return it != reverseMap.end() ? it->second : ModeEnum::None;
+    static ModeEnum fromString(const std::string& name) {
+        std::string upper = toUpper(name);
+
+        for (const auto& kv : map) {
+            if (kv.second == upper) {
+                return kv.first;
+            }
+        }
+        return ModeEnum::None;
     }
 };
