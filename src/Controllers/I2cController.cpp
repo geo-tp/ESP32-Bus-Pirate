@@ -882,153 +882,151 @@ void I2cController::handleHealth(const TerminalCommand& cmd) {
         terminalView.println("Usage: health <addr>");
         return;
     }
+
     uint8_t addr = argTransformer.parseHexOrDec(cmd.getSubcommand());
     terminalView.println("I2C Health: Analyzing @ 0x" + argTransformer.toHex(addr) + "... Press [ENTER] to stop.\n");
 
-    /* PING ANALYZE */
+    struct Stats {
+        int tries = 0;
+        int ok = 0;
+        int nack = 0;
+        uint32_t minUs = 0xFFFFFFFF;
+        uint32_t maxUs = 0;
+        uint32_t sumUs = 0;
 
-    // Warm up for more accurate timing on the next tests
-    i2cService.beginTransmission(addr);
-    (void)i2cService.endTransmission(true);
+        void add(bool success, uint32_t dt) {
+            tries++;
+            if (success) {
+                ok++;
+                sumUs += dt;
+                if (dt < minUs) minUs = dt;
+                if (dt > maxUs) maxUs = dt;
+            } else {
+                nack++;
+            }
+        }
+
+        uint32_t avgUs() const { return (ok > 0) ? (sumUs / (uint32_t)ok) : 0; }
+        uint32_t jitterUs() const { return (ok > 0) ? (maxUs - minUs) : 0; }
+    };
+
+    auto stoppedByUser = [&]() -> bool {
+        char key = terminalInput.readChar();
+        return (key == '\r' || key == '\n');
+    };
+
+    /* PING ANALYZE */
+    terminalView.println("[ACK latency (ping)]");
+
+    // Warm up
+    uint32_t warmDt = 0;
+    (void)i2cService.ping(addr, true, &warmDt);
     delay(1);
 
-    terminalView.println("[ACK latency (ping)]");
-    
     const int PING_TRIES = 50;
-    uint32_t pingMin = 0xFFFFFFFF, pingMax = 0, pingSum = 0;
-    int pingOk = 0, pingNack = 0;
+    Stats ping;
 
     for (int i = 0; i < PING_TRIES; ++i) {
-        char key = terminalInput.readChar();
-        if (key == '\r' || key == '\n') {
+        if (stoppedByUser()) {
             terminalView.println("\nI2C Health: Stopped by user.");
             return;
         }
 
-        uint32_t t0 = micros();
-        i2cService.beginTransmission(addr);
-        uint8_t r = i2cService.endTransmission(true);
-        uint32_t dt = micros() - t0;
+        uint32_t dt = 0;
+        bool ok = i2cService.ping(addr, true, &dt);
+        ping.add(ok, dt);
 
-        if (r == 0) {
-            pingOk++;
-            pingSum += dt;
-            if (dt < pingMin) pingMin = dt;
-            if (dt > pingMax) pingMax = dt;
-        } else {
-            pingNack++;
-        }
         delay(1);
     }
 
-    if (pingOk == 0) {
+    if (ping.ok == 0) {
         terminalView.println("  ❌ No ACK received.\n");
         return;
     }
 
-    // Ping stats
-    uint32_t pingAvg = pingSum / pingOk;
-    terminalView.println("  Tries: 50   Ok: " + std::to_string(pingOk) +
-                         "   Nack: " + std::to_string(pingNack));
-    terminalView.println("  Min: " + std::to_string(pingMin) + " µs   Avg: " +
-                         std::to_string(pingAvg) + " µs   Max: " +
-                         std::to_string(pingMax) + " µs\n\r  Jitter: " +
-                         std::to_string(pingMax - pingMin) + " µs\n");
+    terminalView.println("  Tries: " + std::to_string(PING_TRIES) +
+                         "   Ok: " + std::to_string(ping.ok) +
+                         "   Nack: " + std::to_string(ping.nack));
+    terminalView.println("  Min: " + std::to_string(ping.minUs) + " µs   Avg: " +
+                         std::to_string(ping.avgUs()) + " µs   Max: " +
+                         std::to_string(ping.maxUs) + " µs\n\r  Jitter: " +
+                         std::to_string(ping.jitterUs()) + " µs\n");
 
     /* REGISTER READ ANALYZE */
-
-    bool regSupported = i2cService.isReadableDevice(addr, 0x00);
-
     terminalView.println("[Register read probe]");
+
+    // Probe support by trying a single read of reg 0x00
+    uint8_t probeVal = 0;
+    uint32_t probeDt = 0;
+    bool regSupported = i2cService.readReg(addr, 0x00, &probeVal, &probeDt);
+
     terminalView.println(std::string("  Supported: ") + (regSupported ? "yes" : "no\n"));
 
     const int READ_TRIES = 50;
-    uint32_t readMin = 0xFFFFFFFF, readMax = 0, readSum = 0;
-    int readOk = 0, readNack = 0;
+    Stats rd;
 
     if (regSupported) {
-        for (int i = 0; i < READ_TRIES; ++i) {
-            char key = terminalInput.readChar();
-            if (key == '\r' || key == '\n') {
+        // Include the probe result in stats (optional, but coherent)
+        rd.add(true, probeDt);
+
+        for (int i = 1; i < READ_TRIES; ++i) {
+            if (stoppedByUser()) {
                 terminalView.println("\nI2C Health: Stopped by user.");
                 return;
             }
 
-            uint32_t t0 = micros();
-            bool ok = false;
+            uint8_t val = 0;
+            uint32_t dt = 0;
+            bool ok = i2cService.readReg(addr, 0x00, &val, &dt);
+            rd.add(ok, dt);
 
-            i2cService.beginTransmission(addr);
-            i2cService.write((uint8_t)0x00);
-            if (i2cService.endTransmission(false) == 0) {
-                if (i2cService.requestFrom(addr, (uint8_t)1, true) == 1 &&
-                    i2cService.available()) {
-                    i2cService.read();
-                    ok = true;
-                }
-            }
-
-            uint32_t dt = micros() - t0;
-
-            if (ok) {
-                readOk++;
-                readSum += dt;
-                if (dt < readMin) readMin = dt;
-                if (dt > readMax) readMax = dt;
-            } else {
-                readNack++;
-            }
-
-            while (i2cService.available()) i2cService.read();
             delay(1);
         }
 
-        if (readOk > 0) {
-            uint32_t readAvg = readSum / readOk;
-
-            terminalView.println("  Tries: 50   Ok: " + std::to_string(readOk) +
-                                "   Nack: " + std::to_string(readNack));
-            terminalView.println("  Min: " + std::to_string(readMin) + " µs   Avg: " +
-                                std::to_string(readAvg) + " µs   Max: " +
-                                std::to_string(readMax) + " µs\n\r  Jitter: " +
-                                std::to_string(readMax - readMin) + " µs\n");
+        if (rd.ok > 0) {
+            terminalView.println("  Tries: " + std::to_string(READ_TRIES) +
+                                 "   Ok: " + std::to_string(rd.ok) +
+                                 "   Nack: " + std::to_string(rd.nack));
+            terminalView.println("  Min: " + std::to_string(rd.minUs) + " µs   Avg: " +
+                                 std::to_string(rd.avgUs()) + " µs   Max: " +
+                                 std::to_string(rd.maxUs) + " µs\n\r  Jitter: " +
+                                 std::to_string(rd.jitterUs()) + " µs\n");
         } else {
             terminalView.println("  ❌ No successful register reads\n");
         }
     }
 
-    /* REPORT ANALYZE */
-
+    /* REPORT */
     terminalView.println("[Health report for 0x" + argTransformer.toHex(addr) + "]");
 
     uint32_t freq = state.getI2cFrequency();
     uint32_t bitUs = (freq > 0) ? (1000000UL / freq) : 10; // fallback 10us
-    uint32_t pingJ = pingMax - pingMin;
-    uint32_t readJ = (readOk > 0) ? (readMax - readMin) : 0;
+
+    uint32_t pingJ = ping.jitterUs();
+    uint32_t readJ = (rd.ok > 0) ? rd.jitterUs() : 0;
+
     uint32_t pingThr = 20 * bitUs;
     uint32_t readThr = 40 * bitUs;
 
-    // Ping info
-    bool pingStable = (pingOk > 0) && (pingNack == 0) && (pingJ <= pingThr);
+    bool pingStable = (ping.ok > 0) && (ping.nack == 0) && (pingJ <= pingThr);
     terminalView.println(pingStable ? "  ✅ Stable ACK" : "  ⚠️  ACK variability");
 
-    // Read info
     if (!regSupported) {
         terminalView.println("  Skipped reads (non-standard device)");
     } else {
-        bool readStable = (readOk > 0) && (readNack == 0) && (readJ <= readThr);
+        bool readStable = (rd.ok > 0) && (rd.nack == 0) && (readJ <= readThr);
         terminalView.println(readStable ? "  ✅ Stable reads" : "  ⚠️  Read variability");
     }
 
-    // Context info
     terminalView.println("  Freq=" + std::to_string(freq) + " Hz  bit=" + std::to_string(bitUs) + " µs");
 
-    // If there are 0 NACK but large jitter
-    if (pingNack == 0 && pingJ > (200 * bitUs)) {
+    if (ping.nack == 0 && pingJ > (200 * bitUs)) {
         terminalView.println("  No NACKs but high latency variance.");
     }
-    if (readOk > 0 && readNack == 0 && readJ > (300 * bitUs)) {
+    if (rd.ok > 0 && rd.nack == 0 && readJ > (300 * bitUs)) {
         terminalView.println("  Reads are reliable but variable.");
     }
+
     terminalView.println("");
 }
 
