@@ -177,8 +177,10 @@ inline constexpr I2cKnownAddress i2cKnownAddresses[] = {
 {0x5A, "STHS34PF80", "Thermal PIR (TMOS PIR)"},
 {0x59, "STM32F030", "ExtEncoder"},
 {0x48, "ADS1110", "ADC v1.1"},
+{0x52, "MEGA328P", "Joystick Unit"},
 {0x58, "GP8413", "DAC2 (alt address)"},
 {0x59, "GP8413", "DAC2 (default address)"},
+{0x63, "STM32G030", "Joystick Unit"},
 {0x65, "GP8413", "DAC2 (alt address)"},
 
 // Adafruit List
