@@ -40,6 +40,31 @@ const std::string& CommandHistoryManager::down() {
 }
 
 /*
+Auto complete
+*/
+const std::string& CommandHistoryManager::autocomplete(const std::string& prefix) {
+    currentLine.clear();
+
+    if (prefix.empty() || history.empty()) {
+        return currentLine;
+    }
+
+    // newest -> oldest
+    for (size_t i = history.size(); i-- > 0;) {
+        const std::string& h = history[i];
+
+        if (h.size() >= prefix.size() && h.compare(0, prefix.size(), prefix) == 0) {
+            currentLine = h;
+            index = i;
+            return currentLine;
+        }
+    }
+
+    // no match
+    return currentLine;
+}
+
+/*
 Reset History
 */
 void CommandHistoryManager::reset() {

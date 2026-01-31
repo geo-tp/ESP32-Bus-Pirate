@@ -14,6 +14,9 @@ public:
     // Moves down in history and returns the next command
     const std::string& down();
 
+    // Attempts to autocomplete based on the given prefix
+    const std::string& autocomplete(const std::string& prefix);
+
     // Resets the navigation index to the end of the history
     void reset();
 
