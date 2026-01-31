@@ -8,13 +8,15 @@ TwoWireController::TwoWireController(
     IInput& terminalInput,
     UserInputManager& userInputManager,
     TwoWireService& twoWireService,
-    SmartCardShell& smartCardShell
+    SmartCardShell& smartCardShell,
+    HelpShell& helpShell
 )
     : terminalView(terminalView)
     , terminalInput(terminalInput)
     , userInputManager(userInputManager)
     , twoWireService(twoWireService)
     , smartCardShell(smartCardShell)
+    , helpShell(helpShell)
 {
 }
 
@@ -152,11 +154,8 @@ void TwoWireController::handleConfig() {
 Help
 */
 void TwoWireController::handleHelp() {
-    terminalView.println("Unknown 2Wire command. Usage:");
-    terminalView.println("  config");
-    terminalView.println("  sniff");
-    terminalView.println("  smartcard ");
-    terminalView.println("  [0xAB r:4] Instruction syntax [NYI]");
+    terminalView.println("\nUnknown command. Available 2WIRE commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

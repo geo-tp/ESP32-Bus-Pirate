@@ -283,8 +283,7 @@ void UsbS3Controller::handleReset() {
 Help
 */
 void UsbS3Controller::handleHelp() {
-    terminalView.println("Unknown command.");
-    terminalView.println("Usage:");
+    terminalView.println("Unknown command. Available USB commands:");
     terminalView.println("  stick");
     terminalView.println("  keyboard");
     terminalView.println("  keyboard <text>");

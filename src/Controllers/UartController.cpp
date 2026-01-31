@@ -13,7 +13,8 @@ UartController::UartController(
     HdUartService& hdUartService,
     ArgTransformer& argTransformer,
     UserInputManager& userInputManager,
-    UartAtShell& uartAtShell
+    UartAtShell& uartAtShell,
+    HelpShell& helpShell
 )
     : terminalView(terminalView),
       terminalInput(terminalInput),
@@ -23,7 +24,8 @@ UartController::UartController(
       hdUartService(hdUartService),
       argTransformer(argTransformer),
       userInputManager(userInputManager),
-      uartAtShell(uartAtShell) 
+      uartAtShell(uartAtShell),
+      helpShell(helpShell)
 {}
 
 
@@ -623,23 +625,8 @@ void UartController::handleConfig() {
 Help
 */
 void UartController::handleHelp() {
-    terminalView.println("");
-    terminalView.println("Unknown UART command. Usage:");
-    terminalView.println("  scan");
-    terminalView.println("  autobaud");
-    terminalView.println("  ping");
-    terminalView.println("  read");
-    terminalView.println("  write <text>");
-    terminalView.println("  bridge");
-    terminalView.println("  at");
-    terminalView.println("  spam <text> <ms>");
-    terminalView.println("  glitch");
-    terminalView.println("  xmodem recv <dest path>");
-    terminalView.println("  xmodem send <file path>");
-    terminalView.println("  swap");
-    terminalView.println("  config");
-    terminalView.println("  raw instructions, ['AT' D:100 r:128]");
-    terminalView.println("");
+    terminalView.println("\nUnknown command. Available UART commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

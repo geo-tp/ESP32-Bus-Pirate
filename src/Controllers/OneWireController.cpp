@@ -10,7 +10,8 @@ OneWireController::OneWireController(
     ArgTransformer& argTransformer,
     UserInputManager& userInputManager, 
     IbuttonShell& ibuttonShell,
-    OneWireEepromShell& eepromShell
+    OneWireEepromShell& eepromShell,
+    HelpShell& helpShell
 )
     : terminalView(terminalView), 
       terminalInput(terminalInput), 
@@ -18,7 +19,8 @@ OneWireController::OneWireController(
       argTransformer(argTransformer), 
       userInputManager(userInputManager), 
       ibuttonShell(ibuttonShell),
-      eepromShell(eepromShell) {
+      eepromShell(eepromShell),
+      helpShell(helpShell) {
 }
 
 /*
@@ -531,18 +533,8 @@ void OneWireController::handleEeprom() {
 Help
 */
 void OneWireController::handleHelp() {
-    terminalView.println("Unknown 1Wire command. Usage:");
-    terminalView.println("  scan");
-    terminalView.println("  ping");
-    terminalView.println("  sniff");
-    terminalView.println("  read");
-    terminalView.println("  write id [8 bytes]");
-    terminalView.println("  write sp [8 bytes]");
-    terminalView.println("  ibutton");
-    terminalView.println("  eeprom");
-    terminalView.println("  temp");
-    terminalView.println("  config");
-    terminalView.println("  raw instructions, [0X33 r:8] ...");
+    terminalView.println("\nUnknown command. Available 1Wire commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 void OneWireController::ensureConfigured() {

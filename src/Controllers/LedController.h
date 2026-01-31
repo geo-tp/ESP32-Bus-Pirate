@@ -9,12 +9,13 @@
 #include "Transformers/ArgTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
+#include "Shells/HelpShell.h"
 
 class LedController {
 public:
     LedController(ITerminalView& terminalView, IInput& terminalInput,
                   LedService& ledService, ArgTransformer& argTransformer,
-                  UserInputManager& userInputManager);
+                  UserInputManager& userInputManager, HelpShell& helpShell);
 
     // Dispatch user command for LED mode
     void handleCommand(const TerminalCommand& cmd);
@@ -58,6 +59,7 @@ private:
     LedService& ledService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
 
     bool configured = false;

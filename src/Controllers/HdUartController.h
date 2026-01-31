@@ -9,11 +9,13 @@
 #include "Transformers/ArgTransformer.h"
 #include "States/GlobalState.h"
 #include "Managers/UserInputManager.h"
+#include "Shells/HelpShell.h"
 
 class HdUartController {
 public:
     HdUartController(ITerminalView& terminalView, IInput& terminalInput, IInput& deviceInput,
-                     HdUartService& hdUartService, UartService& uartService, ArgTransformer& argTransformer, UserInputManager& userInputManager);
+                     HdUartService& hdUartService, UartService& uartService, ArgTransformer& argTransformer, 
+                     UserInputManager& userInputManager, HelpShell& helpShell);
     
     // Entry point for HDUART command
     void handleCommand(const TerminalCommand& cmd);
@@ -32,6 +34,7 @@ private:
     UartService& uartService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     
     bool configured = false;

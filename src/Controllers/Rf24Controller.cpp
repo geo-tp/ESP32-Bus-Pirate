@@ -299,11 +299,6 @@ void Rf24Controller::handleConfig() {
 Help
 */
 void Rf24Controller::handleHelp() {
-    terminalView.println("RF24 commands:");
-    terminalView.println("  scan");
-    terminalView.println("  sniff");
-    terminalView.println("  sweep");
-    terminalView.println("  jam");
-    terminalView.println("  setchannel");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available RF24 commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }

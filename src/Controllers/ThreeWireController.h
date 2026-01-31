@@ -13,6 +13,7 @@
 #include "Managers/UserInputManager.h"
 #include "Transformers/ArgTransformer.h"
 #include "Shells/ThreeWireEepromShell.h"
+#include "Shells/HelpShell.h"
 
 class ThreeWireController {
 public:
@@ -22,7 +23,8 @@ public:
         UserInputManager& userInputManager,
         ThreeWireService& threeWireService,
         ArgTransformer& argTransformer,
-        ThreeWireEepromShell& threeWireEepromShell
+        ThreeWireEepromShell& threeWireEepromShell,
+        HelpShell& helpShell
     );
 
     // Entry point for command handling
@@ -41,6 +43,7 @@ private:
     UserInputManager& userInputManager;
     ArgTransformer& argTransformer;
     ThreeWireEepromShell& threeWireEepromShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     bool org8 = true;

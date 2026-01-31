@@ -840,17 +840,6 @@ void SubGhzController::ensureConfigured() {
 Help
 */
 void SubGhzController::handleHelp() {
-    terminalView.println("SubGHz commands:");
-    terminalView.println("  scan");
-    terminalView.println("  sweep");
-    terminalView.println("  sniff");
-    terminalView.println("  decode");
-    terminalView.println("  replay");
-    terminalView.println("  jam");
-    terminalView.println("  bruteforce");
-    terminalView.println("  trace");
-    terminalView.println("  load");
-    terminalView.println("  listen");
-    terminalView.println("  setfrequency");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available SUBGHZ commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }

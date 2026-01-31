@@ -1,9 +1,17 @@
 #include "CanController.h"
 
-CanController::CanController(ITerminalView& terminalView, IInput& terminalInput, UserInputManager& userInputManager,
-                             CanService& canService, ArgTransformer& argTransformer)
-    : terminalView(terminalView), terminalInput(terminalInput), userInputManager(userInputManager),
-      canService(canService), argTransformer(argTransformer) {}
+CanController::CanController(ITerminalView& terminalView,
+                             IInput& terminalInput,
+                             UserInputManager& userInputManager,
+                             CanService& canService,
+                             ArgTransformer& argTransformer,
+                             HelpShell& helpShell)
+    : terminalView(terminalView),
+      terminalInput(terminalInput),
+      userInputManager(userInputManager),
+      canService(canService),
+      argTransformer(argTransformer),
+      helpShell(helpShell) {}
 
 /*
 Entry point for CAN commands
@@ -153,12 +161,8 @@ void CanController::handleReceive(const TerminalCommand& cmd) {
 Help message for CAN commands
 */
 void CanController::handleHelp() {
-    terminalView.println("Available CAN commands:");
-    terminalView.println("  sniff");
-    terminalView.println("  send [id]");
-    terminalView.println("  receive [id]");
-    terminalView.println("  status");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available CAN commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

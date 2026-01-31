@@ -6,7 +6,8 @@ Constructor
 SpiController::SpiController(ITerminalView& terminalView, IInput& terminalInput, 
                              SpiService& spiService, SdService& sdService, ArgTransformer& argTransformer,
                              UserInputManager& userInputManager, BinaryAnalyzeManager& binaryAnalyzeManager,
-                             SdCardShell& sdCardShell, SpiFlashShell& spiFlashShell, SpiEepromShell& spiEepromShell)
+                             SdCardShell& sdCardShell, SpiFlashShell& spiFlashShell, SpiEepromShell& spiEepromShell,
+                             HelpShell& helpShell)
     : terminalView(terminalView),
       terminalInput(terminalInput),
       spiService(spiService),
@@ -16,7 +17,8 @@ SpiController::SpiController(ITerminalView& terminalView, IInput& terminalInput,
       binaryAnalyzeManager(binaryAnalyzeManager),
       sdCardShell(sdCardShell),
       spiFlashShell(spiFlashShell),
-      spiEepromShell(spiEepromShell)
+      spiEepromShell(spiEepromShell),
+      helpShell(helpShell)
 {}
 
 /*
@@ -228,16 +230,8 @@ void SpiController::handleSdCard() {
 Help
 */
 void SpiController::handleHelp() {
-    terminalView.println("");
-    terminalView.println("Unknown SPI command. Usage:");
-    terminalView.println("  sniff");
-    terminalView.println("  sdcard");
-    terminalView.println("  slave");
-    terminalView.println("  flash");
-    terminalView.println("  eeprom");
-    terminalView.println("  config");
-    terminalView.println("  raw instructions, e.g: [0x9F r:3]");
-    terminalView.println("");
+    terminalView.println("\nUnknown command. Available SPI commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

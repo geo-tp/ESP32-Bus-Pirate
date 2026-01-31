@@ -9,13 +9,15 @@ BluetoothController::BluetoothController(
     IInput& deviceInput,
     BluetoothService& bluetoothService,
     ArgTransformer& argTransformer,
-    UserInputManager& userInputManager
+    UserInputManager& userInputManager,
+    HelpShell& helpShell
 ) : terminalView(terminalView),
     terminalInput(terminalInput),
     deviceInput(deviceInput),
     bluetoothService(bluetoothService),
     argTransformer(argTransformer),
-    userInputManager(userInputManager) {}
+    userInputManager(userInputManager),
+    helpShell(helpShell) {}
 
 /*
 Entry point for BT command
@@ -351,19 +353,8 @@ void BluetoothController::handleConfig() {
 Help
 */
 void BluetoothController::handleHelp() {
-    terminalView.println("Bluetooth commands:");
-    terminalView.println("  scan");
-    terminalView.println("  pair <mac>");
-    terminalView.println("  spoof <mac>");
-    terminalView.println("  sniff");
-    terminalView.println("  status");
-    terminalView.println("  server");
-    terminalView.println("  keyboard");
-    terminalView.println("  keyboard <text>");
-    terminalView.println("  mouse <x> <y>");
-    terminalView.println("  mouse click");
-    terminalView.println("  mouse jiggle [ms]");
-    terminalView.println("  reset");
+    terminalView.println("\nUnknown command. Available Bluetooth commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

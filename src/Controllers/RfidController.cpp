@@ -8,12 +8,14 @@ RfidController::RfidController(
     IInput& input,
     RfidService& rfidService,
     UserInputManager& uim,
-    ArgTransformer& transformer
+    ArgTransformer& transformer,
+    HelpShell& helpShell
 ) : terminalView(view),
     terminalInput(input),
     rfidService(rfidService),
     userInputManager(uim),
-    argTransformer(transformer) {}
+    argTransformer(transformer),
+    helpShell(helpShell) {}
 
 /*
 Entry point for command
@@ -341,12 +343,8 @@ void RfidController::handleConfig() {
 Help
 */
 void RfidController::handleHelp() {
-    terminalView.println("RFID commands:");
-    terminalView.println("  read");
-    terminalView.println("  write");
-    terminalView.println("  clone");
-    terminalView.println("  erase");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available RFID commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

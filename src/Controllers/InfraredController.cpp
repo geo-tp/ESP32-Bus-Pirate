@@ -12,7 +12,8 @@ InfraredController::InfraredController(
     ArgTransformer&          argTransformer,
     InfraredRemoteTransformer& infraredRemoteTransformer,
     UserInputManager&        userInputManager,
-    UniversalRemoteShell&    universalRemoteShell
+    UniversalRemoteShell&    universalRemoteShell,
+    HelpShell&               helpShell
 )
     : terminalView(view),
       terminalInput(terminalInput),
@@ -21,7 +22,8 @@ InfraredController::InfraredController(
       argTransformer(argTransformer),
       infraredRemoteTransformer(infraredRemoteTransformer),
       userInputManager(userInputManager),
-      universalRemoteShell(universalRemoteShell)
+      universalRemoteShell(universalRemoteShell),
+      helpShell(helpShell)
 {}
 
 /*
@@ -632,17 +634,8 @@ void InfraredController::handleJam() {
 Help
 */
 void InfraredController::handleHelp() {
-    terminalView.println("Unknown INFRARED command. Usage:");
-    terminalView.println("  send <addr> <subadd> <cmd>");
-    terminalView.println("  receive");
-    terminalView.println("  setprotocol");
-    terminalView.println("  devicebgone");
-    terminalView.println("  remote");
-    terminalView.println("  replay");
-    terminalView.println("  record");
-    terminalView.println("  load");
-    terminalView.println("  jam");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available INFRARED commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 void InfraredController::ensureConfigured() {

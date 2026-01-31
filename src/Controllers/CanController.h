@@ -8,11 +8,12 @@
 #include "Transformers/ArgTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
+#include "Shells/HelpShell.h"
 
 class CanController {
 public:
     CanController(ITerminalView& terminalView, IInput& terminalInput, UserInputManager& userInputManager,
-                  CanService& canService, ArgTransformer& argTransformer);
+                  CanService& canService, ArgTransformer& argTransformer, HelpShell& helpShell);
     
     // Entry point to handle CAN commands
     void handleCommand(const TerminalCommand& cmd);
@@ -26,6 +27,7 @@ private:
     CanService& canService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     

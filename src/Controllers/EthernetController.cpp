@@ -176,12 +176,8 @@ void EthernetController::handleReset()
 Help
 */
 void EthernetController::handleHelp() {
-    terminalView.println("Ethernet commands:");
-    terminalView.println("  status");
-    terminalView.println("  connect");
-    ANetworkController::handleHelp();
-    terminalView.println("  reset");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available Ethernet commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

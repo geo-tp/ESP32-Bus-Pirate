@@ -5,8 +5,8 @@
 /*
 Constructor
 */
-DioController::DioController(ITerminalView& terminalView, IInput& terminalInput, PinService& pinService, ArgTransformer& argTransformer)
-    : terminalView(terminalView), terminalInput(terminalInput), pinService(pinService), argTransformer(argTransformer) {}
+DioController::DioController(ITerminalView& terminalView, IInput& terminalInput, PinService& pinService, ArgTransformer& argTransformer, HelpShell& helpShell)
+    : terminalView(terminalView), terminalInput(terminalInput), pinService(pinService), argTransformer(argTransformer), helpShell(helpShell) {}
 
 /*
 Entry point to handle a DIO command
@@ -496,19 +496,8 @@ void DioController::handleJamPin(const TerminalCommand& cmd) {
 Help
 */
 void DioController::handleHelp() {
-    terminalView.println("Unknown DIO command. Usage:");
-    terminalView.println("  sniff <pin>");
-    terminalView.println("  read <pin>");
-    terminalView.println("  set <pin> <H/L/I/O>");
-    terminalView.println("  pullup <pin>");
-    terminalView.println("  pulldown <pin>");
-    terminalView.println("  pwm <pin> <freq> <duty>");
-    terminalView.println("  servo <pin> <angle>");
-    terminalView.println("  measure <pin> [ms]");
-    terminalView.println("  pulse <pin> <us>");
-    terminalView.println("  toggle <pin> <ms>");
-    terminalView.println("  jam <pin> [min_us] [max_us]");
-    terminalView.println("  reset <pin>");
+    terminalView.println("\nUnknown command. Available DIO commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 bool DioController::isPinAllowed(uint8_t pin, const std::string& context) {

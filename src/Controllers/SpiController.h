@@ -14,6 +14,7 @@
 #include "States/GlobalState.h"
 #include "Data/FlashDatabase.h"
 #include "Shells/SpiEepromShell.h"
+#include "Shells/HelpShell.h"
 
 class SpiController {
 public:
@@ -27,7 +28,8 @@ public:
         BinaryAnalyzeManager& binaryAnalyzeManager, 
         SdCardShell& sdCardShell,
         SpiFlashShell& spiFlashShell,
-        SpiEepromShell& spiEepromShell
+        SpiEepromShell& spiEepromShell,
+        HelpShell& helpShell
     ); 
 
     // Entry point for handle raw user command
@@ -50,6 +52,7 @@ private:
     SdCardShell& sdCardShell;
     SpiFlashShell& spiFlashShell;
     SpiEepromShell& spiEepromShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
 

@@ -13,12 +13,13 @@
 #include "Managers/UserInputManager.h"
 #include "Vendors/i2c_sniffer.h"
 #include "Shells/I2cEepromShell.h"
+#include "Shells/HelpShell.h"
 #include "Data/I2cKnownAdresses.h"
 
 class I2cController {
 public:
     // Constructor
-    I2cController(ITerminalView& terminalView, IInput& terminalInput, I2cService& i2cService, ArgTransformer& argTransformer, UserInputManager& userInputManager, I2cEepromShell& eepromShell);
+    I2cController(ITerminalView& terminalView, IInput& terminalInput, I2cService& i2cService, ArgTransformer& argTransformer, UserInputManager& userInputManager, I2cEepromShell& eepromShell, HelpShell& helpShell);
 
     // Entry point for I2C command
     void handleCommand(const TerminalCommand& cmd);
@@ -60,6 +61,7 @@ private:
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
     I2cEepromShell& eepromShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     

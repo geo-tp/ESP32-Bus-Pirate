@@ -11,6 +11,7 @@
 #include "Managers/UserInputManager.h"
 #include "Shells/IbuttonShell.h"
 #include "Shells/OneWireEepromShell.h"
+#include "Shells/HelpShell.h"
 
 class OneWireController {
 public:
@@ -22,7 +23,8 @@ public:
       ArgTransformer& argTransformer,
       UserInputManager& userInputManager, 
       IbuttonShell& ibuttonShell,
-      OneWireEepromShell& eepromShell
+      OneWireEepromShell& eepromShell,
+      HelpShell& helpShell
     );
 
     // Entry point for handle command
@@ -42,6 +44,7 @@ private:
     UserInputManager& userInputManager;
     IbuttonShell& ibuttonShell;
     OneWireEepromShell& eepromShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
 

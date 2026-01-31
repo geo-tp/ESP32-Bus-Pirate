@@ -8,6 +8,7 @@
 #include "Models/TerminalCommand.h"
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
+#include "Shells/HelpShell.h"
 
 class BluetoothController {
 public:
@@ -17,7 +18,8 @@ public:
         IInput& deviceInput,
         BluetoothService& bluetoothService,
         ArgTransformer& argTransformer,
-        UserInputManager& userInputManager
+        UserInputManager& userInputManager,
+        HelpShell& helpShell
     );
 
     // Entry point for BT command
@@ -33,6 +35,7 @@ private:
     BluetoothService& bluetoothService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     

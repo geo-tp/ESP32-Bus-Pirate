@@ -511,21 +511,8 @@ Help
 */
 void WifiController::handleHelp()
 {
-    terminalView.println("WiFi commands:");
-    terminalView.println("  scan");
-    terminalView.println("  connect");;
-    terminalView.println("  sniff");
-    terminalView.println("  probe");
-    terminalView.println("  spoof sta <mac>");
-    terminalView.println("  spoof ap <mac>");
-    terminalView.println("  deauth [ssid]");
-    terminalView.println("  status");
-    terminalView.println("  disconnect");
-    terminalView.println("  ap <ssid> <password>");
-    terminalView.println("  ap spam");
-    ANetworkController::handleHelp();
-    terminalView.println("  webui");
-    terminalView.println("  reset");
+    terminalView.println("\nUnknown command. Available WiFi commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

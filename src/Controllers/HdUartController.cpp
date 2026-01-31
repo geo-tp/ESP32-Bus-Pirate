@@ -4,9 +4,11 @@
 Constructor
 */
 HdUartController::HdUartController(ITerminalView& terminalView, IInput& terminalInput, IInput& deviceInput,
-                                   HdUartService& hdUartService, UartService& uartService, ArgTransformer& argTransformer, UserInputManager& userInputManager)
+                                   HdUartService& hdUartService, UartService& uartService, ArgTransformer& argTransformer, 
+                                   UserInputManager& userInputManager, HelpShell& helpShell)
     : terminalView(terminalView), terminalInput(terminalInput), deviceInput(deviceInput),
-      hdUartService(hdUartService), uartService(uartService), argTransformer(argTransformer), userInputManager(userInputManager) {}
+      hdUartService(hdUartService), uartService(uartService), argTransformer(argTransformer), 
+      userInputManager(userInputManager), helpShell(helpShell) {}
 
 /*
 Entry point for HDUART commands
@@ -99,10 +101,8 @@ void HdUartController::handleConfig() {
 Help
 */
 void HdUartController::handleHelp() {
-    terminalView.println("Unknown HDUART command. Usage:");
-    terminalView.println("  bridge       Interactive mode");
-    terminalView.println("  config       Set TX/RX pin, baud etc.");
-    terminalView.println("  [0x1 r:255]  Instruction syntax");
+    terminalView.println("\nUnknown command. Available HDUART commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

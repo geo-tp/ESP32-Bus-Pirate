@@ -13,6 +13,7 @@
 #include "Services/Rf24Service.h"
 #include "Services/PinService.h"
 #include "Data/Rf24Channels.h"
+#include "Shells/HelpShell.h"
 
 class Rf24Controller {
 public:
@@ -22,14 +23,16 @@ public:
                    Rf24Service& rf24Service,
                    PinService& pinService,
                    ArgTransformer& argTransformer,
-                   UserInputManager& userInputManager)
+                   UserInputManager& userInputManager,
+                   HelpShell& helpShell)
     : terminalView(terminalView),
       terminalInput(terminalInput),
       deviceView(deviceView),
       rf24Service(rf24Service),
       pinService(pinService),
       argTransformer(argTransformer),
-      userInputManager(userInputManager) {}
+      userInputManager(userInputManager),
+      helpShell(helpShell) {}
 
     // Entry point for rf24 commands
     void handleCommand(const TerminalCommand& cmd);
@@ -55,6 +58,7 @@ private:
     PinService& pinService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
 
     bool configured = false;

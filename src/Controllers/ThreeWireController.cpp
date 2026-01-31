@@ -9,13 +9,15 @@ ThreeWireController::ThreeWireController(
     UserInputManager& userInputManager,
     ThreeWireService& threeWireService,
     ArgTransformer& argTransformer,
-    ThreeWireEepromShell& threeWireEepromShell)
+    ThreeWireEepromShell& threeWireEepromShell,
+    HelpShell& helpShell)
   : terminalView(terminalView),
     terminalInput(terminalInput),
     userInputManager(userInputManager),
     threeWireService(threeWireService),
     argTransformer(argTransformer),
-    threeWireEepromShell(threeWireEepromShell) {}
+    threeWireEepromShell(threeWireEepromShell),
+    helpShell(helpShell) {}
 
 /*
 Entry point for command
@@ -44,9 +46,8 @@ void ThreeWireController::handleEeprom(const TerminalCommand& cmd) {
 Help
 */
 void ThreeWireController::handleHelp() {
-    terminalView.println("Unknown 3WIRE command. Usage:");
-    terminalView.println("  eeprom");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available 3WIRE commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

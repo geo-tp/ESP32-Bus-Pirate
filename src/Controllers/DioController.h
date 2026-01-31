@@ -8,11 +8,12 @@
 #include "Models/TerminalCommand.h"
 #include "States/GlobalState.h"
 #include "Transformers/ArgTransformer.h"
+#include "Shells/HelpShell.h"
 
 class DioController {
 public:
     // Constructor
-    DioController(ITerminalView& terminalView, IInput& terminalInput, PinService& pinService, ArgTransformer& argTransformer);
+    DioController(ITerminalView& terminalView, IInput& terminalInput, PinService& pinService, ArgTransformer& argTransformer, HelpShell& helpShell);
 
     // Entry point to handle a DIO command
     void handleCommand(const TerminalCommand& cmd);
@@ -25,6 +26,7 @@ private:
     IInput& terminalInput;
     PinService& pinService;
     ArgTransformer& argTransformer;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
 
     // Read digital value from a pin

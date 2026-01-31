@@ -22,6 +22,7 @@
 #include "States/GlobalState.h"
 #include "Models/TerminalCommand.h"
 #include "Shells/ModbusShell.h"
+#include "Shells/HelpShell.h"
 
 class ANetworkController {
 public:
@@ -43,7 +44,8 @@ public:
         ArgTransformer& argTransformer,
         JsonTransformer& jsonTransformer,
         UserInputManager& userInputManager,
-        ModbusShell& modbusShell
+        ModbusShell& modbusShell,
+        HelpShell& helpShell
     );
 
 protected:
@@ -54,7 +56,6 @@ protected:
     void handleDiscovery(const TerminalCommand& cmd);
     void handleTelnet(const TerminalCommand& cmd);
     void handleModbus(const TerminalCommand& cmd);
-    void handleHelp();
 
     // HTTP
     void handleHttp(const TerminalCommand &cmd);
@@ -86,6 +87,7 @@ protected:
     TelnetService&     telnetService;
 
     ModbusShell&       modbusShell;
+    HelpShell&        helpShell;
 
     ArgTransformer&    argTransformer;
     JsonTransformer&   jsonTransformer;

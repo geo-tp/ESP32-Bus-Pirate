@@ -10,6 +10,7 @@
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
 #include "Shells/SmartCardShell.h"
+#include "Shells/HelpShell.h"
 
 class TwoWireController {
 public:
@@ -19,7 +20,8 @@ public:
         IInput& terminalInput, 
         UserInputManager& userInputManager, 
         TwoWireService& twoWireService,
-        SmartCardShell& smartCardShell
+        SmartCardShell& smartCardShell,
+        HelpShell& helpShell
     );
 
     // Entry point for handle raw user command
@@ -49,6 +51,7 @@ private:
     UserInputManager& userInputManager;
     TwoWireService& twoWireService;
     SmartCardShell& smartCardShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
 };

@@ -9,12 +9,13 @@
 #include "Models/TerminalCommand.h"
 #include "States/GlobalState.h"
 #include "Data/PcmSoundTestComplete.h"
+#include "Shells/HelpShell.h"
 
 class I2sController {
 public:
     I2sController(ITerminalView& terminalView, IInput& terminalInput,
                   I2sService& i2sService, ArgTransformer& argTransformer,
-                  UserInputManager& userInputManager);
+                  UserInputManager& userInputManager, HelpShell& helpShell);
 
     // Entry point for I2S cmd
     void handleCommand(const TerminalCommand& cmd);
@@ -52,6 +53,7 @@ private:
     I2sService& i2sService;
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
 };

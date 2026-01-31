@@ -16,6 +16,7 @@
 #include "Managers/UserInputManager.h"
 #include "States/GlobalState.h"
 #include "Shells/UniversalRemoteShell.h"
+#include "Shells/HelpShell.h"
 
 class InfraredController {
 public:
@@ -23,7 +24,7 @@ public:
     InfraredController(ITerminalView& view, IInput& terminalInput, 
                        InfraredService& service, LittleFsService& littleFsService,
                        ArgTransformer& argTransformer, InfraredRemoteTransformer& infraredRemoteTransformer,
-                       UserInputManager& userInputManager, UniversalRemoteShell& universalRemoteShell);
+                       UserInputManager& userInputManager, UniversalRemoteShell& universalRemoteShell, HelpShell& helpShell);
 
     // Entry point for Infraredcommand dispatch
     void handleCommand(const TerminalCommand& command);
@@ -41,9 +42,10 @@ private:
     UserInputManager& userInputManager;
     UniversalRemoteShell& universalRemoteShell;
     LittleFsService& littleFsService;
+    HelpShell& helpShell;
+    
     bool configured = false;
     uint8_t MAX_IR_FRAMES = 64; // Maximum frames to record
-
 
     // Frames
     struct IRFrame {

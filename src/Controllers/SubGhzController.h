@@ -20,6 +20,7 @@
 #include "Services/LittleFsService.h"
 #include "Services/I2sService.h"
 #include "Data/SubGhzProtocols.h"
+#include "Shells/HelpShell.h"
 
 class SubGhzController {
 public:
@@ -33,7 +34,8 @@ public:
                      ArgTransformer& argTransformer,
                      SubGhzTransformer& subGhzTransformer,
                      UserInputManager& userInputManager,
-                     SubGhzAnalyzeManager& subGhzAnalyzeManager)
+                     SubGhzAnalyzeManager& subGhzAnalyzeManager,
+                     HelpShell& helpShell)
     : terminalView(terminalView),
       terminalInput(terminalInput),
       deviceView(deviceView),
@@ -44,7 +46,8 @@ public:
       argTransformer(argTransformer),
       subGhzTransformer(subGhzTransformer),
       userInputManager(userInputManager),
-      subGhzAnalyzeManager(subGhzAnalyzeManager) {}
+      subGhzAnalyzeManager(subGhzAnalyzeManager),
+      helpShell(helpShell) {}
 
     // Entry point for subghz commands
     void handleCommand(const TerminalCommand& cmd);
@@ -107,6 +110,7 @@ private:
     SubGhzTransformer& subGhzTransformer;
     UserInputManager& userInputManager;
     SubGhzAnalyzeManager& subGhzAnalyzeManager;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
 
     bool configured = false;

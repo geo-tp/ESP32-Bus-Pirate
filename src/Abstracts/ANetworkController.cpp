@@ -20,7 +20,8 @@ ANetworkController::ANetworkController(
     ArgTransformer& argTransformer,
     JsonTransformer& jsonTransformer,
     UserInputManager& userInputManager,
-    ModbusShell& modbusShell
+    ModbusShell& modbusShell,
+    HelpShell& helpShell
 )
 : terminalView(terminalView),
   terminalInput(terminalInput),
@@ -38,7 +39,8 @@ ANetworkController::ANetworkController(
   argTransformer(argTransformer),
   jsonTransformer(jsonTransformer),
   userInputManager(userInputManager),
-  modbusShell(modbusShell)
+  modbusShell(modbusShell),
+  helpShell(helpShell)
 {
 }
 
@@ -709,22 +711,4 @@ void ANetworkController::handleModbus(const TerminalCommand &cmd)
     // Start shell
     terminalView.println("Starting Modbus shell...");
     modbusShell.run(host, port);
-}
-
-/*
-Help
-*/
-void ANetworkController::handleHelp()
-{
-    terminalView.println("  ping <host>");
-    terminalView.println("  discovery");
-    terminalView.println("  ssh <host> <user> <password> [port]");
-    terminalView.println("  telnet <host> [port]");
-    terminalView.println("  nc <host> <port>");
-    terminalView.println("  nmap <host> [-p ports]");
-    terminalView.println("  modbus <host> [port]");
-    terminalView.println("  http get <url>");
-    terminalView.println("  http analyze <url>");
-    terminalView.println("  lookup mac <addr>");
-    terminalView.println("  lookup ip <addr or url>");
 }

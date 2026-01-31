@@ -10,6 +10,7 @@
 #include "Managers/UserInputManager.h"
 #include "Transformers/ArgTransformer.h"
 #include "States/GlobalState.h"
+#include "Shells/HelpShell.h"
 
 class RfidController {
 public:
@@ -18,7 +19,8 @@ public:
         IInput& input,
         RfidService& rfidService,
         UserInputManager& uim,
-        ArgTransformer& transformer
+        ArgTransformer& transformer,
+        HelpShell& helpShell
     );
 
     // Entry point for commands
@@ -46,5 +48,6 @@ bool configured = false;
     RfidService& rfidService;
     UserInputManager& userInputManager;
     ArgTransformer& argTransformer;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
 };

@@ -18,7 +18,7 @@ private:
 
 private:
     // menu
-    void cmdGeneral(const char* header = "General");
+    void cmdGeneral();
     void cmdOneWire();
     void cmdUart();
     void cmdHdUart();

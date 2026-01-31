@@ -41,7 +41,7 @@ private:
     // Hard reset the W5500 (via RST)
     void handleReset();
 
-    // Available commands
+    // Help message for Ethernet commands
     void handleHelp();
 
 private:

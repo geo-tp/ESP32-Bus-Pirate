@@ -9,14 +9,16 @@ I2cController::I2cController(
     I2cService& i2cService,
     ArgTransformer& argTransformer,
     UserInputManager& userInputManager,
-    I2cEepromShell& eepromShell
+    I2cEepromShell& eepromShell,
+    HelpShell& helpShell
 )
     : terminalView(terminalView),
       terminalInput(terminalInput),
       i2cService(i2cService),
       argTransformer(argTransformer),
       userInputManager(userInputManager),
-      eepromShell(eepromShell)
+      eepromShell(eepromShell),
+      helpShell(helpShell)
 {}
 
 /*
@@ -811,26 +813,8 @@ void I2cController::handleEeprom(const TerminalCommand& cmd) {
 Help
 */
 void I2cController::handleHelp() {
-    terminalView.println("Unknown I2C command. Usage:");
-    terminalView.println("  scan");
-    terminalView.println("  discover");
-    terminalView.println("  ping <addr>");
-    terminalView.println("  identify <addr>");
-    terminalView.println("  sniff");
-    terminalView.println("  slave <addr>");
-    terminalView.println("  read <addr> [reg]");
-    terminalView.println("  write <addr> [reg] [val]");
-    terminalView.println("  dump <addr> [len]");
-    terminalView.println("  glitch <addr>");
-    terminalView.println("  flood <addr>");
-    terminalView.println("  health <addr>");
-    terminalView.println("  jam");
-    terminalView.println("  recover");
-    terminalView.println("  monitor <addr> [delay_ms]");
-    terminalView.println("  eeprom [addr]");
-    terminalView.println("  swap");
-    terminalView.println("  config");
-    terminalView.println("  raw instructions, e.g: [0x13 0x4B r:8]");
+    terminalView.println("\nUnknown command. Available I2C commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

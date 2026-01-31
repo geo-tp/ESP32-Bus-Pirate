@@ -3,9 +3,17 @@
 /*
 Constructor
 */
-JtagController::JtagController(ITerminalView& terminalView, IInput& terminalInput, JtagService& jtagService, UserInputManager& userInputManager)
-    : terminalView(terminalView), terminalInput(terminalInput), jtagService(jtagService), userInputManager(userInputManager) {}
-
+JtagController::JtagController(
+    ITerminalView& terminalView,
+    IInput& terminalInput,
+    JtagService& jtagService,
+    UserInputManager& userInputManager,
+    HelpShell& helpShell
+) : terminalView(terminalView),
+    terminalInput(terminalInput),
+    jtagService(jtagService),
+    userInputManager(userInputManager),
+    helpShell(helpShell) {}
 /*
 Entry point that handles JTAG commands
 */
@@ -123,12 +131,8 @@ void JtagController::handleConfig() {
 Help
 */
 void JtagController::handleHelp() {
-    terminalView.println("");
-    terminalView.println("Unknown JTAG command. Usage:");
-    terminalView.println("  scan swd");
-    terminalView.println("  scan jtag");
-    terminalView.println("  config");
-    terminalView.println("");
+    terminalView.println("\nUnknown command. Available JTAG commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

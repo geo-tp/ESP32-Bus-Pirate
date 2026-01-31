@@ -7,9 +7,10 @@ Constructor
 */
 LedController::LedController(ITerminalView& terminalView, IInput& terminalInput,
                              LedService& ledService, ArgTransformer& argTransformer,
-                             UserInputManager& userInputManager)
+                             UserInputManager& userInputManager, HelpShell& helpShell)
     : terminalView(terminalView), terminalInput(terminalInput),
-      ledService(ledService), argTransformer(argTransformer), userInputManager(userInputManager) {}
+      ledService(ledService), argTransformer(argTransformer), 
+      userInputManager(userInputManager), helpShell(helpShell) {}
 
 /*
 Command
@@ -297,18 +298,8 @@ void LedController::handleSetProtocol() {
 Help
 */
 void LedController::handleHelp() {
-    terminalView.println("Unknown LED command. Usage:");
-    terminalView.println("  scan");
-    terminalView.println("  fill blue");
-    terminalView.println("  set 1 red");
-    terminalView.println("  blink");
-    terminalView.println("  rainbow");
-    terminalView.println("  chase");
-    terminalView.println("  cycle");
-    terminalView.println("  wave");
-    terminalView.println("  reset [led num]");
-    terminalView.println("  setprotocol");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available LED commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

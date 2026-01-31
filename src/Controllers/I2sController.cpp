@@ -5,10 +5,10 @@ Constructor
 */
 I2sController::I2sController(ITerminalView& terminalView, IInput& terminalInput,
                              I2sService& i2sService, ArgTransformer& argTransformer,
-                             UserInputManager& userInputManager)
+                             UserInputManager& userInputManager, HelpShell& helpShell)
     : terminalView(terminalView), terminalInput(terminalInput),
       i2sService(i2sService), argTransformer(argTransformer),
-      userInputManager(userInputManager) {}
+      userInputManager(userInputManager), helpShell(helpShell) {}
 
 void I2sController::handleCommand(const TerminalCommand& cmd) {
     if (cmd.getRoot() == "config") {
@@ -370,12 +370,8 @@ void I2sController::handleConfig() {
 Help
 */
 void I2sController::handleHelp() {
-    terminalView.println("Available I2S commands:");
-    terminalView.println("  play <freq> [duration]");
-    terminalView.println("  record ");
-    terminalView.println("  test <speaker|mic>");
-    terminalView.println("  reset");
-    terminalView.println("  config");
+    terminalView.println("\nUnknown command. Available I2S commands:");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 

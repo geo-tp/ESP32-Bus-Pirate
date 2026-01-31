@@ -14,6 +14,7 @@
 #include "Transformers/ArgTransformer.h"
 #include "Managers/UserInputManager.h"
 #include "Shells/UartAtShell.h"
+#include "Shells/HelpShell.h"
 
 class UartController {
 public:
@@ -26,7 +27,8 @@ public:
                    HdUartService& hdUartService, 
                    ArgTransformer& argTransformer,
                    UserInputManager& userInputManager,
-                   UartAtShell& uartAtShell);
+                   UartAtShell& uartAtShell,
+                   HelpShell& helpShell);
     
     // Entry point for UART command
     void handleCommand(const TerminalCommand& cmd);
@@ -107,6 +109,7 @@ private:
     ArgTransformer& argTransformer;
     UserInputManager& userInputManager;
     UartAtShell& uartAtShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     bool scanCancelled = false;
