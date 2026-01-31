@@ -17,6 +17,8 @@
 #include "Transformers/ArgTransformer.h"
 #include "Shells/SysInfoShell.h"
 #include "Shells/GuideShell.h"
+#include "Shells/HelpShell.h"
+
 class UtilityController {
 public:
     // Constructor
@@ -29,7 +31,8 @@ public:
         PinAnalyzeManager& pinAnalyzeManager,
         ArgTransformer& argTransformer,
         SysInfoShell& sysInfoShell,
-        GuideShell& guideShell
+        GuideShell& guideShell,
+        HelpShell& helpShell
     );
 
     // Entry point for global utility commands
@@ -46,6 +49,9 @@ public:
 
     // Check if a command is a global utility command
     bool isGlobalCommand(const TerminalCommand& cmd);
+
+    // Check if a command is related to screen operations
+    bool isScreenCommand(const TerminalCommand& cmd);
 
 private:
     // Display help for utility commands
@@ -78,5 +84,6 @@ private:
     ArgTransformer& argTransformer;
     SysInfoShell& sysInfoShell;
     GuideShell& guideShell;
+    HelpShell& helpShell;
     GlobalState& state = GlobalState::getInstance();
 };
