@@ -617,7 +617,7 @@ std::string PinAnalyzeManager::formatWizardReport(uint8_t pin, const Report& r) 
 
         if (r.bursts >= 2) {
             line("It comes in bursts (" + std::to_string(r.bursts) +
-                 " bursts, max gap ~" + std::to_string(r.maxGapUs) + " us).");
+                " bursts, max gap ~" + std::to_string(r.maxGapUs / 1000.0) + " ms).");
         }
 
         if (r.minPulseUs != 0xFFFFFFFF) {
