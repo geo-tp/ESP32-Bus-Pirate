@@ -26,7 +26,8 @@ char S3DevKitInput::handler() {
     return c;
 }
 
-void S3DevKitInput::waitPress() {
+void S3DevKitInput::waitPress(uint32_t timeoutMs) {
+    (void)timeoutMs; // currently not used
     while (mapButton() == KEY_NONE) {
         delay(5);
     }

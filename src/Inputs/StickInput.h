@@ -15,7 +15,7 @@ public:
 
     char handler() override;     // Lecture bloquante
     char readChar() override;    // Lecture non bloquante
-    void waitPress() override;   // Attend une pression
+    void waitPress(uint32_t timeoutMs) override;   // Attend une pression
 
 private:
     char mapButton();

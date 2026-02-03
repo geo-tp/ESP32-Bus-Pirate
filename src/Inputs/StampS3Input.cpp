@@ -27,7 +27,8 @@ char StampS3Input::handler() {
     return c;
 }
 
-void StampS3Input::waitPress() {
+void StampS3Input::waitPress(uint32_t timeoutMs) {
+    (void)timeoutMs; // currently not used
     while (mapButton() == KEY_NONE) {
         delay(10);
     }

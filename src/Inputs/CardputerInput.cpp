@@ -46,17 +46,21 @@ char CardputerInput::handler() {
     }
 }
 
-void CardputerInput::waitPress() {
-  while(true){
-    M5Cardputer.update();
-    if (M5Cardputer.Keyboard.isChange()) {
-      if (M5Cardputer.Keyboard.isPressed()) {
-        Keyboard_Class::KeysState status = M5Cardputer.Keyboard.keysState();
-        return;
-      }
+void CardputerInput::waitPress(uint32_t timeoutMs) {
+    uint32_t start = millis();
+
+    for (;;) {
+        char c = readChar();
+        if (c != KEY_NONE) {
+            return;
+        }
+
+        if (timeoutMs > 0 && (millis() - start) >= timeoutMs) {
+            return;
+        }
+
+        delay(5);
     }
-    delay(10);
-  }
 }
 
 char CardputerInput::readChar() {

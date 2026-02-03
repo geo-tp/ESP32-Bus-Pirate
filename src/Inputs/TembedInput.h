@@ -25,7 +25,7 @@ public:
 
     char handler() override;
     char readChar() override;
-    void waitPress() override;
+    void waitPress(uint32_t timeoutMs) override;
 
     void tick();
     void checkShutdownRequest();

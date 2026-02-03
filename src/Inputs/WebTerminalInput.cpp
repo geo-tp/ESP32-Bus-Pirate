@@ -10,6 +10,7 @@ char WebTerminalInput::readChar() {
     return server.readCharNonBlocking();
 }
 
-void WebTerminalInput::waitPress() {
+void WebTerminalInput::waitPress(uint32_t timeoutMs) {
+    (void)timeoutMs; // currently not used
     server.readCharBlocking();
 }

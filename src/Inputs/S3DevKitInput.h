@@ -10,5 +10,5 @@ public:
     char mapButton();
     char readChar();
     char handler();
-    void waitPress();
+    void waitPress(uint32_t timeoutMs);
 };

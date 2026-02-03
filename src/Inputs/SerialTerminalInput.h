@@ -7,6 +7,6 @@
 class SerialTerminalInput : public IInput {
 public:
     char handler() override;
-    void waitPress() override;
+    void waitPress(uint32_t timeoutMs) override;
     char readChar() override;
 };

@@ -28,9 +28,18 @@ char StickInput::handler() {
     return c;
 }
 
-void StickInput::waitPress() {
-    while (mapButton() == KEY_NONE) {
-        delay(10);
+void StickInput::waitPress(uint32_t timeoutMs) {
+    uint32_t start = millis();
+    for (;;) {
+        char c = mapButton();
+        if (c != KEY_NONE) {
+            return;
+        }
+
+        if (timeoutMs > 0 && (millis() - start) >= timeoutMs) {
+            return;
+        }
+        delay(5);
     }
 }
 

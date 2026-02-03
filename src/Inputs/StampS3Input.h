@@ -11,7 +11,7 @@ public:
 
     char readChar() override;
     char handler() override;
-    void waitPress() override;
+    void waitPress(uint32_t timeoutMs) override;
 
 private:
     char mapButton();

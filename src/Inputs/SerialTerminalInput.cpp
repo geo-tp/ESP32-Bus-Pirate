@@ -6,7 +6,8 @@ char SerialTerminalInput::handler() {
     return Serial.read();
 }
 
-void SerialTerminalInput::waitPress() {
+void SerialTerminalInput::waitPress(uint32_t timeoutMs) {
+    (void)timeoutMs; // currently not used
     while (!Serial.available()) {}
     Serial.read(); // discard
 }

@@ -52,9 +52,11 @@ char TembedInput::handler() {
     }
 }
 
-void TembedInput::waitPress() {
+void TembedInput::waitPress(uint32_t timeoutMs) {
+    uint32_t start = millis();
     while (true) {
         if (readChar() != KEY_NONE) return;
+        if (timeoutMs > 0 && (millis() - start) >= timeoutMs) return;
         delay(5);
     }
 }

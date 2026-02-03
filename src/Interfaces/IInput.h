@@ -18,6 +18,6 @@ public:
     virtual char readChar() = 0;
 
     // Wait an inpout
-    virtual void waitPress() = 0;
+    virtual void waitPress(uint32_t timeoutMs = 0) = 0;
     
 };
