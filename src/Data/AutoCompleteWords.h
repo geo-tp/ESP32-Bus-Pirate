@@ -7,7 +7,7 @@ static const char* const autoCompleteWords[] = {
     "scan","ping","sniff","read","write","temp","ibutton","eeprom","config",
 
     // --- UART / HDUART ---
-    "autobaud","bridge","at","spam","glitch","xmodem","swap",
+    "autobaud","bridge","at","spam","glitch","xmodem","swap", "emulator",
 
     // --- I2C ---
     "discovery","identify","slave","dump","flood","health","monitor",
