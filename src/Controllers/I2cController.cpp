@@ -195,7 +195,7 @@ void I2cController::handleWrite(const TerminalCommand& cmd) {
         }
         reg = argTransformer.parseHexOrDec(args[0]);
     } else {
-        reg = (uint8_t)userInputManager.readValidatedUint32("Register (e.g. 0x00)", 0);
+        reg = (uint8_t)userInputManager.readValidatedHex("Register to write", 0, 0x00, 0xFF);
     }
 
     // val
@@ -207,7 +207,7 @@ void I2cController::handleWrite(const TerminalCommand& cmd) {
         }
         val = argTransformer.parseHexOrDec(args[1]);
     } else {
-        val = (uint8_t)userInputManager.readValidatedUint32("Value (e.g. 0x1E)", 0);
+        val = (uint8_t)userInputManager.readValidatedHex("Value to write", 0, 0x00, 0xFF);
     }
 
     // Ping addr
@@ -258,7 +258,7 @@ void I2cController::handleRead(const TerminalCommand& cmd) {
         }
         reg = argTransformer.parseHexOrDec(cmd.getArgs());
     } else {
-        reg = (uint8_t)userInputManager.readValidatedUint32("Register (e.g. 0x00)", 0);
+        reg = (uint8_t)userInputManager.readValidatedHex("Register to read", 0, 0x00, 0xFF);
     }
 
     // Check I2C device presence
@@ -335,6 +335,9 @@ void I2cController::handleSlave(const TerminalCommand& cmd) {
     // Start slave
     i2cService.clearSlaveLog();
     i2cService.beginSlave(addr, sda, scl);
+    std::vector<std::string> currentLog;
+    currentLog.reserve(I2cService::SLAVE_LOG_MAX);
+    uint32_t lastLogCount = 0;
 
     std::vector<std::string> lastLog;
     while (true) {
@@ -343,18 +346,27 @@ void I2cController::handleSlave(const TerminalCommand& cmd) {
         if (key == '\r' || key == '\n') break;
 
         // Get master log from slave and display it
-        auto currentLog = i2cService.getSlaveLog();
-        if (currentLog.size() > lastLog.size()) {
-            for (size_t i = lastLog.size(); i < currentLog.size(); ++i) {
+        currentLog = i2cService.getSlaveLog();
+        uint32_t count = i2cService.getSlaveLogCount();
+        if (count != lastLogCount) {
+            currentLog = i2cService.getSlaveLog();
+
+            uint32_t delta = count - lastLogCount;
+            if (delta > currentLog.size()) delta = currentLog.size(); // cap
+
+            // DIsplay new entries
+            size_t start = currentLog.size() - delta;
+            for (size_t i = start; i < currentLog.size(); ++i) {
                 terminalView.println(currentLog[i]);
             }
-            lastLog = currentLog;
+
+            lastLogCount = count;
         }
-        delay(1);
     }
 
     // Close slave
     i2cService.endSlave();
+    i2cService.clearSlaveLog();
     ensureConfigured();
     terminalView.println("\nI2S Slave: Stopped by user.");
 }

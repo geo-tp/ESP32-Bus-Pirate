@@ -128,11 +128,6 @@ bool I2cService::isReadableDevice(uint8_t addr, uint8_t startReg) {
 Slave
 */
 
-std::vector<std::string> I2cService::slaveLog;
-uint8_t I2cService::slaveResponseBuffer[16] = {};
-size_t I2cService::slaveResponseLength = 1;
-portMUX_TYPE I2cService::slaveLogMux = portMUX_INITIALIZER_UNLOCKED;
-
 void I2cService::beginSlave(uint8_t address, uint8_t sda, uint8_t scl, uint32_t freq) {
     Wire.end();
     Wire1.end();
@@ -146,12 +141,6 @@ void I2cService::endSlave() {
     Wire1.end();
 }
 
-void I2cService::setSlaveResponse(const uint8_t* data, size_t len) {
-    size_t copyLen = (len < sizeof(slaveResponseBuffer)) ? len : sizeof(slaveResponseBuffer);
-    memcpy(slaveResponseBuffer, data, copyLen);
-    slaveResponseLength = copyLen;
-}
-
 std::vector<std::string> I2cService::getSlaveLog() {
     portENTER_CRITICAL(&slaveLogMux);
     std::vector<std::string> copy = slaveLog;
@@ -159,14 +148,22 @@ std::vector<std::string> I2cService::getSlaveLog() {
     return copy;
 }
 
+uint32_t I2cService::getSlaveLogCount() {
+    portENTER_CRITICAL(&slaveLogMux);
+    uint32_t v = slaveLogTotal;
+    portEXIT_CRITICAL(&slaveLogMux);
+    return v;
+}
+
 void I2cService::clearSlaveLog() {
     portENTER_CRITICAL(&slaveLogMux);
     slaveLog.clear();
+    slaveLogWriteIdx = 0;
     portEXIT_CRITICAL(&slaveLogMux);
 }
 
 void I2cService::onSlaveReceive(int len) {
-    std::string entry = "Master wrote:";
+    std::string entry = "Master wrote: 0x";
     while (Wire1.available()) {
         uint8_t b = Wire1.read();
         char hex[5];
@@ -175,16 +172,36 @@ void I2cService::onSlaveReceive(int len) {
     }
 
     portENTER_CRITICAL(&slaveLogMux);
-    slaveLog.push_back(entry);
+
+    if (slaveLog.size() < SLAVE_LOG_MAX) {
+        slaveLog.push_back(entry);
+    } else {
+        slaveLog[slaveLogWriteIdx] = entry;
+        slaveLogWriteIdx = (slaveLogWriteIdx + 1) % SLAVE_LOG_MAX;
+    }
+    slaveLogTotal++;
+
     portEXIT_CRITICAL(&slaveLogMux);
 }
 
 void I2cService::onSlaveRequest() {
     portENTER_CRITICAL(&slaveLogMux);
-    slaveLog.push_back("Master requested read");
+
+    const std::string entry = "Master requested read";
+
+    if (slaveLog.size() < SLAVE_LOG_MAX) {
+        slaveLog.push_back(entry);
+    } else {
+        slaveLog[slaveLogWriteIdx] = entry;
+        slaveLogWriteIdx = (slaveLogWriteIdx + 1) % SLAVE_LOG_MAX;
+    }
+    slaveLogTotal++;
+
     portEXIT_CRITICAL(&slaveLogMux);
 
-    Wire1.write(slaveResponseBuffer, slaveResponseLength);
+    // Send counter as data
+    uint8_t v = (uint8_t)(slaveLogTotal & 0xFF);
+    Wire1.write(&v, 1);
 }
 
 /*

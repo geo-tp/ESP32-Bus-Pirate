@@ -34,10 +34,11 @@ public:
     bool i2cBitBangRecoverBus(uint8_t scl, uint8_t sda, uint32_t freqHz);
 
     // Slave
+    static constexpr size_t SLAVE_LOG_MAX = 128;
     void beginSlave(uint8_t address, uint8_t sda, uint8_t scl, uint32_t freq = 100000);
     void endSlave();
-    void setSlaveResponse(const uint8_t* data, size_t len);
     std::vector<std::string> getSlaveLog();
+    uint32_t getSlaveLogCount();
     void clearSlaveLog();
 
     // Glitch
@@ -76,13 +77,13 @@ public:
 
 
 private:
-    static std::vector<std::string> slaveLog;
-    static portMUX_TYPE slaveLogMux;
-    static uint8_t slaveResponseBuffer[16];
-    static size_t slaveResponseLength;
-    static I2cService* activeSlaveInstance;
     ExternalEEPROM eeprom;
+    bool probeReadableReg(uint8_t addr, uint8_t reg);
+
     static void onSlaveReceive(int len);
     static void onSlaveRequest();
-    bool probeReadableReg(uint8_t addr, uint8_t reg);
+    inline static std::vector<std::string> slaveLog = {};
+    inline static size_t slaveLogWriteIdx = 0;
+    inline static uint32_t slaveLogTotal = 0;
+    inline static portMUX_TYPE slaveLogMux = portMUX_INITIALIZER_UNLOCKED;
 };
