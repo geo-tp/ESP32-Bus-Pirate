@@ -48,8 +48,6 @@ void M5DeviceView::logo() {
 
     M5.Lcd.setCursor(textX, textY);
     M5.Lcd.print(text.c_str());
-
-    delay(3000);
 }
 
 void M5DeviceView::show(PinoutConfig& config) {
