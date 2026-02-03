@@ -5,8 +5,8 @@
 /*
 Constructor
 */
-DioController::DioController(ITerminalView& terminalView, IInput& terminalInput, PinService& pinService, ArgTransformer& argTransformer, HelpShell& helpShell)
-    : terminalView(terminalView), terminalInput(terminalInput), pinService(pinService), argTransformer(argTransformer), helpShell(helpShell) {}
+DioController::DioController(ITerminalView& terminalView, IInput& terminalInput, PinService& pinService, ArgTransformer& argTransformer, HelpShell& helpShell, UserInputManager& userInputManager)
+    : terminalView(terminalView), terminalInput(terminalInput), pinService(pinService), argTransformer(argTransformer), helpShell(helpShell), userInputManager(userInputManager) {}
 
 /*
 Entry point to handle a DIO command
@@ -185,34 +185,39 @@ void DioController::handlePwm(const TerminalCommand& cmd) {
     auto sub = cmd.getSubcommand();
     auto args = argTransformer.splitArgs(cmd.getArgs());
 
-    if (!sub.empty() && args.size() != 2) {
-        terminalView.println("DIO PWM: Invalid syntax. Use:");
-        terminalView.println("  pwm <pin> <frequency> <duty>");
-        return;
-    }
-
-    if (!argTransformer.isValidNumber(sub) ||
-        !argTransformer.isValidNumber(args[0]) ||
-        !argTransformer.isValidNumber(args[1])) {
-        terminalView.println("DIO PWM: All arguments must be valid numbers.");
+    // Validate pin
+    if (sub.empty() || !argTransformer.isValidNumber(sub)) {
+        terminalView.println("Usage: pwm <pin> [frequency] [duty]");
         return;
     }
 
     uint8_t pin = argTransformer.toUint8(sub);
     if (!isPinAllowed(pin, "PWM")) return;
 
-    uint32_t freq = argTransformer.toUint32(args[0]);
-    uint8_t duty = argTransformer.toUint8(args[1]);
+    // Defaults
+    uint32_t freq = 1000;
+    uint8_t duty = 50;
 
-    if (duty > 100) {
-        terminalView.println("DIO PWM: Duty cycle must be between 0 and 100.");
-        return;
+    // freq / duty  ?
+    if (args.size() >= 1 && argTransformer.isValidNumber(args[0])) {
+        freq = argTransformer.toUint32(args[0]);
+    } else {
+        // prompt freq 
+        freq = userInputManager.readValidatedUint32("PWM frequency (Hz)", freq, false);
     }
 
+    if (args.size() >= 2 && argTransformer.isValidNumber(args[1])) {
+        duty = argTransformer.toUint8(args[1]);
+    } else {
+        // prompt duty
+        duty = userInputManager.readValidatedUint8("PWM duty (%)", duty, 0, 100);
+    }
+
+    // Setup PWM
     bool ok = pinService.setupPwm(pin, freq, duty);
     if (!ok) {
         terminalView.println("DIO PWM: Cannot generate " + std::to_string(freq) +
-                            " Hz. Try a higher frequency or use toggle command.");
+                             " Hz. Try a higher frequency or use toggle command.");
         return;
     }
 
@@ -220,6 +225,7 @@ void DioController::handlePwm(const TerminalCommand& cmd) {
                          " (" + std::to_string(freq) + "Hz, " +
                          std::to_string(duty) + "% duty).");
 }
+
 
 /*
 Measure edges
