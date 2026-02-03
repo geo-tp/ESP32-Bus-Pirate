@@ -64,6 +64,8 @@ void setup() {
         deviceView.setRotation(3);
         StickInput deviceInput;
         M5.Power.setExtOutput(false);
+        deviceView.logo();
+        deviceInput.waitPress(3000);
     #elif DEVICE_CARDPUTER
         // Setup the Cardputer
         #include <M5Unified.h>
@@ -72,6 +74,8 @@ void setup() {
         M5DeviceView deviceView;
         deviceView.setRotation(1);
         CardputerInput deviceInput;
+        deviceView.logo();
+        deviceInput.waitPress(3000);
     #elif DEVICE_M5STAMPS3
         // Setup the StampS3/AtomS3
         #include <M5Unified.h>
@@ -83,13 +87,14 @@ void setup() {
         // Setup the T-embed
         TembedDeviceView deviceView;
         TembedInput deviceInput;
+        deviceView.logo();
+        deviceInput.waitPress(3000);
     #else
         // Fallback to S3 dev kit
         NoScreenDeviceView deviceView;
         S3DevKitInput deviceInput;
     #endif
 
-    deviceView.logo();
     GlobalState& state = GlobalState::getInstance();
     LittleFsService littleFsService;
 
