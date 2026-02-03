@@ -51,8 +51,6 @@ void TembedDeviceView::logo() {
     GlobalState& state = GlobalState::getInstance();
     auto version = "ESP32 Bus Pirate - " + state.getVersion();
     drawCenterText(version.c_str(), 130, 1.9);
-
-    delay(3000);
 }
 
 void TembedDeviceView::welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) {
@@ -151,11 +149,13 @@ void TembedDeviceView::setRotation(uint8_t rotation) {
 }
 
 void TembedDeviceView::setBrightness(uint8_t brightness) {
-    tft.setBrightness(brightness);
+    // TODO: handle this
+    // tft.setBrightness(brightness);
 }
 
 uint8_t TembedDeviceView::getBrightness() {
-    return tft.getBrightness();
+    // return tft.getBrightness();
+    return 100; // TODO : handle this
 }   
 
 void TembedDeviceView::topBar(const std::string& title, bool submenu, bool searchBar) {
