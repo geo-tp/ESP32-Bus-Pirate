@@ -15,6 +15,7 @@
 #include "Managers/UserInputManager.h"
 #include "Shells/UartAtShell.h"
 #include "Shells/HelpShell.h"
+#include "Shells/UartEmulationShell.h"
 
 class UartController {
 public:
@@ -28,7 +29,8 @@ public:
                    ArgTransformer& argTransformer,
                    UserInputManager& userInputManager,
                    UartAtShell& uartAtShell,
-                   HelpShell& helpShell);
+                   HelpShell& helpShell,
+                   UartEmulationShell& uartEmulationShell);
     
     // Entry point for UART command
     void handleCommand(const TerminalCommand& cmd);
@@ -85,6 +87,9 @@ private:
     // Send file to xmodem
     void handleXmodemSend(const std::string& path);
 
+    // Handle UART emulation shell
+    void handleEmulation();
+
     // Scan a baudrate
     bool scanAtBaudrate(int baud);
 
@@ -110,6 +115,7 @@ private:
     UserInputManager& userInputManager;
     UartAtShell& uartAtShell;
     HelpShell& helpShell;
+    UartEmulationShell& uartEmulationShell;
     GlobalState& state = GlobalState::getInstance();
     bool configured = false;
     bool scanCancelled = false;

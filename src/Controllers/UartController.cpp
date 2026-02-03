@@ -14,7 +14,8 @@ UartController::UartController(
     ArgTransformer& argTransformer,
     UserInputManager& userInputManager,
     UartAtShell& uartAtShell,
-    HelpShell& helpShell
+    HelpShell& helpShell,
+    UartEmulationShell& uartEmulationShell
 )
     : terminalView(terminalView),
       terminalInput(terminalInput),
@@ -25,7 +26,8 @@ UartController::UartController(
       argTransformer(argTransformer),
       userInputManager(userInputManager),
       uartAtShell(uartAtShell),
-      helpShell(helpShell)
+      helpShell(helpShell),
+      uartEmulationShell(uartEmulationShell)
 {}
 
 
@@ -40,6 +42,7 @@ void UartController::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "write") handleWrite(cmd);
     else if (cmd.getRoot() == "bridge") handleBridge();
     else if (cmd.getRoot() == "at") handleAtCommand(cmd);
+    else if (cmd.getRoot() == "emulator") handleEmulation();
     else if (cmd.getRoot() == "spam") handleSpam(cmd);
     else if (cmd.getRoot() == "glitch") handleGlitch();
     else if (cmd.getRoot() == "xmodem") handleXmodem(cmd);
@@ -661,6 +664,13 @@ void UartController::handleSwap() {
         " TX=" + std::to_string(state.getUartTxPin())
     );
     terminalView.println("");
+}
+
+/*
+Emulation
+*/
+void UartController::handleEmulation() {
+    uartEmulationShell.run();
 }
 
 /*

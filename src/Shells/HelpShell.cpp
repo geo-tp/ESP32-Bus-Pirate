@@ -141,8 +141,8 @@ void HelpShell::cmdUart() {
         "write <text>         - Send at current baud",
         "bridge               - Full-duplex mode",
         "at                   - AT commands operations",
+        "emulator             - Emulate UART device",
         "spam <text> <ms>     - Write text every ms",
-        "glitch               - Timing attack",
         "xmodem <send> <path> - Send file via XMODEM",
         "xmodem <recv> <path> - Receive file via XMODEM",
         "config               - Configure settings",
@@ -166,7 +166,7 @@ void HelpShell::cmdI2c() {
     printHeader("I2C");
     static const char* const lines[] = {
         "scan                 - Find devices",
-        "discovey             - Report on devices",
+        "discovery            - Report on devices",
         "ping <addr>          - Check ACK",
         "identify <addr>      - Identify device",
         "sniff                - View traffic",
@@ -232,7 +232,7 @@ void HelpShell::cmdDio() {
         "pulldown <pin>       - Set pin pulldown",
         "pulse <pin> <us>     - Send pulse on pin",
         "servo <pin> <angle>  - Set servo angle",
-        "pwm <pin freq duty%> - Set PWM on pin",
+        "pwm <pin> [frq duty%]- Set PWM on pin",
         "toggle <pin> <ms>    - Toggle pin periodically",
         "measure <pin> [ms]   - Calculate frequency",
         "jam <pin> [min max]  - Random high/low states",
