@@ -110,9 +110,13 @@ uint8_t UserInputManager::readValidatedUint8(const std::string& label, uint8_t d
     return readValidatedUint8(label, defaultVal, 0, 255);
 }
 
-uint32_t UserInputManager::readValidatedUint32(const std::string& label, uint32_t def) {
+uint32_t UserInputManager::readValidatedUint32(const std::string& label, uint32_t def, bool hex) {
     while (true) {
-        terminalView.print(label + " [" + std::to_string(def) + "]: ");
+        if (hex) {
+            terminalView.print(label + " [0x" + argTransformer.toHex(def) + "]: ");
+        } else {
+            terminalView.print(label + " [" + std::to_string(def) + "]: ");
+        }
         std::string input = getLine();
         if (input.empty()) return def;
 
@@ -121,6 +125,46 @@ uint32_t UserInputManager::readValidatedUint32(const std::string& label, uint32_
         }
 
         terminalView.println("Invalid number.");
+    }
+}
+
+uint32_t UserInputManager::readValidatedHex(
+    const std::string& label,
+    int def,
+    int min,
+    int max)
+{
+    while (true) {
+
+        terminalView.print(
+            label + " [0x" + argTransformer.toHex(def) + "]: "
+        );
+
+        std::string input = getLine();
+
+        // ENTER → default
+        if (input.empty())
+            return def;
+
+        // Check valid number (hex or dec)
+        if (!argTransformer.isValidNumber(input)) {
+            terminalView.println("❌ Invalid number.");
+            continue;
+        }
+
+        // Parse hex or dec
+        uint32_t val = argTransformer.parseHexOrDec32(input);
+
+        if (val < (uint32_t)min || val > (uint32_t)max) {
+            terminalView.println(
+                "❌ Out of range (0x" +
+                argTransformer.toHex(min) + " - 0x" +
+                argTransformer.toHex(max) + ")"
+            );
+            continue;
+        }
+
+        return val;
     }
 }
 

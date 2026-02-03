@@ -18,9 +18,9 @@ public:
     std::string readSanitizedString(const std::string& label, const std::string& def, bool onlyLetter = false);    
     uint8_t readValidatedUint8(const std::string& label, uint8_t def, uint8_t min, uint8_t max);
     uint8_t readValidatedUint8(const std::string& label, uint8_t defaultVal);
-    uint32_t readValidatedUint32(const std::string& label, uint32_t def);
+    uint32_t readValidatedUint32(const std::string& label, uint32_t def, bool hex=false);
     int readValidatedInt(const std::string& label, int def, int min = -127, int max = 127);
-
+    uint32_t readValidatedHex(const std::string& label, int def, int min, int max);
     char readCharChoice(const std::string& label, char def, const std::vector<char>& allowed);
     bool readYesNo(const std::string& label, bool def);
     uint8_t readModeNumber();
