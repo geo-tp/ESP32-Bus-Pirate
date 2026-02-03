@@ -85,6 +85,7 @@ and injecting shared instances of core components
 #include "Shells/OneWireEepromShell.h"
 #include "Shells/GuideShell.h"
 #include "Shells/HelpShell.h"
+#include "Shells/UartEmulationShell.h"
 #include "Config/TerminalTypeConfigurator.h"
 
 class DependencyProvider
@@ -191,6 +192,7 @@ public:
     OneWireEepromShell &getOneWireEepromShell();    
     GuideShell &getGuideShell();
     HelpShell &getHelpShell();
+    UartEmulationShell &getUartEmulationShell();
 
     // Selectors
     HorizontalSelector &getHorizontalSelector();
@@ -296,6 +298,7 @@ private:
     OneWireEepromShell oneWireEepromShell;
     GuideShell guideShell;
     HelpShell helpShell;
+    UartEmulationShell uartEmulationShell;
 
     // Selectors
     HorizontalSelector horizontalSelector;

@@ -71,6 +71,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       oneWireEepromShell(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, binaryAnalyzeManager),
       guideShell(terminalView, terminalInput, userInputManager),
       helpShell(terminalView, terminalInput, userInputManager),
+      uartEmulationShell(terminalView, terminalInput, uartService, argTransformer, userInputManager),
 
       // Selectors
       horizontalSelector(deviceView, deviceInput),
@@ -79,7 +80,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       terminalTypeConfigurator(horizontalSelector),
 
       // Controllers
-      uartController(terminalView, terminalInput, deviceInput, uartService, sdService, hdUartService, argTransformer, userInputManager, uartAtShell, helpShell),
+      uartController(terminalView, terminalInput, deviceInput, uartService, sdService, hdUartService, argTransformer, userInputManager, uartAtShell, helpShell, uartEmulationShell),
       i2cController(terminalView, terminalInput, i2cService, argTransformer, userInputManager, i2cEepromShell, helpShell),
       oneWireController(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, ibuttonShell, oneWireEepromShell, helpShell),
       infraredController(terminalView, terminalInput, infraredService, littleFsService, argTransformer, infraredTransformer, userInputManager, universalRemoteShell, helpShell),
@@ -89,7 +90,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       jtagController(terminalView, terminalInput, jtagService, userInputManager, helpShell),
       twoWireController(terminalView, terminalInput, userInputManager, twoWireService, smartCardShell, helpShell),
       threeWireController(terminalView, terminalInput, userInputManager, threeWireService, argTransformer, threeWireEepromShell, helpShell),
-      dioController(terminalView, terminalInput, pinService, argTransformer, helpShell),
+      dioController(terminalView, terminalInput, pinService, argTransformer, helpShell, userInputManager),
       ledController(terminalView, terminalInput, ledService, argTransformer, userInputManager, helpShell),
       bluetoothController(terminalView, terminalInput, deviceInput, bluetoothService, argTransformer, userInputManager, helpShell),
       i2sController(terminalView, terminalInput, i2sService, argTransformer, userInputManager, helpShell),
