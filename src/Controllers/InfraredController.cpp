@@ -1,5 +1,4 @@
 #include "InfraredController.h"
-#include <M5Unified.h>
 
 /*
 Constructor
