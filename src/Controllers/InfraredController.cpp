@@ -1,5 +1,9 @@
 #include "InfraredController.h"
 
+#ifdef DEVICE_STICKS3
+    #include <M5Unified.h>
+#endif
+
 /*
 Constructor
 */
