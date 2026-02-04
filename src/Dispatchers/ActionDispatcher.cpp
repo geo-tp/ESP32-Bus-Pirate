@@ -15,7 +15,7 @@ void ActionDispatcher::setup(TerminalTypeEnum terminalType, std::string terminal
     provider.getDeviceView().initialize();
     provider.getDeviceView().welcome(terminalType, terminalInfos);
 
-    if (terminalType == TerminalTypeEnum::Serial) {
+    if (terminalType == TerminalTypeEnum::SerialPort) {
         provider.getTerminalView().initialize();
         provider.getTerminalView().waitPress();
         provider.getTerminalInput().waitPress();

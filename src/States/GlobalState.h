@@ -6,6 +6,7 @@
 #include "Enums/InfraredProtocolEnum.h"
 #include "Enums/ModeEnum.h"
 #include "Enums/TerminalTypeEnum.h"
+#include <array>
 
 class GlobalState {
 private:
@@ -38,7 +39,7 @@ private:
     std::string terminalIp = "0.0.0.0";
 
     // Terminal transmission mode
-    TerminalTypeEnum terminalMode = TerminalTypeEnum::Serial;
+    TerminalTypeEnum terminalMode = TerminalTypeEnum::SerialPort;
 
     //  Current selected mode
     ModeEnum currentMode = ModeEnum::HIZ;

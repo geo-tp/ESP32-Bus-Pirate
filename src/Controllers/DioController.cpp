@@ -248,7 +248,7 @@ void DioController::handleMeasure(const TerminalCommand& cmd) {
 
     uint32_t durationMs = 1000;
     if (!args.empty() && argTransformer.isValidNumber(args[0])) {
-        durationMs = std::min(argTransformer.toUint32(args[0]), 5000u);
+        durationMs = std::min<uint32_t>(argTransformer.toUint32(args[0]), 5000UL);
         if (durationMs == 5000) {
             terminalView.println("Note: Duration limited to 5000 ms max.");
         }
@@ -379,7 +379,7 @@ void DioController::handleResetPin(const TerminalCommand& cmd) {
     if (!isPinAllowed(pin, "Reset")) return;
 
     // Detacher PWM
-    ledcDetachPin(pin);
+    ledcDetach(pin);
 
     // Reset Pullup
     pinService.setInput(pin);

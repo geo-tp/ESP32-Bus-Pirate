@@ -53,7 +53,6 @@ and then launches the main loop through the ActionDispatcher.
   Inputs, Services, and Controllers based on the current configuration.
 */
 
-
 void setup() {    
     #if defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
         // Setup the Stick
@@ -85,8 +84,11 @@ void setup() {
         StampS3Input deviceInput;
     #elif defined(DEVICE_TEMBEDS3) || defined(DEVICE_TEMBEDS3CC1101)
         // Setup the T-embed
+        // TODO: TFT_eSPI is not compatible with latest arduino framework
+        // temporary use NoScreenDeviceView
         TembedDeviceView deviceView;
         TembedInput deviceInput;
+        deviceView.initialize();
         deviceView.logo();
         deviceInput.waitPress(3000);
     #else
@@ -111,14 +113,14 @@ void setup() {
         webIp = wifiTypeConfigurator.configure(terminalType);
         
         if (webIp == "0.0.0.0") {
-            terminalType = TerminalTypeEnum::Serial;
+            terminalType = TerminalTypeEnum::SerialPort;
         } else {
             state.setTerminalIp(webIp);
         }
     }
 
     switch (terminalType) {
-        case TerminalTypeEnum::Serial: {
+        case TerminalTypeEnum::SerialPort: {
             // Serial View/Input
             SerialTerminalView serialView;
             SerialTerminalInput serialInput;

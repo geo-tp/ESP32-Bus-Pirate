@@ -1,5 +1,5 @@
 #include "ArgTransformer.h"
-
+#include <array>
 
 uint8_t ArgTransformer::parseByte(const std::string& str, int index) const {
     std::istringstream ss(str);

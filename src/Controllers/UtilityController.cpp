@@ -259,7 +259,7 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
             char c = terminalInput.readChar();
             if (c == '\r' || c == '\n') {
                 // fdufnews 2025/10/24 added to restore cursor position when leaving
-                if (state.getTerminalMode() == TerminalTypeEnum::Serial)
+                if (state.getTerminalMode() == TerminalTypeEnum::SerialPort)
                     terminalView.print("\n\n\n\n\r"); // 4 lines down to place cursor just under the logic trace
                 terminalView.println("Logic Analyzer: Stopped by user.");
                 break;
@@ -297,7 +297,7 @@ void UtilityController::handleLogicAnalyzer(const TerminalCommand& cmd) {
 
             // The poor man's drawLogicTrace() on terminal
             // draws a 132 samples sub part of the buffer to speed up the things
-            if (state.getTerminalMode() == TerminalTypeEnum::Serial){
+            if (state.getTerminalMode() == TerminalTypeEnum::SerialPort){
                 terminalView.println("");
                 uint8_t pos = 0;
                 for(size_t i = 0; i < 132; i++, pos++){

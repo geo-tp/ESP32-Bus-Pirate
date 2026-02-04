@@ -83,7 +83,8 @@ BinaryAnalyzeManager::AnalysisResult BinaryAnalyzeManager::analyze(
     float entropySum = 0;
     std::vector<std::string> foundFiles, foundSecrets;
     uint32_t totalBlocks = (totalSize - start) / blockSize;
-    uint32_t dotInterval = std::max(totalBlocks / 30, 1u);
+    size_t dotIntervalSz = std::max<size_t>(totalBlocks / 30, (size_t)1);
+    uint32_t dotInterval = (uint32_t)dotIntervalSz;
 
     terminalView.print("In progress");
 

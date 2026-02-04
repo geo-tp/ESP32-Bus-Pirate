@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <vector>
+#include <string>
 
 extern "C" {
     #include "93Cx6.h"

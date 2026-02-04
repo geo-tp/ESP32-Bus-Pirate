@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <vector>
+#include <string>
 
 class TwoWireService {
 public:

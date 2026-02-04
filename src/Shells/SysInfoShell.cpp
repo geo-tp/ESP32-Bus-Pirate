@@ -1,6 +1,7 @@
 #include "SysInfoShell.h"
 #include <cstdarg>
 #include <cstdio>
+#include <esp_chip_info.h>
 
 SysInfoShell::SysInfoShell(ITerminalView& tv,
                            IInput& in,
