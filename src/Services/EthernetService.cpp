@@ -5,7 +5,8 @@
 #include "esp_log.h"
 #include "driver/gpio.h"
 #include <Arduino.h>
-
+#include "driver/spi_master.h"
+#include "esp_eth_mac_spi.h"
 // =================================== LOG ================================
 
 // Erase macro to log on serial
@@ -100,7 +101,8 @@ bool EthernetService::configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8
     if (eDev != ESP_OK) { LOG_ERR("spi_bus_add_device(final)", eDev); return false; }
 
     // MAC/PHY W5500
-    eth_w5500_config_t mac_cfg = ETH_W5500_DEFAULT_CONFIG(_spi);
+    spi_host_device_t host = SPI2_HOST;              // ou SPI3_HOST selon ton montage
+    eth_w5500_config_t mac_cfg = ETH_W5500_DEFAULT_CONFIG(host, &devcfg_final);
     mac_cfg.int_gpio_num = _pinIRQ;
 
     // Mode polling
