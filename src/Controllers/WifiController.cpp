@@ -26,6 +26,7 @@ void WifiController::handleCommand(const TerminalCommand &cmd)
     else if (root == "http") handleHttp(cmd);
     else if (root == "lookup") handleLookup(cmd);
     else if (root == "discovery") handleDiscovery(cmd);
+    else if (root == "repeater") handleRepeater(cmd);  
     else if (root == "reset") handleReset();
     else if (root == "deauth") handleDeauth(cmd);
     else handleHelp();
@@ -451,6 +452,144 @@ void WifiController::handleSpoof(const TerminalCommand &cmd)
     {
         terminalView.println("WiFi: Failed to spoof MAC.");
     }
+}
+
+/*
+Repeater
+*/
+void WifiController::handleRepeater(const TerminalCommand& cmd)
+{
+    // Usage:
+    // repeater
+    // repeater [ap_ssid] [ap_pass]
+    // repeater stop
+    // repeater start (prompt for ap_ssid/ap_pass)
+    // repeater start [ap_ssid] [ap_pass]
+
+    std::string sub = cmd.getSubcommand();
+    std::string args = cmd.getArgs();
+    std::string apSsid = "";
+    std::string apPass = "";
+    std::string apPassMasked = "";
+    const uint8_t maxConn = 10;
+
+    // Must be connected first
+    if (!wifiService.isConnected()) {
+        terminalView.println("WiFi Repeater: WiFi not connected. Run 'connect' first.\n");
+        return;
+    }
+
+    // Status   
+    if (sub.empty() ) {
+        sub = wifiService.isRepeaterRunning() ? "stop" : "start";
+    }
+
+    if (sub == "stop") {
+        wifiService.stopRepeater();
+        terminalView.println("WiFi Repeater: Stop routing traffic between uplink and repeater.\n");
+        return;
+    }
+
+    if (sub != "start") {
+        if (!args.empty())
+            args = sub + " " + args;
+        else
+            args = sub;
+    }
+
+    // Parse ap ssid/pass from args
+    if (!args.empty()) {
+        auto parts = argTransformer.splitArgs(args);
+
+        if (parts.size() >= 1) apSsid = parts[0];
+        if (parts.size() >= 2) apPass = parts[1];
+
+        // If SSID had spaces, keep last token as pass and rest as SSID
+        if (parts.size() > 2) {
+            apPass = parts.back();
+            apSsid.clear();
+            for (size_t i = 0; i + 1 < parts.size(); ++i) {
+                if (i) apSsid += " ";
+                apSsid += parts[i];
+            }
+        }
+    }
+
+    // Prompt for missing info
+    if (apSsid.empty()) {
+        terminalView.println("\nWiFi Repeater: Forwarding traffic from uplink.");
+        apSsid = userInputManager.readSanitizedString(
+            "Enter Repeater SSID", 
+            "esp32repeater", 
+            /*onlyLetter=*/false
+        );
+        apSsid = apSsid.size() > 32 ? apSsid.substr(0, 32) : apSsid;
+    }
+
+    if (apPass.empty()) {
+        apPass = userInputManager.readSanitizedString(
+            "Enter Repeater Pass", 
+            "esp32buspirate", 
+            /*onlyLetter=*/false
+        );
+        if (apPass.size() > 64) {
+            terminalView.println("Password must be at most 64 chars. Length reduced.");
+            apPass = apPass.substr(0, 64);
+        }
+    }
+
+    if (apPass.length() < 12 && !apPass.empty()) {
+        terminalView.println("Password must be at least 12 characters.");
+        return;
+    }
+
+    // at this point, password can't be empty
+    std::string first2 = apPass.substr(0, apPass.size() >= 2 ? 2 : 1);
+    apPassMasked = first2 + "********" + std::string(1, apPass.back());
+
+    // Read current uplink creds from NVS
+    std::string staSsid;
+    std::string staPass;
+    nvsService.open();
+    staSsid = nvsService.getString(state.getNvsSsidField());
+    staPass = nvsService.getString(state.getNvsPasswordField());
+    nvsService.close();
+
+    if (staSsid.empty()) {
+        // fallback to current SSID if NVS empty
+        staSsid = wifiService.getSsid();
+    }
+
+    if (staSsid.empty()) {
+        terminalView.println("WiFi Repeater: WiFi not connected, run 'connect' first.\n");
+        return;
+    }
+
+    terminalView.println("\nWiFi Repeater: Starting repeater...\n");
+
+    // Start NAT repeater
+    bool ok = wifiService.startRepeater(
+        staSsid,
+        staPass,
+        apSsid,
+        apPass,
+        /*apChannel=*/1,
+        /*maxConn=*/maxConn,
+        /*timeoutMs=*/15000
+    );
+
+    if (!ok) {
+        terminalView.println("\nWiFi Repeater: Failed to start. Abort\n");
+        return;
+    }
+
+    terminalView.println("WiFi Repeater: Routing traffic between uplink and repeater...");
+    terminalView.println("\n  Uplink           : " + staSsid);
+    terminalView.println("  Repeater SSID    : " + apSsid);
+    terminalView.println("  Repeater Pass    : " + std::string(apPassMasked.empty() ? "(open)" :  apPassMasked));
+    terminalView.println("  Max connections  : " + std::to_string(maxConn));
+    terminalView.println("\n  Use 'repeater stop' to stop.");
+    terminalView.println("");
 }
 
 /*

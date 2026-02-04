@@ -67,6 +67,9 @@ private:
     // Deauthentication attack
     void handleDeauth(const TerminalCommand& cmd);
 
+    // Routing traffic between STA and AP
+    void handleRepeater(const TerminalCommand& cmd);
+
     // Reset Wi-Fi configuration
     void handleReset();
 
