@@ -219,17 +219,32 @@ void WifiController::handleAp(const TerminalCommand &cmd)
         handleApSpam();
         return;
     }
+    
+    if (ssid == "stop") {
+        wifiService.stopAccessPoint();
+        terminalView.println("WiFi: Access Point stopped.\n");
+        return;
+    }
 
     auto full = cmd.getSubcommand() + " " + cmd.getArgs();
 
     // Find the last space to separate SSID and password
     size_t pos = full.find_last_of(' ');
     if (pos == std::string::npos || pos == full.size() - 1) {
-        terminalView.println("Usage: connect <ssid> <password>");
+        terminalView.println("Usage: ap <ssid> <password>");
         return;
     }
     ssid = full.substr(0, pos);
     auto password = full.substr(pos + 1);
+
+    // Confirm forwarding
+    if (wifiService.isConnected()) {
+        auto forward = userInputManager.readYesNo("Enable internet access forwarding ?", true);
+        if (forward) {
+            handleRepeater(cmd);
+            return;
+        }
+    }
 
     // Already connected, mode AP+STA
     if (wifiService.isConnected())
@@ -243,8 +258,14 @@ void WifiController::handleAp(const TerminalCommand &cmd)
 
     if (wifiService.startAccessPoint(ssid, password))
     {
-        terminalView.println("WiFi: Access Point started with SSID " + ssid);
-        terminalView.println("AP IP: " + wifiService.getApIp());
+        terminalView.println("\nWiFi: Access Point is started, no internet forwarding...\n");
+        terminalView.println("  SSID            : " + ssid);
+        std::string apPassMasked = password.empty() ? "" : std::string(password.length(), '*');
+        std::string first2 = password.substr(0, password.size() >= 2 ? 2 : 1);
+        apPassMasked = first2 + "********" + std::string(1, password.back()); 
+        terminalView.println("  Password        : " + (apPassMasked.empty() ? "(open)" : apPassMasked));
+        terminalView.println("  Access point IP : " + wifiService.getApIp());
+        terminalView.println("\n  Use 'ap stop' to stop the access point");
 
         auto nvsSsidField = state.getNvsSsidField();
         auto nvsPasswordField = state.getNvsPasswordField();
@@ -259,8 +280,9 @@ void WifiController::handleAp(const TerminalCommand &cmd)
 
         if (wifiService.isConnected())
         {
-            terminalView.println("STA IP: " + wifiService.getLocalIp());
+            terminalView.println("  Station IP      : " + wifiService.getLocalIp());
         }
+        terminalView.println("");
     }
     else
     {
@@ -587,6 +609,7 @@ void WifiController::handleRepeater(const TerminalCommand& cmd)
     terminalView.println("\n  Uplink           : " + staSsid);
     terminalView.println("  Repeater SSID    : " + apSsid);
     terminalView.println("  Repeater Pass    : " + std::string(apPassMasked.empty() ? "(open)" :  apPassMasked));
+    terminalView.println("  Repeater IP      : " + wifiService.getRepeaterIp());
     terminalView.println("  Max connections  : " + std::to_string(maxConn));
     terminalView.println("\n  Use 'repeater stop' to stop.");
     terminalView.println("");
