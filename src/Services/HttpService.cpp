@@ -1,5 +1,6 @@
 #include "HttpService.h"
 
+
 void HttpService::ensureClient(bool https, bool insecure, int timeout_s)
 {
     // Recreate the client if not initialized or if the type changes

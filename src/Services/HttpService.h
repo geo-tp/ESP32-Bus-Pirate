@@ -4,6 +4,9 @@
 #undef IPADDR_NONE
 
 #include <HTTPClient.h>
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiClientSecure.h>
 #include <vector>
 #include <string>
 #include <atomic>
