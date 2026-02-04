@@ -71,6 +71,7 @@ public:
     
     // Access point
     bool startAccessPoint(const std::string& ssid, const std::string& password = "", int channel = 1, int maxConn = 4);
+    bool stopAccessPoint();
 
     // Spoof MAC
     bool spoofMacAddress(const std::string& macStr, MacInterface which);
@@ -118,6 +119,7 @@ public:
 
     void stopRepeater();
     bool isRepeaterRunning() const;
+    std::string getRepeaterIp() const;
 
     // Wifi mode to string
     static inline const char* wifiModeToStr(int m) {

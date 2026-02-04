@@ -106,6 +106,10 @@ bool WifiService::startAccessPoint(const std::string& ssid, const std::string& p
     }
 }
 
+bool WifiService::stopAccessPoint() {
+    return WiFi.softAPdisconnect(true);
+}
+
 void WifiService::reset() {
     disconnect();
     WiFi.mode(WIFI_STA);
@@ -596,4 +600,9 @@ void WifiService::stopRepeater()
 
 bool WifiService::isRepeaterRunning() const {
     return repeater;
+}
+
+std::string WifiService::getRepeaterIp() const {
+    if (!repeater) return "";
+    return std::string(WiFi.softAPIP().toString().c_str());
 }
