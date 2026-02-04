@@ -1,372 +1,350 @@
 #if defined(DEVICE_TEMBEDS3) || defined(DEVICE_TEMBEDS3CC1101)
 
 #include "TembedDeviceView.h"
-#include <Arduino.h>
 #include "Data/WelcomeScreen.h"
 
 TembedDeviceView::TembedDeviceView() {
-    pinMode(PIN_POWER_ON, OUTPUT);
-    digitalWrite(PIN_POWER_ON, HIGH);
-    tft.begin();
-    tft.fillScreen(TFT_BLACK);
-    initDisplayRegs();
-    tft.setRotation(3);
-    tft.setSwapBytes(true);
-    pinMode(PIN_LCD_BL, OUTPUT);
-    digitalWrite(PIN_LCD_BL, HIGH);
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  pinMode(PIN_POWER_ON, OUTPUT);
+  digitalWrite(PIN_POWER_ON, HIGH);
+
+  pinMode(PIN_LCD_BL, OUTPUT);
+  digitalWrite(PIN_LCD_BL, HIGH);
 }
 
 SPIClass& TembedDeviceView::getScreenSpiInstance() {
-    return tft.getSPIinstance();
+  return screenSpi;
 }
 
-void TembedDeviceView::initDisplayRegs() {
-    for (uint8_t i = 0; i < sizeof(lcd_st7789v) / sizeof(lcd_cmd_t); i++) {
-        tft.writecommand(lcd_st7789v[i].cmd);
-        for (int j = 0; j < (lcd_st7789v[i].len & 0x7F); j++) {
-            tft.writedata(lcd_st7789v[i].data[j]);
-        }
-        if (lcd_st7789v[i].len & 0x80) {
-            delay(120);
-        }
-    }
+void* TembedDeviceView::getScreen() {
+  return &tft; 
 }
 
 void TembedDeviceView::initialize() {
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  pinMode(PIN_POWER_ON, OUTPUT);
+  digitalWrite(PIN_POWER_ON, HIGH);
+
+  screenSpi.begin(PIN_LCD_SCLK, PIN_LCD_MISO, PIN_LCD_MOSI, PIN_LCD_CS);
+
+  tft.init();
+  tft.setRotation(3);
+  tft.setSwapBytes(true);
+
+  pinMode(PIN_LCD_BL, OUTPUT);
+  digitalWrite(PIN_LCD_BL, HIGH);
+
+  setBrightness(brightnessPct);
+
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
 }
 
 void TembedDeviceView::logo() {
-    clear();
+  clear();
 
-    // Logo
-    tft.setSwapBytes(true);
-    tft.pushImage(40, 30, WELCOME_IMAGE_WIDTH, WELCOME_IMAGE_HEIGHT, WelcomeScreen);
-    tft.setSwapBytes(false);
+  // Logo
+  tft.setSwapBytes(true);
+  tft.pushImage(40, 30, WELCOME_IMAGE_WIDTH, WELCOME_IMAGE_HEIGHT, WelcomeScreen);
+  tft.setSwapBytes(false);
 
-    // Sub
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
-    GlobalState& state = GlobalState::getInstance();
-    auto version = "ESP32 Bus Pirate - " + state.getVersion();
-    drawCenterText(version.c_str(), 130, 1.9);
+  // Sub
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  GlobalState& state = GlobalState::getInstance();
+  auto version = "ESP32 Bus Pirate - " + state.getVersion();
+  drawCenterText(version.c_str(), 130, 2);
 }
 
 void TembedDeviceView::welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) {
-    if (terminalType == TerminalTypeEnum::WiFiClient) welcomeWeb(terminalInfos);
-    else welcomeSerial(terminalInfos);
+  if (terminalType == TerminalTypeEnum::WiFiClient) welcomeWeb(terminalInfos);
+  else welcomeSerial(terminalInfos);
 }
 
 void TembedDeviceView::loading() {
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
-    tft.setTextFont(1);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE);
+  tft.setTextFont(1);
 
-    tft.fillRoundRect(20, 20, tft.width() - 40, tft.height() - 40, 5, DARK_GREY_RECT);
-    tft.drawRoundRect(20, 20, tft.width() - 40, tft.height() - 40, 5, TFT_GREEN);
+  tft.fillRoundRect(20, 20, tft.width() - 40, tft.height() - 40, 5, DARK_GREY_RECT);
+  tft.drawRoundRect(20, 20, tft.width() - 40, tft.height() - 40, 5, TFT_GREEN);
 
-    tft.setTextColor(TFT_WHITE);
-    tft.setTextSize(2);
-    tft.drawString("Loading...", 102, 52);
+  tft.setTextColor(TFT_WHITE);
+  tft.setTextSize(2);
+  tft.drawString("Loading...", 102, 52);
 }
 
 void TembedDeviceView::clear() {
-    tft.fillScreen(TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
 }
 
 void TembedDeviceView::drawLogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {
-    const int canvasWidth = 320;
-    const int canvasHeight = 80;
-    const int logicCenterY = canvasHeight / 2;
-    //const int step = 1;
+  tft.fillRect(0, 35, tft.width(), tft.height() - 35, TFT_BLACK);
 
-    canvas.setColorDepth(8);
-    canvas.createSprite(canvasWidth, canvasHeight);
-    canvas.fillSprite(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
+  tft.setCursor(10, 10);
+  tft.print("Pin ");
+  tft.print(pin);
 
-    // Pin num
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setTextSize(1);
-    canvas.setCursor(10, 0);
-    canvas.print("Pin ");
-    canvas.print(pin);
+  const int traceY = 50;
+  const int traceH = 80;
+  const int centerY = traceY + traceH / 2;
 
-    // Trace
-    int x = 10;
-    for (size_t i = 1; i < buffer.size(); ++i) {
-        uint8_t prev = buffer[i - 1];
-        uint8_t curr = buffer[i];
-        int y1 = prev ? logicCenterY - 15 : logicCenterY + 15;
-        int y2 = curr ? logicCenterY - 15 : logicCenterY + 15;
+  int x = 10;
+  for (size_t i = 1; i < buffer.size(); ++i) {
+    uint8_t prev = buffer[i - 1];
+    uint8_t curr = buffer[i];
 
-        if (curr != prev){
-            canvas.drawLine(x, y1, x + step, y1, prev ? TFT_GREEN : TFT_WHITE );
-            canvas.drawLine(x + step, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE );
-        } else {
-            canvas.drawLine(x, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE );
-        }
-        x += step;
-        if (x > canvasWidth - step) break;
+    int y1 = prev ? (centerY - 15) : (centerY + 15);
+    int y2 = curr ? (centerY - 15) : (centerY + 15);
+
+    if (curr != prev) {
+      tft.drawLine(x, y1, x + step, y1, prev ? TFT_GREEN : TFT_WHITE);
+      tft.drawLine(x + step, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE);
+    } else {
+      tft.drawLine(x, y1, x + step, y2, curr ? TFT_GREEN : TFT_WHITE);
     }
 
-    canvas.pushSprite(0, 50);
-    canvas.deleteSprite();
+    x += step;
+    if (x > tft.width() - step) break;
+  }
 }
 
 void TembedDeviceView::drawAnalogicTrace(uint8_t pin, const std::vector<uint8_t>& buffer, uint8_t step) {
-    const int canvasWidth = 320;
-    const int canvasHeight = 135;
+  tft.fillRect(0, 35, tft.width(), tft.height() - 35, TFT_BLACK);
 
-    canvas.setColorDepth(8);
-    canvas.createSprite(canvasWidth, canvasHeight);
-    canvas.fillSprite(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
+  tft.setCursor(10, 10);
+  tft.print("Pin ");
+  tft.print(pin);
 
-    // Pin num
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setTextSize(1);
-    canvas.setCursor(10, 0);
-    canvas.print("Pin ");
-    canvas.print(pin);
+  const int topY = 35;
+  const int h = 135;
 
-    // Trace
-    int x = 10;
-    for (size_t i = 1; i < buffer.size(); ++i) {
-        
-        uint8_t prev = canvasHeight - 1 - (buffer[i - 1] >> 1);
-        uint8_t curr = canvasHeight - 1 - (buffer[i] >> 1);
-        canvas.drawLine(x, prev, x + step, curr, TFT_GREEN);      
-        x += step;
-        if (x > canvasWidth - step) break;
-    }
-
-    canvas.pushSprite(0, 35);
-    canvas.deleteSprite();
+  int x = 10;
+  for (size_t i = 1; i < buffer.size(); ++i) {
+    int prev = topY + (h - 1) - (buffer[i - 1] >> 1);
+    int curr = topY + (h - 1) - (buffer[i] >> 1);
+    tft.drawLine(x, prev, x + step, curr, TFT_GREEN);
+    x += step;
+    if (x > tft.width() - step) break;
+  }
 }
 
 void TembedDeviceView::setRotation(uint8_t rotation) {
-    tft.setRotation(rotation);
+  tft.setRotation(rotation);
 }
 
 void TembedDeviceView::setBrightness(uint8_t brightness) {
-    // TODO: handle this
-    // tft.setBrightness(brightness);
+  if (brightness > 100) brightness = 100;
+  brightnessPct = brightness;
+
+  uint8_t pwm = (uint8_t)((brightnessPct * 255) / 100);
+  tft.setBrightness(pwm);
 }
 
 uint8_t TembedDeviceView::getBrightness() {
-    // return tft.getBrightness();
-    return 100; // TODO : handle this
-}   
+  return brightnessPct;
+}
 
 void TembedDeviceView::topBar(const std::string& title, bool submenu, bool searchBar) {
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.setTextSize(2);
-    drawCenterText(title.c_str(), 20, 2);
+  (void)submenu;
+  (void)searchBar;
 
-    if (submenu) {
-        // TODO
-    }
-    if (searchBar) {
-        // TODO
-    }
+  // Zone topbar
+  tft.fillRect(0, 0, tft.width(), 30, TFT_BLACK);
+
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setTextSize(2);
+  tft.setTextDatum(MC_DATUM);
+  tft.drawString(title.c_str(), tft.width() / 2, 20);
+  tft.setTextDatum(TL_DATUM);
 }
 
 void TembedDeviceView::horizontalSelection(
-    const std::vector<std::string>& options,
-    uint16_t selectedIndex,
-    const std::string& description1,
-    const std::string& description2)
-{
-    canvas.setColorDepth(16);
-    canvas.createSprite(tft.width(), tft.height() - 30); // without topBar
-    canvas.fillSprite(TFT_BLACK);
+  const std::vector<std::string>& options,
+  uint16_t selectedIndex,
+  const std::string& description1,
+  const std::string& description2
+) {
+  const int originY = 30;
+  const int h = tft.height() - originY;
 
-    // Description 1
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setTextDatum(MC_DATUM);
-    canvas.setTextFont(2);
-    canvas.setTextSize(1);
-    canvas.drawString(description1.c_str(), canvas.width() / 2, 26);
+  // avoid topbar overlap
+  tft.fillRect(0, originY, tft.width(), h, TFT_BLACK);
 
-    // Description 2
-    canvas.setTextColor(DARK_GREY_RECT, TFT_BLACK);
-    canvas.drawString("Long press button to shut down", canvas.width() / 2, canvas.height() - 15);
+  // Description 1
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.setTextDatum(MC_DATUM);
+  tft.drawString(description1.c_str(), tft.width() / 2, originY + 26);
 
-    // Option placing
-    const std::string& option = options[selectedIndex];
-    int boxX = 60;
-    int boxW = canvas.width() - 120;
-    int boxY = 45;
-    int boxH = 50;
-    int corner = 8;
+  // Description 2 hardcoded
+  tft.setTextColor(DARK_GREY_RECT, TFT_BLACK);
+  tft.drawString("Long press button to shut down", tft.width() / 2, tft.height() - 20);
 
-    // Option Rect
-    canvas.fillRoundRect(boxX, boxY, boxW, boxH, corner, DARK_GREY_RECT);
-    canvas.drawRoundRect(boxX, boxY, boxW, boxH, corner, TFT_GREEN);
+  // Box option
+  const std::string& option = options[selectedIndex];
+  int boxX = 60;
+  int boxW = tft.width() - 120;
+  int boxY = originY + 45;
+  int boxH = 50;
+  int corner = 8;
 
-    // Option name
-    canvas.setTextColor(TFT_WHITE, DARK_GREY_RECT);
-    canvas.setTextFont(2);
-    canvas.setTextSize(2);
-    int textW = canvas.textWidth(option.c_str(), 2);
-    int textX = (canvas.width() - textW) / 2;
-    canvas.setCursor(textX, boxY + 10);
-    canvas.print(option.c_str());
+  tft.fillRoundRect(boxX, boxY, boxW, boxH, corner, DARK_GREY_RECT);
+  tft.drawRoundRect(boxX, boxY, boxW, boxH, corner, TFT_GREEN);
 
-    // Arrows
-    canvas.setTextSize(1);
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setTextFont(2);
-    canvas.setCursor(35, boxY + 19);
-    canvas.print("<");
-    canvas.setCursor(canvas.width() - 40, boxY + 19);
-    canvas.print(">");
+  // Option name
+  tft.setTextColor(TFT_WHITE, DARK_GREY_RECT);
+  tft.setTextFont(2);
+  tft.setTextSize(2);
 
-    // Display
-    canvas.pushSprite(0, 30); // topbar height
+  int textW = tft.textWidth(option.c_str());
+  int textX = (tft.width() - textW) / 2;
+  int textH = tft.fontHeight();
+  int textY = boxY + (boxH - textH) / 2;
 
-    // Release
-    canvas.deleteSprite();
+  tft.setTextDatum(TL_DATUM);
+  tft.drawString(option.c_str(), textX, textY);
+
+  // Arrows
+  tft.setTextSize(1);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setCursor(35, boxY + 19);
+  tft.print("<");
+  tft.setCursor(tft.width() - 40, boxY + 19);
+  tft.print(">");
 }
 
 void TembedDeviceView::drawCenterText(const std::string& text, int y, int fontSize) {
-    int16_t x1, y1;
-    uint16_t w, h;
-    tft.setTextDatum(MC_DATUM);
-    tft.setTextFont(fontSize);
-    tft.drawString(text.c_str(), tft.width() / 2, y);
+  tft.setTextDatum(MC_DATUM);
+  tft.setTextFont(fontSize);
+  tft.drawString(text.c_str(), tft.width() / 2, y);
+  tft.setTextDatum(TL_DATUM);
 }
 
 void TembedDeviceView::welcomeSerial(const std::string& baudStr) {
-    canvas.setColorDepth(16);
-    canvas.setTextFont(2);
-    canvas.createSprite(tft.width(), tft.height());
-    canvas.fillSprite(TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
 
-    // Titre
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setTextDatum(TL_DATUM);
-    canvas.setCursor(88, 35);
-    canvas.println("Open Serial (USB COM)");
+  // Titre
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.setTextDatum(TL_DATUM);
+  tft.setCursor(88, 35);
+  tft.println("Open Serial (USB COM)");
 
-    // Rect baudrate
-    canvas.fillRoundRect(70, 60, 180, 40, 8, DARK_GREY_RECT);
-    canvas.drawRoundRect(70, 60, 180, 40, 8, TFT_GREEN);
+  // Rect baudrate
+  tft.fillRoundRect(70, 60, 180, 40, 8, DARK_GREY_RECT);
+  tft.drawRoundRect(70, 60, 180, 40, 8, TFT_GREEN);
 
-    // Texte Baud
-    std::string baud = "Baudrate: " + baudStr;
-    int16_t textW = canvas.textWidth(baud.c_str(), 2);
-    canvas.setCursor((canvas.width() - textW) / 2, 73);
-    canvas.setTextColor(TFT_WHITE, DARK_GREY_RECT);
-    canvas.print(baud.c_str());
+  // Texte baud
+  std::string baud = "Baudrate: " + baudStr;
+  int textW = tft.textWidth(baud.c_str());
+  tft.setTextColor(TFT_WHITE, DARK_GREY_RECT);
+  tft.setCursor((tft.width() - textW) / 2, 73);
+  tft.print(baud.c_str());
 
-    // Sub
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setCursor(80, 107);
-    canvas.println("Then press a key to start");
-
-    canvas.pushSprite(0, 0);
-    canvas.deleteSprite();
+  // Sub
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setCursor(80, 107);
+  tft.println("Then press a key to start");
 }
 
-
 void TembedDeviceView::welcomeWeb(const std::string& ipStr) {
-    canvas.setColorDepth(16);
-    canvas.createSprite(tft.width(), tft.height());
-    canvas.fillSprite(TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
 
-    // Titre
-    canvas.setTextColor(TFT_WHITE, TFT_BLACK);
-    canvas.setTextDatum(TL_DATUM);
-    canvas.setTextFont(2);
-    canvas.setCursor(82, 34);
-    canvas.println("Open browser to connect");
+  // Titre
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.setTextDatum(TL_DATUM);
+  tft.setCursor(82, 34);
+  tft.println("Open browser to connect");
 
-    // Rectangle IP
-    canvas.fillRoundRect(60, 60, 200, 40, 8, DARK_GREY_RECT);
-    canvas.drawRoundRect(60, 60, 200, 40, 8, TFT_GREEN);
+  // Rectangle IP
+  tft.fillRoundRect(60, 60, 200, 40, 8, DARK_GREY_RECT);
+  tft.drawRoundRect(60, 60, 200, 40, 8, TFT_GREEN);
 
-    // Texte IP
-    std::string ip = "http://" + ipStr;
-    int16_t textW = canvas.textWidth(ip.c_str(), 2);
-    canvas.setCursor((canvas.width() - textW) / 2, 73);
-    canvas.setTextColor(TFT_WHITE, DARK_GREY_RECT);
-    canvas.setTextFont(2);
-    canvas.print(ip.c_str());
-
-    canvas.pushSprite(0, 0);
-    canvas.deleteSprite();
+  // Texte IP
+  std::string ip = "http://" + ipStr;
+  int textW = tft.textWidth(ip.c_str());
+  tft.setTextColor(TFT_WHITE, DARK_GREY_RECT);
+  tft.setCursor((tft.width() - textW) / 2, 73);
+  tft.print(ip.c_str());
 }
 
 void TembedDeviceView::shutDown() {
-    tft.setRotation(3); // it is called from input
-    tft.fillScreen(TFT_BLACK);
-    tft.setCursor(40, 60);
-    tft.setTextColor(TFT_WHITE);
-    tft.setTextFont(2);
-    drawCenterText("Shutting down...", 80, 2);
-    delay(1000);
-    digitalWrite(PIN_LCD_BL, LOW);
-    digitalWrite(PIN_POWER_ON, LOW);
-    initialize(); // black screen
+  tft.setRotation(3);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextFont(2);
+  drawCenterText("Shutting down...", 80, 2);
+  delay(1000);
+
+  // backlight + power
+  digitalWrite(PIN_LCD_BL, LOW);
+  digitalWrite(PIN_POWER_ON, LOW);
 }
 
 void TembedDeviceView::show(PinoutConfig& config) {
-    clear();
+  tft.fillScreen(TFT_BLACK);
 
-    const auto& mappings = config.getMappings();
-    auto mode = config.getMode();
+  const auto& mappings = config.getMappings();
+  auto mode = config.getMode();
 
-    canvas.setColorDepth(16);
-    canvas.createSprite(tft.width(), tft.height());
-    canvas.fillSprite(TFT_BLACK);
+  // Mode name
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.setTextDatum(MC_DATUM);
+  std::string modeStr = "MODE " + mode;
+  tft.drawString(modeStr.c_str(), tft.width() / 2, 20);
+  tft.setTextDatum(TL_DATUM);
 
-    // Mode name
-    canvas.setTextColor(TFT_GREEN);
-    canvas.setTextFont(2.5);
-    std::string modeStr = "MODE " + mode;
-    int modeW = canvas.textWidth(modeStr.c_str(), 2);
-    int modeX = (canvas.width() - modeW) / 2;
-    canvas.drawString(modeStr.c_str(), modeX, 13);
+  // No mapping
+  if (mappings.empty()) {
+    const int frameX = 20;
+    const int frameY = 45;
+    const int frameW = tft.width() - 40;
+    const int frameH = tft.height() - 70;
+    const int frameR = 5;
 
-    // No mapping
-    if (mappings.empty()) {
-        canvas.fillRoundRect(20, 45, canvas.width() - 40, canvas.height() - 70, 5, TFT_BLACK);
-        canvas.drawRoundRect(20, 45, canvas.width() - 40, canvas.height() - 70, 5, TFT_GREEN);
+    tft.fillRoundRect(frameX, frameY, frameW, frameH, frameR, TFT_BLACK);
+    tft.drawRoundRect(frameX, frameY, frameW, frameH, frameR, TFT_GREEN);
 
-        canvas.setTextColor(TFT_WHITE);
-        canvas.setTextFont(2);
-        canvas.drawString("Nothing to display", 100, 85);
-        canvas.pushSprite(0, 0);
-        canvas.deleteSprite();
-        return;
-    }
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextFont(2);
+    tft.setTextDatum(MC_DATUM);
+    tft.drawString("Nothing to display", tft.width() / 2, frameY + frameH / 2);
+    tft.setTextDatum(TL_DATUM);
+    return;
+  }
 
-    // Mapping
-    int boxHeight = 24;
-    int startY = 40;
-    int spacing = 4;
-    int margin = 10;
+  // Mapping list
+  int boxHeight = 24;
+  int startY = 40;
 
-    for (size_t i = 0; i < mappings.size(); ++i) {
-        const std::string& mapping = mappings[i];
-        int y = startY + i * (boxHeight + spacing);
+  for (size_t i = 0; i < mappings.size(); ++i) {
+    int y = startY + (int)i * (boxHeight + 4);
 
-        canvas.fillRoundRect(margin * 2, y, canvas.width() - 4 * margin, boxHeight, 6, DARK_GREY_RECT);
-        canvas.drawRoundRect(margin  *2, y, canvas.width() - 4 * margin, boxHeight, 6, TFT_GREEN);
+    tft.fillRoundRect(20, y, tft.width() - 40, boxHeight, 6, DARK_GREY_RECT);
+    tft.drawRoundRect(20, y, tft.width() - 40, boxHeight, 6, TFT_GREEN);
 
-        int textW = canvas.textWidth(mapping.c_str(), 2);
-        int textX = (canvas.width() - textW) / 2;
-        int textY = y + (boxHeight - 16) / 2 + 1;
+    tft.setTextFont(2);
+    tft.setTextSize(1);
+    tft.setTextColor(TFT_WHITE, DARK_GREY_RECT);
 
-        canvas.setTextColor(TFT_WHITE, DARK_GREY_RECT);
-        canvas.setCursor(textX, textY);
-        canvas.setTextFont(2);
-        canvas.print(mapping.c_str());
-    }
+    int w = tft.textWidth(mappings[i].c_str());
+    int textX = (tft.width() - w) / 2;
 
-    canvas.pushSprite(0, 0);
-    canvas.deleteSprite();
+    tft.setCursor(textX, y + 5);
+    tft.print(mappings[i].c_str());
+  }
 }
 
 #endif
