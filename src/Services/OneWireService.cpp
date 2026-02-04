@@ -20,6 +20,7 @@ void OneWireService::close() {
 
 bool OneWireService::reset() {
     if (oneWire) return oneWire->reset();
+    return false;
 }
 
 void OneWireService::write(uint8_t data) {
