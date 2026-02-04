@@ -13,7 +13,7 @@ std::string WifiTypeConfigurator::configure(TerminalTypeEnum& terminalType) {
             setupStickWifi(); // check stored creds
         #elif defined(DEVICE_TEMBEDS3) || defined(DEVICE_TEMBEDS3CC1101)
             // Use this standalone setup for now
-            setupTembedWifi(); // endless loop until a valid WiFi is selected and connected
+            setupTembedWifi(view); // endless loop until a valid WiFi is selected and connected
         #else
             // Use this standalone setup for now
             setupS3Wifi(); // check stored creds
