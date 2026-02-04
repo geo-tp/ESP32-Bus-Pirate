@@ -1,4 +1,6 @@
 #include "BluetoothService.h"
+#include "esp_mac.h"
+
 
 // Static var for the sniffer
 std::vector<std::string> BluetoothService::bluetoothSniffLog;
@@ -28,7 +30,7 @@ void BluetoothService::startServer(const std::string& deviceName) {
     stopServer();
 
     delay(200);
-    BLEDevice::init(deviceName);
+    BLEDevice::init(String(deviceName.c_str()));
     BLEServer* server = BLEDevice::createServer();
     server->setCallbacks(new BluetoothServerCallbacks(*this));
 
@@ -155,7 +157,7 @@ void BluetoothService::sendEmptyReports() {
 }
 
 void BluetoothService::pairWithAddress(const std::string& addrStr) {
-    BLEAddress addr(addrStr);
+    BLEAddress addr(String(addrStr.c_str()));
     BLEDevice::whiteListAdd(addr);  // Optionnel ?
 }
 
@@ -198,14 +200,14 @@ std::vector<std::string> BluetoothService::scanDevices(int seconds) {
 
     std::vector<std::string> formattedDevices;
 
-    for (int i = 0; i < results.getCount(); ++i) {
-        BLEAdvertisedDevice device = results.getDevice(i);
+    for (int i = 0; i < results->getCount(); ++i) {
+        BLEAdvertisedDevice device = results->getDevice(i);
 
-        std::string name = device.getName().empty() ? "(unknown)" : device.getName();
-        std::string addr = device.getAddress().toString();
+        String name = device.getName().isEmpty() ? "(unknown)" : device.getName();
+        String addr = device.getAddress().toString();
         int rssi = device.getRSSI();
         std::string type = isLikelyConnectable(device) ? "Connectable" : "Non-Connectable";
-        std::string entry = addr + " | " + name + " | RSSI: " + std::to_string(rssi) + " | Type: " + type;
+        std::string entry = std::string(addr.c_str()) + " | " + std::string(name.c_str()) + " | RSSI: " + std::to_string(rssi) + " | Type: " + type;
 
         formattedDevices.push_back(entry);
     }
@@ -222,7 +224,7 @@ std::vector<std::string> BluetoothService::connectTo(const std::string& addr) {
         mode = BluetoothMode::CLIENT;
     }
 
-    BLEAddress address(addr);
+    BLEAddress address(String(addr.c_str()));
     BLEClient* client = BLEDevice::createClient();
 
     if (!client->connect(address)) {
@@ -246,7 +248,7 @@ void BluetoothService::init(const std::string& deviceName) {
         return;
     }
 
-    BLEDevice::init(deviceName);
+    BLEDevice::init(String(deviceName.c_str()));
     mode = BluetoothMode::CLIENT;
 }
 
@@ -285,25 +287,32 @@ bool BluetoothService::spoofMacAddress(const std::string& macStr) {
 }
 
 void BluetoothService::clearBondedDevices() {
-    int dev_num = esp_ble_get_bond_device_num();
-    if (dev_num == 0) return;
+    // === NEW ===
 
-    esp_ble_bond_dev_t* bonded = (esp_ble_bond_dev_t*)malloc(sizeof(esp_ble_bond_dev_t) * dev_num);
-    if (!bonded) return;
+    ble_store_config_init();
+    ble_store_clear();
+    
+    // === OLD ===
 
-    if (esp_ble_get_bond_device_list(&dev_num, bonded) == ESP_OK) {
-        for (int i = 0; i < dev_num; ++i) {
-            esp_ble_remove_bond_device(bonded[i].bd_addr);
-        }
-    }
+    // int dev_num = esp_ble_get_bond_device_num();
+    // if (dev_num == 0) return;
 
-    free(bonded);
+    // esp_ble_bond_dev_t* bonded = (esp_ble_bond_dev_t*)malloc(sizeof(esp_ble_bond_dev_t) * dev_num);
+    // if (!bonded) return;
+
+    // if (esp_ble_get_bond_device_list(&dev_num, bonded) == ESP_OK) {
+    //     for (int i = 0; i < dev_num; ++i) {
+    //         esp_ble_remove_bond_device(bonded[i].bd_addr);
+    //     }
+    // }
+
+    // free(bonded);
 }
 
 void BluetoothService::PassiveAdvertisedDeviceCallbacks::onResult(BLEAdvertisedDevice advertisedDevice) {
     // Basic infos
-    std::string name = advertisedDevice.getName().empty() ? "(unknown)" : advertisedDevice.getName();
-    std::string addr = advertisedDevice.getAddress().toString();
+    String name = advertisedDevice.getName().isEmpty() ? "(unknown)" : advertisedDevice.getName();
+    String addr = advertisedDevice.getAddress().toString();
     int rssi = advertisedDevice.getRSSI();
 
     // Check type
@@ -315,7 +324,7 @@ void BluetoothService::PassiveAdvertisedDeviceCallbacks::onResult(BLEAdvertisedD
     }
 
     // Build the log entry
-    std::string logEntry = "[BLE] " + addr + " | " + name + " | RSSI: " + std::to_string(rssi) + " | Type: " + type;
+    std::string logEntry = "[BLE] " + std::string(addr.c_str()) + " | " + std::string(name.c_str()) + " | RSSI: " + std::to_string(rssi) + " | Type: " + type;
 
     // Parse AD infos
     std::string adParsed = parseAdTypes(advertisedDevice.getPayload(), advertisedDevice.getPayloadLength());
