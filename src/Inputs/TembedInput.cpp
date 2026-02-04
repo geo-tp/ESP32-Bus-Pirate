@@ -81,7 +81,7 @@ void TembedInput::checkShutdownRequest() {
 }
 
 void TembedInput::shutdownToDeepSleep() {
-    view.shutDown();
+    // view.shutDown();
     delay(3000);
     esp_sleep_enable_ext0_wakeup((gpio_num_t)TEMBED_PIN_SIDE_BTN, 0);
     esp_deep_sleep_start();

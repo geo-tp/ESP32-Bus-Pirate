@@ -5,7 +5,7 @@
 #include "Interfaces/IInput.h"
 #include <RotaryEncoder.h>
 #include <Arduino.h>
-#include <Views/TembedDeviceView.h>
+// #include <Views/TembedDeviceView.h>
 
 #ifdef DEVICE_TEMBEDS3CC1101
     #define TEMBED_PIN_ENCODE_A          4
@@ -33,7 +33,7 @@ public:
 
 private:
     RotaryEncoder encoder;
-    TembedDeviceView view;
+    // TembedDeviceView view;
     char lastInput;
     char lastButton;
     int lastPos;
