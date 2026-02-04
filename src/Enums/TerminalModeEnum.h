@@ -2,7 +2,7 @@
 #include <string>
 
 enum class TerminalMode {
-    Serial,
+    SerialPort,
     Web,
     None
 };
@@ -11,7 +11,7 @@ class TerminalModeEnumMapper {
 public:
     static std::string toString(TerminalMode mode) {
         switch (mode) {
-            case TerminalMode::Serial: return "Serial";
+            case TerminalMode::SerialPort: return "Serial";
             case TerminalMode::Web:    return "Web   ";
             case TerminalMode::None:   return "None  ";
             default:                   return "Unknown";
