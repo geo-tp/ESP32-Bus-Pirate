@@ -190,7 +190,7 @@ void SubGhzController::handleReplay(const TerminalCommand&) {
     terminalView.println("SUBGHZ Replay: Recording up to 64 frames @ " +
                          std::to_string(f) + " MHz... Press [ENTER] to stop.\n");
 
-    std::vector<std::vector<rmt_item32_t>> frames;
+    std::vector<std::vector<rmt_symbol_word_t>> frames;
     frames.reserve(64);
 
     bool stop = false;

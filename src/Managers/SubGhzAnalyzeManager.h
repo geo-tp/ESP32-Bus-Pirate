@@ -8,7 +8,9 @@
 
 #include "Interfaces/ITerminalView.h"
 #include "Interfaces/IInput.h"
-#include "driver/rmt.h"
+#include "driver/rmt_rx.h"
+#include "driver/rmt_tx.h"
+#include "driver/rmt_types.h"
 
 enum class RfEncoding { Unknown, PulseLength, Manchester, PWM };
 
@@ -49,7 +51,7 @@ public:
     enum class ModGuess { ASK_OOK, FSK_GFSK, NFM_FM, Unknown };
 
     // Analyse frame
-    std::string analyzeFrame(const std::vector<rmt_item32_t>& items,
+    std::string analyzeFrame(const std::vector<rmt_symbol_word_t>& items,
                                     float tickPerUs = 1.0f);
 
     // Analyze activity
@@ -73,7 +75,7 @@ private:
                                 float confidence,
                                 std::string mod);
 
-    void   collectDurations(const std::vector<rmt_item32_t>& items, float tickPerUs,
+    void   collectDurations(const std::vector<rmt_symbol_word_t>& items, float tickPerUs,
                                    std::vector<uint32_t>& highs, std::vector<uint32_t>& lows);
     float  median(std::vector<uint32_t> v);
     float  estimateBaseT(const std::vector<uint32_t>& highs, const std::vector<uint32_t>& lows);
@@ -84,7 +86,7 @@ private:
     bool   looksPWM(float T, const std::vector<uint32_t>& highs, const std::vector<uint32_t>& lows);
 
     // Decode
-    bool   decodePT2262Like(float T, const std::vector<rmt_item32_t>& items, float tickPerUs,
+    bool   decodePT2262Like(float T, const std::vector<rmt_symbol_word_t>& items, float tickPerUs,
                                    std::string& hexOut, int& bitCountOut);
     std::pair<ModGuess, float>  decodeModulationRSSI(const std::vector<int>& samples);
 

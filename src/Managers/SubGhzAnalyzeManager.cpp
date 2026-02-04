@@ -3,7 +3,7 @@
 #include <sstream>
 #include <unordered_set>
 
-std::string SubGhzAnalyzeManager::analyzeFrame(const std::vector<rmt_item32_t>& items, float tickPerUs) {
+std::string SubGhzAnalyzeManager::analyzeFrame(const std::vector<rmt_symbol_word_t>& items, float tickPerUs) {
     SubGhzDetectResult r;
     if (items.empty()) { r.notes = "Empty frame"; return formatFrame(r); }
 
@@ -192,7 +192,7 @@ std::string SubGhzAnalyzeManager::formatFrame(const SubGhzDetectResult& r) const
     return oss.str();
 }
 
-void SubGhzAnalyzeManager::collectDurations(const std::vector<rmt_item32_t>& items, float tickPerUs,
+void SubGhzAnalyzeManager::collectDurations(const std::vector<rmt_symbol_word_t>& items, float tickPerUs,
                                             std::vector<uint32_t>& highs, std::vector<uint32_t>& lows) {
     highs.clear(); lows.clear();
     highs.reserve(items.size());
@@ -278,7 +278,7 @@ bool SubGhzAnalyzeManager::looksPWM(float T, const std::vector<uint32_t>& highs,
 static inline bool isShortT(float d, float T)  { return std::fabs(d - T) <= (T * 0.6f); }
 static inline bool isLong3T(float d, float T)  { return std::fabs(d - 3*T) <= (T * 0.8f); }
 
-bool SubGhzAnalyzeManager::decodePT2262Like(float T, const std::vector<rmt_item32_t>& items, float tickPerUs,
+bool SubGhzAnalyzeManager::decodePT2262Like(float T, const std::vector<rmt_symbol_word_t>& items, float tickPerUs,
                                             std::string& hexOut, int& bitCountOut) {
     if (T <= 0.f || items.size() < 8) return false;
 
