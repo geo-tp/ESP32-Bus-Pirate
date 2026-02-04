@@ -1,5 +1,4 @@
 #include "SubGhzService.h"
-#include "driver/rmt.h"
 #include <sstream>
 
 // Base
@@ -126,102 +125,156 @@ void SubGhzService::setScanBand(const std::string& s) {
 
 // Raw sniffer
 
+bool IRAM_ATTR SubGhzService::on_rx_done(rmt_channel_handle_t,
+                                        const rmt_rx_done_event_data_t* edata,
+                                        void* user) {
+    auto* self = static_cast<SubGhzService*>(user);
+    self->last_symbols_ = edata->num_symbols;
+    self->rx_done_ = true;
+    return false;
+}
+
 bool SubGhzService::startRawSniffer(int pin) {
-    // Configure RMT
-    rmt_config_t rxconfig;
-    rxconfig.rmt_mode = RMT_MODE_RX;
-    rxconfig.channel = RMT_RX_CHANNEL;
-    rxconfig.gpio_num = (gpio_num_t)pin;
-    rxconfig.clk_div = RMT_CLK_DIV;
-    rxconfig.mem_block_num = 2;
-    rxconfig.flags = 0;
-    rxconfig.rx_config.idle_threshold = 3 * RMT_1MS_TICKS,
-    rxconfig.rx_config.filter_ticks_thresh = 200 * RMT_1US_TICKS;
-    rxconfig.rx_config.filter_en = true;
+    stopRawSniffer();
 
-    // Install RMT driver
-    if (rmt_config(&rxconfig) != ESP_OK) return false;
-    if (rmt_driver_install(rxconfig.channel, RMT_BUFFER_SIZE, 0) != ESP_OK) return false;
+    // --- RX channel config (new driver)
+    rmt_rx_channel_config_t cfg{};
+    cfg.gpio_num        = (gpio_num_t)pin;
+    cfg.clk_src         = RMT_CLK_SRC_DEFAULT;
+    cfg.resolution_hz   = 1000000;        // 1 tick = 1 us
+    cfg.flags.invert_in = false;
+    cfg.flags.with_dma  = true;
+    cfg.mem_block_symbols = 256;            // simple & safe (pair)
 
-    // Get ring buffer handle
-    if (rmt_get_ringbuf_handle(rxconfig.channel, &rb_) != ESP_OK) return false;
-    rmt_rx_start(rxconfig.channel, true);
+    esp_err_t err = rmt_new_rx_channel(&cfg, &rx_chan_);
+    if (err != ESP_OK || !rx_chan_) {
+        rx_chan_ = nullptr;
+        return false;
+    }
+
+    // --- callbacks
+    rmt_rx_event_callbacks_t cbs{};
+    cbs.on_recv_done = &on_rx_done;
+    err = rmt_rx_register_event_callbacks(rx_chan_, &cbs, this);
+    if (err != ESP_OK) {
+        stopRawSniffer();
+        return false;
+    }
+
+    // --- enable channel
+    err = rmt_enable(rx_chan_);
+    if (err != ESP_OK) {
+        stopRawSniffer();
+        return false;
+    }
+
+    // --- user buffer (DMA writes here) : keep it modest to avoid DMA cap errors
+    // Start with 256; if you later confirm 512 works on your build, you can increase.
+    rx_buf_.assign(256, {});
+
+    // --- receive config
+    rmt_receive_config_t rcfg{};
+    rcfg.signal_range_min_ns = 1'000;        // 1 us glitch filter
+    rcfg.signal_range_max_ns = 20'000'000;   // 20 ms max same-level (20ms)
+    rcfg.flags.en_partial_rx = 1;            // allow piece-by-piece for long streams
+
+    rx_done_ = false;
+    last_symbols_ = 0;
+
+    err = rmt_receive(rx_chan_,
+                      rx_buf_.data(),
+                      rx_buf_.size() * sizeof(rmt_symbol_word_t),
+                      &rcfg);
+
+    if (err != ESP_OK) {
+        stopRawSniffer();
+        return false;
+    }
 
     return true;
 }
 
-bool SubGhzService::isSnifferOverflowing() const {
-    if (!rb_) return false;
-    size_t freeBytes = xRingbufferGetCurFreeSize(rb_);
-    return freeBytes < 128;
-}
-
-void SubGhzService::drainSniffer() {
-    if (!rb_) return;
-    while (true) {
-        size_t rx_size = 0;
-        rmt_item32_t* item = (rmt_item32_t*) xRingbufferReceive(rb_, &rx_size, 0);
-        if (!item) break;
-        vRingbufferReturnItem(rb_, (void*)item);
-    }
-}
-
 void SubGhzService::stopRawSniffer() {
-    rmt_rx_stop(RMT_RX_CHANNEL);
-    drainSniffer();
-    rmt_driver_uninstall(RMT_RX_CHANNEL);
-    rb_ = nullptr;
-    ELECHOUSE_cc1101.setSidle();
+    if (rx_chan_) {
+        rmt_disable(rx_chan_);
+        rmt_del_channel(rx_chan_);
+        rx_chan_ = nullptr;
+    }
+    rx_buf_.clear();
+    rx_done_ = false;
+    last_symbols_ = 0;
 }
 
 std::pair<std::string, size_t> SubGhzService::readRawPulses() {
-    if (!rb_) return {"", 0};
+    if (!rx_done_) return {"", 0};
 
-    size_t rx_size = 0;
-    rmt_item32_t* item = (rmt_item32_t*) xRingbufferReceive(rb_, &rx_size, 0);
-    if (!item) return {"", 0};
-
-    size_t n = rx_size / sizeof(rmt_item32_t);
-    uint32_t totalDuration = 0;
-    for (size_t i = 0; i < n; i++) {
-        totalDuration += item[i].duration0;
-        totalDuration += item[i].duration1;
-    }
+    size_t n = last_symbols_;
+    if (n > rx_buf_.size()) n = rx_buf_.size();
 
     std::ostringstream oss;
-    oss << "[raw " << n << " pulses | freq=" << mhz_
-        << " MHz | dur=" << totalDuration << " ticks]\r\n";
+    oss << "[raw " << n << " symbols | freq=" << mhz_ << " MHz]\r\n";
 
     int col = 0;
-    for (size_t i = 0; i < n; i++) {
-        oss << (item[i].level0 ? 'H' : 'L') << ":" << item[i].duration0
+    for (size_t i = 0; i < n; ++i) {
+        const auto& s = rx_buf_[i];
+        oss << (s.level0 ? 'H' : 'L') << ":" << s.duration0
             << " | "
-            << (item[i].level1 ? 'H' : 'L') << ":" << item[i].duration1
+            << (s.level1 ? 'H' : 'L') << ":" << s.duration1
             << "   ";
         if (++col % 4 == 0) oss << "\r\n";
     }
-    oss << "\n\r";
+    oss << "\r\n";
 
-    vRingbufferReturnItem(rb_, (void*)item); // Free memory
+    rx_done_ = false;
+    last_symbols_ = 0;
+    rmt_receive_config_t rcfg{};
+    rcfg.signal_range_min_ns = 1000;
+    rcfg.signal_range_max_ns = 3000000;
+    rmt_receive(rx_chan_, rx_buf_.data(),
+                rx_buf_.size() * sizeof(rmt_symbol_word_t),
+                &rcfg);
+
     return {oss.str(), n};
 }
 
-std::vector<rmt_item32_t> SubGhzService::readRawFrame() {
-    std::vector<rmt_item32_t> frame;
-    if (!rb_) return frame;
+std::vector<rmt_symbol_word_t> SubGhzService::readRawFrame() {
+    std::vector<rmt_symbol_word_t> frame;
 
-    size_t rx_size = 0;
-    rmt_item32_t* item = (rmt_item32_t*) xRingbufferReceive(rb_, &rx_size, 0);
-    if (!item) return frame;
+    // Pas de channel actif ou pas encore de réception terminée
+    if (!rx_chan_) return frame;
+    if (!rx_done_) return frame;
 
-    size_t n = rx_size / sizeof(rmt_item32_t);
-    frame.assign(item, item + n);
+    size_t n = last_symbols_;
+    if (n > rx_buf_.size()) {
+        n = rx_buf_.size();
+    }
 
-    vRingbufferReturnItem(rb_, (void*)item);
+    if (n == 0) {
+        rx_done_ = false;
+        return frame;
+    }
+
+    // Copier les symbols reçus
+    frame.assign(rx_buf_.begin(), rx_buf_.begin() + n);
+
+    // Préparer prochaine capture
+    rx_done_ = false;
+    last_symbols_ = 0;
+
+    rmt_receive_config_t rcfg{};
+    rcfg.signal_range_min_ns = 1000;        // 1 us
+    rcfg.signal_range_max_ns = 20'000'000;  // 20 ms
+    rcfg.flags.en_partial_rx = 1;
+
+    rmt_receive(rx_chan_,
+                rx_buf_.data(),
+                rx_buf_.size() * sizeof(rmt_symbol_word_t),
+                &rcfg);
+
     return frame;
 }
 
-bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_item32_t>& items, uint32_t tick_per_us) {
+bool SubGhzService::sendRawFrame(int pin, const std::vector<rmt_symbol_word_t>& items, uint32_t tick_per_us) {
     if (!isConfigured_ || items.empty()) return false;
 
     // Output

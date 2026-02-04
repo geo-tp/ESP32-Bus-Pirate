@@ -3,12 +3,14 @@
 #include <Arduino.h>
 #include <vector>
 #include <cstdint>
-#include "driver/rmt.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/ringbuf.h"
 #include "ELECHOUSE_CC1101_SRC_DRV.h"
 #include "Data/SugGhzFreqs.h"
 #include "Transformers/SubGhzTransformer.h"
+#include "driver/rmt_rx.h"
+#include "driver/rmt_tx.h"
+#include "driver/rmt_types.h"
 
 #define RMT_RX_CHANNEL RMT_CHANNEL_6
 #define RMT_TX_CHANNEL RMT_CHANNEL_5
@@ -37,16 +39,14 @@ public:
     // RMT raw sniffer
     bool startRawSniffer(int pin);
     std::pair<std::string, size_t> readRawPulses();
-    std::vector<rmt_item32_t> readRawFrame();
-    bool isSnifferOverflowing() const;
-    void drainSniffer();
+    std::vector<rmt_symbol_word_t> readRawFrame();
     void stopRawSniffer();
 
     // Raw send
     bool startTxBitBang();
     bool stopTxBitBang();
     bool sendRawFrame(int pin,
-                      const std::vector<rmt_item32_t>& items,
+                      const std::vector<rmt_symbol_word_t>& items,
                       uint32_t tick_per_us = RMT_1US_TICKS);
     bool sendRandomBurst(int pin);
     bool sendRawPulse(int pin, int duration);
@@ -81,7 +81,17 @@ private:
     uint8_t rfSw1_ = TEMBED_CC1101_SW1;
     uint8_t rfSel_ = 2; //  uses 0/1/2 as selections
 
+    rmt_channel_handle_t rx_chan_ = nullptr;
+    std::vector<rmt_symbol_word_t> rx_buf_;
+    volatile size_t last_symbols_ = 0;
+    volatile bool rx_done_ = false;
+    
     // Tembed S3 CC1101 specific
     void initTembed();
     void selectRfPathFor(float mhz);
+
+    // Presets
+    static bool IRAM_ATTR on_rx_done(rmt_channel_handle_t,
+                                const rmt_rx_done_event_data_t* edata,
+                                void* user);
 };
