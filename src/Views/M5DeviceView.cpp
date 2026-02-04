@@ -11,8 +11,12 @@ SPIClass& M5DeviceView::getScreenSpiInstance() {
     return *(SPIClass*)(nullptr);
 }
 
+void* M5DeviceView::getScreen() {
+    return &M5.Lcd;
+}
+
 void M5DeviceView::welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) {
-    if (terminalType == TerminalTypeEnum::Serial) {
+    if (terminalType == TerminalTypeEnum::SerialPort) {
         welcomeSerial(terminalInfos);
     } else {
         welcomeWeb(terminalInfos);

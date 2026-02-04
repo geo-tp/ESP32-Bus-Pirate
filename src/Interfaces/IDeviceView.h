@@ -17,6 +17,9 @@ public:
     // Get the SPI instance
     virtual SPIClass& getScreenSpiInstance() = 0;
 
+    // Get the screen instance
+    virtual void* getScreen() = 0;
+
     // Show logo
     virtual void logo() = 0;
 
