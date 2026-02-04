@@ -68,15 +68,15 @@ bool PinService::setupPwm(uint8_t pin, uint32_t freq, uint8_t dutyPercent) {
     int resolution = -1;
     for (int bits = 14; bits >= 1; --bits) {
         if (isPwmFeasible(freq, bits)) {
-            if (ledcSetup(channel, freq, bits)) {  // ok
-                resolution = bits;
-                break;
-            }
+            resolution = bits;
+            break;
         }
     }
     if (resolution < 0) return false;
 
-    ledcAttachPin(pin, channel);
+    if (!ledcAttachChannel(pin, freq, resolution, channel)) {
+        return false;
+    }
 
     uint32_t dutyMax = (1UL << resolution) - 1;
     uint32_t dutyVal = ((uint32_t)dutyPercent * dutyMax) / 100U;
@@ -90,8 +90,7 @@ void PinService::setServoAngle(uint8_t pin, uint8_t angle) {
   const int resolution = 14;  // max stable
 
   // setup et attach
-  ledcSetup(channel, freq, resolution);
-  ledcAttachPin(pin, channel);
+  ledcAttachChannel(pin, freq, resolution, channel);
 
   // period and duty
   const uint32_t periodUs = 1000000UL / freq;    // 20000 us
