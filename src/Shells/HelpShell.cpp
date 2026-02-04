@@ -318,6 +318,7 @@ void HelpShell::cmdWifi() {
         "discovery            - Discover network devices",
         "sniff                - Monitor Wi-Fi packets",
         "probe                - Search for net access",
+        "repeater             - Forward Wi-Fi traffic",
         "spoof ap <mac>       - Spoof AP MAC",
         "spoof sta <mac>      - Spoof Station MAC",
         "status               - Show Wi-Fi status",
