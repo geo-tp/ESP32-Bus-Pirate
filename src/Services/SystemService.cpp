@@ -9,6 +9,7 @@
 #include <esp_partition.h>
 #include <esp_ota_ops.h>
 #include <nvs.h>
+#include <esp_mac.h>
 
 namespace {
     inline void appendLine(std::string& s, const std::string& line) {
@@ -85,7 +86,7 @@ int SystemService::getChipFullRevision() const
 {
     esp_chip_info_t ci{};
     esp_chip_info(&ci);
-    return ci.full_revision;
+    return ci.revision;
 }
 
 uint32_t SystemService::getChipFeaturesRaw() const
@@ -118,37 +119,9 @@ std::string SystemService::getArduinoCore() const
 // -----------------------------
 
 size_t SystemService::getStackUsed() const {
-    TaskHandle_t h = xTaskGetCurrentTaskHandle();
-    size_t usedNow = 0;
-
-    // Get snapshot of tasks
-    TaskSnapshot_t snaps[16];
-    UBaseType_t count = 0;
-    UBaseType_t got = uxTaskGetSnapshotAll(snaps, 16, &count);
-    if (got == 0) {
-        return -1;
-    }
-
-    // Find the snapshot of the current task
-    const TaskSnapshot_t* self = nullptr;
-    for (UBaseType_t i = 0; i < got; ++i) {
-        if (snaps[i].pxTCB == h) {
-            self = &snaps[i];
-            break;
-        }
-    }
-    if (!self) {
-        return -1;
-    }
-
-    uintptr_t top = reinterpret_cast<uintptr_t>(self->pxTopOfStack);
-    uintptr_t end = reinterpret_cast<uintptr_t>(self->pxEndOfStack);
-    if (top == 0 || end == 0 || end <= top) {
-        return -1;
-    }
-
-    usedNow = end - top;
-    return usedNow;
+    // HighWaterMark = mots libres minimum depuis le start
+    UBaseType_t freeWordsMin = uxTaskGetStackHighWaterMark(nullptr);
+    return (CONFIG_ARDUINO_LOOP_STACK_SIZE - (freeWordsMin * sizeof(StackType_t)));
 }
 
 size_t SystemService::getStackTotal() const {
@@ -291,8 +264,6 @@ std::string SystemService::getPartitions() const
 {
     std::string out;
     const esp_partition_t* run  = esp_ota_get_running_partition();
-    const esp_partition_t* boot = esp_ota_get_boot_partition();
-    const esp_partition_t* next = esp_ota_get_next_update_partition(nullptr);
 
     auto partLine = [](const esp_partition_t* p) -> std::string {
         if (!p) {
@@ -310,10 +281,8 @@ std::string SystemService::getPartitions() const
     };
 
     appendLine(out, std::string("Running  : ") + partLine(run));
-    appendLine(out, std::string("Boot     : ") + partLine(boot));
-    appendLine(out, std::string("Next OTA : ") + partLine(next));
-
     appendLine(out, "");
+
     appendLine(out, "TYPE LABEL    ADDRESS   SIZE(B)");
 
     esp_partition_iterator_t it = esp_partition_find(ESP_PARTITION_TYPE_ANY,
@@ -369,21 +338,20 @@ std::string SystemService::getNvsStats() const {
 std::string SystemService::getNvsEntries() const {
     std::string out;
 
-    nvs_iterator_t it = nvs_entry_find("nvs", nullptr, NVS_TYPE_ANY);
-    if (!it) {
+    nvs_iterator_t it = nullptr;
+    esp_err_t err = nvs_entry_find("nvs", nullptr, NVS_TYPE_ANY, &it);
+    if (err != ESP_OK || !it) {
         appendLine(out, "(no entries)");
         return out;
     }
 
-    // Largeurs fixes (monospace-friendly)
     constexpr size_t W_NS  = 16;
     constexpr size_t W_KEY = 20;
-
     appendLine(out, padRight("NS", W_NS) + " " + padRight("KEY", W_KEY) + " TYPE");
 
-    for (nvs_iterator_t iter = it; iter; iter = nvs_entry_next(iter)) {
+    while (it) {
         nvs_entry_info_t info{};
-        nvs_entry_info(iter, &info);
+        nvs_entry_info(it, &info);
 
         std::string line = padRight(info.namespace_name, W_NS)
                          + " "
@@ -391,12 +359,18 @@ std::string SystemService::getNvsEntries() const {
                          + " "
                          + nvsTypeToStr(info.type);
         appendLine(out, line);
+
+        err = nvs_entry_next(&it);
+        if (err == ESP_ERR_NVS_NOT_FOUND) {
+
+            break;
+        } else if (err != ESP_OK) {
+            appendLine(out, "(iterator error)");
+            break;
+        }
     }
 
-    #if defined(nvs_release_iterator)
-        nvs_release_iterator(it);
-    #endif
-
+    nvs_release_iterator(it);
     return out;
 }
 
