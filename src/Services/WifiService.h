@@ -43,6 +43,8 @@ public:
     bool connect(const std::string& ssid, const std::string& password, unsigned long timeoutMs = 15000);
     void disconnect();
     bool isConnected() const;
+    bool connected = false;
+    bool repeater = false;
 
     // Utils
     std::string getLocalIP() const;
@@ -96,16 +98,26 @@ public:
     bool deauthApBySsid (const std::string& ssid);
     void deauthAttack(const uint8_t bssid[6], uint8_t channel, uint8_t bursts, uint32_t sniffMs);
 
-    bool connected;
+    // Client sniffer
     static void snifferCallback(void* buf, wifi_promiscuous_pkt_type_t type);
     static std::vector<std::string> sniffLog;
     static portMUX_TYPE sniffMux;
-
-    // --- Client sniffer ---
     static portMUX_TYPE staMux;
     static std::vector<std::array<uint8_t, 6>> staList;
     static uint8_t apBSSID[6];
     static void clientSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type);
+
+    // Repeater
+    bool startRepeater(const std::string& staSsid,
+                    const std::string& staPass,
+                    const std::string& apSsid,
+                    const std::string& apPass,
+                    int apChannel = 1,
+                    int maxConn = 10,
+                    unsigned long timeoutMs = 15000);
+
+    void stopRepeater();
+    bool isRepeaterRunning() const;
 
     // Wifi mode to string
     static inline const char* wifiModeToStr(int m) {

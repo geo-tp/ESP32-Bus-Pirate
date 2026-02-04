@@ -496,3 +496,104 @@ bool WifiService::deauthApBySsid(const std::string& ssid)
     }
     return false;                           // SSID not found
 }
+
+bool WifiService::startRepeater(const std::string& staSsid,
+                                const std::string& staPass,
+                                const std::string& apSsid,
+                                const std::string& apPass,
+                                int apChannel,
+                                int maxConn,
+                                unsigned long timeoutMs)
+{
+    // stop anything already running
+    stopRepeater();
+
+    // AP+STA
+    WiFi.mode(WIFI_AP_STA);
+
+    // AP IP
+    IPAddress ap_ip(192, 168, 4, 1);
+    IPAddress ap_gw(192, 168, 4, 1);
+    IPAddress ap_mask(255, 255, 255, 0);
+    WiFi.softAPConfig(ap_ip, ap_gw, ap_mask);
+
+    // Start AP
+    bool ap_ok = false;
+    if (apPass.empty()) {
+        ap_ok = WiFi.softAP(apSsid.c_str(), nullptr, apChannel, false, maxConn);
+    } else {
+        ap_ok = WiFi.softAP(apSsid.c_str(), apPass.c_str(), apChannel, false, maxConn);
+    }
+    if (!ap_ok) return false;
+
+    // Start STA uplink
+    WiFi.begin(staSsid.c_str(), staPass.c_str());
+
+    unsigned long t0 = millis();
+    while (WiFi.status() != WL_CONNECTED && (millis() - t0) < timeoutMs) {
+        delay(50);
+    }
+    if (WiFi.status() != WL_CONNECTED) {
+        connected = false;
+        return false; // AP stays up, but no uplink
+    }
+
+    // Disable PS for better throughput/latency
+    esp_wifi_set_ps(WIFI_PS_NONE);
+
+    // Get netifs
+    esp_netif_t* sta_netif = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
+    if (!sta_netif) sta_netif = esp_netif_get_handle_from_ifkey("WIFI_STA");
+
+    esp_netif_t* ap_netif = esp_netif_get_handle_from_ifkey("WIFI_AP_DEF");
+    if (!ap_netif) ap_netif = esp_netif_get_handle_from_ifkey("WIFI_AP");
+
+    if (!sta_netif || !ap_netif) {
+        connected = false;
+        return false;
+    }
+
+    // DNS forwarding
+    esp_netif_dns_info_t dns{};
+    if (esp_netif_get_dns_info(sta_netif, ESP_NETIF_DNS_MAIN, &dns) == ESP_OK) {
+        // restart dhcps with DNS option enabled
+        esp_netif_dhcps_stop(ap_netif);
+
+        uint8_t offer_dns = 0x02; // DHCPS_OFFER_DNS
+        esp_netif_dhcps_option(ap_netif, ESP_NETIF_OP_SET, ESP_NETIF_DOMAIN_NAME_SERVER,
+                               &offer_dns, sizeof(offer_dns));
+
+        esp_netif_set_dns_info(ap_netif, ESP_NETIF_DNS_MAIN, &dns);
+        esp_netif_dhcps_start(ap_netif);
+    }
+
+    // Enable NAT
+    esp_err_t nat_err = esp_netif_napt_enable(ap_netif);
+    if (nat_err != ESP_OK) {
+        connected = false;
+        return false;
+    }
+
+    connected = true;
+    repeater = true;
+    return true;
+}
+
+void WifiService::stopRepeater()
+{
+    // Stop NAT
+    esp_netif_t* ap_netif = esp_netif_get_handle_from_ifkey("WIFI_AP_DEF");
+    if (!ap_netif) ap_netif = esp_netif_get_handle_from_ifkey("WIFI_AP");
+    if (ap_netif) {
+        // ignore errors
+        esp_netif_napt_disable(ap_netif);
+    }
+
+    WiFi.softAPdisconnect(true);
+    WiFi.mode(WIFI_STA);
+    repeater = false;
+}
+
+bool WifiService::isRepeaterRunning() const {
+    return repeater;
+}
