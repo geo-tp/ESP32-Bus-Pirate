@@ -1,172 +1,186 @@
 #include "I2sService.h"
-#include "math.h"
+#include <math.h>
 
 #if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
-    #include <M5Unified.h>
+  #include <M5Unified.h>
 #endif
 
-static void stop_and_delete(i2s_chan_handle_t& ch) {
-    if (!ch) return;
-    i2s_channel_disable(ch);
-    i2s_del_channel(ch);
-    ch = nullptr;
+static i2s_data_bit_width_t toWidth(uint8_t bits) {
+    switch (bits) {
+        case 8:  return I2S_DATA_BIT_WIDTH_8BIT;
+        case 24: return I2S_DATA_BIT_WIDTH_24BIT;
+        case 32: return I2S_DATA_BIT_WIDTH_32BIT;
+        default: return I2S_DATA_BIT_WIDTH_16BIT;
+    }
+}
+
+void I2sService::end() {
+    if (initialized) {
+        i2s.end();
+        initialized = false;
+    }
+}
+
+bool I2sService::isInitialized() const {
+    return initialized;
+}
+
+inline void I2sService::writeStereo16(int16_t s) {
+    // Left (low, high)
+    i2s.write((uint8_t)(s & 0xFF));
+    i2s.write((uint8_t)((s >> 8) & 0xFF));
+    // Right (low, high)
+    i2s.write((uint8_t)(s & 0xFF));
+    i2s.write((uint8_t)((s >> 8) & 0xFF));
 }
 
 void I2sService::configureOutput(uint8_t bclk, uint8_t lrck, uint8_t dout, uint32_t sampleRate, uint8_t bits) {
-    // stop previous
-    stop_and_delete(tx_chan);
-    stop_and_delete(rx_chan);
+    end();
 
 #if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
-    M5.Mic.end();
     M5.Speaker.begin();
 #endif
 
-    // create channel (TX only)
-    i2s_chan_config_t chan_cfg = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM_0, I2S_ROLE_MASTER);
-    ESP_ERROR_CHECK(i2s_new_channel(&chan_cfg, &tx_chan, nullptr));
-    isTx = true;
+    i2s.setPins(bclk, lrck, dout);
 
-    // bits mapping
-    i2s_data_bit_width_t w = I2S_DATA_BIT_WIDTH_16BIT;
-    if (bits == 8)  w = I2S_DATA_BIT_WIDTH_8BIT;
-    if (bits == 24) w = I2S_DATA_BIT_WIDTH_24BIT;
-    if (bits == 32) w = I2S_DATA_BIT_WIDTH_32BIT;
+    const i2s_mode_t mode = I2S_MODE_STD;
+    const i2s_slot_mode_t slot = I2S_SLOT_MODE_STEREO;
+    const i2s_data_bit_width_t w = toWidth(bits);
 
-    // std config
-    i2s_std_config_t cfg = {
-        .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG(sampleRate),
-        .slot_cfg = I2S_STD_MSB_SLOT_DEFAULT_CONFIG(w, I2S_SLOT_MODE_STEREO),
-        .gpio_cfg = {
-            .mclk = I2S_GPIO_UNUSED,
-            .bclk = (gpio_num_t)bclk,
-            .ws   = (gpio_num_t)lrck,
-            .dout = (gpio_num_t)dout,
-            .din  = I2S_GPIO_UNUSED,
-            .invert_flags = { .mclk_inv = false, .bclk_inv = false, .ws_inv = false },
-        },
-    };
-
-    ESP_ERROR_CHECK(i2s_channel_init_std_mode(tx_chan, &cfg));
-    ESP_ERROR_CHECK(i2s_channel_enable(tx_chan));
+    if (!i2s.begin(mode, sampleRate, w, slot)) {
+        initialized = false;
+        return;
+    }
 
     prevBclk = bclk;
     prevLrck = lrck;
     prevDout = dout;
+    bitsPerSample = bits;
+    sampleRateHz = sampleRate;
+    isTx = true;
     initialized = true;
 }
 
-void I2sService::configureInput(uint8_t bclk, uint8_t lrck, uint8_t din, uint32_t sampleRate, uint8_t bits) {
-    stop_and_delete(tx_chan);
-    stop_and_delete(rx_chan);
+void I2sService::configureInput(uint8_t bclk, uint8_t lrck, uint8_t din,
+                                uint32_t sampleRate, uint8_t bits) {
+    end();
 
 #if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
     M5.Speaker.end();
     M5.Mic.begin();
 #endif
 
-    i2s_chan_config_t chan_cfg = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM_0, I2S_ROLE_MASTER);
-    ESP_ERROR_CHECK(i2s_new_channel(&chan_cfg, nullptr, &rx_chan));
-    isTx = false;
+    i2s.setPins(bclk, lrck, -1, din);
 
-    i2s_data_bit_width_t w = I2S_DATA_BIT_WIDTH_16BIT;
-    if (bits == 8)  w = I2S_DATA_BIT_WIDTH_8BIT;
-    if (bits == 24) w = I2S_DATA_BIT_WIDTH_24BIT;
-    if (bits == 32) w = I2S_DATA_BIT_WIDTH_32BIT;
+    const i2s_mode_t mode = I2S_MODE_STD;
+    const i2s_slot_mode_t slotMode = I2S_SLOT_MODE_MONO;
+    const i2s_data_bit_width_t w = toWidth(bits);
 
-    i2s_std_config_t cfg = {
-        .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG(sampleRate),
-        .slot_cfg = I2S_STD_MSB_SLOT_DEFAULT_CONFIG(w, I2S_SLOT_MODE_MONO),
-        .gpio_cfg = {
-            .mclk = I2S_GPIO_UNUSED,
-            .bclk = (gpio_num_t)bclk,
-            .ws   = (gpio_num_t)lrck,
-            .dout = I2S_GPIO_UNUSED,
-            .din  = (gpio_num_t)din,
-            .invert_flags = { .mclk_inv = false, .bclk_inv = false, .ws_inv = false },
-        },
-    };
-
-    ESP_ERROR_CHECK(i2s_channel_init_std_mode(rx_chan, &cfg));
-    ESP_ERROR_CHECK(i2s_channel_enable(rx_chan));
+    if (!i2s.begin(mode, sampleRate, w, slotMode, I2S_STD_SLOT_LEFT)) {
+        initialized = false;
+        return;
+    }
 
     prevBclk = bclk;
     prevLrck = lrck;
     prevDin  = din;
+    bitsPerSample = bits;
+    sampleRateHz = sampleRate;
+    isTx = false;
     initialized = true;
 }
 
+void I2sService::playTone(uint32_t /*sampleRate*/, uint16_t freq, uint16_t durationMs) {
+    if (!initialized || !isTx) return;
 
-void I2sService::playTone(uint32_t sampleRate, uint16_t freq, uint16_t durationMs) {
-    if (!initialized) return;
+    const uint32_t sr = sampleRateHz;  
+    if (sr == 0 || freq == 0 || durationMs == 0) return;
 
-    int samples = (sampleRate * durationMs) / 1000;
-    int16_t buffer[2];
+    static constexpr size_t FRAMES = 256; 
+    int16_t buf[FRAMES * 2];
+    const int16_t amp = 32767;
 
-    for (int i = 0; i < samples; ++i) {
-        float t = (float)i / sampleRate;
-        int16_t sample = sinf(2.0f * PI * freq * t) * 32767;
-        buffer[0] = sample;
-        buffer[1] = sample;
-        size_t written;
-        i2s_channel_write(tx_chan, buffer, sizeof(buffer), &written, portMAX_DELAY);
+    const uint32_t totalFrames = (sr * (uint32_t)durationMs) / 1000UL;
+    uint32_t done = 0;
+
+    while (done < totalFrames) {
+        size_t n = FRAMES;
+        if (done + n > totalFrames) n = (size_t)(totalFrames - done);
+
+        for (size_t i = 0; i < n; i++) {
+            float t = (float)(done + (uint32_t)i) / (float)sr;
+            int16_t s = (int16_t)(sinf(2.0f * (float)M_PI * (float)freq * t) * (float)amp);
+
+            buf[2 * i]     = s; // L
+            buf[2 * i + 1] = s; // R
+        }
+
+        const size_t bytes = n * 2 * sizeof(int16_t);
+        i2s.write((uint8_t*)buf, bytes);
+
+        done += (uint32_t)n;
     }
 }
 
-void I2sService::playToneInterruptible(uint32_t sampleRate, uint16_t freq, uint32_t durationMs, std::function<bool()> shouldStop) {
-    const int16_t amplitude = 32767;
-    const int chunkDurationMs = 20;
-    const int samplesPerChunk = (sampleRate * chunkDurationMs) / 1000;
-    int16_t buffer[2 * samplesPerChunk];
+void I2sService::playToneInterruptible(uint32_t /*sampleRate*/, uint16_t freq, uint32_t durationMs, std::function<bool()> shouldStop) {
+    if (!initialized || !isTx) return;
 
-    uint32_t elapsed = 0;
-    while (elapsed < durationMs) {
-        for (int i = 0; i < samplesPerChunk; ++i) {
-            float t = (float)(i + (elapsed * sampleRate / 1000)) / sampleRate;
-            int16_t sample = sinf(2.0f * PI * freq * t) * amplitude;
-            buffer[2 * i] = sample;
-            buffer[2 * i + 1] = sample;
+    const uint32_t sr = sampleRateHz; 
+    if (sr == 0 || freq == 0 || durationMs == 0) return;
+
+    static constexpr size_t FRAMES = 256;
+    int16_t buf[FRAMES * 2];
+    const int16_t amp = 32767;
+
+    const uint32_t totalFrames = (sr * durationMs) / 1000UL;
+    uint32_t done = 0;
+
+    while (done < totalFrames) {
+        if (shouldStop && shouldStop()) break;
+
+        size_t n = FRAMES;
+        if (done + n > totalFrames) n = (size_t)(totalFrames - done);
+
+        for (size_t i = 0; i < n; i++) {
+            float t = (float)(done + (uint32_t)i) / (float)sr;
+            int16_t s = (int16_t)(sinf(2.0f * (float)M_PI * (float)freq * t) * (float)amp);
+
+            buf[2 * i]     = s;
+            buf[2 * i + 1] = s;
         }
 
-        size_t written;
-        i2s_channel_write(tx_chan, buffer, sizeof(buffer), &written, portMAX_DELAY);
-        elapsed += chunkDurationMs;
+        const size_t bytes = n * 2 * sizeof(int16_t);
+        i2s.write((uint8_t*)buf, bytes);
 
-        if (shouldStop()) {
-            break;
-        }
+        done += (uint32_t)n;
     }
 }
 
 void I2sService::playPcm(const int16_t* data, size_t numBytes) {
-    if (!initialized || data == nullptr || numBytes == 0) return;
+    if (!initialized || !isTx || data == nullptr || numBytes == 0) return;
 
-    size_t bytesWritten = 0;
-    i2s_channel_write(tx_chan, data, numBytes, &bytesWritten, portMAX_DELAY);
+    const size_t sampleCount = numBytes / sizeof(int16_t);
+
+    for (size_t i = 0; i < sampleCount; i++) {
+        int16_t s = data[i];
+        writeStereo16(s);
+    }
 }
 
 size_t I2sService::recordSamples(int16_t* outBuffer, size_t sampleCount) {
-    if (!initialized) return 0;
+    if (!initialized || outBuffer == nullptr || sampleCount == 0) return 0;
+
+    const size_t bytesToRead = sampleCount * sizeof(int16_t);
+    uint8_t* buffer = reinterpret_cast<uint8_t*>(outBuffer);
 
     size_t totalRead = 0;
-    size_t bytesToRead = sampleCount * sizeof(int16_t);
 
-    uint8_t* buffer = reinterpret_cast<uint8_t*>(outBuffer);
     while (totalRead < bytesToRead) {
-        size_t readBytes = 0;
-        i2s_channel_read(rx_chan, buffer + totalRead, bytesToRead - totalRead, &readBytes, portMAX_DELAY);
-        totalRead += readBytes;
+        int got = i2s.readBytes(reinterpret_cast<char*>(buffer + totalRead),
+                                bytesToRead - totalRead);
+
+        totalRead += (size_t)got;
     }
 
     return totalRead / sizeof(int16_t);
-}
-
-void I2sService::end() {
-    stop_and_delete(tx_chan);
-    stop_and_delete(rx_chan);
-    initialized = false;
-}
-
-bool I2sService::isInitialized() const {
-    return initialized;
 }
