@@ -373,3 +373,65 @@ std::vector<UartService::PinActivity> UartService::scanUartActivity(const std::v
 
     return out;
 }
+
+uint32_t UartService::detectBaudByEdge(
+    uint8_t pin,
+    uint32_t totalMs,
+    uint32_t windowMs,
+    uint32_t minEdges,
+    bool pullup
+) {
+    std::map<uint32_t, uint32_t> votes;
+    uint32_t bestBaud = 0;
+    uint32_t bestVotes = 0;
+
+    uint32_t consecutiveBaud = 0;
+    uint32_t consecutiveCount = 0;
+
+    unsigned long start = millis();
+
+    while (millis() - start < totalMs) {
+        auto a = measureUartActivity(pin, windowMs, pullup);
+
+        // not enough edges or no valid baud
+        if (a.edges < minEdges || a.approxBaud == 0) {
+            consecutiveBaud = 0;
+            consecutiveCount = 0;
+            continue;
+        }
+
+        // to closest standard baudrate
+        uint32_t approx = a.approxBaud;
+        uint32_t snapped = kBaudRates[0];
+        uint32_t bestDiff = (approx > snapped) ? (approx - snapped) : (snapped - approx);
+
+        for (size_t i = 1; i < kBaudRatesCount; i++) {
+            uint32_t b = kBaudRates[i];
+            uint32_t diff = (approx > b) ? (approx - b) : (b - approx);
+            if (diff < bestDiff) {
+                bestDiff = diff;
+                snapped = b;
+            }
+        }
+
+        votes[snapped]++;
+
+        // track best
+        if (votes[snapped] > bestVotes) {
+            bestVotes = votes[snapped];
+            bestBaud = snapped;
+        }
+
+        // check for consecutive agreement
+        if (snapped == consecutiveBaud) consecutiveCount++;
+        else {
+            consecutiveBaud = snapped;
+            consecutiveCount = 1;
+        }
+
+        if (consecutiveCount >= 2) return consecutiveBaud;
+        if (bestVotes >= 3) return bestBaud;
+    }
+
+    return 0;
+}

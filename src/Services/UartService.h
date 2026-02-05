@@ -10,6 +10,7 @@
 #include "soc/uart_periph.h"
 #include "Models/ByteCode.h"
 #include <SD.h>
+#include <map>
 
 #define UART_PORT UART_NUM_1
 
@@ -53,6 +54,7 @@ public:
                                               uint32_t windowMs = 100,
                                               uint32_t minEdges = 10,
                                               bool pullup = true);
+    uint32_t detectBaudByEdge(uint8_t pin, uint32_t totalMs = 5000, uint32_t windowMs = 300, uint32_t minEdges = 30, bool pullup = true);
 
 private:
     XModem xmodem;
@@ -66,4 +68,27 @@ private:
     inline static volatile uint32_t lastEdgeTimeUs = 0;
     inline static volatile uint32_t edgeIntervals[64] = {0};
     inline static volatile uint8_t intervalCount = 0;
+
+    inline static constexpr uint32_t kBaudRates[] = {
+        // Legacy 
+        110, 300, 600, 1200, 1800, 2000, 2400, 3600, 4800, 7200,
+        9600, 10400, 14400, 16000, 19200,
+
+        // Mid-range
+        28800, 31250, 32000, 33600, 38400,
+        56000, 57600, 64000, 76800,
+
+        // High 
+        100000, 115200, 125000, 128000, 153600,
+        200000, 230400, 250000, 256000, 307200,
+
+        // Very high
+        460800, 500000, 576000, 614400, 750000,
+        921600, 1000000, 1152000, 1228800, 1500000,
+
+        // Extreme
+        2000000, 2500000, 3000000, 3500000, 4000000
+    };
+
+    static constexpr size_t kBaudRatesCount = sizeof(kBaudRates) / sizeof(kBaudRates[0]);
 };
