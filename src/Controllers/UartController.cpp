@@ -273,118 +273,39 @@ void UartController::handleScan() {
 Autobaud
 */
 void UartController::handleAutoBaud() {
-    terminalView.println("UART Autobaud: in progress... Press [ENTER] to cancel");
-    terminalView.println("");
-    terminalView.println("[INFO]");
-    terminalView.println("  The UART autobaud attempts to detect the correct baudrate");
-    terminalView.println("  by iteratively switching speeds, sending predefined probes");
-    terminalView.println("");
-
+    uint8_t rxPin = state.getUartRxPin();
+    terminalView.println("UART Autobaud: Listening on RX GPIO " + std::to_string(rxPin) + " until detected..." + " Press [ENTER] to stop\n");
     uartService.clearUartBuffer();
 
-    for (int baud : baudrates) {
-        if (scanCancelled) return;
-        if (scanAtBaudrate(baud)) {
-            state.setUartBaudRate(baud);
-            uartService.switchBaudrate(baud);
-            terminalView.println("");
-            terminalView.println("UART Autobaud: Setting baudrate to UART config.");
+    while (true) {
+        char key = terminalInput.readChar();
+        if (key == '\r' || key == '\n') {
+            terminalView.println("UART Autobaud: Stopped by user.");
+            return;
+        }
+
+        uint32_t baud = uartService.detectBaudByEdge(
+            rxPin,
+            30,     // totalMs
+            10,    // windowMs
+            5,     // minEdges
+            true  // pullup
+        );
+
+        if (baud != 0) {
             terminalView.println("UART Autobaud: Baudrate detected " + std::to_string(baud));
-            terminalView.println("");
+            auto confirm = userInputManager.readYesNo("Save baudrate to config?", true);
+            if (confirm) {
+                state.setUartBaudRate(baud);
+                uartService.switchBaudrate(baud);
+                terminalView.println("UART Autobaud: Baudrate saved to config.\n");
+            } 
             return;
         }
     }
 
-    uartService.switchBaudrate(state.getUartBaudRate()); // restore previous
-    terminalView.println("UART Autobaud: No device detected.");
+    terminalView.println("UART Autobaud: Detection finished.");
     terminalView.println("");
-}
-
-bool UartController::scanAtBaudrate(int baud) {
-    const size_t maxResponseSize = 8192;
-    uartService.switchBaudrate(baud);
-    terminalView.println("→ Testing baudrate " + std::to_string(baud));
-    uartService.clearUartBuffer();
-
-    std::string response;
-    size_t asciiCount = 0;
-    size_t probeIndex = 0;
-    unsigned long start = millis();
-
-    while (millis() - start < 1500) {
-        char key = terminalInput.readChar();
-        if (key == '\r' || key == '\n') {
-            terminalView.println("\nUART Autobaud: Stopped by user.");
-            uartService.switchBaudrate(state.getUartBaudRate()); // restore previous
-            scanCancelled = true;
-            break;
-        }
-
-        sendNextProbe(probeIndex);
-        updateResponse(response, asciiCount, maxResponseSize);
-
-        if (isValidResponse(response, asciiCount)) {
-            terminalView.println("");
-            terminalView.println("Preview:");
-            auto cleaned = argTransformer.filterPrintable(response.substr(0, 100));
-            terminalView.println(cleaned + "...");
-            return true;
-        }
-
-        delay(10);
-    }
-
-    return false;
-}
-
-void UartController::sendNextProbe(size_t& probeIndex) {
-    if (probeIndex < probes.size()) {
-        uartService.write(probes[probeIndex]);
-        probeIndex++;
-    }
-}
-
-void UartController::updateResponse(std::string& response, size_t& asciiCount, size_t maxSize) {
-    unsigned long readStart = millis();
-    const unsigned long readTimeout = 150;  // ms
-    while (uartService.available() > 0 && millis() - readStart < readTimeout) {
-        char c = uartService.read();
-
-        if (response.length() >= maxSize) {
-            char dropped = response.front();
-            if (isprint(dropped) || isspace(dropped)) asciiCount--;
-            response.erase(0, 1);
-        }
-
-        if (isprint(c) || isspace(c)) asciiCount++;
-        response += c;
-    }
-}
-
-bool UartController::isValidResponse(const std::string& response, size_t asciiCount) {
-    if (response.empty()) return false;
-
-    float ratio = static_cast<float>(asciiCount) / response.size();
-    float entropy = computeEntropy(response);
-
-    bool plausibleLength = response.length() >= 32;
-    bool readableEnough = ratio >= 0.85f;
-    bool entropyOK = entropy >= 3.0f && entropy <= 7.5f;
-
-    return plausibleLength && readableEnough && entropyOK;
-}
-
-float UartController::computeEntropy(const std::string& data) {
-    std::unordered_map<char, size_t> freq;
-    for (char c : data)
-        freq[c]++;
-
-    float entropy = 0.0f;
-    for (auto& p : freq) {
-        float prob = static_cast<float>(p.second) / data.size();
-        entropy -= prob * std::log2(prob);
-    }
-    return entropy;
 }
 
 /*
