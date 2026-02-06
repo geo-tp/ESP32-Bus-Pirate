@@ -2,14 +2,11 @@
 
 DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView &deviceView,
                                        IInput &terminalInput, IInput &deviceInput,
-                                       IUsbService &usbService, IUsbController &usbController,
                                        LittleFsService &littleFsService)
     : terminalView(terminalView),
       deviceView(deviceView),
       terminalInput(terminalInput),
       deviceInput(deviceInput),
-      usbService(usbService),
-      usbController(usbController),
       littleFsService(littleFsService),
 
       // Services
@@ -39,6 +36,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       subGhzService(),
       rfidService(),
       rf24Service(),
+      usbService(),
 
       // Transformers
       commandTransformer(),
@@ -99,7 +97,8 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       subGhzController(terminalView, terminalInput, deviceView, subGhzService, pinService, i2sService, littleFsService, argTransformer, subGhzTransformer, userInputManager, subGhzAnalyzeManager, helpShell),
       rfidController(terminalView, terminalInput, rfidService, userInputManager, argTransformer, helpShell),
       rf24Controller(terminalView, terminalInput, deviceView, rf24Service, pinService, argTransformer, userInputManager, helpShell),
-      ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell, helpShell)
+      ethernetController(terminalView, terminalInput, deviceInput, wifiService, wifiScannerService, ethernetService, sshService, netcatService, nmapService, icmpService, nvsService, httpService, telnetService, argTransformer, jsonTransformer, userInputManager, modbusShell, helpShell),
+      usbController(terminalView, terminalInput, deviceInput, usbService, argTransformer, userInputManager, helpShell)
 {
 }
 
@@ -119,7 +118,7 @@ UartService &DependencyProvider::getUartService() { return uartService; }
 OneWireService &DependencyProvider::getOneWireService() { return oneWireService; }
 TwoWireService &DependencyProvider::getTwoWireService() { return twoWireService; }
 InfraredService &DependencyProvider::getInfraredService() { return infraredService; }
-IUsbService &DependencyProvider::getUsbService() { return usbService; }
+UsbS3Service &DependencyProvider::getUsbService() { return usbService; }
 SpiService &DependencyProvider::getSpiService() { return spiService; }
 HdUartService &DependencyProvider::getHdUartService() { return hdUartService; }
 PinService &DependencyProvider::getPinService() { return pinService; }
@@ -146,7 +145,7 @@ I2cController &DependencyProvider::getI2cController() { return i2cController; }
 OneWireController &DependencyProvider::getOneWireController() { return oneWireController; }
 UtilityController &DependencyProvider::getUtilityController() { return utilityController; }
 InfraredController &DependencyProvider::getInfraredController() { return infraredController; }
-IUsbController &DependencyProvider::getUsbController() { return usbController; }
+UsbS3Controller &DependencyProvider::getUsbController() { return usbController; }
 HdUartController &DependencyProvider::getHdUartController() { return hdUartController; }
 SpiController &DependencyProvider::getSpiController() { return spiController; }
 JtagController &DependencyProvider::getJtagController() { return jtagController; }

@@ -21,7 +21,6 @@
 #include <Selectors/HorizontalSelector.h>
 #include <Config/TerminalTypeConfigurator.h>
 #include <Config/WifiTypeConfigurator.h>
-#include <Config/UsbConfigurator.h>
 #include <Enums/TerminalTypeEnum.h>
 #include <States/GlobalState.h>
 
@@ -54,7 +53,7 @@ and then launches the main loop through the ActionDispatcher.
 */
 
 void setup() {    
-    #if defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
+    #if DEVICE_STICKS3
         // Setup the Stick
         #include <M5Unified.h>
         auto cfg = M5.config();
@@ -129,13 +128,10 @@ void setup() {
             auto baud = std::to_string(state.getSerialTerminalBaudRate());
             serialView.setBaudrate(state.getSerialTerminalBaudRate());
 
-            // Configure USB
-            auto usb = UsbConfigurator::configure(serialView, serialInput, deviceInput);
-
             // Build the provider for serial type and run the dispatcher loop
             // too big to fit on the stack anymore, allocated on the heap
             DependencyProvider* provider = new DependencyProvider(serialView, deviceView, serialInput, deviceInput, 
-                                                                  usb.usbService, usb.usbController, littleFsService);
+                                                                  littleFsService);
             ActionDispatcher dispatcher(*provider);
             dispatcher.setup(terminalType, baud);
             dispatcher.run(); // Forever
@@ -164,13 +160,10 @@ void setup() {
             wsServer.setupRoutes();
             httpServer.setupRoutes();
 
-            // Configure USB
-            auto usb = UsbConfigurator::configure(webView, webInput, deviceInput);
-
             // Build the provider for webui type and run the dispatcher loop
             // too big to fit on the stack anymore, allocated on the heap
             DependencyProvider* provider = new DependencyProvider(webView, deviceView, webInput, deviceInput, 
-                                                                  usb.usbService, usb.usbController, littleFsService);
+                                                                  littleFsService);
             ActionDispatcher dispatcher(*provider);
             
             dispatcher.setup(terminalType, webIp);
@@ -187,12 +180,9 @@ void setup() {
             CardputerDeviceView deviceView; // used for logic analyzer only
             S3DevKitInput deviceInput; // the G0 button of the cardputer
 
-            // Configure USB
-            auto usb = UsbConfigurator::configure(standaloneView, standaloneInput, deviceInput);
-
             // Build the provider for cardputer standalone and run the dispatcher loop
             DependencyProvider* provider = new DependencyProvider(standaloneView, deviceView, standaloneInput, deviceInput, 
-                                                                usb.usbService, usb.usbController, littleFsService);
+                                                                  littleFsService);
             ActionDispatcher dispatcher(*provider);
             dispatcher.setup(terminalType, "standalone");
             dispatcher.run(); // Forever

@@ -9,8 +9,6 @@ and injecting shared instances of core components
 #include "Interfaces/ITerminalView.h"
 #include "Interfaces/IDeviceView.h"
 #include "Interfaces/IInput.h"
-#include "Interfaces/IUsbController.h"
-#include "Interfaces/IUsbService.h"
 #include "Services/SdService.h"
 #include "Services/NvsService.h"
 #include "Services/LedService.h"
@@ -39,6 +37,7 @@ and injecting shared instances of core components
 #include "Services/RfidService.h"
 #include "Services/Rf24Service.h"
 #include "Services/LittleFsService.h"
+#include "Services/UsbS3Service.h"
 #include "Controllers/UartController.h"
 #include "Controllers/I2cController.h"
 #include "Controllers/OneWireController.h"
@@ -60,6 +59,7 @@ and injecting shared instances of core components
 #include "Controllers/EthernetController.h"
 #include "Controllers/RfidController.h"
 #include "Controllers/Rf24Controller.h"
+#include "Controllers/UsbS3Controller.h"
 #include "Transformers/TerminalCommandTransformer.h"
 #include "Transformers/InstructionTransformer.h"
 #include "Transformers/ArgTransformer.h"
@@ -93,8 +93,6 @@ class DependencyProvider
 public:
     DependencyProvider(ITerminalView &terminalView, IDeviceView &deviceView,
                        IInput &terminalInput, IInput &deviceInput,
-                       IUsbService &usbService,
-                       IUsbController &usbController,
                        LittleFsService &littleFsService);
 
     // Core Components
@@ -114,7 +112,7 @@ public:
     TwoWireService &getTwoWireService();
     ThreeWireService& getThreeWireService();
     InfraredService &getInfraredService();
-    IUsbService &getUsbService();
+    UsbS3Service &getUsbService();
     SpiService &getSpiService();
     HdUartService &getHdUartService();
     PinService &getPinService();
@@ -144,7 +142,7 @@ public:
     UtilityController &getUtilityController();
     OneWireController &getOneWireController();
     InfraredController &getInfraredController();
-    IUsbController &getUsbController();
+    UsbS3Controller &getUsbController();
     HdUartController &getHdUartController();
     SpiController &getSpiController();
     JtagController &getJtagController();
@@ -209,8 +207,6 @@ private:
     IDeviceView &deviceView;
     IInput &terminalInput;
     IInput &deviceInput;
-    IUsbService &usbService;
-    IUsbController &usbController;
     LittleFsService &littleFsService;
 
     // Services
@@ -244,6 +240,7 @@ private:
     SubGhzService subGhzService;
     RfidService rfidService;
     Rf24Service rf24Service;
+    UsbS3Service usbService;
 
     // Controllers
     UartController uartController;
@@ -266,6 +263,7 @@ private:
     SubGhzController subGhzController;
     RfidController rfidController;
     Rf24Controller rf24Controller;
+    UsbS3Controller usbController;
 
     // Transformers
     TerminalCommandTransformer commandTransformer;

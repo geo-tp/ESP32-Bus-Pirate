@@ -11,14 +11,16 @@ UsbS3Controller::UsbS3Controller(
     IInput& deviceInput,
     IUsbService& usbService,
     ArgTransformer& argTransformer,
-    UserInputManager& userInputManager
+    UserInputManager& userInputManager,
+    HelpShell& helpShell
 )
     : terminalView(terminalView),
       terminalInput(terminalInput),
       deviceInput(deviceInput),
       usbService(usbService),
       argTransformer(argTransformer),
-      userInputManager(userInputManager)
+      userInputManager(userInputManager),
+      helpShell(helpShell)
 {}
 
 /*
@@ -283,16 +285,7 @@ void UsbS3Controller::handleReset() {
 Help
 */
 void UsbS3Controller::handleHelp() {
-    terminalView.println("Unknown command. Available USB commands:");
-    terminalView.println("  stick");
-    terminalView.println("  keyboard");
-    terminalView.println("  keyboard <text>");
-    terminalView.println("  mouse <x> <y>");
-    terminalView.println("  mouse click");
-    terminalView.println("  mouse jiggle [ms]");
-    terminalView.println("  gamepad <key>, eg. A, B, LEFT...");
-    terminalView.println("  reset");
-    terminalView.println("  config");
+    helpShell.run(state.getCurrentMode(), false);
 }
 
 /*

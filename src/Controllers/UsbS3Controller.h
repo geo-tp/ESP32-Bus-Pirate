@@ -13,6 +13,7 @@
 #include "Managers/UserInputManager.h"
 #include "Interfaces/IUsbController.h"
 #include "Interfaces/IUsbService.h"
+#include "Shells/HelpShell.h"
 
 class UsbS3Controller: public IUsbController {
 public:
@@ -23,7 +24,8 @@ public:
         IInput& deviceInput,
         IUsbService& usbService, 
         ArgTransformer& argTransformer, 
-        UserInputManager& userInputManager
+        UserInputManager& userInputManager,
+        HelpShell& helpShell
     );
 
     // Entry point for handle raw terminal command
@@ -35,7 +37,6 @@ public:
 private:
     // Simulate USB mass storage mount
     void handleUsbStick();
-
 
     // Move the HID mouse cursor
     void handleMouseMove(const TerminalCommand& cmd);
@@ -78,6 +79,7 @@ private:
     ArgTransformer& argTransformer;
     GlobalState& state = GlobalState::getInstance();
     UserInputManager& userInputManager;
+    HelpShell& helpShell;
 };
 
 #endif
