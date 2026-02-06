@@ -244,7 +244,7 @@ void HelpShell::cmdDio() {
 void HelpShell::cmdLed() {
     printHeader("LED");
     static const char* const lines[] = {
-        "scan                 - Try to detect LEDs type",
+        // "scan                 - Try to detect LEDs type",
         "fill <color>         - Fill all LEDs with a color",
         "set <index> <color>  - Set specific LED color",
         "blink                - Blink all LEDs",

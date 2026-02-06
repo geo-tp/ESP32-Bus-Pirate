@@ -28,6 +28,7 @@ public:
 
 private:
     // Try to autodetect LED protocol by scanning different types
+    // TODO: Currently disabled due to RMT channel limitations with the new core
     void handleScan();
 
     // Fill all LEDs with a single color

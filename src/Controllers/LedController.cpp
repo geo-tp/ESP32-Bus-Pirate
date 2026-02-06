@@ -18,8 +18,12 @@ Command
 void LedController::handleCommand(const TerminalCommand& cmd) {
     if (cmd.getRoot() == "fill") {
         handleFill(cmd);
-    } else if (cmd.getRoot() == "scan") {
-        handleScan();
+
+    // Not possible anymore with the new core because of limited RMT channel
+    // Just disable it here in case a workaround is found later
+    // } else if (cmd.getRoot() == "scan") {
+    //     handleScan();
+
     } else if (cmd.getRoot() == "set") {
         handleSet(cmd);
     } else if (cmd.getRoot() == "reset") {
@@ -208,7 +212,6 @@ void LedController::handleConfig() {
     auto selectedProtocol = state.getLedProtocol();
     terminalView.println("Current protocol: '" + selectedProtocol + "'");
     terminalView.println("You can change it with 'setprotocol'");
-    terminalView.println("or try to detect it automatically with 'scan'");
 
     // Configure
     ledService.configure(defaultDataPin, defaultClockPin, length, selectedProtocol, brightness);
