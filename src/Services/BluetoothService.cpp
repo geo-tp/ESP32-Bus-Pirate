@@ -34,8 +34,11 @@ void BluetoothService::startServer(const std::string& deviceName) {
     BLEServer* server = BLEDevice::createServer();
     server->setCallbacks(new BluetoothServerCallbacks(*this));
 
+    // TEMP: Mouse disabled due to NimBLE bug when registering multiple HID reports
+    // with identical characteristic UUIDs (service not attached -> notify() crash)
+
     hid = new BLEHIDDevice(server);
-    mouseInput = hid->inputReport(1);
+    // mouseInput = hid->inputReport(1);
     keyboardInput = hid->inputReport(2);
 
     hid->manufacturer()->setValue("M5Stack");
@@ -286,63 +289,49 @@ bool BluetoothService::spoofMacAddress(const std::string& macStr) {
     return err == ESP_OK;
 }
 
-void BluetoothService::clearBondedDevices() {
-    // === NEW ===
-
-    ble_store_config_init();
-    ble_store_clear();
-    
-    // === OLD ===
-
-    // int dev_num = esp_ble_get_bond_device_num();
-    // if (dev_num == 0) return;
-
-    // esp_ble_bond_dev_t* bonded = (esp_ble_bond_dev_t*)malloc(sizeof(esp_ble_bond_dev_t) * dev_num);
-    // if (!bonded) return;
-
-    // if (esp_ble_get_bond_device_list(&dev_num, bonded) == ESP_OK) {
-    //     for (int i = 0; i < dev_num; ++i) {
-    //         esp_ble_remove_bond_device(bonded[i].bd_addr);
-    //     }
-    // }
-
-    // free(bonded);
-}
-
 void BluetoothService::PassiveAdvertisedDeviceCallbacks::onResult(BLEAdvertisedDevice advertisedDevice) {
-    // Basic infos
+
     String name = advertisedDevice.getName().isEmpty() ? "(unknown)" : advertisedDevice.getName();
     String addr = advertisedDevice.getAddress().toString();
     int rssi = advertisedDevice.getRSSI();
 
-    // Check type
-    std::string type;
-    if (isLikelyConnectable(advertisedDevice)) {
-        type = "Connectable    ";
-    } else {
-        type = "Non-Connectable";
-    }
+    std::string type = isLikelyConnectable(advertisedDevice)
+        ? "Connectable"
+        : "Non-Connectable";
 
-    // Build the log entry
-    std::string logEntry = "[BLE] " + std::string(addr.c_str()) + " | " + std::string(name.c_str()) + " | RSSI: " + std::to_string(rssi) + " | Type: " + type;
-
-    // Parse AD infos
-    std::string adParsed = parseAdTypes(advertisedDevice.getPayload(), advertisedDevice.getPayloadLength());
+    std::string adParsed = parseAdTypes(
+        advertisedDevice.getPayload(),
+        advertisedDevice.getPayloadLength()
+    );
 
     // No AD duplicate
     if (adParsed == lastAdParsed) return;
     lastAdParsed = adParsed;
 
-    // Ad AD infos to log
+    //  Build formatted frame
+    std::string logEntry;
+
+    logEntry += "[BLUETOOTH FRAME #" + std::to_string(receivedFramesCount+1) + "]\r\n";
+    logEntry += "  Addr : " + std::string(addr.c_str()) + "\r\n";
+    logEntry += "  Name : " + std::string(name.c_str()) + "\r\n";
+    logEntry += "  RSSI : " + std::to_string(rssi) + " dBm\r\n";
+    logEntry += "  Type : " + type + "\r\n";
+
     if (!adParsed.empty()) {
-        logEntry += " | " + adParsed;
+        logEntry += adParsed;
+        logEntry += "\r\n";
     }
 
-    // Add log to shared vector, erase the first element if max size is reach
+    //  Store
     portENTER_CRITICAL(&BluetoothService::bluetoothSniffMux);
-    if (bluetoothSniffLog.size() > 200) bluetoothSniffLog.erase(bluetoothSniffLog.begin());
+
+    if (bluetoothSniffLog.size() > 200)
+        bluetoothSniffLog.erase(bluetoothSniffLog.begin());
+
     BluetoothService::bluetoothSniffLog.push_back(logEntry);
     portEXIT_CRITICAL(&BluetoothService::bluetoothSniffMux);
+
+    receivedFramesCount++;
 }
 
 void BluetoothService::startPassiveBluetoothSniffing() {
@@ -351,7 +340,7 @@ void BluetoothService::startPassiveBluetoothSniffing() {
     }
 
     bleScan = BLEDevice::getScan();
-    bleScan->setAdvertisedDeviceCallbacks(new PassiveAdvertisedDeviceCallbacks(), true);
+    bleScan->setAdvertisedDeviceCallbacks(new PassiveAdvertisedDeviceCallbacks(), false);
     bleScan->setActiveScan(false);
     bleScan->start(0, nullptr);
 }
@@ -398,8 +387,13 @@ bool BluetoothService::isLikelyConnectable(BLEAdvertisedDevice& device) {
 }
 
 std::string BluetoothService::parseAdTypes(const uint8_t* payload, size_t len) {
-    std::string result;
+    std::string out;
     size_t i = 0;
+
+    auto addLine = [&](const std::string& s) {
+        if (!out.empty()) out += "\r\n";
+        out += "  " + s;   // indentation style
+    };
 
     while (i + 1 < len) {
         uint8_t field_len = payload[i];
@@ -408,112 +402,140 @@ std::string BluetoothService::parseAdTypes(const uint8_t* payload, size_t len) {
         uint8_t ad_type = payload[i + 1];
         const uint8_t* data = payload + i + 2;
 
-        std::string entry;
+        std::string line;
 
         switch (ad_type) {
             case 0x01: { // Flags
-                entry = "AD 0x01: Flags: ";
                 uint8_t flags = data[0];
-                if (flags & 0x01) entry += "LE Limited, ";
-                if (flags & 0x02) entry += "LE General, ";
-                if (flags & 0x04) entry += "BR/EDR Not Supported, ";
-                if (flags & 0x08) entry += "LE+BR/EDR (Controller), ";
-                if (flags & 0x10) entry += "LE+BR/EDR (Host), ";
-                if (!entry.empty() && entry.back() == ' ') entry.erase(entry.size() - 2); // remove ", "
+                line = "AD 0x01 Flags: ";
+                bool first = true;
+
+                auto addFlag = [&](const char* s) {
+                    if (!first) line += ", ";
+                    line += s;
+                    first = false;
+                };
+
+                if (flags & 0x01) addFlag("LE Limited");
+                if (flags & 0x02) addFlag("LE General");
+                if (flags & 0x04) addFlag("BR/EDR Not Supported");
+                if (flags & 0x08) addFlag("LE+BR/EDR (Controller)");
+                if (flags & 0x10) addFlag("LE+BR/EDR (Host)");
+                if (first) line += "(none)";
                 break;
             }
+
             case 0x02:
-            case 0x03: { // 16bit UUIDs
-                entry = "AD 0x03: UUID16: ";
-                for (int j = 0; j + 1 < field_len - 1; j += 2) {
+            case 0x03: { // 16-bit UUIDs
+                line = (ad_type == 0x02) ? "AD 0x02 UUID16 (incomplete): " : "AD 0x03 UUID16: ";
+                bool any = false;
+                for (int j = 0; j + 1 < (int)field_len - 1; j += 2) {
                     uint16_t uuid = data[j] | (data[j + 1] << 8);
-                    char uuidStr[8];
-                    snprintf(uuidStr, sizeof(uuidStr), "0x%04X ", uuid);
-                    entry += uuidStr;
+                    char buf[8];
+                    snprintf(buf, sizeof(buf), "0x%04X", uuid);
+                    if (any) line += " ";
+                    line += buf;
+                    any = true;
                 }
+                if (!any) line += "(empty)";
                 break;
             }
+
             case 0x06:
-            case 0x07: { // 128bit UUIDs
-                entry = "AD 0x07: UUID128: ";
-                for (int j = 0; j + 15 < field_len - 1; j += 16) {
+            case 0x07: { // 128-bit UUIDs
+                line = (ad_type == 0x06) ? "AD 0x06 UUID128 (incomplete): " : "AD 0x07 UUID128: ";
+                bool any = false;
+
+                for (int j = 0; j + 15 < (int)field_len - 1; j += 16) {
                     char uuidStr[40];
                     snprintf(uuidStr, sizeof(uuidStr),
-                        "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X ",
+                        "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X",
                         data[j+15], data[j+14], data[j+13], data[j+12],
                         data[j+11], data[j+10],
                         data[j+9], data[j+8],
                         data[j+7], data[j+6],
-                        data[j+5], data[j+4], data[j+3], data[j+2], data[j+1], data[j+0]);
-                    entry += uuidStr;
+                        data[j+5], data[j+4], data[j+3], data[j+2], data[j+1], data[j+0]
+                    );
+                    if (any) line += " ";
+                    line += uuidStr;
+                    any = true;
                 }
+                if (!any) line += "(empty)";
                 break;
             }
-            case 0x08: // Shortened Local Name
-            case 0x09: { // Complete Local Name
-                entry = "AD 0x09: Name: ";
-                entry.append(reinterpret_cast<const char*>(data), field_len - 1);
+
+            case 0x08:
+            case 0x09: { // Local Name
+                line = (ad_type == 0x08) ? "AD 0x08 Name (short): " : "AD 0x09 Name: ";
+                line.append(reinterpret_cast<const char*>(data), field_len - 1);
                 break;
             }
-            case 0x0A: { // Tx Power Level
-                entry = "AD 0x0A: Tx Power: ";
-                char val[6];
+
+            case 0x0A: { // Tx Power
+                line = "AD 0x0A Tx Power: ";
+                char val[16];
                 snprintf(val, sizeof(val), "%d dBm", (int8_t)data[0]);
-                entry += val;
+                line += val;
                 break;
             }
-            case 0x16: {
-                entry = "AD 0x16: ServiceData16: ";
-                // UUID16 + raw data
+
+            case 0x16: { // Service Data - 16-bit UUID
+                line = "AD 0x16 ServiceData16: ";
                 if (field_len >= 3) {
                     uint16_t uuid = data[0] | (data[1] << 8);
-                    char uuidStr[16];
-                    snprintf(uuidStr, sizeof(uuidStr), "UUID 0x%04X, Data: ", uuid);
-                    entry += uuidStr;
-                    for (int j = 2; j < field_len - 1; ++j) {
-                        char byteStr[4];
-                        snprintf(byteStr, sizeof(byteStr), "%02X ", data[j]);
-                        entry += byteStr;
+                    char head[24];
+                    snprintf(head, sizeof(head), "UUID 0x%04X Data:", uuid);
+                    line += head;
+
+                    for (int j = 2; j < (int)field_len - 1; ++j) {
+                        char b[4];
+                        snprintf(b, sizeof(b), " %02X", data[j]);
+                        line += b;
                     }
+                } else {
+                    line += "(too short)";
                 }
                 break;
             }
-            case 0xFF: { // Manufacturer Specific
-                entry = "AD 0xFF: Raw ";
-                for (int j = 0; j < field_len - 1; ++j) {
-                    char byteStr[4];
-                    snprintf(byteStr, sizeof(byteStr), "%02X ", data[j]);
-                    entry += byteStr;
+
+            case 0xFF: { // Manufacturer specific
+                line = "AD 0xFF Manufacturer: ";
+                if (field_len > 1) {
+                    for (int j = 0; j < (int)field_len - 1; ++j) {
+                        char b[4];
+                        snprintf(b, sizeof(b), "%02X", data[j]);
+                        line += b;
+                        if (j + 1 < (int)field_len - 1) line += " ";
+                    }
+                } else {
+                    line += "(empty)";
                 }
                 break;
             }
-            default: {
-                char typeLabel[24];
-                snprintf(typeLabel, sizeof(typeLabel), "AD 0x%02X: Raw ", ad_type);
-                entry = typeLabel;
-                for (int j = 0; j < field_len - 1; ++j) {
-                    char byteStr[4];
-                    snprintf(byteStr, sizeof(byteStr), "%02X ", data[j]);
-                    entry += byteStr;
+
+            default: { // Raw
+                char head[32];
+                snprintf(head, sizeof(head), "AD 0x%02X Raw:", ad_type);
+                line = head;
+
+                if (field_len > 1) {
+                    for (int j = 0; j < (int)field_len - 1; ++j) {
+                        char b[4];
+                        snprintf(b, sizeof(b), " %02X", data[j]);
+                        line += b;
+                    }
+                } else {
+                    line += " (empty)";
                 }
                 break;
             }
         }
 
-        // Trim space if needed
-        if (!entry.empty() && entry.back() == ' ') entry.pop_back();
-
-        // Add entry with separator
-        result += entry + " | ";
-
+        addLine(line);
         i += field_len + 1;
     }
 
-    // Remove trailing " | " if present
-    if (result.size() >= 3 && result.substr(result.size() - 3) == " | ")
-        result.erase(result.size() - 3);
-
-    return result;
+    return out; // multi-line, already indented
 }
 
 const uint8_t BluetoothService::HID_REPORT_MAP[] = {

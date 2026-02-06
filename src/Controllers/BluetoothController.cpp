@@ -227,6 +227,15 @@ void BluetoothController::handleMouse(const TerminalCommand& cmd) {
         return;
     }
 
+    // TEMPORARY TODO: Mouse HID report disabled.
+    // Creating multiple HID input reports with the same characteristic UUID
+    // currently causes the second report to be attached without a valid service
+    // in NimBLE, leading to a crash on notify().
+    // Until the root cause is fixed in the BLE HID stack, we only enable
+    // a single HID report (keyboard).
+    terminalView.println("Bluetooth Mouse: HID report currently unavailable due to issues.\n");
+    return;
+
     // mouse click
     if (cmd.getSubcommand() == "click") {
         bluetoothService.clickMouse();
