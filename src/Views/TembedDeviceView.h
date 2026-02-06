@@ -121,7 +121,7 @@ private:
   LGFX_Tembed tft;
   //   lgfx::LGFX_Sprite canvas; // Not used currently, memory consumption is too high
   uint8_t brightnessPct = 100;
-  SPIClass screenSpi{FSPI};
+  SPIClass screenSpi{HSPI}; // or FSPI
 
   void drawCenterText(const std::string& text, int y, int fontSize);
   void welcomeWeb(const std::string& ip);
