@@ -29,7 +29,7 @@ bool EEPROM_SPI_WE::init(uint8_t sckPin, uint8_t misoPin, uint8_t mosiPin, uint8
     smallEEPROM = false;
     memSize = 0;
 
-    if (wpPin != 999) {
+    if (wpPin != 255) {
         pinMode(wpPin, OUTPUT);
         digitalWrite(wpPin, HIGH);
     }
@@ -166,10 +166,10 @@ void EEPROM_SPI_WE::writeProtect(eeprom_writeProtect sectors){
 
 void EEPROM_SPI_WE::protectStatusRegister(bool protect){
     uint8_t statusReg = eepromReadStatusReg();
-    if(!protect && (wpPin != 999)){
+    if(!protect && (wpPin != 255)){
         digitalWrite(wpPin, HIGH);
     }
-    else if(protect && (wpPin != 999)){
+    else if(protect && (wpPin != 255)){
         statusReg |= 0x80;
         eepromWriteEnable();
         eepromWriteStatusReg(statusReg);

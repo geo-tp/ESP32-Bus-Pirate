@@ -31,7 +31,7 @@ public:
     void writeFlashPatch(uint32_t address, const std::vector<uint8_t>& data, uint32_t freq);
 
     // EEPROM
-    bool initEeprom(uint8_t mosi, uint8_t miso, uint8_t sclk, uint8_t cs, uint16_t pageSize, uint32_t memSize, uint16_t wp=999, bool small=false);
+    bool initEeprom(uint8_t mosi, uint8_t miso, uint8_t sclk, uint8_t cs, uint16_t pageSize, uint32_t memSize, uint16_t wp=255, bool small=false);
     bool probeEeprom();
     bool writeEeprom(uint32_t address, uint8_t value);
     uint8_t readEeprom(uint32_t address);
@@ -59,7 +59,7 @@ public:
 private:
     uint8_t csPin;
     uint32_t spiFrequency = 1000000;
-    EEPROM_SPI_WE eeprom = EEPROM_SPI_WE(&SPI, SPI_CS_PIN, 999, 8000000);
+    EEPROM_SPI_WE* eeprom = nullptr;
     bool eepromInitialized = false;
     uint32_t eepromFrequency = 8000000;
 

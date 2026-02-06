@@ -328,12 +328,15 @@ bool SpiService::initEeprom(
     if (eepromInitialized) return true;
     SPI.end();
 
+   // Crée l'objet au moment de l'init (comme tu veux)
+    eeprom = new EEPROM_SPI_WE(&SPI, cs, wp, eepromFrequency);
+
     // Init eeprom
-    if (!eeprom.init(sclk, miso, mosi, cs, wp)) return false;
+    if (!eeprom->init(sclk, miso, mosi, cs, wp)) return false;
 
     // Size
-    eeprom.setMemorySize((eeprom_size_t)memSize);
-    eeprom.setPageSize(
+    eeprom->setMemorySize((eeprom_size_t)memSize);
+    eeprom->setPageSize(
         pageSize == 16  ? EEPROM_PAGE_SIZE_16  :
         pageSize == 32  ? EEPROM_PAGE_SIZE_32  :
         pageSize == 64  ? EEPROM_PAGE_SIZE_64  :
@@ -342,7 +345,7 @@ bool SpiService::initEeprom(
     );
 
     if (small) {
-        eeprom.setSmallEEPROM();
+        eeprom->setSmallEEPROM();
     }
 
     eepromInitialized = true;
@@ -351,24 +354,24 @@ bool SpiService::initEeprom(
 
 bool SpiService::probeEeprom() {
     if (!eepromInitialized) return false;
-    return eeprom.probe();
+    return eeprom->probe();
 }
 
 bool SpiService::writeEeprom(uint32_t address, uint8_t value) {
     if (!eepromInitialized) return false;
-    eeprom.write(address, value);
+    eeprom->write(address, value);
     return true;
 }
 
 uint8_t SpiService::readEeprom(uint32_t address) {
     if (!eepromInitialized) return 0xFF;
-    return eeprom.read(address);
+    return eeprom->read(address);
 }
 
 bool SpiService::writeEepromBuffer(uint32_t address, const uint8_t* data, size_t len) {
     if (!eepromInitialized) return false;
     for (size_t i = 0; i < len; ++i) {
-        eeprom.write(address + i, data[i]);
+        eeprom->write(address + i, data[i]);
     }
     return true;
 }
@@ -376,64 +379,68 @@ bool SpiService::writeEepromBuffer(uint32_t address, const uint8_t* data, size_t
 bool SpiService::readEepromBuffer(uint32_t address, uint8_t* buffer, size_t len) {
     if (!eepromInitialized) return false;
     for (size_t i = 0; i < len; ++i) {
-        buffer[i] = eeprom.read(address + i);
+        buffer[i] = eeprom->read(address + i);
     }
     return true;
 }
 
 bool SpiService::writeEepromInt(uint32_t address, int32_t value) {
     if (!eepromInitialized) return false;
-    eeprom.put(address, value);
+    eeprom->put(address, value);
     return true;
 }
 
 int32_t SpiService::readEepromInt(uint32_t address) {
     if (!eepromInitialized) return 0;
     int32_t value = 0;
-    eeprom.get(address, value);
+    eeprom->get(address, value);
     return value;
 }
 
 bool SpiService::writeEepromFloat(uint32_t address, float value) {
     if (!eepromInitialized) return false;
-    eeprom.put(address, value);
+    eeprom->put(address, value);
     return true;
 }
 
 float SpiService::readEepromFloat(uint32_t address) {
     if (!eepromInitialized) return 0.0f;
     float value = 0.0f;
-    eeprom.get(address, value);
+    eeprom->get(address, value);
     return value;
 }
 
 bool SpiService::writeEepromString(uint32_t address, const std::string& str) {
     if (!eepromInitialized) return false;
     String arduinoStr = String(str.c_str()); 
-    eeprom.putString(address, arduinoStr);
+    eeprom->putString(address, arduinoStr);
     return true;
 }
 
 bool SpiService::readEepromString(uint32_t address, std::string& str) {
     if (!eepromInitialized) return false;
     String arduinoStr = String(str.c_str());
-    eeprom.getString(address, arduinoStr);
+    eeprom->getString(address, arduinoStr);
     return true;
 }
 
 void SpiService::eraseEepromChip() {
-    if (eepromInitialized) eeprom.eraseCompleteEEPROM();
+    if (eepromInitialized) eeprom->eraseCompleteEEPROM();
 }
 
 void SpiService::eraseEepromSector(uint32_t address) {
-    if (eepromInitialized) eeprom.eraseSector(address);
+    if (eepromInitialized) eeprom->eraseSector(address);
 }
 
 void SpiService::eraseEepromPage(uint32_t address) {
-    if (eepromInitialized) eeprom.erasePage(address);
+    if (eepromInitialized) eeprom->erasePage(address);
 }
 
 void SpiService::closeEeprom() {
     eepromInitialized = false;
-    eeprom = EEPROM_SPI_WE(); 
+
+    if (eeprom) {
+        delete eeprom;
+        eeprom = nullptr;
+    }
 }

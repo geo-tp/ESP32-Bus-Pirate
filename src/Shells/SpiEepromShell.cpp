@@ -37,7 +37,7 @@ void SpiEepromShell::run() {
     auto miso = state.getSpiMISOPin();
     auto sclk = state.getSpiCLKPin();
     auto cs = state.getSpiCSPin();
-    auto wp = 999; // Default write protect pin
+    auto wp = 255; // Default write protect pin
     
     // Initialize EEPROM
     bool ok = spiService.initEeprom(mosi, miso, sclk, cs, pageSize, eepromSize, wp, isSmall);
@@ -46,6 +46,8 @@ void SpiEepromShell::run() {
         terminalView.println("HOLD pin must be connected to VCC to detect EEPROM.\n");
         return;
     }
+
+    terminalView.println("\n✅ EEPROM initialized successfully.");
 
     while (true) {
         terminalView.println("\n=== SPI EEPROM Shell ===");
