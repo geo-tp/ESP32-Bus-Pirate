@@ -515,18 +515,12 @@ void OneWireController::handleTemperature() {
 EEPROM
 */
 void OneWireController::handleEeprom() {
-    #ifndef DEVICE_M5STICK
-        terminalView.println("OneWire EEPROM: EEPROM Shell starts...");
-        oneWireService.close();
-        oneWireService.configureEeprom(state.getOneWirePin());
-        eepromShell.run();
-        oneWireService.closeEeprom();
-        ensureConfigured();
-
-    #else
-        // No space left for the eeprom lib
-        terminalView.println("OneWire EEPROM: Not supported on M5STICK.");
-    #endif
+    terminalView.println("OneWire EEPROM: EEPROM Shell starts...");
+    oneWireService.close();
+    oneWireService.configureEeprom(state.getOneWirePin());
+    eepromShell.run();
+    oneWireService.closeEeprom();
+    ensureConfigured();
 }
 
 /*

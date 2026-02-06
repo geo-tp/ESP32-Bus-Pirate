@@ -1,6 +1,3 @@
-
-#ifndef DEVICE_M5STICK
-
 #include "UsbS3Service.h"
 
 UsbS3Service::UsbS3Service()
@@ -246,5 +243,3 @@ void UsbS3Service::reset() {
         gamepadActive = false;
     }
 }
-
-#endif

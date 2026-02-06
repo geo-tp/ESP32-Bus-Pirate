@@ -116,8 +116,6 @@ void SysInfoShell::cmdMemory() {
     snprintf(line, sizeof(line), "Stack total       : %.2f KB", totKB);
     terminalView.println(line);
 
-    #ifndef DEVICE_M5STICK // M5StickC has no more IRAM left to handle this
-
     size_t stUsed = systemService.getStackUsed();
     float usedKB = stUsed / 1024.0f;
     float freeKB = (stTot > stUsed ? (stTot - stUsed) : 0) / 1024.0f;
@@ -127,8 +125,6 @@ void SysInfoShell::cmdMemory() {
     terminalView.println(line);
     snprintf(line, sizeof(line), "Stack used        : %.2f KB (%.0f%%)", usedKB, pct);
     terminalView.println(line);
-
-    #endif
 
     // Heap
     const size_t heapTotal = systemService.getHeapTotal();

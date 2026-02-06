@@ -123,36 +123,27 @@ void WifiOpenScannerService::processOneNetwork(int idx) {
     unsigned long connectMs = 0;
     const unsigned long timeoutMs = 12000;
 
-    // IRAM overflow at compile time on M5Stick, so skip connection check
-    #ifdef DEVICE_M5STICK
-        char line[256];
+    const bool ok = connectToNetwork(ssid, /*isOpen=*/true, timeoutMs, ip, connectMs);
+    if (!ok) {
+        char line[320];
         snprintf(line, sizeof(line),
-                "[SKIP] SSID=\"%s\" ENC=%s -> Open. Can't check internet access on M5Stick",
-                ssid.c_str(), encToStr(enc));
+                "[TRY]  SSID=\"%s\" ENC=%s -> connect FAILED (%lums)",
+                ssid.c_str(), encToStr(enc), connectMs);
         pushProbeLog(line);
-    #else
-        const bool ok = connectToNetwork(ssid, /*isOpen=*/true, timeoutMs, ip, connectMs);
-        if (!ok) {
-            char line[320];
-            snprintf(line, sizeof(line),
-                    "[TRY]  SSID=\"%s\" ENC=%s -> connect FAILED (%lums)",
-                    ssid.c_str(), encToStr(enc), connectMs);
-            pushProbeLog(line);
-            safeDisconnect();
+        safeDisconnect();
 
-            // Test HTTP/Internet
-            int httpCode = -1; unsigned long httpMs = 0;
-            const bool internet = performHttpCheck(httpCode, httpMs);
+        // Test HTTP/Internet
+        int httpCode = -1; unsigned long httpMs = 0;
+        const bool internet = performHttpCheck(httpCode, httpMs);
 
-            snprintf(line, sizeof(line),
-                    "[TRY]  SSID=\"%s\" ENC=%s -> CONNECTED ip=%s (connect %lums) HTTP=%d (%s, %lums)",
-                    ssid.c_str(), encToStr(enc), ip.c_str(), connectMs, httpCode,
-                    internet ? "Internet OK" : "No Internet", httpMs);
-            pushProbeLog(line);
+        snprintf(line, sizeof(line),
+                "[TRY]  SSID=\"%s\" ENC=%s -> CONNECTED ip=%s (connect %lums) HTTP=%d (%s, %lums)",
+                ssid.c_str(), encToStr(enc), ip.c_str(), connectMs, httpCode,
+                internet ? "Internet OK" : "No Internet", httpMs);
+        pushProbeLog(line);
 
-            safeDisconnect(50);
-        }
-    #endif
+        safeDisconnect(50);
+    }
 }
 
 bool WifiOpenScannerService::connectToNetwork(const std::string& ssid,

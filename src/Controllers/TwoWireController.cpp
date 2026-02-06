@@ -41,10 +41,6 @@ void TwoWireController::handleInstruction(const std::vector<ByteCode>& bytecodes
 Sniff
 */
 void TwoWireController::handleSniff() {
-
-    // IRAM overflow for M5tick, not enough space left in IRAM
-    #ifndef DEVICE_M5STICK
-
     ensureConfigured();
     terminalView.println("2WIRE Sniffer: Running on CLK/IO... Press [ENTER] to stop\r\n");
 
@@ -114,12 +110,6 @@ void TwoWireController::handleSniff() {
 
     twoWireService.stopSniffer();
     terminalView.println("\r\n2WIRE Sniffer: Stopped by user.");
-
-    #else
-
-    terminalView.println("\r\n2WIRE Sniffer: M5Stick not supported.");
-
-    #endif
 }
 
 /*

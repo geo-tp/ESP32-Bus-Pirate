@@ -50,13 +50,6 @@ void SpiController::handleInstruction(const std::vector<ByteCode>& bytecodes) {
 Sniff
 */
 void SpiController::handleSniff() {
-    #ifdef DEVICE_M5STICK
-
-        terminalView.println("SPI Sniffer: Not supported on M5Stick devices due to shared SPI bus.");
-        return;
-
-    #endif
-
     // Select line
     std::vector<std::string> choices = { " MOSI", " MISO" };
     int choice = userInputManager.readValidatedChoiceIndex("Select line to sniff", choices, 0);
@@ -132,13 +125,6 @@ void SpiController::handleEeprom(const TerminalCommand& cmd) {
 Slave
 */
 void SpiController::handleSlave() {
-    #ifdef DEVICE_M5STICK
-
-    terminalView.println("SPI Slave: Not supported on M5Stick devices due to shared SPI bus.");
-    return;
-
-    #endif
-
     spiService.end(); // Stop master mode if active
     
     int sclk = state.getSpiCLKPin();

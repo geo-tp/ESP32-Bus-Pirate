@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
+#if defined(DEVICE_STICKS3)
 
 
 #include <M5Unified.h>
@@ -8,7 +8,6 @@
 #include "Interfaces/IInput.h"
 #include "InputKeys.h"
 
-// M5Stick C PLUS 2 inputs
 class StickInput : public IInput {
 public:
     StickInput();

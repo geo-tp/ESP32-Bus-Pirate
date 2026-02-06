@@ -1,5 +1,3 @@
-#ifndef DEVICE_M5STICK 
-
 #include "UsbS3Controller.h"
 
 /*
@@ -297,5 +295,3 @@ void UsbS3Controller::ensureConfigured() {
         configured = true;
     }
 }
-
-#endif

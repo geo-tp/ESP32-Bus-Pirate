@@ -353,9 +353,7 @@ void BluetoothController::handleReset() {
 Config
 */
 void BluetoothController::handleConfig() {
-    #ifdef DEVICE_M5STICK
-        bluetoothService.releaseBtClassic();
-    #endif
+    // bluetoothService.releaseBtClassic();
 }
 
 /*

@@ -1,7 +1,5 @@
 #pragma once
 
-#ifndef DEVICE_M5STICK
-
 #include <sstream>
 #include <Arduino.h>
 #include "Interfaces/ITerminalView.h"
@@ -81,5 +79,3 @@ private:
     UserInputManager& userInputManager;
     HelpShell& helpShell;
 };
-
-#endif

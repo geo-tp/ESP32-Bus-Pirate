@@ -342,7 +342,6 @@ void NmapService::scanTarget(const std::string &host, const std::vector<uint16_t
     this->report.append("Nmap scan report for ").append(host).append(" (").append(ipStr).append(")\r\n");
 
     if (icmpService != nullptr) {
-        #ifndef DEVICE_M5STICK
         icmpService->startPingTask(host, 1, 1000, 200);
         while (!icmpService->isPingReady()) vTaskDelay(pdMS_TO_TICKS(50));
         if (icmpService->lastRc() == ping_rc_t::ping_ok) {
@@ -351,13 +350,6 @@ void NmapService::scanTarget(const std::string &host, const std::vector<uint16_t
             this->report.append("Host is down.\r\n");
             return;
         }
-        #else
-        const unsigned long t0 = millis();
-        const bool ok = Ping.ping(host.c_str(), 1);
-        const unsigned long t1 = millis();
-        if (ok) this->report.append("Host is up (").append(std::to_string(t1 - t0)).append("ms latency).\r\n");
-        else { this->report.append("Host is down.\r\n"); return; }
-        #endif
     } else {
         this->report.append("Error: ICMP service not available.\r\n");
         return;

@@ -1,4 +1,4 @@
-#if defined(DEVICE_CARDPUTER) || defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
+#if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
 
 #include "M5DeviceView.h"
 #include "Data/WelcomeScreen.h"

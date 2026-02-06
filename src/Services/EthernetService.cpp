@@ -50,11 +50,6 @@ void EthernetService::ensureStacksInited() {
 }
 
 bool EthernetService::configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8_t pinMISO, int8_t pinMOSI, uint8_t pinIRQ, uint32_t spiHz, const std::array<uint8_t,6>& chosenMac) {
-    #ifdef DEVICE_M5STICK
-        ESP_LOGE(TAG, "M5Stick not supported");
-        return false;
-    #else
-    
     if (_configured) {
         return true; // already configured
     }
@@ -160,8 +155,6 @@ bool EthernetService::configure(int8_t pinCS, int8_t pinRST, int8_t pinSCK, int8
     if (e6 != ESP_OK) { LOG_ERR("handler IP_EVENT register", e6); return false; }
 
     _configured = true;
-
-    #endif
 
     return true;
 }

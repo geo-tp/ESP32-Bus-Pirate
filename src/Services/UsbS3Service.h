@@ -1,7 +1,5 @@
 #pragma once
 
-#ifndef DEVICE_M5STICK 
-
 #include <Arduino.h>
 #include <USB.h>
 #include <USBMSC.h>
@@ -74,5 +72,3 @@ private:
 
     void setupStorageEvent();
 };
-
-#endif

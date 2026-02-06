@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(DEVICE_CARDPUTER) || defined(DEVICE_M5STICK) || defined(DEVICE_STICKS3)
+#if defined(DEVICE_CARDPUTER) || defined(DEVICE_STICKS3)
 
 #include <algorithm>
 #include <M5Unified.h>

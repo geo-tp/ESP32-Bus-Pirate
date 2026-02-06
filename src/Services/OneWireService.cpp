@@ -154,10 +154,6 @@ bool OneWireService::search(uint8_t* rom) {
     return oneWire->search(rom);
 }
 
-// EEPROM, not supported on M5STICK
-
-#ifndef DEVICE_M5STICK
-
 void OneWireService::configureEeprom(uint8_t pin) {
     if (owEeprom) {
         delete owEeprom;
@@ -317,5 +313,3 @@ bool OneWireService::getEepromModelInfos(uint8_t* romId, std::string& model, uin
             return false;
     }
 }
-
-#endif

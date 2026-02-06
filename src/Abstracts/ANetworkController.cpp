@@ -60,8 +60,6 @@ void ANetworkController::handlePing(const TerminalCommand &cmd)
         return;
     }   
     
-    #ifndef DEVICE_M5STICK
-
     auto args = argTransformer.splitArgs(cmd.getArgs());
     int pingCount = 5, pingTimeout = 1000, pingInterval = 200;
 
@@ -100,22 +98,6 @@ void ANetworkController::handlePing(const TerminalCommand &cmd)
         vTaskDelay(pdMS_TO_TICKS(50));
 
     terminalView.print(icmpService.getReport());
-
-
-    #else  
-
-    // Using ESP32Ping library to avoid IRAM overflow
-
-    const unsigned long t0 = millis();
-    const bool ok = Ping.ping(host.c_str(), 1);
-    const unsigned long t1 = millis();
-    if (ok) {
-        terminalView.println("Ping: " + host + " successful, " + std::to_string(t1 - t0) + " ms");
-    } else {
-        terminalView.println("Ping: " + host + " failed.");
-    }
-
-    #endif
 }
 
 /*
@@ -411,8 +393,6 @@ HTTP
 */
 void ANetworkController::handleHttp(const TerminalCommand &cmd)
 {
-    #ifndef DEVICE_M5STICK
-
     // Check connection
     if (!wifiService.isConnected() && !ethernetService.isConnected())
     {
@@ -441,12 +421,6 @@ void ANetworkController::handleHttp(const TerminalCommand &cmd)
     } else {
         terminalView.println("Usage: http <get|post|put|delete> <url>");
     }
-
-    #else
-
-    terminalView.println("HTTP: M5Stick is not supported.");
-
-    #endif
 }
 
 /*
@@ -549,8 +523,6 @@ Lookup
 */
 void ANetworkController::handleLookup(const TerminalCommand& cmd)
 {
-    # ifndef DEVICE_M5STICK
-
     if (!wifiService.isConnected() && !ethernetService.isConnected()) {
         terminalView.println("Lookup: You must be connected to Wi-Fi or Ethernet. Use 'connect' first.");
         return;
@@ -565,12 +537,6 @@ void ANetworkController::handleLookup(const TerminalCommand& cmd)
         terminalView.println("Usage: lookup mac <addr>");
         terminalView.println("       lookup ip <addr or url>");
     }
-
-    #else
-
-    terminalView.println("Lookup: M5Stick is not supported.");
-
-    #endif
 }
 
 /*

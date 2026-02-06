@@ -1,7 +1,0 @@
-# It seems that the m5stick-c environment only uses 4 MB out of the 8 MB available
-
-# Name,   Type, SubType, Offset,   Size,     Flags
-nvs,      data, nvs,     0x9000,   0x5000,
-app0,     app,  factory, 0x10000,  0x380000,
-spiffs,   data, spiffs,  0x390000, 0x60000,
-coredump, data, coredump,0x3F0000, 0x10000,
