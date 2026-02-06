@@ -21,20 +21,10 @@ bool SubGhzService::configure(SPIClass& spi, uint8_t sck, uint8_t miso, uint8_t 
     #ifdef DEVICE_TEMBEDS3CC1101
 
     initTembed();
-    ELECHOUSE_cc1101.setSPIinstance(&spi);
-
-    #elif defined(DEVICE_M5STICK) || defined(DEVICE_CARDPUTER)
-
-    SPI.end();
-    delay(10);
-    SPI.begin(sck_, miso_, mosi_, ss_);
-    ELECHOUSE_cc1101.setSPIinstance(&SPI);
-
-    #else
-
-    ELECHOUSE_cc1101.setSPIinstance(&spi);
 
     #endif
+    
+    ELECHOUSE_cc1101.setSPIinstance(&SPI);
 
     // Initialize CC1101
     ELECHOUSE_cc1101.setSpiPin(sck_, miso_, mosi_, ss_);
