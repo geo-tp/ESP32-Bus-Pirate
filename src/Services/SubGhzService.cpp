@@ -21,7 +21,7 @@ bool SubGhzService::configure(SPIClass& spi, uint8_t sck, uint8_t miso, uint8_t 
     #ifdef DEVICE_TEMBEDS3CC1101
 
     initTembed();
-    // ELECHOUSE_cc1101.setSPIinstance(&spi);
+    ELECHOUSE_cc1101.setSPIinstance(&spi);
 
     #else
 
