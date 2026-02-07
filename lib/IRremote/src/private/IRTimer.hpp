@@ -1542,14 +1542,42 @@ void disableSendPWMByTimer() {
 void timerConfigForSend(uint16_t aFrequencyKHz) {
 #    if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0)
 #      if defined(IR_SEND_PIN)
-    ledcAttach(IR_SEND_PIN, aFrequencyKHz * 1000, 8); // 3.x API
-#      else
-    if(sLastSendPin != 0 && sLastSendPin != IrSender.sendPin){
-        ledcDetach(IrSender.sendPin); // detach pin before new attaching see #1194
+
+    static bool sAttached = false;
+    static uint16_t sLastKHz = 0;
+
+    if (!sAttached) {
+        ledcAttach(IR_SEND_PIN, aFrequencyKHz * 1000, 8);
+        sAttached = true;
+        sLastKHz = aFrequencyKHz;
+    } else if (sLastKHz != aFrequencyKHz) {
+        // Reconfigure frequency safely
+        ledcDetach(IR_SEND_PIN);
+        ledcAttach(IR_SEND_PIN, aFrequencyKHz * 1000, 8);
+        sLastKHz = aFrequencyKHz;
     }
-    ledcAttach(IrSender.sendPin, aFrequencyKHz * 1000, 8); // 3.x API
-    sLastSendPin = IrSender.sendPin;
-#      endif
+
+#      else
+
+    static uint16_t sLastKHz = 0;
+
+    if (sLastSendPin == 0) {
+        // First attach
+        ledcAttach(IrSender.sendPin, aFrequencyKHz * 1000, 8);
+        sLastSendPin = IrSender.sendPin;
+        sLastKHz = aFrequencyKHz;
+
+    } else if (sLastSendPin != IrSender.sendPin || sLastKHz != aFrequencyKHz) {
+        // Pin/freq changed, detach OLD pin, attach NEW pin
+        ledcDetach(sLastSendPin);
+        ledcAttach(IrSender.sendPin, aFrequencyKHz * 1000, 8);
+        sLastSendPin = IrSender.sendPin;
+        sLastKHz = aFrequencyKHz;
+    }
+    // Same pin + same freq, do nothing
+
+#    endif
+
 #    else
     // ESP version < 3.0
     ledcSetup(SEND_LEDC_CHANNEL, aFrequencyKHz * 1000, 8);  // 8 bit PWM resolution
