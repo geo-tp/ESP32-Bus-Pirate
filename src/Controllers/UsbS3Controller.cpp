@@ -7,7 +7,7 @@ UsbS3Controller::UsbS3Controller(
     ITerminalView& terminalView,
     IInput& terminalInput,
     IInput& deviceInput,
-    IUsbService& usbService,
+    UsbS3Service& usbService,
     ArgTransformer& argTransformer,
     UserInputManager& userInputManager,
     HelpShell& helpShell
@@ -29,6 +29,7 @@ void UsbS3Controller::handleCommand(const TerminalCommand& cmd) {
     else if (cmd.getRoot() == "keyboard") handleKeyboard(cmd);
     else if (cmd.getRoot() == "mouse") handleMouse(cmd);
     else if (cmd.getRoot() == "gamepad") handleGamepad(cmd);
+    else if (cmd.getRoot() == "host") handleHost();
     else if (cmd.getRoot() == "reset") handleReset();
     else if (cmd.getRoot() == "config") handleConfig();
     else handleHelp();
@@ -79,7 +80,6 @@ void UsbS3Controller::handleKeyboardBridge() {
     }    
 
     terminalView.println("USB Keyboard: Bridge started.. Press [ANY ESP32 BUTTON] to stop.");
-
 
     while (true) {
         // Esp32 button to stop
@@ -269,6 +269,46 @@ void UsbS3Controller::handleConfig() {
     terminalView.println("\n[WARNING] If you're using USB Serial terminal mode,");
     terminalView.println("          using USB commands may interrupt the session.");
     terminalView.println("          Use Web UI or restart if connection is lost.\n");
+}
+
+/*
+Host
+*/
+void UsbS3Controller::handleHost() {
+    if (!usbService.isHostActive()) {
+        terminalView.println("USB Host: Once started, you cannot use USB HID features until restart.");
+        auto confirm = userInputManager.readYesNo("\nSwitch to host to connect USB Devices to the ESP32?", false);
+        if (!confirm) {
+            terminalView.println("USB Host: Action cancelled by user.\n");
+            return;
+        }
+    }
+
+    if (!usbService.usbHostBegin()) {
+        terminalView.println("USB Host: Failed to start.\n");
+        return;
+    }
+
+    terminalView.println("");
+    terminalView.println("USB Host: Starting... Plug a USB device to the ESP32. Press [ENTER] to stop.\n");
+    terminalView.println("[INFO] USB Host will print connected device info and descriptors.");
+    terminalView.println("       This feature works only with USB *devices* (peripherals),");
+    terminalView.println("       such as keyboards, mice, gamepads, USB adapters, etc.\n");
+
+    while (true) {
+        char c = terminalInput.readChar();
+        if (c == '\r' || c == '\n') break;
+
+        std::string msg = usbService.usbHostTick();
+        if (!msg.empty()) {
+            terminalView.println(msg);
+        }
+
+    }
+
+    // TODO: usbService.usbHostEnd(); can't be called because it will stop the host 
+    // and make the USB interface instable, find a way to switch back to default mode
+    terminalView.println("\nUSB Host: Stopped by user.\n");
 }
 
 /*

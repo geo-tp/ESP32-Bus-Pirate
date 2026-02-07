@@ -9,18 +9,17 @@
 #include "States/GlobalState.h"
 #include "Transformers/ArgTransformer.h"
 #include "Managers/UserInputManager.h"
-#include "Interfaces/IUsbController.h"
-#include "Interfaces/IUsbService.h"
+#include "Services/UsbS3Service.h"
 #include "Shells/HelpShell.h"
 
-class UsbS3Controller: public IUsbController {
+class UsbS3Controller {
 public:
     // Constructor
     UsbS3Controller(
         ITerminalView& terminalView, 
         IInput& terminalInput, 
         IInput& deviceInput,
-        IUsbService& usbService, 
+        UsbS3Service& usbService, 
         ArgTransformer& argTransformer, 
         UserInputManager& userInputManager,
         HelpShell& helpShell
@@ -60,6 +59,9 @@ private:
     // Send keyboard input via HID
     void handleKeyboardSend(const TerminalCommand& cmd);
 
+    // Handle USB host mode with infos and device dump
+    void handleHost();
+
     // Reset all USB states
     void handleReset();
 
@@ -73,7 +75,7 @@ private:
     ITerminalView& terminalView;
     IInput& terminalInput;
     IInput& deviceInput;
-    IUsbService& usbService;
+    UsbS3Service& usbService;
     ArgTransformer& argTransformer;
     GlobalState& state = GlobalState::getInstance();
     UserInputManager& userInputManager;

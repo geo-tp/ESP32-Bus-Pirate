@@ -285,6 +285,7 @@ void HelpShell::cmdUsb() {
         "mouse click          - Left click",
         "mouse jiggle [ms]    - Random mouse moves",
         "gamepad <key>        - Press button",
+        "host                 - Connect device to ESP32",
         "reset                - Reset interface",
         "config               - Configure settings"
     };
