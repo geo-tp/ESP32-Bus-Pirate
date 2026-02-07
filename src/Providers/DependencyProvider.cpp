@@ -81,7 +81,7 @@ DependencyProvider::DependencyProvider(ITerminalView &terminalView, IDeviceView 
       uartController(terminalView, terminalInput, deviceInput, uartService, sdService, hdUartService, argTransformer, userInputManager, uartAtShell, helpShell, uartEmulationShell),
       i2cController(terminalView, terminalInput, i2cService, argTransformer, userInputManager, i2cEepromShell, helpShell),
       oneWireController(terminalView, terminalInput, oneWireService, argTransformer, userInputManager, ibuttonShell, oneWireEepromShell, helpShell),
-      infraredController(terminalView, terminalInput, infraredService, littleFsService, argTransformer, infraredTransformer, userInputManager, universalRemoteShell, helpShell),
+      infraredController(terminalView, terminalInput, infraredService, littleFsService, i2cService, argTransformer, infraredTransformer, userInputManager, universalRemoteShell, helpShell),
       utilityController(terminalView, deviceView, terminalInput, pinService, userInputManager, pinAnalyzeManager, argTransformer, sysInfoShell, guideShell, helpShell),
       hdUartController(terminalView, terminalInput, deviceInput, hdUartService, uartService, argTransformer, userInputManager, helpShell),
       spiController(terminalView, terminalInput, spiService, sdService, argTransformer, userInputManager, binaryAnalyzeManager, sdCardShell, spiFlashShell, spiEepromShell, helpShell),

@@ -12,6 +12,7 @@ InfraredController::InfraredController(
     IInput&                  terminalInput,
     InfraredService&         service,
     LittleFsService&         littleFsService,
+    I2cService&              i2cService,
     ArgTransformer&          argTransformer,
     InfraredRemoteTransformer& infraredRemoteTransformer,
     UserInputManager&        userInputManager,
@@ -21,6 +22,7 @@ InfraredController::InfraredController(
     : terminalView(view),
       terminalInput(terminalInput),
       infraredService(service),
+      i2cService(i2cService),
       littleFsService(littleFsService),
       argTransformer(argTransformer),
       infraredRemoteTransformer(infraredRemoteTransformer),
@@ -574,18 +576,16 @@ void InfraredController::handleConfig() {
         auto confirm = userInputManager.readYesNo(
             "Enable power for built-in IR on StickS3?", true
         );
-        const uint32_t t0 = millis();
-        bool done = false;
 
-        while (millis() - t0 < 1000) { // retry for 1 sec
-            M5.Power.setExtOutput(confirm);
+        bool success = false;
+        if (confirm) {
+            success = i2cService.tryPowerOnSticks3Pmic(1000);
+        }
 
-            // Done when current state matches requested state
-            if (M5.Power.getExtOutput() == confirm) {
-                done = true;
-                break;
-            }
-            delay(100);
+        if (confirm && success) {
+            terminalView.println("✅ Powered on built-in IR module on StickS3.");
+        } else if (confirm) {
+            terminalView.println("⚠️ Failed to power on IR module. It may not work properly.");
         }
 
         pinMode(state.getInfraredRxPin(), INPUT_PULLUP);
