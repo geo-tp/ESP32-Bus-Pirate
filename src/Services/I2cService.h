@@ -75,6 +75,8 @@ public:
     uint16_t eepromDetectPageSize();
     uint8_t  eepromDetectWriteTime(uint8_t testCount = 8);
 
+    // sticks3 power control
+    bool tryPowerOnSticks3Pmic(uint32_t timeout);
 
 private:
     ExternalEEPROM eeprom;

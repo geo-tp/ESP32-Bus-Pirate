@@ -639,3 +639,34 @@ bool I2cService::probeReadableReg(uint8_t addr, uint8_t reg) {
     while (available()) (void)read();
     return true;
 }
+
+bool I2cService::tryPowerOnSticks3Pmic(uint32_t timeoutMs) {
+    constexpr uint8_t PMIC_ADDR = 0x6E;
+    constexpr uint8_t PMIC_REG  = 0x06;
+    constexpr uint8_t PMIC_VAL  = 0x1E;
+    constexpr uint8_t SDA_PIN = 47;
+    constexpr uint8_t SCL_PIN = 48;
+
+    const uint32_t t0 = millis();
+
+    configure(SDA_PIN, SCL_PIN);
+
+    while (millis() - t0 < timeoutMs) {
+
+        beginTransmission(PMIC_ADDR);
+        write(PMIC_REG);
+        write(PMIC_VAL);
+
+        const uint8_t err = endTransmission(true);
+
+        if (err == 0) {
+            return true; // success
+        }
+
+        delay(100);
+    }
+
+    end();
+
+    return false; // timeout
+}
