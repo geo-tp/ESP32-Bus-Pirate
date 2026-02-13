@@ -11,12 +11,20 @@ let bridgeMode = false;
 let fsTotalBytes = 0;
 let fsUsedBytes  = 0;
 let isUploading  = false;
+let sessionToken = null; // Authentication token
 const filePanel = document.getElementById("file-panel");
 const filePanelOverlay = document.getElementById("file-panel-overlay");
 
 /* =========================
    WebSocket / Terminal
    ========================= */
+
+function generateSessionToken() {
+  // Generate cryptographically secure random token
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+}
 
 function connectSocket() {
   socket = new WebSocket("ws://" + window.location.host + "/ws");
@@ -25,6 +33,8 @@ function connectSocket() {
     hideWsLostPopup();
     bridgeMode = false;
     pendingEchoLines = 0;
+    // Generate session token for authenticated operations
+    sessionToken = generateSessionToken();
     console.log("[WebSocket] Connected");
   };
 
@@ -194,7 +204,17 @@ async function refreshFileList() {
   const listEl = document.getElementById("file-list");
   listEl.innerHTML = "<div class='fp-empty'>Loading...</div>";
   try {
-    const r = await fetch("/littlefs/list?dir=/", { cache: "no-store" });
+    // Validate session token exists before listing files
+    if (!sessionToken) {
+      throw new Error("Authentication required. Please reconnect.");
+    }
+
+    const r = await fetch("/littlefs/list?dir=/", { 
+      cache: "no-store",
+      headers: {
+        "X-Session-Token": sessionToken
+      }
+    });
     const j = await r.json();
     fsTotalBytes = Number(j.total) || 0;
     fsUsedBytes  = Number(j.used)  || 0;
@@ -356,9 +376,17 @@ async function uploadFile(file) {
     disableDropArea(true);
     titleEl.textContent = "⏳ Upload... Please wait";
 
+    // Validate session token exists before upload
+    if (!sessionToken) {
+      throw new Error("Authentication required. Please reconnect.");
+    }
+
     const r = await fetch("/littlefs/upload?file=" + encodeURIComponent(file.name), {
       method: "POST",
-      headers: { "Content-Type": "application/octet-stream" },
+      headers: { 
+        "Content-Type": "application/octet-stream",
+        "X-Session-Token": sessionToken
+      },
       body: file
     });
 
@@ -378,8 +406,13 @@ async function uploadFile(file) {
 /* Download */
 
 function downloadFile(name) {
+  // Validate session token exists before download
+  if (!sessionToken) {
+    alert("Authentication required. Please reconnect.");
+    return;
+  }
   // Content-Type binaire Content-Disposition: attachment
-  const url = "/littlefs/download?file=" + encodeURIComponent(name);
+  const url = "/littlefs/download?file=" + encodeURIComponent(name) + "&token=" + encodeURIComponent(sessionToken);
   window.open(url, "_blank");
 }
 
@@ -388,8 +421,18 @@ function downloadFile(name) {
 async function deleteFile(name) {
   if (!confirm(`Delete '${name}' ?`)) return;
   try {
+    // Validate session token exists before delete
+    if (!sessionToken) {
+      throw new Error("Authentication required. Please reconnect.");
+    }
+
     const url = "/littlefs/delete?file=" + encodeURIComponent(name);
-    const r = await fetch(url, { method: "DELETE" });
+    const r = await fetch(url, { 
+      method: "DELETE",
+      headers: {
+        "X-Session-Token": sessionToken
+      }
+    });
     if (!r.ok) throw new Error("Delete failed");
     await refreshFileList();
   } catch (e) {
