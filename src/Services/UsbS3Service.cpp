@@ -282,8 +282,6 @@ bool UsbS3Service::usbHostBegin() {
     host_cfg.root_port_unpowered = false; 
     host_cfg.intr_flags = 0;
     host_cfg.enum_filter_cb = nullptr;
-    host_cfg.fifo_settings_custom = {0, 0, 0}; 
-    host_cfg.peripheral_map = 0;
 
     esp_err_t err = usb_host_install(&host_cfg);
     if (err != ESP_OK) {
