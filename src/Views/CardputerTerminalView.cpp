@@ -5,6 +5,7 @@
 void CardputerTerminalView::initialize() {
     auto cfg = M5.config();
     M5Cardputer.begin(cfg);
+    glass2Init();
 
     M5Cardputer.Display.setRotation(1);
     M5Cardputer.Display.fillScreen(BACKGROUND_COLOR);
@@ -34,6 +35,7 @@ void CardputerTerminalView::initialize() {
 }
 
 void CardputerTerminalView::welcome(TerminalTypeEnum& /*terminalType*/, std::string& terminalInfos) {
+    glass2Show("BUS PIRATE");
     clear();
     println(" ____       ____  ");
     println("| __ )     |  _ \\");
@@ -110,6 +112,7 @@ void CardputerTerminalView::println(const std::string& text) {
 }
 
 void CardputerTerminalView::printPrompt(const std::string& mode) {
+    glass2Show("BUS PIRATE", mode.size() > 21 ? mode.substr(0, 21).c_str() : mode.c_str());
     instantRender = true;
     print(mode + "> ");
 }

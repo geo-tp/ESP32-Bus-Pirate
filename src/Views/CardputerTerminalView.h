@@ -9,6 +9,7 @@
 
 #include <M5Cardputer.h>
 #include <Enums/TerminalTypeEnum.h>
+#include "glass2.h"
 #include "Interfaces/ITerminalView.h"
 #include "Inputs/InputKeys.h"
 #include "States/GlobalState.h"
