@@ -5,6 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "Inputs/InputKeys.h"
+#include "Utils/HostSerial.h"
 
 void SubGhzRawCdcAdapter::run(const SubGhzRawCdcConfig& adapterConfig, IInput& deviceInput) {
     input = &deviceInput;
@@ -48,10 +49,10 @@ void SubGhzRawCdcAdapter::begin() {
     rxReporting = false;
     lastInputPollMs = millis();
 
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
     Serial.setRxBufferSize(4096);
     Serial.setTimeout(0);
-    Serial.begin(runtimeConfig->baudrate);
+    hostSerialBegin(runtimeConfig->baudrate);
 
     if (!allocateLazyObjects()) {
         Serial.println("ERR:MEM");

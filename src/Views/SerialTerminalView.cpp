@@ -1,10 +1,8 @@
 #include "SerialTerminalView.h"
+#include "Utils/HostSerial.h"
 
 void SerialTerminalView::initialize() {
-    Serial.begin(baudrate); // Serial USB CDC, to the PC
-    while (!Serial) {
-        delay(10);
-    }
+    hostSerialWaitReady(baudrate);
 }
 
 void SerialTerminalView::welcome(TerminalTypeEnum& terminalType, std::string& terminalInfos) {

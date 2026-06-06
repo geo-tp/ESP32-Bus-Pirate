@@ -1,5 +1,6 @@
 #include "OpenOcdBusPirateAdapter.h"
 #include "Inputs/InputKeys.h"
+#include "Utils/HostSerial.h"
 #include "driver/gpio.h"
 #include <cstring>
 
@@ -57,9 +58,9 @@ inline void swdDelay() {
 void OpenOcdBusPirateAdapter::run(const OpenOcdBusPirateConfig& adapterConfig, IInput& input) {
     config = adapterConfig;
 
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
     Serial.setRxBufferSize((MAX_TAP_BYTES * 2) + 64);
-    Serial.begin();
+    hostSerialBegin();
 
     configurePins();
     runBitbangMode(input);

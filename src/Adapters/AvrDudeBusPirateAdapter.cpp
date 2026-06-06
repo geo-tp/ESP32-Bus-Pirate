@@ -1,5 +1,6 @@
 #include "AvrDudeBusPirateAdapter.h"
 #include "Inputs/InputKeys.h"
+#include "Utils/HostSerial.h"
 #include <cstring>
 #include <vector>
 
@@ -17,9 +18,9 @@ void AvrDudeBusPirateAdapter::run(const AvrDudeBusPirateConfig& adapterConfig, I
         config.frequency = DEFAULT_SPI_FREQUENCY;
     }
 
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
     Serial.setRxBufferSize(MAX_TRANSFER + 64);
-    Serial.begin();
+    hostSerialBegin();
 
     state = ProtocolState::WaitBbio;
     zeroCount = 0;

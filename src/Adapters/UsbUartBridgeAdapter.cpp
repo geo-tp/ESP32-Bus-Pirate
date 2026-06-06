@@ -1,4 +1,5 @@
 #include "UsbUartBridgeAdapter.h"
+#include "Utils/HostSerial.h"
 #include "driver/gpio.h"
 #include <USBCDC.h>
 #include <algorithm>
@@ -150,11 +151,13 @@ void UsbUartBridgeAdapter::run(const UsbUartBridgeConfig& config, IInput& input)
     unsigned long lastLineCodingCheckMs = 0;
     uint32_t loopCounter = 0;
 
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
     Serial.setRxBufferSize(USB_RX_BUFFER_SIZE);
     Serial.setTimeout(0);
+#if ARDUINO_USB_CDC_ON_BOOT
     Serial.onEvent(ARDUINO_USB_CDC_LINE_CODING_EVENT, onLineCoding);
-    Serial.begin();
+#endif
+    hostSerialBegin();
 
     configureUart(DEFAULT_BAUD, SERIAL_8N1);
 

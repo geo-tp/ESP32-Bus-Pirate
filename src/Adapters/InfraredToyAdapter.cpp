@@ -1,6 +1,7 @@
 #include "InfraredToyAdapter.h"
 
 #include "Inputs/InputKeys.h"
+#include "Utils/HostSerial.h"
 
 void InfraredToyAdapter::run(const InfraredToyConfig& config, IInput& input) {
     InfraredToyAdapter::config = config;
@@ -63,10 +64,10 @@ void InfraredToyAdapter::begin() {
 
     lastInputPollMs = millis();
 
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
     Serial.setRxBufferSize(SERIAL_RX_BUFFER_SIZE);
     Serial.setTimeout(0);
-    Serial.begin(115200);
+    hostSerialBegin();
 
     if (!allocateLazyBuffers()) {
         static constexpr char msg[] = "IR Toy adapter: buffer allocation failed\r\n";

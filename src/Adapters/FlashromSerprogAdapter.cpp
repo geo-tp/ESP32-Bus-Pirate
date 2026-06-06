@@ -1,5 +1,6 @@
 #include "FlashromSerprogAdapter.h"
 #include "Inputs/InputKeys.h"
+#include "Utils/HostSerial.h"
 #include <USBCDC.h>
 #include <vector>
 
@@ -46,11 +47,18 @@ void FlashromSerprogAdapter::run(const FlashromSerprogConfig& adapterConfig, IIn
         config.frequency = DEFAULT_SPI_FREQUENCY;
     }
 
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
+#if ARDUINO_USB_CDC_ON_BOOT
     Serial.setTxTimeoutMs(TX_TIMEOUT_MS);
+#endif
     Serial.setRxBufferSize(SERIAL_BUFFER_SIZE);
+#if ARDUINO_USB_CDC_ON_BOOT
     Serial.onEvent(onUsbEvent);
-    Serial.begin();
+#endif
+    hostSerialBegin();
+    if (hostSerialUartAlwaysConnected()) {
+        cdcConnected = true;
+    }
 
     initializeSpi();
     setPinDrivers(true);

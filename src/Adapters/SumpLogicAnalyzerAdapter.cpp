@@ -1,5 +1,6 @@
 #include "SumpLogicAnalyzerAdapter.h"
 #include "Inputs/InputKeys.h"
+#include "Utils/HostSerial.h"
 #include "driver/gpio.h"
 #include "esp_heap_caps.h"
 #include "esp_timer.h"
@@ -40,9 +41,9 @@ void IRAM_ATTR SumpLogicAnalyzerAdapter::waitUntilCycle(uint32_t targetCycle) {
 }
 
 void SumpLogicAnalyzerAdapter::run(const SumpLogicAnalyzerConfig& config, IInput& input) {
-    Serial.enableReboot(false);
+    hostSerialDisableReboot();
     Serial.setRxBufferSize(1024);
-    Serial.begin();
+    hostSerialBegin();
 
     configure(config, input);
 

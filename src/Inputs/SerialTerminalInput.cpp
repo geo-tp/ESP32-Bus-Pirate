@@ -1,5 +1,5 @@
 #include "SerialTerminalInput.h"
-#include <Arduino.h>
+#include "Utils/HostSerial.h"
 
 char SerialTerminalInput::handler() {
     while (!Serial.available()) {}
@@ -8,7 +8,7 @@ char SerialTerminalInput::handler() {
 
 void SerialTerminalInput::waitPress(uint32_t timeoutMs) {
     (void)timeoutMs; // currently not used
-    while (!Serial.available()) {}
+    hostSerialWaitForPress();
     Serial.read(); // discard
 }
 
