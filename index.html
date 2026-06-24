@@ -530,6 +530,168 @@
       gap: 16px;
     }
 
+    .ecosystem-grid {
+      position: relative;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(3, minmax(0, auto));
+      gap: clamp(18px, 2.6vw, 32px);
+      align-items: stretch;
+      padding: clamp(3px, 0.9vw, 10px) 0 clamp(5px, 1.2vw, 14px);
+      background:
+        radial-gradient(ellipse at 50% 49%, rgba(0, 255, 204, 0.075) 0%, rgba(0, 255, 153, 0.035) 38%, transparent 72%),
+        radial-gradient(circle at 15% 24%, rgba(0, 255, 204, 0.035), transparent 18%),
+        radial-gradient(circle at 84% 76%, rgba(0, 255, 153, 0.03), transparent 19%);
+      isolation: isolate;
+    }
+
+    .ecosystem-grid::before {
+      position: absolute;
+      z-index: -2;
+      top: 50%;
+      left: 50%;
+      width: min(84%, 860px);
+      aspect-ratio: 1;
+      border: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 153, 0.22) 0%, rgba(0, 255, 204, 0.12) 32%, rgba(0, 255, 204, 0.055) 54%, rgba(0, 255, 153, 0.018) 70%, transparent 88%);
+      box-shadow: 0 0 90px rgba(0, 255, 204, 0.14), inset 0 0 78px rgba(0, 255, 153, 0.08);
+      content: "";
+      filter: blur(8px);
+      transform: translate(-50%, -50%);
+    }
+
+    .ecosystem-flow {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .ecosystem-flow path {
+      fill: none;
+      stroke: rgba(0, 255, 204, 0.30);
+      stroke-width: 1.35;
+      stroke-dasharray: 3 9;
+      animation: ecosystem-data-flow 7s linear infinite;
+    }
+
+    .ecosystem-flow path:nth-child(even) {
+      animation-direction: reverse;
+      animation-duration: 9s;
+    }
+
+    @keyframes ecosystem-data-flow {
+      to { stroke-dashoffset: -96; }
+    }
+
+    .ecosystem-grid .system-card {
+      position: relative;
+      z-index: 1;
+      border-color: rgba(79, 111, 92, 0.8);
+      background: linear-gradient(145deg, rgba(21, 29, 25, 0.98), rgba(12, 14, 13, 0.98));
+    }
+
+    .ecosystem-grid .system-card::before {
+      position: absolute;
+      top: 16px;
+      left: 0;
+      width: 3px;
+      height: 26px;
+      border-radius: 0 4px 4px 0;
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 255, 204, 0.58);
+      content: "";
+    }
+
+    .ecosystem-grid .card-cover {
+      display: block;
+      height: auto;
+      aspect-ratio: 26 / 15;
+      object-fit: cover;
+    }
+
+    .ecosystem-grid .card-copy {
+      gap: 5px;
+      padding: 15px 17px 14px;
+    }
+
+    .ecosystem-grid .card-copy p {
+      margin-bottom: 4px;
+      font-size: 0.82rem;
+      line-height: 1.42;
+    }
+
+    .ecosystem-grid .card-copy h3 {
+      font-size: 1rem;
+      line-height: 1.18;
+    }
+
+    .ecosystem-grid .card-arrow {
+      margin-top: 3px;
+      font-size: 0.76rem;
+    }
+
+    .ecosystem-node-flasher { grid-area: 1 / 1; }
+    .ecosystem-node-tools { grid-area: 1 / 2; }
+    .ecosystem-node-recipes { grid-area: 1 / 3; }
+    .ecosystem-node-wiki { grid-area: 2 / 1; }
+    .ecosystem-node-python { grid-area: 2 / 3; }
+    .ecosystem-node-expander { grid-area: 3 / 1; }
+    .ecosystem-node-dock { grid-area: 3 / 2; }
+    .ecosystem-node-boards { grid-area: 3 / 3; }
+
+    .ecosystem-node-core {
+      grid-area: 2 / 2;
+      border-color: rgba(0, 255, 204, 0.55) !important;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(0, 255, 153, 0.20), transparent 50%),
+        linear-gradient(145deg, #19261e, #0d1110 72%) !important;
+      box-shadow: 0 0 0 1px rgba(0, 255, 204, 0.08), 0 22px 55px rgba(0, 0, 0, 0.32), inset 0 0 28px rgba(0, 255, 153, 0.08);
+      animation: ecosystem-core-pulse 10s ease-in-out infinite;
+    }
+
+    .ecosystem-node-core::before {
+      top: 50% !important;
+      height: 50px !important;
+      transform: translateY(-50%);
+    }
+
+    .ecosystem-node-core .card-copy {
+      justify-content: center;
+      min-height: 0;
+      padding: 15px 17px 14px;
+    }
+
+    .ecosystem-node-core .card-copy h3 {
+      max-width: none;
+      font-size: 1.1rem;
+      line-height: 1.18;
+    }
+
+    .ecosystem-node-core .card-copy p {
+      max-width: 31ch;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .ecosystem-node-core .card-eyebrow {
+      color: #d8fff2;
+    }
+
+    @keyframes ecosystem-core-pulse {
+      0%, 100% {
+        transform: scale(1.035);
+        box-shadow: 0 0 0 1px rgba(0, 255, 204, 0.14), 0 0 16px rgba(0, 255, 204, 0.08), 0 22px 55px rgba(0, 0, 0, 0.32), inset 0 0 28px rgba(0, 255, 153, 0.10);
+      }
+      50% {
+        transform: scale(1.035);
+        box-shadow: 0 0 0 1px rgba(0, 255, 204, 0.22), 0 0 27px rgba(0, 255, 204, 0.16), 0 22px 55px rgba(0, 0, 0, 0.32), inset 0 0 34px rgba(0, 255, 153, 0.16);
+      }
+    }
+
     .content-card,
     .system-card {
       min-width: 0;
@@ -677,6 +839,10 @@
       margin-top: 30px;
     }
 
+    #ecosystem + #start {
+      margin-top: 22px;
+    }
+
     .brand-signature-card {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
@@ -807,6 +973,69 @@
       }
     }
 
+    @media (max-width: 1040px) {
+      .ecosystem-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+        grid-template-rows: none;
+        gap: 16px;
+        padding: 0;
+        background: none;
+      }
+
+      .ecosystem-flow,
+      .ecosystem-grid::before {
+        display: none;
+      }
+
+      .ecosystem-grid .system-card {
+        z-index: auto;
+        border-color: var(--border);
+        background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+      }
+
+      .ecosystem-grid .card-cover {
+        height: 190px;
+      }
+
+      .ecosystem-node-core {
+        grid-area: auto;
+        grid-column: auto;
+        order: 0;
+        border-color: var(--border) !important;
+        background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep)) !important;
+        box-shadow: inset 0 0 5px #000;
+        animation: none;
+      }
+
+      .ecosystem-node-core::before {
+        top: 16px !important;
+        height: 26px !important;
+        transform: none;
+      }
+
+      .ecosystem-node-core .card-copy h3 {
+        font-size: 1rem;
+        line-height: 1.18;
+      }
+
+      .ecosystem-node-core .card-copy p {
+        max-width: none;
+        font-size: 0.82rem;
+        line-height: 1.42;
+      }
+
+      .ecosystem-node-flasher,
+      .ecosystem-node-tools,
+      .ecosystem-node-recipes,
+      .ecosystem-node-wiki,
+      .ecosystem-node-python,
+      .ecosystem-node-expander,
+      .ecosystem-node-dock,
+      .ecosystem-node-boards {
+        grid-area: auto;
+      }
+    }
+
     @media (max-width: 880px) {
       .hero,
       .support {
@@ -876,6 +1105,18 @@
         grid-template-columns: 1fr;
       }
 
+      .ecosystem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ecosystem-grid .card-cover {
+        height: auto;
+      }
+
+      .ecosystem-node-core .card-copy {
+        padding: 14px;
+      }
+
       .card-cover,
       .featured .content-card:first-child .card-cover {
         height: auto;
@@ -895,8 +1136,11 @@
 
       .button,
       .content-card,
-      .system-card {
+      .system-card,
+      .ecosystem-flow path,
+      .ecosystem-node-core {
         transition: none;
+        animation: none;
       }
     }
   </style>
@@ -979,7 +1223,17 @@
       </div>
 
       <div class="ecosystem-grid">
-        <article class="system-card">
+        <svg class="ecosystem-flow" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M500 300 C418 242 282 125 140 78"></path>
+          <path d="M500 300 C500 205 500 112 500 42"></path>
+          <path d="M500 300 C582 242 718 125 860 78"></path>
+          <path d="M500 300 C358 300 188 300 66 300"></path>
+          <path d="M500 300 C642 300 812 300 934 300"></path>
+          <path d="M500 300 C418 358 282 475 140 522"></path>
+          <path d="M500 300 C500 395 500 488 500 558"></path>
+          <path d="M500 300 C582 358 718 475 860 522"></path>
+        </svg>
+        <article class="system-card ecosystem-node-core">
           <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">
             <img class="card-cover" src="assets/index-firmware.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -991,7 +1245,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-flasher">
           <a class="system-card-link" href="webflasher/">
             <img class="card-cover" src="assets/index-webflasher.svg?v=20260624" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1003,7 +1257,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-tools">
           <a class="system-card-link" href="web-tools/">
             <img class="card-cover" src="web-tools/assets/bit-pirate-web-tools.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1015,7 +1269,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-recipes">
           <a class="system-card-link" href="recipes/">
             <img class="card-cover" src="assets/index-recipes.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1027,7 +1281,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-wiki">
           <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener">
             <img class="card-cover" src="assets/index-wiki.svg?v=20260624" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1039,7 +1293,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-python">
           <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate-Scripts" rel="noopener">
             <img class="card-cover" src="assets/index-python.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1051,7 +1305,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-expander">
           <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bus-Expander" rel="noopener">
             <img class="card-cover" src="assets/index-expander.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1063,7 +1317,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-dock">
           <a class="system-card-link" href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener">
             <img class="card-cover" src="assets/index-dock.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
@@ -1075,7 +1329,7 @@
           </a>
         </article>
 
-        <article class="system-card">
+        <article class="system-card ecosystem-node-boards">
           <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate#supported-devices" rel="noopener">
             <img class="card-cover" src="assets/index-boards.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
