@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+  <title id="title">Web flasher page visual</title>
+  <desc id="desc">A compact browser interface for selecting a board and flashing firmware.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+    <radialGradient id="cyanGlow" cx="16%" cy="20%" r="64%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".13"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
+    <radialGradient id="greenGlow" cx="88%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
+  <g stroke="#22312d" stroke-width="1.4" opacity=".72">
+    <path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/>
+    <path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/>
+    <path d="M-50 540L520 40M160 575L790 35M500 620L1070 120" opacity=".28"/>
+  </g>
+  
+  <rect x="106" y="92" width="828" height="416" rx="24" fill="#0b0d0c" stroke="#40514b" stroke-width="3"/>
+  <rect x="106" y="92" width="828" height="58" rx="24" fill="#141917"/><circle cx="146" cy="121" r="8" fill="#00ffcc"/><circle cx="176" cy="121" r="8" fill="#00ff70"/><circle cx="206" cy="121" r="8" fill="#ffc257"/>
+  <text x="252" y="128" fill="#d8fff2" font-family="Menlo, Courier New, monospace" font-size="21" font-weight="700">ESP32 Bit Pirate · Web Flasher</text>
+  <text x="160" y="211" fill="#f4fff9" font-family="Menlo, Courier New, monospace" font-size="29" font-weight="700">Flash your device</text>
+  <rect x="160" y="282" width="330" height="58" rx="12" fill="#101615" stroke="#40514b" stroke-width="2"/>
+  <text x="185" y="318" fill="#d8fff2" font-family="Menlo, Courier New, monospace" font-size="18" font-weight="700">ESP32-S3 DevKit</text><path d="M452 306l11 11 11-11" fill="none" stroke="#00ffcc" stroke-width="4"/>
+  <rect x="160" y="366" width="220" height="48" rx="12" fill="#1b4430" stroke="#00ffcc" stroke-width="2"/>
+  <text x="197" y="397" fill="#d8fff2" font-family="Menlo, Courier New, monospace" font-size="18" font-weight="700">FLASH DEVICE</text>
+  <rect x="560" y="196" width="310" height="238" rx="20" fill="#101615" stroke="#335149" stroke-width="2"/>
+  <text x="596" y="240" fill="#b8ffb8" font-family="Menlo, Courier New, monospace" font-size="18" font-weight="700">Ready to install</text>
+  <path d="M596 278h238" stroke="#2f3a36" stroke-width="12" stroke-linecap="round"/><path d="M596 278h151" stroke="#00ffcc" stroke-width="12" stroke-linecap="round" filter="url(#glow)"/>
+  <rect x="668" y="320" width="78" height="72" rx="10" fill="#0b0d0c" stroke="#8ab4ff" stroke-width="4"/>
+  <path d="M652 337h16m-16 22h16m78-22h16m-16 22h16M687 304v16m36-16v16m-36 72v16m36-16v16" stroke="#8ab4ff" stroke-width="3" stroke-linecap="round"/>
+
+</svg>

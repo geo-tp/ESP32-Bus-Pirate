@@ -1,0 +1,2098 @@
+:root {
+  color-scheme: dark;
+  --page-bg: #121212;
+  --panel-bg: #1a1a1a;
+  --panel-bg-deep: #0f0f0f;
+  --border: #333;
+  --text: #e0e0e0;
+  --muted: #9aa0a6;
+  --green: #00ff00;
+  --green-dim: #0ea86b;
+  --cyan: #00ffcc;
+  --radius: 8px;
+  --font-mono: Menlo, "Courier New", Courier, "Liberation Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+html,
+body {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: min(1080px, calc(100% - 24px));
+  min-width: 0;
+  margin: 0 auto;
+  padding: 22px 0 32px;
+}
+
+.hero {
+  margin-bottom: 18px;
+}
+
+.article-top-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.article-top-nav a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 7px 10px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #111;
+  color: #d8fff2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.article-top-nav a:hover,
+.article-top-nav a:focus-visible {
+  border-color: #00ffcc88;
+  color: #b8ffb8;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand:hover,
+.brand:focus-visible {
+  color: var(--green);
+}
+
+.brand-mark {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid #2f3a2fa0;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+  color: var(--green);
+  font-size: 0.86rem;
+  font-weight: 900;
+  box-shadow: inset 0 0 10px #00ff9910;
+}
+
+h1 {
+  max-width: 880px;
+  margin-bottom: 10px;
+  font-size: clamp(1.7rem, 3vw, 3rem);
+  line-height: 1.08;
+}
+
+.hero p,
+.lead {
+  max-width: 860px;
+  color: #d8ddd8;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.hero-actions,
+.recipe-toolbar,
+.recipe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.button,
+.filter-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid #2b2b2b;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #26332a, #151a17);
+  color: #b8ffb8;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 255, 153, 0.06), inset 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.button.secondary-button {
+  background: linear-gradient(135deg, #17252b, #101517);
+  color: #d8fff2;
+}
+
+.button:hover,
+.button:focus-visible,
+.filter-button:hover,
+.filter-button:focus-visible,
+.filter-button.is-active {
+  border-color: #00ffcc88;
+  color: #d8fff2;
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.14), inset 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.filter-button.is-active {
+  background: linear-gradient(135deg, #143b33, #101817);
+}
+
+.recipe-toolbar {
+  justify-content: space-between;
+  gap: 14px;
+  margin: 14px 0 16px;
+}
+
+.recipe-selectors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: 10px;
+  flex: 1;
+}
+
+.recipe-selectors label {
+  display: grid;
+  gap: 6px;
+}
+
+.recipe-selectors span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.recipe-selectors select {
+  min-height: 46px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #111;
+  color: #d8fff2;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.recipe-selectors select:focus {
+  border-color: #00ffcc88;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.14);
+}
+
+.recipe-count {
+  align-self: end;
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  margin: 0 0 0 auto;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+}
+
+.recipe-card,
+.content-card,
+.recipe-section {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+  box-shadow: inset 0 0 5px #000;
+}
+
+.recipe-card {
+  min-width: 0;
+  overflow: hidden;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.recipe-card:hover {
+  border-color: #00ffcc88;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22), inset 0 0 5px #000;
+}
+
+.recipe-card-link {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.recipe-card-link:hover,
+.recipe-card-link:focus-visible {
+  color: var(--text);
+}
+
+.recipe-cover {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 190px;
+  aspect-ratio: 26 / 15;
+  object-fit: cover;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: #0b0d0c;
+  box-shadow: inset 0 0 5px #000;
+}
+
+
+
+.recipe-card .eyebrow,
+.recipe-card h2,
+.recipe-card .recipe-description,
+.recipe-card .recipe-meta,
+.recipe-card .recipe-date {
+  margin-right: 14px;
+  margin-left: 14px;
+}
+
+.recipe-card .eyebrow {
+  margin-top: 14px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.eyebrow-text-mark {
+  color: var(--cyan);
+}
+
+h2 {
+  margin-bottom: 9px;
+  color: var(--green-dim);
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+
+.recipe-description,
+.recipe-card p,
+.content-card p,
+.recipe-section p,
+.recipe-section li {
+  color: #d8ddd8;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.recipe-description {
+  margin-bottom: 18px;
+}
+
+.recipe-takeaway {
+  margin: -3px 0 14px;
+  padding-left: 12px;
+  border-left: 2px solid #00ffcc66;
+  color: #eefcf7 !important;
+}
+
+.recipe-meta {
+  display: block;
+  margin-top: auto;
+}
+
+.recipe-pill-list,
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  list-style: none;
+}
+
+.recipe-pill-list li,
+.tag-list li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #111;
+  color: #b8ffb8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.recipe-pill-list-muted li,
+.tag-list li {
+  border-color: #283028;
+  color: #d8fff2;
+}
+
+.recipe-facts-list li {
+  border-color: #2d5b51;
+  background: #101817;
+  color: #d8fff2;
+}
+
+.tag-list {
+  margin-top: 10px;
+}
+
+.tag-list li {
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.recipe-date {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  color: var(--muted) !important;
+  font-size: 0.78rem !important;
+}
+
+.content-card {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 18px;
+}
+
+.content-card h2 {
+  margin-bottom: 0;
+}
+
+.audience-card {
+  align-items: start;
+  margin-top: 20px;
+}
+
+.audience-card-header {
+  display: grid;
+  gap: 4px;
+}
+
+.audience-card-header p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.audience-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 8px;
+  max-height: 360px;
+  overflow: auto;
+  padding-left: 0;
+  list-style: none;
+}
+
+.audience-list li {
+  padding: 10px;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background: #101514;
+  color: #d8fff2;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.audience-list span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.audience-list strong {
+  display: block;
+  color: #d8fff2;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.contribution-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.contribution-card .button {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.recipe-search {
+  margin: 20px 0 10px;
+}
+
+.recipe-search-bar {
+  position: relative;
+  display: grid;
+  align-items: center;
+}
+
+.recipe-search-input {
+  width: 100%;
+  min-height: 64px;
+  padding: 18px 118px 18px 20px;
+  border: 1px solid #2d5b51;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #18211f, #101413);
+  color: #eefcf7;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.58), 0 8px 26px rgba(0, 255, 204, 0.05);
+}
+
+.recipe-search-input::placeholder {
+  color: #82948f;
+}
+
+.recipe-search-input:focus {
+  border-color: #00ffcc99;
+  outline: none;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.58), 0 0 0 2px rgba(0, 255, 204, 0.16);
+}
+
+.recipe-search-icon {
+  position: absolute;
+  right: 18px;
+  color: var(--cyan);
+  font-size: 1.2rem;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+.recipe-search-clear {
+  position: absolute;
+  right: 60px;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid #2f3a2f;
+  border-radius: 50%;
+  background: #111;
+  color: #b8ffb8;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.recipe-search-clear:hover,
+.recipe-search-clear:focus-visible {
+  border-color: #00ffcc88;
+  color: #d8fff2;
+}
+
+.recipe-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.recipe-article {
+  display: grid;
+  gap: 12px;
+}
+
+.recipe-section {
+  padding: 18px;
+}
+
+.recipe-intro-card {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+  box-shadow: inset 0 0 5px #000;
+}
+
+.recipe-badge-list,
+.hardware-list,
+.link-card-list,
+.wiring-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.recipe-badge-list li,
+.hardware-list li,
+.wiring-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #111;
+  color: #d8fff2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.recipe-badge-list li:first-child {
+  border-color: #2d5b51;
+  color: #b8ffb8;
+}
+
+.hardware-list li::before,
+.wiring-list li::before {
+  display: inline-grid;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 1px solid #2d5b51;
+  border-radius: 6px;
+  background: #101817;
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.08);
+  content: "HW";
+}
+
+.hardware-list li:nth-child(2n)::before {
+  color: var(--green);
+  content: "IC";
+}
+
+.hardware-list li:nth-child(3n)::before {
+  color: #f4d06f;
+  content: "IO";
+}
+
+.hardware-list li:nth-child(4n)::before {
+  color: #d8fff2;
+  content: "USB";
+}
+
+.wiring-list li::before {
+  content: "PIN";
+}
+
+.recipe-snapshot {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.snapshot-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background: #101514;
+}
+
+.snapshot-card span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.snapshot-card strong {
+  display: block;
+  color: #d8fff2;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.callout {
+  padding: 14px;
+  border: 1px solid #2d5b51;
+  border-radius: var(--radius);
+  background: #101817;
+}
+
+.wiring-diagram + .callout,
+.wiring-list + .callout,
+.cli-window + .callout,
+.recipe-section [data-cli-session] + .callout {
+  margin-top: 12px;
+}
+
+.callout.warning {
+  border-color: #725f2c;
+  background: #19160d;
+}
+
+.callout.success {
+  border-color: #2f6b43;
+  background: #101b13;
+}
+
+.callout h3 {
+  margin-bottom: 7px;
+  color: var(--green);
+  font-size: 0.92rem;
+}
+
+.callout.warning h3 {
+  color: #f4d06f;
+}
+
+.callout p {
+  color: #d8ddd8;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.wiring-diagram {
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid #2d5b51;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, rgba(0, 255, 204, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(0, 255, 204, 0.035) 1px, transparent 1px),
+    linear-gradient(145deg, #111817, #090c0b);
+  background-size: 28px 28px, 28px 28px, auto;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.58);
+}
+
+.wiring-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
+}
+
+.wiring-node {
+  fill: #111;
+  stroke: #2f3a2f;
+  stroke-width: 2;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28));
+}
+
+.wiring-node-left {
+  stroke: #315f52;
+}
+
+.wiring-node-right {
+  stroke: #40613f;
+}
+
+.wiring-title {
+  fill: var(--green);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.wiring-pin {
+  fill: #d8fff2;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wiring-line {
+  stroke: var(--cyan);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.wiring-line.wire-1 {
+  stroke: var(--green);
+}
+
+.wiring-line.wire-2 {
+  stroke: #f4d06f;
+}
+
+.wiring-line.wire-3 {
+  stroke: #71d5ff;
+}
+
+.wiring-line.wire-4 {
+  stroke: #d8fff2;
+}
+
+.wiring-diagram figcaption {
+  padding: 9px 12px;
+  border-top: 1px solid #283028;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.wiring-mobile-list {
+  display: none;
+}
+
+.link-card-list a {
+  display: grid;
+  gap: 5px;
+  min-width: min(100%, 220px);
+  padding: 11px;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background: #101514;
+  color: #d8fff2;
+  text-decoration: none;
+}
+
+.link-card-list a:hover,
+.link-card-list a:focus-visible {
+  border-color: #00ffcc88;
+  color: #b8ffb8;
+}
+
+.link-card-list span {
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.link-card-list strong {
+  font-size: 0.9rem;
+}
+
+.recipe-section.is-note {
+  border-color: #2d5b51;
+  background: linear-gradient(145deg, #17211f, #101413);
+}
+
+.recipe-section.result-section {
+  border-color: #2f6b43;
+  background: linear-gradient(145deg, #142016, #0f130f);
+}
+
+.recipe-section.troubleshooting-section {
+  border-color: #6d2f35;
+  background: linear-gradient(145deg, #211314, #120d0d);
+}
+
+.recipe-section.troubleshooting-section h2 {
+  color: #ff8f8f;
+}
+
+.recipe-section.troubleshooting-section code {
+  color: #ffe4e4;
+}
+
+.mistake-list {
+  margin-top: 12px;
+  padding-left: 0 !important;
+  list-style: none;
+}
+
+.mistake-list li {
+  padding: 9px 10px;
+  border: 1px solid #6d2f35;
+  border-radius: var(--radius);
+  background: #180f10;
+  color: #ffe4e4;
+}
+
+.recipe-section h2 {
+  color: var(--green);
+}
+
+.recipe-section ul,
+.recipe-section ol {
+  display: grid;
+  gap: 8px;
+  padding-left: 22px;
+}
+
+.recipe-section pre {
+  margin-top: 10px;
+  overflow-x: auto;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background: #090c0b;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.55);
+}
+
+.recipe-section code {
+  color: #d8fff2;
+  font-family: var(--font-mono);
+}
+
+.recipe-section pre code {
+  display: block;
+  padding: 14px;
+  line-height: 1.5;
+}
+
+.cli-window {
+  max-width: 100%;
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid #2d5b51;
+  border-radius: var(--radius);
+  background: #090c0b;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.65);
+}
+
+.cli-window-chrome {
+  position: relative;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #21302c;
+  background: #101817;
+}
+
+.cli-window-chrome span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00ffcc;
+  opacity: 0.72;
+}
+
+.cli-window-chrome span:nth-child(2) {
+  background: #00ff00;
+  opacity: 0.58;
+}
+
+.cli-window-chrome span:nth-child(3) {
+  background: #0ea86b;
+  opacity: 0.62;
+}
+
+.cli-copy {
+  margin-left: auto;
+  padding: 5px 8px;
+  border: 1px solid #2f3a2f;
+  border-radius: 6px;
+  background: #111;
+  color: #b8ffb8;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cli-copy:hover,
+.cli-copy:focus-visible {
+  border-color: #00ffcc88;
+  color: #d8fff2;
+}
+
+.cli-window-body {
+  margin: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  background: transparent;
+}
+
+.cli-window-body code {
+  display: block;
+  padding: 14px;
+  color: #d8fff2;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.recipe-banner,
+.recipe-image-break {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #0b0d0c;
+  box-shadow: inset 0 0 5px #000;
+}
+
+.recipe-banner {
+  margin-bottom: 12px;
+}
+
+.recipe-banner img,
+.recipe-image-break img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.recipe-banner img {
+  aspect-ratio: 26 / 10;
+  height: min(360px, 38vw);
+  min-height: 190px;
+}
+
+.recipe-image-break img {
+  aspect-ratio: 26 / 14;
+  height: min(420px, 46vw);
+  min-height: 210px;
+}
+
+.recipe-banner figcaption,
+.recipe-image-break figcaption {
+  padding: 9px 12px;
+  border-top: 1px solid #283028;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.aside-card {
+  position: sticky;
+  top: 12px;
+}
+
+.aside-card dl {
+  display: grid;
+  gap: 12px;
+}
+
+.aside-card dt {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  color: var(--green);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.aside-card dt::before {
+  display: inline-grid;
+  width: 21px;
+  height: 21px;
+  place-items: center;
+  border: 1px solid #2d5b51;
+  border-radius: 6px;
+  background: #101817;
+  color: var(--cyan);
+  font-size: 0.62rem;
+  font-weight: 900;
+  content: "IO";
+}
+
+.aside-card dt:nth-of-type(2)::before {
+  content: "FW";
+}
+
+.aside-card dt:nth-of-type(3)::before {
+  content: "CMD";
+}
+
+.aside-card dt:nth-of-type(4)::before {
+  content: "DOC";
+}
+
+.aside-card dt:nth-of-type(5)::before {
+  content: "CAL";
+}
+
+.aside-card dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+  margin-top: -6px;
+  padding: 10px;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background: #101514;
+  color: #d8ddd8;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.aside-card dd code {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 7px;
+  border: 1px solid #2d5b51;
+  border-radius: 7px;
+  background: #090c0b;
+  color: #b8ffb8;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.aside-card dd a {
+  color: #b8ffb8;
+  font-weight: 800;
+}
+
+.empty-state {
+  margin-top: 12px;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding: 16px 0 4px;
+  border-top: 1px solid #2f3a2f;
+  color: var(--muted);
+}
+
+.site-footer-title {
+  color: #d8fff2;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.site-footer a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 7px 10px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #111;
+  color: #d8fff2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  border-color: #00ffcc88;
+  color: #b8ffb8;
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    width: min(100% - 12px, 1080px);
+    padding-top: 12px;
+  }
+
+  .recipe-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-snapshot {
+    grid-template-columns: 1fr;
+  }
+
+  .aside-card {
+    position: static;
+  }
+
+  .recipe-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .recipe-selectors {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .audience-list {
+    grid-template-columns: 1fr;
+  }
+
+  .contribution-card {
+    grid-template-columns: 1fr;
+  }
+
+  .contribution-card .button {
+    width: 100%;
+  }
+
+  .recipe-search-input {
+    min-height: 58px;
+    padding: 14px 102px 14px 14px;
+    font-size: 0.92rem;
+  }
+
+  .recipe-search-clear {
+    right: 54px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .recipe-search-icon {
+    right: 15px;
+    font-size: 1rem;
+  }
+
+  .recipe-cover {
+    height: 180px;
+  }
+
+  .recipe-banner img,
+  .recipe-image-break img {
+    height: auto;
+    min-height: 0;
+  }
+
+  .wiring-diagram svg {
+    display: none;
+  }
+
+  .wiring-mobile-list {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .wiring-mobile-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #283028;
+    border-left: 3px solid var(--cyan);
+    border-radius: var(--radius);
+    background: #101514;
+  }
+
+  .wiring-mobile-row.wire-1 {
+    border-left-color: var(--green);
+  }
+
+  .wiring-mobile-row.wire-2 {
+    border-left-color: #f4d06f;
+  }
+
+  .wiring-mobile-row.wire-3 {
+    border-left-color: #71d5ff;
+  }
+
+  .wiring-mobile-row.wire-4 {
+    border-left-color: #d8fff2;
+  }
+
+  .wiring-mobile-row span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: #d8fff2;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .wiring-mobile-arrow {
+    color: var(--cyan) !important;
+    font-weight: 900 !important;
+  }
+
+  .site-footer,
+  .site-footer nav {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+/* Visual polish pass: richer article header, styled lists and aligned aside cards. */
+.article-hero-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.article-brand-tags {
+  display: flex;
+  flex: 1 1 420px;
+  min-width: 0;
+  gap: 10px;
+  align-items: center;
+}
+
+.article-hero-top .brand {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+}
+
+.article-hero-top .article-top-nav {
+  flex: 0 1 auto;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.article-hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-width: 0;
+  list-style: none;
+}
+
+.article-hero-tags li {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 6px 9px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #111817, #0d110f);
+  color: #d8fff2;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.45);
+}
+
+.article-hero-tags li:first-child {
+  border-color: #2d5b51;
+  color: #b8ffb8;
+}
+
+.article-hero-tags li:nth-child(2) {
+  color: var(--cyan);
+}
+
+.recipe-layout > .aside-card {
+  align-self: start;
+  margin-top: 0;
+}
+
+.recipe-intro-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.recipe-intro-card::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(var(--cyan), var(--green));
+  opacity: 0.78;
+  content: "";
+}
+
+.snapshot-card {
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+/* Inline commands should read as commands, not plain text. */
+.recipe-section p code,
+.recipe-section li code,
+.callout p code,
+.aside-card dd code {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.12rem 0.38rem;
+  border: 1px solid rgba(0, 255, 204, 0.36);
+  border-radius: 7px;
+  background: rgba(0, 255, 204, 0.075);
+  color: #d8fff2;
+  font-size: 0.86em;
+  font-weight: 800;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.035);
+}
+
+.next-steps-section li code {
+  margin: 0 0.1rem;
+  border-color: rgba(184, 255, 184, 0.55);
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.14), rgba(184, 255, 184, 0.08));
+  color: #f2fff8;
+  text-shadow: 0 0 8px rgba(0, 255, 204, 0.16);
+}
+
+.next-steps-section li {
+  align-items: start;
+}
+
+/* Replace raw article bullets and 1. 2. lists with cards that match the tool UI. */
+.recipe-section > ol,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) {
+  display: grid;
+  gap: 9px;
+  margin-top: 10px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.recipe-section > ol {
+  counter-reset: recipe-step;
+}
+
+.recipe-section > ol > li,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li {
+  position: relative;
+  display: grid;
+  min-height: 42px;
+  align-items: center;
+  padding: 10px 12px 10px 48px;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, rgba(0, 255, 204, 0.055), transparent 38%),
+    #101514;
+  color: #d8ddd8;
+  line-height: 1.48;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.35);
+}
+
+.recipe-section > ol > li::before,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li::before {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid #2d5b51;
+  border-radius: 7px;
+  background: #090c0b;
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.08);
+}
+
+.recipe-section > ol > li::before {
+  counter-increment: recipe-step;
+  content: counter(recipe-step);
+}
+
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li::before {
+  color: var(--green);
+  content: "✓";
+}
+
+.mistake-list li {
+  position: relative;
+  padding-left: 42px;
+}
+
+.mistake-list li::before {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid #6d2f35;
+  border-radius: 6px;
+  background: #120d0d;
+  color: #ff8f8f;
+  font-size: 0.72rem;
+  font-weight: 900;
+  content: "!";
+}
+
+.hardware-list li,
+.wiring-list li,
+.recipe-pill-list li,
+.tag-list li,
+.article-hero-tags li,
+.mistake-list li,
+.snapshot-card,
+.aside-card dd,
+.link-card-list a {
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.hardware-list li:hover,
+.wiring-list li:hover,
+.recipe-section > ol > li:hover,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li:hover,
+.link-card-list a:hover {
+  border-color: #00ffcc88;
+  transform: translateY(-1px);
+}
+
+.recipe-search-input:focus {
+  box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.16), 0 0 28px rgba(0, 255, 204, 0.07);
+}
+
+@media (max-width: 760px) {
+  .article-hero-top,
+  .article-brand-tags,
+  .article-hero-top .article-top-nav {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .article-hero-tags {
+    width: 100%;
+  }
+
+  .article-hero-tags li {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* Small semantic icons for article section titles. */
+.recipe-section h2,
+.callout h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title-icon {
+  display: inline-grid;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid #2d5b51;
+  border-radius: 7px;
+  background: #101817;
+  color: var(--cyan);
+  font-size: 0.88rem;
+  line-height: 1;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.08);
+}
+
+.recipe-section.troubleshooting-section h2 .section-title-icon,
+.mistake-list + .section-title-icon {
+  border-color: #6d2f35;
+  background: #180f10;
+  color: #ff8f8f;
+}
+
+.callout.warning h3 .section-title-icon {
+  border-color: #725f2c;
+  background: #19160d;
+  color: #f4d06f;
+}
+
+.callout.success h3 .section-title-icon,
+.result-section h2 .section-title-icon {
+  border-color: #2f6b43;
+  background: #101b13;
+  color: var(--green);
+}
+
+
+/* Keep the same small visual language on the recipes index. */
+.content-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.audience-list li {
+  position: relative;
+  padding-left: 48px;
+}
+
+.audience-list li::before {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid #2d5b51;
+  border-radius: 7px;
+  background: #101817;
+  color: var(--cyan);
+  font-size: 0.78rem;
+  line-height: 1;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.08);
+  content: "•";
+}
+
+.audience-list li:nth-child(1)::before { content: "🔎"; }
+.audience-list li:nth-child(2)::before { content: "💾"; }
+.audience-list li:nth-child(3)::before { content: "📡"; }
+.audience-list li:nth-child(4)::before { content: "📈"; }
+
+/* Align styled list markers with the first text line instead of vertical centering. */
+.recipe-section > ol > li,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li {
+  align-items: start;
+}
+
+.recipe-section > ol > li::before,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li::before,
+.mistake-list li::before {
+  top: 11px;
+  transform: none;
+}
+
+.mistake-list li {
+  align-items: start;
+}
+
+/* Mobile toolbar pass: keep article tags compact and hide duplicated top links. */
+@media (max-width: 760px) {
+  .article-hero-top {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .article-brand-tags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .article-brand-tags .brand {
+    flex: 0 0 auto;
+  }
+
+  .article-hero-tags {
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1px 2px 3px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+
+  .article-hero-tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .article-hero-tags li {
+    flex: 0 0 auto;
+    justify-content: center;
+    min-width: max-content;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .article-hero-top .article-top-nav {
+    display: none;
+  }
+}
+
+/* V6 polish: compact mobile article toolbar and lighter decorative title icons. */
+.section-title-icon,
+.recipe-section.troubleshooting-section h2 .section-title-icon,
+.callout.warning h3 .section-title-icon,
+.callout.success h3 .section-title-icon,
+.result-section h2 .section-title-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  place-items: initial;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1em;
+  line-height: 1;
+  box-shadow: none;
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    padding-top: 14px;
+  }
+
+  .hero {
+    margin-bottom: 12px;
+  }
+
+  .article-hero-top {
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .article-brand-tags {
+    flex: 0 0 auto;
+    min-height: 0;
+    gap: 8px;
+    align-items: center;
+    padding: 0;
+  }
+
+  .article-brand-tags .brand {
+    margin: 0;
+  }
+
+  .article-hero-tags {
+    gap: 6px;
+    padding: 0 2px;
+  }
+
+  .article-hero-tags li {
+    min-height: 26px;
+    padding: 5px 8px;
+    font-size: 0.68rem;
+  }
+}
+
+
+/* V9 index refinements: compact per-recipe marks and aligned count. */
+.recipe-card .eyebrow-text-mark {
+  min-width: 2.7em;
+  padding: 2px 7px;
+  border: 1px solid #244a43;
+  border-radius: 999px;
+  background: rgba(0, 255, 204, 0.055);
+  color: var(--cyan);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .recipe-count {
+    align-self: flex-start;
+    min-height: auto;
+    margin: -2px 0 2px;
+  }
+}
+
+
+/* Article readability pass: compact setup aside, command step tag, no decorative title icons. */
+.recipe-side-panel {
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.recipe-side-panel > dl,
+.setup-aside {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+  box-shadow: inset 0 0 5px #000;
+}
+
+.recipe-side-panel > dl {
+  margin: 0;
+}
+
+.setup-aside {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.setup-aside h2 {
+  margin: 0;
+  color: var(--green);
+  font-size: 0.92rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.aside-mini-block {
+  display: grid;
+  gap: 8px;
+}
+
+.aside-mini-block h3 {
+  margin: 0;
+  color: var(--cyan);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.setup-aside .hardware-list,
+.setup-aside .wiring-list,
+.setup-aside .setup-list {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.setup-aside .hardware-list li,
+.setup-aside .wiring-list li,
+.setup-aside .setup-list li {
+  min-height: 0;
+  padding: 6px 8px;
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.setup-aside .hardware-list li::before,
+.setup-aside .wiring-list li::before,
+.setup-aside .setup-list li::before {
+  display: none;
+}
+
+.setup-aside .wiring-diagram {
+  display: none;
+}
+
+.setup-callout {
+  padding: 10px;
+}
+
+.setup-callout h3 {
+  margin-bottom: 5px;
+  font-size: 0.78rem;
+}
+
+.setup-callout p {
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.command-step-section {
+  position: relative;
+}
+
+.step-label {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 26px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 8px;
+  border: 1px solid #2d5b51;
+  border-radius: 999px;
+  background: #101817;
+  color: var(--cyan);
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.recipe-article.has-single-step .step-label {
+  display: none;
+}
+
+.recipe-section h2,
+.callout h3,
+.content-card h2 {
+  gap: 0;
+}
+
+.section-title-icon {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  .recipe-side-panel {
+    order: -1;
+  }
+}
+
+/* V10 article side panel fix: keep one existing aside card and put setup details inside it. */
+.recipe-layout > .aside-card {
+  align-self: start;
+  margin-top: 0;
+}
+
+.aside-card.recipe-side-panel,
+.recipe-side-panel {
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+  box-shadow: inset 0 0 5px #000;
+}
+
+.aside-card > dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.aside-card dt::before {
+  content: "INFO";
+}
+
+.aside-card dt.aside-dt-requirements::before { content: "REQ"; }
+.aside-card dt.aside-dt-wiring::before { content: "PIN"; }
+.aside-card dt.aside-dt-setup::before { content: "SET"; }
+.aside-card dt.aside-dt-protocol::before { content: "IO"; }
+.aside-card dt.aside-dt-hardware::before { content: "HW"; }
+.aside-card dt.aside-dt-command::before { content: "CMD"; }
+.aside-card dt.aside-dt-wiki::before { content: "DOC"; }
+.aside-card dt.aside-dt-date::before { content: "CAL"; }
+.aside-card dt.aside-dt-tool::before { content: "APP"; }
+.aside-card dt.aside-dt-target::before { content: "TGT"; }
+.aside-card dt.aside-dt-mode::before { content: "MODE"; }
+.aside-card dt.aside-dt-adapter::before { content: "USB"; }
+.aside-card dt.aside-dt-warning::before { content: "!"; }
+
+.aside-card dd.aside-setup-dd {
+  display: grid;
+  gap: 8px;
+}
+
+.aside-card .aside-setup-list,
+.aside-card dd.aside-setup-dd ul {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.aside-card .aside-setup-list li,
+.aside-card dd.aside-setup-dd ul li {
+  display: block;
+  min-height: 0;
+  padding: 7px 8px;
+  border: 1px solid #283028;
+  border-radius: var(--radius);
+  background: #0f1413;
+  color: #d8fff2;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.aside-card .aside-setup-list li::before,
+.aside-card dd.aside-setup-dd ul li::before {
+  display: none !important;
+  content: none !important;
+}
+
+.aside-card dd.aside-setup-dd p {
+  color: #d8ddd8;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.aside-card dd.aside-setup-dd .callout,
+.aside-card dd.aside-setup-dd .aside-callout {
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+.aside-card dd.aside-setup-dd .callout h3,
+.aside-card dd.aside-setup-dd .aside-callout h3 {
+  margin-bottom: 5px;
+  font-size: 0.78rem;
+}
+
+.aside-card dd.aside-setup-dd .callout p,
+.aside-card dd.aside-setup-dd .aside-callout p {
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.aside-card dd.aside-setup-dd .wiring-diagram {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .recipe-layout > .aside-card {
+    order: -1;
+  }
+}
+
+
+/* V11 wiring visual: generate one normal first article section from the setup aside. */
+.wiring-visual-section {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-color: #2d5b51;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 255, 204, 0.08), transparent 18rem),
+    linear-gradient(145deg, #151d19, #0f0f0f);
+}
+
+.wiring-visual-head {
+  display: grid;
+  gap: 5px;
+}
+
+.wiring-visual-head .eyebrow {
+  margin-bottom: 2px;
+}
+
+.wiring-visual-head h2 {
+  margin-bottom: 0;
+  color: var(--green);
+}
+
+.wiring-visual-head p {
+  max-width: 760px;
+  color: #d8ddd8;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.wiring-visual-section .wiring-diagram {
+  margin-top: 0;
+}
+
+.wiring-diagram-main figcaption {
+  color: #aebbb7;
+}
+
+@media (max-width: 760px) {
+  .wiring-visual-section {
+    padding: 14px;
+  }
+}
+
+
+/* V12 article tweaks: titleless wiring visual, compact aside, normal inline text flow. */
+.wiring-visual-section {
+  gap: 0;
+}
+
+.wiring-visual-head {
+  display: none !important;
+}
+
+.recipe-section > ol > li,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li {
+  display: block;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.recipe-section > ol > li a,
+.recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) > li a,
+.recipe-section p a {
+  display: inline;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.aside-card .aside-callout,
+.aside-card .setup-callout,
+.aside-card .callout.warning {
+  display: none !important;
+}
+
+
+/* V13 wiring visual label: keep one compact title for generated view. */
+.wiring-visual-section {
+  gap: 10px;
+}
+
+.wiring-visual-label {
+  margin: 0 0 2px;
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.wiring-visual-section .wiring-diagram {
+  margin-top: 0;
+}

@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="ESP32 Bit Pirate Recipes: Learn Hardware Debugging by Doing" property="og:title"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools.svg" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ESP32 Bit Pirate Recipes: Learn Hardware Debugging by Doing" name="twitter:title"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools.svg" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" rel="canonical"/>
+<title>ESP32 Bit Pirate Recipes | Learn Hardware Debugging by Doing</title>
+<link href="../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="recipes.css?v=20260623-batch8" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "ESP32 Bit Pirate Recipes",
+  "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/",
+  "description": "Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ESP32 Bit Pirate",
+    "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+  }
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<a aria-label="ESP32 Bit Pirate home" class="brand" href="../">
+<span aria-hidden="true" class="brand-mark">B</span>
+<span>ESP32 Bit Pirate</span>
+</a>
+<h1>Hardware Debugging Recipes</h1>
+<p>Learn ESP32 Bit Pirate by doing real tasks. These short recipes act like practical documentation: start from zero, connect safely, run useful commands, then grow into UART, I2C, SPI, GPIO, flash, IR, SubGHz, USB, network and debug workflows.</p>
+</header>
+<section aria-label="Search recipes" class="recipe-search">
+<label class="visually-hidden" for="recipe-search-input">Search recipes</label>
+<div class="recipe-search-bar">
+<input autocomplete="off" autofocus="" class="recipe-search-input" data-recipe-search="" id="recipe-search-input" name="q" placeholder="Try: scan I2C, stuck bus, read EEPROM…" type="search"/>
+<button aria-label="Clear search" class="recipe-search-clear" data-search-clear="" hidden="" type="button">x</button>
+<span aria-hidden="true" class="recipe-search-icon">⌕</span>
+</div>
+</section>
+<section aria-label="Recipe filters" class="recipe-toolbar">
+<div class="recipe-selectors">
+<label>
+<span>Protocol</span>
+<select data-recipe-select="protocol">
+<option value="All">All protocols</option>
+<option value="I2C">I2C</option>
+<option value="SPI">SPI</option>
+<option value="UART">UART</option>
+<option value="HD UART">HD UART</option>
+<option value="GPIO / DIO">GPIO / DIO</option>
+<option value="PWM / Servo">PWM / Servo</option>
+<option value="1-Wire">1-Wire</option>
+<option value="2-Wire / SLE4442">2-Wire / SLE4442</option>
+<option value="3-Wire">3-Wire</option>
+<option value="I2S">I2S</option>
+<option value="JTAG / SWD">JTAG / SWD</option>
+<option value="CAN">CAN</option>
+<option value="USB">USB</option>
+<option value="Infrared">Infrared</option>
+<option value="Sub-GHz">Sub-GHz</option>
+<option value="Wi-Fi">Wi-Fi</option>
+<option value="BLE">BLE</option>
+<option value="RF24">RF24</option>
+<option value="FM / RDS">FM / RDS</option>
+<option value="Ethernet">Ethernet</option>
+<option value="Cellular AT">Cellular AT</option>
+<option value="RFID">RFID</option>
+<option value="LED">LED</option>
+</select>
+</label>
+<label>
+<span>Task</span>
+<select data-recipe-select="task">
+<option value="All">All tasks</option>
+<option value="Find &amp; diagnose">Find &amp; diagnose</option>
+<option value="Read &amp; inspect">Read &amp; inspect</option>
+<option value="Flash &amp; write">Flash &amp; write</option>
+<option value="Capture &amp; analyze">Capture &amp; analyze</option>
+<option value="Connect &amp; control">Connect &amp; control</option>
+</select>
+</label>
+<label>
+<span>Difficulty</span>
+<select data-recipe-select="difficulty">
+<option value="All">Any level</option>
+<option value="Beginner">Beginner</option>
+<option value="Intermediate">Intermediate</option>
+<option value="Advanced">Advanced</option>
+</select>
+</label>
+</div>
+<p class="recipe-count" data-recipe-count="">0 recipes</p>
+</section>
+<section aria-label="Bit Pirate recipe links" class="recipe-grid recipe-static-grid" data-static-recipe-grid="">
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-unknown-i2c-device/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">I²C</span>Beginner</p>
+<h2>Scan an unknown I2C device</h2>
+<p class="recipe-description">A quick address scan before you lose an hour chasing the wrong example code.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="dump-spi-flash-browser/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-spi-flash.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SPI</span>Beginner</p>
+<h2>Dump a SPI flash chip from your browser</h2>
+<p class="recipe-description">Make a clean backup before a repair attempt, with the browser as the workbench.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Web SPI Flash Programmer</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="sniff-uart-between-two-boards/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RX</span>Beginner</p>
+<h2>Sniff UART between two boards</h2>
+<p class="recipe-description">Tap RX and ground first, then let the boot logs tell you what is really happening.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-ibutton-id/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ibutton.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">1W</span>Beginner</p>
+<h2>Read an iButton ID</h2>
+<p class="recipe-description">Read the ROM code from a tag without writing a throwaway sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-logic-analyzer-pulseview/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-logic-analyzer.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LA</span>Beginner</p>
+<h2>Use the logic analyzer with PulseView</h2>
+<p class="recipe-description">Turn a suspicious pin into a waveform you can measure and share.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>PulseView</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="dump-i2c-eeprom/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c-eeprom.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">EE</span>Beginner</p>
+<h2>Dump an I2C EEPROM safely</h2>
+<p class="recipe-description">Probe the chip first, then dump it through the dedicated EEPROM shell instead of guessing register reads.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="recover-stuck-i2c-bus/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c-recover.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">I²C</span>Beginner</p>
+<h2>Recover a stuck I2C bus</h2>
+<p class="recipe-description">Before rewiring everything, clock the bus and send a stop condition to release a stuck target.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-ds18b20-temperature/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ds18b20.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">1W</span>Beginner</p>
+<h2>Read a DS18B20 temperature sensor</h2>
+<p class="recipe-description">Confirm the sensor ROM first, then let the firmware decode the temperature value.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="dump-one-wire-eeprom/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-1wire-eeprom.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">1W</span>Intermediate</p>
+<h2>Dump a 1-Wire EEPROM</h2>
+<p class="recipe-description">Use the EEPROM shell instead of raw 1-Wire instructions when you need a reliable backup.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="measure-gpio-frequency/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-gpio-measure.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">DIO</span>Beginner</p>
+<h2>Measure a GPIO signal frequency</h2>
+<p class="recipe-description">Check if a pin is alive and roughly how fast it toggles before opening a full logic capture.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="generate-pwm-servo-signal/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-pwm-servo.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">PWM</span>Beginner</p>
+<h2>Generate PWM or move a servo</h2>
+<p class="recipe-description">Generate a quick test signal from the bench without writing a sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="capture-infrared-remote/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-infrared.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">IR</span>Beginner</p>
+<h2>Capture an infrared remote signal</h2>
+<p class="recipe-description">Point the remote, capture the protocol/data, then decide if you need to record or replay it.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="load-flipper-ir-file/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ir-file.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">IR</span>Intermediate</p>
+<h2>Load and send a Flipper IR file</h2>
+<p class="recipe-description">Use saved .ir files as reusable remote profiles instead of manually entering every command.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-usb-hid-keyboard-mouse/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-usb-hid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">USB</span>Beginner</p>
+<h2>Use USB HID keyboard and mouse mode</h2>
+<p class="recipe-description">Test HID behavior directly from the firmware without writing a TinyUSB example.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="usb-mass-storage-sd-card/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-usb-storage.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">MSC</span>Intermediate</p>
+<h2>Expose an SD card as USB storage</h2>
+<p class="recipe-description">Move files through the board without removing the SD card when the hardware supports it.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="open-spi-sd-card-shell/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-spi-sdcard.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SD</span>Beginner</p>
+<h2>Open the SPI SD card shell</h2>
+<p class="recipe-description">Check files from the bench without moving the card or adding a temporary sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="analyze-spi-flash-cli/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-flash-analyze.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SPI</span>Intermediate</p>
+<h2>Analyze a SPI flash from the CLI</h2>
+<p class="recipe-description">Probe first, then use analyze/search/strings before deciding what to dump or modify.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-wifi-find-local-devices/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-wifi.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WiFi</span>Beginner</p>
+<h2>Scan Wi-Fi and find local devices</h2>
+<p class="recipe-description">Use the board as a small network probe after it connects to your own Wi-Fi.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="sniff-can-frames-mcp2515/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-can.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CAN</span>Intermediate</p>
+<h2>Sniff CAN frames with MCP2515</h2>
+<p class="recipe-description">Configure bitrate and verify controller status before trusting captured CAN frames.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="detect-uart-baudrate-autobaud/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart-autobaud.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">BAUD</span>Beginner</p>
+<h2>Auto-detect an unknown UART baud rate</h2>
+<p class="recipe-description">Find the baud rate before you waste time guessing terminal settings.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="bridge-uart-console/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">TTY</span>Beginner</p>
+<h2>Bridge a UART console</h2>
+<p class="recipe-description">Turn the board into a quick serial console adapter after the passive checks are done.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="transfer-uart-xmodem-sd/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-file-workflow.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">XMD</span>Intermediate</p>
+<h2>Transfer files over UART with XMODEM</h2>
+<p class="recipe-description">Stage the file on SD, then use XMODEM only when the target expects it.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-bluetooth-devices/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ble.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">BLE</span>Beginner</p>
+<h2>Scan nearby Bluetooth devices</h2>
+<p class="recipe-description">List nearby devices and addresses before attempting any connection.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-ble-hid-server/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ble.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HID</span>Intermediate</p>
+<h2>Test BLE HID keyboard and mouse mode</h2>
+<p class="recipe-description">Test HID behavior without writing a BLEHIDDevice sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-subghz-frequency-cc1101/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-subghz.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SG</span>Intermediate</p>
+<h2>Find active Sub-GHz frequencies</h2>
+<p class="recipe-description">Discover the active frequency before trying to decode a frame.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="receive-subghz-frame/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-waveform.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RX</span>Intermediate</p>
+<h2>Receive and analyze a Sub-GHz frame</h2>
+<p class="recipe-description">Capture the frame shape and encoding hints before deciding whether any replay workflow is appropriate.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-rf24-channel-activity/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF24</span>Intermediate</p>
+<h2>Scan 2.4 GHz RF24 channel activity</h2>
+<p class="recipe-description">Use channel activity as a clue before trying any payload receive workflow.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-rfid-tag-pn532/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rfid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">NFC</span>Beginner</p>
+<h2>Read a PN532 RFID tag UID</h2>
+<p class="recipe-description">Identify a tag family and UID before attempting any write or clone workflow.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-fm-band-si4713/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-fm.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">FM</span>Intermediate</p>
+<h2>Scan the FM band with Si4713</h2>
+<p class="recipe-description">Use sweep and trace to inspect the band before considering any broadcast experiment.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-cellular-modem-status/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-cell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LTE</span>Intermediate</p>
+<h2>Check cellular modem status</h2>
+<p class="recipe-description">Check modem/SIM/network state before trying SMS, calls or USSD.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-swd-pinout/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-swd.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SWD</span>Advanced</p>
+<h2>Scan for SWD pins</h2>
+<p class="recipe-description">Reduce blind probing by scanning a controlled set of candidate pins.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-jtag-pinout/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-jtag.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">JTAG</span>Advanced</p>
+<h2>Scan for a JTAG pinout</h2>
+<p class="recipe-description">Let the firmware test permutations instead of manually trying every JTAG wire order.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-openocd-jtag-adapter/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-openocd.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">OCD</span>Advanced</p>
+<h2>Use OpenOCD adapter mode</h2>
+<p class="recipe-description">Switch to adapter mode only after wiring and target voltage are confirmed.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="bridge-half-duplex-uart/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HD</span>Intermediate</p>
+<h2>Bridge a half-duplex UART console</h2>
+<p class="recipe-description">Use one shared TX/RX GPIO when the target console is half-duplex instead of normal UART.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-sle4442-smartcard/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-smartcard.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">2W</span>Intermediate</p>
+<h2>Read an SLE4442 smartcard</h2>
+<p class="recipe-description">Probe ATR and security memory before any write or PSC operation.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="dump-microwire-93c-eeprom/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-threewire.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">3W</span>Intermediate</p>
+<h2>Dump a 93Cxx Microwire EEPROM</h2>
+<p class="recipe-description">Select the right chip model and ORG setting before trusting a 3WIRE EEPROM dump.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="test-i2s-microphone-speaker/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2s.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">I2S</span>Beginner</p>
+<h2>Test an I2S microphone or speaker</h2>
+<p class="recipe-description">Verify audio wiring with built-in tests before writing a custom sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="connect-w5500-ethernet/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ethernet.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">ETH</span>Intermediate</p>
+<h2>Connect a W5500 Ethernet module</h2>
+<p class="recipe-description">Use a wired network path to separate Wi-Fi problems from LAN or application problems.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="test-addressable-led-strip/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-led.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LED</span>Beginner</p>
+<h2>Test an addressable LED strip</h2>
+<p class="recipe-description">Verify LED power, data direction, protocol and color order before writing animation code.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="bridge-esp32-c5-expander/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-terminal-shell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">EXP</span>Intermediate</p>
+<h2>Bridge the ESP32-C5 Expander</h2>
+<p class="recipe-description">Confirm the expansion module handshake before using the bridged shell.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-can-frame-mcp2515/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-can.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CAN</span>Advanced</p>
+<h2>Send a CAN frame with MCP2515</h2>
+<p class="recipe-description">Send one known standard CAN frame after status confirms the adapter is healthy.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-i2c-registers/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">REG</span>Beginner</p>
+<h2>Read I2C registers</h2>
+<p class="recipe-description">Read a documented ID or status register to confirm the device behaves like the expected part.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-http-endpoint/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-http-api.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HTTP</span>Intermediate</p>
+<h2>Check an HTTP endpoint</h2>
+<p class="recipe-description">Test the actual web endpoint, not just ping reachability.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="open-web-serial-terminal/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-webserial.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">&gt;_</span>Beginner</p>
+<h2>Open a Web Serial terminal</h2>
+<p class="recipe-description">Open the CLI from a browser before installing a desktop terminal.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Web Serial Terminal</li><li>1 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-bytecode-instructions/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-protocol-lab.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">[]</span>Intermediate</p>
+<h2>Use Bus Pirate-style bytecode instructions</h2>
+<p class="recipe-description">Use compact bracket sequences when a full driver would be overkill.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-spi-flash-jedec-id/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-scan.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">9F</span>Beginner</p>
+<h2>Read a SPI flash JEDEC ID</h2>
+<p class="recipe-description">Read manufacturer/device bytes before a full flash dump or write.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="dump-spi-eeprom-25x/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-spi-eeprom.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">25X</span>Intermediate</p>
+<h2>Dump a SPI EEPROM 25X chip</h2>
+<p class="recipe-description">Use the dedicated SPI EEPROM shell instead of guessing raw reads.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="program-avr-with-avrdude/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-dump.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">AVR</span>Intermediate</p>
+<h2>Program an AVR with AVRDUDE</h2>
+<p class="recipe-description">Use ESP32 Bit Pirate as the Bus Pirate-style adapter AVRDUDE already understands.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>AVRDUDE</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="write-spi-flash-with-flashrom/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-repair.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WR</span>Advanced</p>
+<h2>Write a SPI flash image with Flashrom</h2>
+<p class="recipe-description">Write only after probe and backup; let Flashrom verify the image.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Flashrom</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-usb-host-descriptors/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-usb-host.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">USB</span>Intermediate</p>
+<h2>Read USB host descriptors</h2>
+<p class="recipe-description">Dump descriptors before writing USB host code.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-usb-ir-toy-lirc-adapter/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ir-file.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">IR</span>Intermediate</p>
+<h2>Use the USB IR Toy LIRC adapter</h2>
+<p class="recipe-description">Use mature LIRC tools when you want raw IR timing capture from the desktop.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>LIRC</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="pulse-gpio-microseconds/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-dio.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">DIO</span>Beginner</p>
+<h2>Pulse a GPIO in microseconds</h2>
+<p class="recipe-description">Generate a quick trigger pulse without writing a sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="sniff-gpio-edges-cli/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-sniffer.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">EDGE</span>Beginner</p>
+<h2>Sniff GPIO edges from the CLI</h2>
+<p class="recipe-description">Find out if a pin is alive before committing to a full capture.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="open-modbus-tcp-session/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-modbus.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">MB</span>Intermediate</p>
+<h2>Open a Modbus TCP session</h2>
+<p class="recipe-description">Use Modbus mode only on systems you own or are explicitly allowed to test.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="test-raw-tcp-nc-telnet/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-terminal-shell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">TCP</span>Intermediate</p>
+<h2>Test a raw TCP service with nc or telnet</h2>
+<p class="recipe-description">Check the service itself, not just network reachability.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-open-ports-nmap/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-scan.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SCAN</span>Intermediate</p>
+<h2>Check open ports with nmap mode</h2>
+<p class="recipe-description">Check only the ports you need, on systems you are allowed to test.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="choose-gpio-pinout-before-wiring/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-pinout.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">PIN</span>Beginner</p>
+<h2>Choose the right GPIO pinout</h2>
+<p class="recipe-description">Check exposed GPIOs before assigning protocol pins.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Wiki</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="save-pin-profiles-and-aliases/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-terminal-shell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CLI</span>Beginner</p>
+<h2>Save pin profiles and aliases</h2>
+<p class="recipe-description">Turn repeated bench steps into a shorter command flow.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-subghz-raw-cdc-adapter/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-subghz.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF</span>Advanced</p>
+<h2>Use the SubGHz Raw CDC adapter</h2>
+<p class="recipe-description">Drive CC1101 from scripts when the normal interactive UI is not enough.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>USB CDC</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="dump-sim-card-info-cellular-modem/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-cell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SIM</span>Beginner</p>
+<h2>Dump SIM card information from a cellular modem</h2>
+<p class="recipe-description">Check SIM status before chasing network or SMS problems.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-cellular-network-registration/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-cell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LTE</span>Beginner</p>
+<h2>Check GSM/LTE network registration</h2>
+<p class="recipe-description">Use CELL mode to check cellular registration, signal information and available operators from a GSM/LTE modem.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-ussd-cellular-modem/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-cell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">USSD</span>Intermediate</p>
+<h2>Send a USSD request from a modem</h2>
+<p class="recipe-description">Use CELL mode to send USSD codes from a cellular modem after SIM and network registration checks.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="list-sim-phonebook-contacts/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-cell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SIM</span>Beginner</p>
+<h2>List SIM phonebook contacts</h2>
+<p class="recipe-description">Use CELL mode to display contacts stored on a SIM card through a cellular modem phonebook command.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-sms-from-cellular-modem/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-cell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SMS</span>Intermediate</p>
+<h2>Send an SMS from a cellular modem</h2>
+<p class="recipe-description">Use CELL mode sms operations to send a message from a GSM/LTE modem after SIM and network checks.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-uart-at-shell-modem/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">AT</span>Beginner</p>
+<h2>Use the UART AT command helper</h2>
+<p class="recipe-description">Use UART mode at helper to send guided AT commands to modems and serial modules.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="emulate-uart-gps-device/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-gps.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">EMU</span>Intermediate</p>
+<h2>Emulate a UART peripheral for firmware tests</h2>
+<p class="recipe-description">Use UART emulator mode to test how another board behaves when a serial peripheral sends expected data.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="auto-reply-uart-trigger-pattern/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-trigger.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">TRIG</span>Intermediate</p>
+<h2>Auto-reply when UART text appears</h2>
+<p class="recipe-description">Use UART trigger to send a predefined response when a byte pattern is detected.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="monitor-i2c-register-changes/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">MON</span>Intermediate</p>
+<h2>Monitor I2C register changes</h2>
+<p class="recipe-description">Use I2C monitor or trace to watch changing registers on a target device over time.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="run-i2c-health-diagnostics/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-troubleshooting.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HLTH</span>Intermediate</p>
+<h2>Run I2C health diagnostics</h2>
+<p class="recipe-description">Use the I2C health command to check timing and stability of a target device.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="emulate-i2c-slave-device/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SLV</span>Advanced</p>
+<h2>Emulate an I2C slave device</h2>
+<p class="recipe-description">Use I2C slave mode to listen as a target address and log master operations.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="write-rfid-ntag-page-pn532/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rfid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">NFC</span>Intermediate</p>
+<h2>Write a test page to an NFC tag</h2>
+<p class="recipe-description">Use RFID mode with a PN532 module to write lab data to an NTAG or Ultralight page.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="erase-rfid-test-tag-pn532/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rfid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">NFC</span>Intermediate</p>
+<h2>Erase a lab NFC/RFID tag</h2>
+<p class="recipe-description">Use RFID erase flow with PN532 for lab tags where wiping user data is expected.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="record-infrared-remote-file/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ir-file.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">IR</span>Intermediate</p>
+<h2>Record an infrared remote to a .ir file</h2>
+<p class="recipe-description">Use INFRARED record to capture remote frames and save them to LittleFS in Flipper-style .</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-infrared-universal-remote-shell/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-infrared.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">IR</span>Beginner</p>
+<h2>Use the infrared universal remote shell</h2>
+<p class="recipe-description">Launch the INFRARED remote shell to send common keys such as power, volume and mute across known protocols.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="sweep-subghz-frequency-activity/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-subghz.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF</span>Beginner</p>
+<h2>Sweep SubGHz frequency activity</h2>
+<p class="recipe-description">Use CC1101 SubGHz sweep to find active frequency areas before receiving or decoding frames.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="record-subghz-signal-littlefs/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-subghz.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF</span>Intermediate</p>
+<h2>Record a SubGHz signal to LittleFS</h2>
+<p class="recipe-description">Use SubGHz record to capture symbols from a CC1101 receiver and save them to LittleFS.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="load-subghz-flipper-sub-file/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-file-workflow.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SUB</span>Advanced</p>
+<h2>Load a Flipper SubGHz .sub file</h2>
+<p class="recipe-description">Upload a .</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="start-web-cli-hotspot/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-webserial.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WEB</span>Beginner</p>
+<h2>Start the Web CLI through Wi-Fi hotspot</h2>
+<p class="recipe-description">Use Wi-Fi hotspot mode to access the browser CLI without an existing router or saved credentials.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Web CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="first-serial-connection-firmware/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-terminal-shell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CLI</span>Beginner</p>
+<h2>Make the first serial connection</h2>
+<p class="recipe-description">Get to a working prompt before debugging the target hardware.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="select-protocol-mode-cli/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-protocol-lab.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">MODE</span>Beginner</p>
+<h2>Select a protocol mode quickly</h2>
+<p class="recipe-description">Use direct mode selection instead of scrolling through menus every time.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>1 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-help-and-man-firmware/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-education.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HELP</span>Beginner</p>
+<h2>Use help and man before a workflow</h2>
+<p class="recipe-description">Find the command vocabulary from the firmware itself.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>1 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="open-system-status-shell/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-troubleshooting.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SYS</span>Beginner</p>
+<h2>Open the system status shell</h2>
+<p class="recipe-description">Check firmware and memory state before blaming the target device.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="create-command-alias-shortcuts/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-terminal-shell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">ALIAS</span>Beginner</p>
+<h2>Create command aliases for common tasks</h2>
+<p class="recipe-description">Turn long bench commands into short repeatable actions.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="repeat-commands-for-testing/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-trigger.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">REP</span>Beginner</p>
+<h2>Repeat commands for quick testing</h2>
+<p class="recipe-description">Repeat a simple check without writing a script.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="chain-commands-with-delays-cli/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-protocol-lab.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CLI</span>Intermediate</p>
+<h2>Chain commands with delays</h2>
+<p class="recipe-description">Build tiny scripts from the prompt without a host-side Python file.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="detect-unknown-pin-with-wizard/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-gpio-measure.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WIZ</span>Beginner</p>
+<h2>Detect an unknown GPIO signal with wizard</h2>
+<p class="recipe-description">Use wizard as the first safe question before selecting a protocol mode.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="enable-smart-pullups-per-mode/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-pinout.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">P/p</span>Beginner</p>
+<h2>Enable smart pull-ups per mode</h2>
+<p class="recipe-description">Use mode-aware pull-ups instead of guessing which input needs help.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="view-logic-on-device-screen/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-waveform.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LOG</span>Beginner</p>
+<h2>View GPIO logic on the device screen</h2>
+<p class="recipe-description">Get a quick visual signal check without opening PulseView.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="view-analog-gpio-on-screen/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-gpio-measure.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">ADC</span>Beginner</p>
+<h2>View analog GPIO values on screen</h2>
+<p class="recipe-description">Check whether a sensor output changes before writing ADC code.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="listen-gpio-activity-as-audio/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2s.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">AUD</span>Intermediate</p>
+<h2>Listen to GPIO activity as audio</h2>
+<p class="recipe-description">Use your ears as a quick activity detector for repetitive signals.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="manage-littlefs-files-webui/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-file-workflow.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">FS</span>Beginner</p>
+<h2>Manage LittleFS files from the Web UI</h2>
+<p class="recipe-description">Move .ir, .sub and other small workflow files without a separate filesystem tool.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Web UI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-python-automation-over-serial/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-terminal-shell.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">PY</span>Intermediate</p>
+<h2>Use Python automation over serial</h2>
+<p class="recipe-description">Move from manual commands to repeatable host-side tests.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Python</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="daily-bench-startup-checklist/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-repair.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">START</span>Beginner</p>
+<h2>Run a daily bench startup checklist</h2>
+<p class="recipe-description">Catch terminal, firmware or setup issues before wiring an unknown board.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="configure-nrf24-module/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF24</span>Beginner</p>
+<h2>Configure an nRF24L01 module</h2>
+<p class="recipe-description">Start RF24 work by saving a known-good pin and channel configuration.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-rf24-payload/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF24</span>Intermediate</p>
+<h2>Send a small RF24 payload</h2>
+<p class="recipe-description">Verify a 2.4 GHz lab link with a tiny controlled payload.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="receive-rf24-payloads/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF24</span>Intermediate</p>
+<h2>Receive RF24 payloads</h2>
+<p class="recipe-description">Turn the firmware into a quick RF24 payload receiver for lab tests.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="sweep-rf24-channels-activity/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF24</span>Beginner</p>
+<h2>Sweep RF24 channels for activity</h2>
+<p class="recipe-description">Choose quieter RF24 channels before transmit/receive tests.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="configure-addressable-led-strip/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-led.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LED</span>Beginner</p>
+<h2>Configure an addressable LED strip</h2>
+<p class="recipe-description">Create a safe LED baseline before testing animations or individual pixels.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="set-one-led-pixel-index/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-neopixel.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LED</span>Beginner</p>
+<h2>Set one LED pixel by index</h2>
+<p class="recipe-description">Verify LED order and indexing without animating the whole strip.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="play-i2s-test-tone/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2s.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">I2S</span>Beginner</p>
+<h2>Play an I2S test tone</h2>
+<p class="recipe-description">Verify I2S output with a known tone before playing or debugging audio data.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="record-i2s-microphone-signal/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2s.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">I2S</span>Intermediate</p>
+<h2>Record from an I2S microphone</h2>
+<p class="recipe-description">Confirm I2S microphone wiring before writing custom audio code.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="open-hduart-bridge-session/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HDUART</span>Intermediate</p>
+<h2>Bridge a half-duplex UART bus</h2>
+<p class="recipe-description">Talk to simple single-wire UART devices from the CLI.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-hduart-bytecode-query/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-trigger.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HDUART</span>Advanced</p>
+<h2>Send a timed HDUART query</h2>
+<p class="recipe-description">Build controlled request/response tests on a shared UART line.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="probe-sle4442-smartcard-atr/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-smartcard.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">2WIRE</span>Intermediate</p>
+<h2>Probe an SLE4442 smartcard ATR</h2>
+<p class="recipe-description">Identify the card and ATR before dump, write or security actions.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-sle4442-security-status/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-smartcard.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">2WIRE</span>Intermediate</p>
+<h2>Check SLE4442 security status</h2>
+<p class="recipe-description">Check retry counter and protection status before risky smartcard actions.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="write-93cxx-eeprom-bytes/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-threewire.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">3WIRE</span>Advanced</p>
+<h2>Write bytes to a 93Cxx EEPROM</h2>
+<p class="recipe-description">Practice controlled Microwire EEPROM writes after a backup.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="erase-lab-93cxx-eeprom/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-threewire.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">3WIRE</span>Advanced</p>
+<h2>Erase a lab 93Cxx EEPROM</h2>
+<p class="recipe-description">Practice destructive Microwire erase only on replaceable chips.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="receive-specific-can-frame-id/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-can.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CAN</span>Intermediate</p>
+<h2>Receive a specific CAN frame ID</h2>
+<p class="recipe-description">Focus CAN logging on one identifier instead of reading every frame.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-mcp2515-can-status/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-can.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CAN</span>Beginner</p>
+<h2>Check MCP2515 CAN status</h2>
+<p class="recipe-description">Check controller errors before blaming the target bus.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="trace-one-fm-frequency/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-fm.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">FM</span>Beginner</p>
+<h2>Trace one FM frequency</h2>
+<p class="recipe-description">Check one FM frequency before experimenting with broadcast operations.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="start-ble-hid-keyboard-server/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ble.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">BLE</span>Intermediate</p>
+<h2>Start a BLE HID keyboard server</h2>
+<p class="recipe-description">Validate BLE HID keyboard mode with a short controlled text send.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-ble-mouse-movement/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ble.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">BLE</span>Intermediate</p>
+<h2>Use BLE mouse movement</h2>
+<p class="recipe-description">Test BLE HID mouse mode without writing a custom HID sketch.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="sniff-one-wire-bus-timing/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-1wire.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">1W</span>Intermediate</p>
+<h2>Sniff 1-Wire bus timing</h2>
+<p class="recipe-description">Use 1-Wire sniff mode to observe reset, presence and bit timing on a Dallas-style single-wire bus.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="copy-rw1990-ibutton-shell/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ibutton.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">1W</span>Intermediate</p>
+<h2>Copy an RW1990 iButton in the shell</h2>
+<p class="recipe-description">Open the 1-Wire iButton shell to read a Dallas key ID and write it to a compatible RW1990 test key.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="write-one-wire-scratchpad-pattern/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-1wire-eeprom.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">1W</span>Intermediate</p>
+<h2>Write a 1-Wire scratchpad test pattern</h2>
+<p class="recipe-description">Use the documented 1-Wire write sp command to send an eight-byte scratchpad pattern to a supported lab device.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-uart-spam-pattern/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">UART</span>Beginner</p>
+<h2>Send repeated UART text with spam</h2>
+<p class="recipe-description">Use UART spam to send a repeated text or newline pattern at a fixed interval while testing serial devices.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="read-uart-raw-hex-stream/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">UART</span>Beginner</p>
+<h2>Read UART as raw hex bytes</h2>
+<p class="recipe-description">Use UART raw mode to view serial traffic as hexadecimal bytes instead of printable ASCII.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="probe-uart-device-with-ping/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-uart-autobaud.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">UART</span>Beginner</p>
+<h2>Probe a UART device with ping</h2>
+<p class="recipe-description">Use UART ping to send predefined probes and detect whether an unknown serial target answers.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="press-usb-hid-gamepad-button/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-usb-hid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">USB</span>Beginner</p>
+<h2>Press a USB HID gamepad button</h2>
+<p class="recipe-description">Use USB gamepad mode to send a single HID button press such as A, B or LEFT to a connected host.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-usb-system-control-action/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-usb-hid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">USB</span>Intermediate</p>
+<h2>Send a USB system control action</h2>
+<p class="recipe-description">Use the USB sysctrl command to emulate hardware control button actions on a connected host.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="choose-dedicated-usb-adapter-mode/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-browser-tools.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">USB</span>Intermediate</p>
+<h2>Choose a dedicated USB adapter mode</h2>
+<p class="recipe-description">Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy or SubGHz tool modes.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="configure-jtag-swd-scan-pins/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-jtag.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">JTAG</span>Intermediate</p>
+<h2>Configure the JTAG/SWD scan pin group</h2>
+<p class="recipe-description">Use JTAG config to select which GPIOs are included in SWD or JTAG pinout brute-force scans.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="run-passive-wifi-sniffer-session/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-wifi.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WiFi</span>Intermediate</p>
+<h2>Run a passive Wi-Fi sniffer session</h2>
+<p class="recipe-description">Use Wi-Fi sniff mode to cycle channels and display nearby 2.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="lookup-mac-address-vendor/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-wifi.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WiFi</span>Beginner</p>
+<h2>Look up a MAC address vendor</h2>
+<p class="recipe-description">Use Wi-Fi lookup mac to query vendor details for a MAC address while documenting devices on a bench network.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="lookup-ip-address-details/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-wifi.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WiFi</span>Beginner</p>
+<h2>Look up IP address details</h2>
+<p class="recipe-description">Use Wi-Fi lookup ip to get basic public IP or hostname details while checking network targets from the CLI.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="start-wifi-access-point-mode/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-wifi.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">WiFi</span>Beginner</p>
+<h2>Start a Wi-Fi access point</h2>
+<p class="recipe-description">Use Wi-Fi AP mode to create an access point from the firmware and optionally keep station fallback when credentials exist.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="analyze-url-with-http-apis/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-http-api.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">HTTP</span>Intermediate</p>
+<h2>Analyze a URL from the firmware CLI</h2>
+<p class="recipe-description">Use Wi-Fi http analyze to run a URL analysis workflow from the firmware CLI after connecting to Wi-Fi.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="clone-mifare-uid-magic-card/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rfid.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RFID</span>Advanced</p>
+<h2>Clone a MIFARE UID to a magic card</h2>
+<p class="recipe-description">Use the RFID clone flow with a PN532 to copy a source UID to a compatible magic MIFARE Classic lab card.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="check-logic-levels-before-wiring/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-gpio-measure.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">DIO</span>Beginner</p>
+<h2>Check logic levels before wiring a target</h2>
+<p class="recipe-description">Confirm voltage, shared ground and GPIO direction before connecting an unknown digital target.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>3 min</li></ul>
+</a>
+</article>
+<article class="recipe-card"><a class="recipe-card-link" href="wire-cc1101-subghz-module/"><img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-subghz.svg" width="520"/><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SubGHz</span>Beginner</p><h2>Wire a CC1101 Sub-GHz module</h2><p class="recipe-description">Connect SPI plus GDO0, then configure the selected board pins from the SubGHz shell.</p><ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul></a></article>
+<article class="recipe-card"><a class="recipe-card-link" href="wire-nrf24l01-rf24-module/"><img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RF24</span>Beginner</p><h2>Wire an nRF24L01 RF24 module</h2><p class="recipe-description">Connect SPI plus CE and CSN, then configure the selected board pins from RF24 mode.</p><ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul></a></article>
+<article class="recipe-card"><a class="recipe-card-link" href="wire-si4713-fm-module/"><img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-fm.svg" width="520"/><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">FM</span>Beginner</p><h2>Wire a Si4713 FM module</h2><p class="recipe-description">Connect I2C and reset, then configure the selected board pins from FM mode.</p><ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul></a></article>
+<article class="recipe-card"><a class="recipe-card-link" href="wire-pn532-rfid-reader-i2c/"><img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rfid.svg" width="520"/><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">RFID</span>Beginner</p><h2>Wire a PN532 RFID reader in I2C mode</h2><p class="recipe-description">Set the PN532 to I2C mode, connect SDA/SCL, then initialize it from RFID config.</p><ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul></a></article>
+<article class="recipe-card"><a class="recipe-card-link" href="wire-w5500-ethernet-module/"><img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-ethernet.svg" width="520"/><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Ethernet</span>Intermediate</p><h2>Wire a W5500 Ethernet module</h2><p class="recipe-description">Connect SPI, CS and IRQ, then configure Ethernet mode for the selected board pins.</p><ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul></a></article>
+<article class="recipe-card"><a class="recipe-card-link" href="wire-mcp2515-can-module/"><img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-can.svg" width="520"/><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">CAN</span>Intermediate</p><h2>Wire an MCP2515 CAN module</h2><p class="recipe-description">Connect SPI and CAN bus roles before configuring CAN mode.</p><ul class="recipe-pill-list recipe-facts-list"><li>Serial CLI</li><li>5 min</li></ul></a></article>
+</section>
+<section aria-label="Filtered Bit Pirate recipes" class="recipe-grid" data-recipe-grid=""></section>
+<section class="content-card empty-state" data-empty-state="" hidden="">
+<h2>No recipe here yet</h2>
+<p>Try a broader search, or share a short note if you already solved this target or workflow.</p>
+</section>
+<section aria-labelledby="share-title" class="content-card contribution-card">
+<div>
+<h2 id="share-title">Share your own recipe</h2>
+<p>Solved a real hardware problem with ESP32 Bit Pirate? Share the wiring, command and result so others can learn the same workflow by practice.</p>
+</div>
+<a class="button secondary-button" href="https://github.com/geo-tp/ESP32-Bit-Pirate/issues/new?title=Recipe%20submission%3A%20&amp;body=%23%23%23%20What%20problem%20did%20you%20solve%3F%0A%0A%23%23%23%20What%20hardware%20did%20you%20use%3F%0A%0A%23%23%23%20How%20did%20you%20wire%20it%3F%0A%0A%23%23%23%20Which%20Bit%20Pirate%20command%20or%20Web%20Tool%20did%20you%20use%3F%0A%0A%23%23%23%20What%20was%20the%20result%3F%0A%0A%23%23%23%20Photos%20%2F%20screenshots%0A" rel="noopener" target="_blank">Open GitHub issue</a>
+</section>
+<section aria-labelledby="audience-title" class="content-card audience-card">
+<div class="audience-card-header">
+<h2 id="audience-title">Use these recipes when</h2>
+<p>Practical entry points for learning the firmware feature by feature, while keeping the full Wiki as the reference.</p>
+</div>
+<ul class="audience-list">
+<li><span>Start from zero</span><strong>Open Web Serial, select a mode, read help, check status and learn the CLI without a long setup.</strong></li>
+<li><span>Find unknown hardware</span><strong>Scan I2C, read UART logs, detect GPIO activity, identify chips and avoid guessing before writing code.</strong></li>
+<li><span>Backup memories</span><strong>Dump SPI flash, I2C EEPROM, 1-Wire EEPROM or smartcard data before repair work or firmware experiments.</strong></li>
+<li><span>Use ESP32 adapters</span><strong>Run ESP32 serprog, ESP32 SUMP logic analyzer, USB CDC, IR Toy/LIRC and browser-based SPI flash workflows.</strong></li>
+<li><span>Practice real protocols</span><strong>Learn UART, I2C, SPI, DIO, Infrared, SubGHz, RFID, CAN, Ethernet, BLE and USB through small tasks.</strong></li>
+<li><span>Build repeatable tests</span><strong>Use alias, repeat, command chaining, delays, profiles and Python automation for daily bench workflows.</strong></li>
+<li><span>Troubleshoot</span><strong>Identify and resolve issues in your hardware setup or firmware configuration.</strong></li>
+<li><span>Learn by practice</span><strong>Use the recipes to learn the firmware feature by feature, while keeping the full Wiki as the reference.</strong></li>
+</ul>
+</section>
+</main>
+<script src="recipes-list.js?v=20260623-batch8"></script>
+<script src="recipes.js?v=20260623-batch8"></script>
+</body>
+</html>

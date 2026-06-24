@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use Wi-Fi mode to scan networks, connect to your own network, show status and discover local devices." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to scan Wi-Fi and find local devices with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use Wi-Fi mode to scan networks, connect to your own network, show status and discover local devices." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to scan Wi-Fi and find local devices with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use Wi-Fi mode to scan networks, connect to your own network, show status and discover local devices." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/" rel="canonical"/>
+<title>How to scan Wi-Fi and find local devices with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to scan Wi-Fi and find local devices with ESP32 Bit Pirate",
+      "description": "Use Wi-Fi mode to scan networks, connect to your own network, show status and discover local devices.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to scan Wi-Fi and find local devices with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>Wi-Fi</li><li>Beginner</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · Wi-Fi</p>
+<h1>How to scan Wi-Fi and find local devices with ESP32 Bit Pirate</h1>
+<p>Wi-Fi mode is useful for the non-invasive side of IoT debugging: see nearby networks, connect, print status, ping and discover devices on your own LAN.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-wifi.svg" width="1040"/>
+<figcaption>Use the board as a small network probe after it connects to your own Wi-Fi.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode wifi
+scan
+connect
+status
+discovery 3000
+ping 8.8.8.8" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>Use scan/status for connectivity, discovery for local visibility, and ping for reachability. Avoid running Wi-Fi reset/disconnect while using Web CLI.</p>
+</div>
+<div data-cli-commands="status" data-cli-mode="Wi-Fi" data-cli-result="Connected to SSID
+IP address printed
+MAC address printed
+Discovery can list local responders" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>Changing Wi-Fi state while connected through Web CLI.</li>
+<li>Scanning or probing networks you do not own or have permission to test.</li>
+<li>Assuming discovery finds every device; some hosts block ping.</li>
+<li>Forgetting saved credentials may auto-reconnect later.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Use <code>webui</code> to print the Web UI URL after connecting.</li>
+<li>Use <code>ping &lt;host&gt;</code> for reachability.</li>
+<li>Use <code>nc</code> or <code>http get</code> only against systems you control.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/14-WIFI"><span>Wiki</span><strong>Wi-Fi mode commands</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Related</span><strong>Open Web Serial Terminal</strong></a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate"><span>Repo</span><strong>ESP32 Bit Pirate GitHub</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>Your own Wi-Fi network</li>
+<li>USB Serial preferred when changing Wi-Fi state</li>
+<li>Target device on the LAN</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="LAN" data-wiring-right="BP">
+<li>USB → CLI access</li>
+<li>Wi-Fi → own network</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>Wi-Fi</dd><dt class="aside-dt-hardware">Hardware</dt><dd>ESP32 Bit Pirate with Wi-Fi access</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/14-WIFI">14-WIFI</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

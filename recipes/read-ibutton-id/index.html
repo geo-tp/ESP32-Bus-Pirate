@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use ESP32 Bit Pirate to read a Dallas iButton ROM ID with the real 1-Wire and iButton shell workflow." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to read an iButton ID with ESP32" property="og:title"/>
+<meta content="A practical ESP32 Bit Pirate recipe for reading a Dallas iButton ID over 1-Wire." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to read an iButton ID with ESP32" name="twitter:title"/>
+<meta content="Use ESP32 Bit Pirate to scan a 1-Wire bus and read a Dallas iButton ROM ID." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" rel="canonical"/>
+<title>How to read an iButton ID with ESP32</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to read an iButton ID with ESP32",
+      "description": "Use ESP32 Bit Pirate to read a Dallas iButton ROM ID with the real 1-Wire and iButton shell workflow.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": { "@type": "Organization", "name": "ESP32 Bit Pirate", "url": "https://github.com/geo-tp/ESP32-Bit-Pirate" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to read an iButton ID with ESP32", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>1-Wire</li><li>iButton</li><li>Serial CLI</li><li>5 min</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · 1-Wire</p>
+<h1>How to read an iButton ID with ESP32</h1>
+<p>A drawer had three Dallas-style keys and no labels. I needed the ROM ID from each one, not a new Arduino sketch that would be deleted ten minutes later.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="1-Wire iButton visual with data contact and ROM ID" height="600" src="../assets/visual-ibutton.svg" width="1040"/>
+<figcaption>For iButton work, contact quality matters as much as the command.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">iButton</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">iButton data</text><text class="wiring-pin" x="688" y="126">1-Wire Data GPIO</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">iButton case</text><text class="wiring-pin" x="688" y="148">BP GND</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">Data pull-up</text><text class="wiring-pin" x="688" y="170">3.3V</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>iButton data</span><span class="wiring-mobile-arrow">-&gt;</span><span>1-Wire Data GPIO</span></div><div class="wiring-mobile-row wire-1"><span>iButton case</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div><div class="wiring-mobile-row wire-2"><span>Data pull-up</span><span class="wiring-mobile-arrow">-&gt;</span><span>3.3V</span></div></div>
+<figcaption>Generated from the wiring summary: iButton to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Check the 1-Wire bus</h2>
+<p>Start in 1-Wire mode and run a basic scan. The first time you enter the mode, Bit Pirate asks for the data GPIO automatically. The scan tells you whether the tag is being seen before you enter the iButton shell.</p>
+<div data-cli-commands="mode 1WIRE
+scan" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section command-step-section">
+<span class="step-label">Step 2</span><h2>Read the iButton ID</h2>
+<p>The firmware has a dedicated <code>ibutton</code> shell. Open it from 1-Wire mode, then choose <strong>Read ID</strong> from the interactive menu and hold the tag steady until the ROM ID prints.</p>
+<div data-cli-commands="ibutton" data-cli-mode="1WIRE" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>What the result means</h2>
+<div class="callout success">
+<h3>Record all eight bytes</h3>
+<p>The first byte is the family code, the middle bytes are the serial value, and the last byte is the CRC. Keep the full ROM ID together; shortening it makes later comparisons easy to mess up.</p>
+</div>
+<div data-cli-commands="ibutton" data-cli-mode="1WIRE" data-cli-result="=== iButton RW1990 Shell ===
+iButton Read: Press [ENTER] to stop.
+iButton Read: In progress...
+ROM ID: 01 23 45 67 89 AB CD EF
+Same value twice means the contact and pull-up are probably stable." data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<p>If the shell reports CRC errors or the scan appears and disappears, suspect contact pressure first. Clean the iButton, shorten the wires, verify the pull-up, and repeat the read until the same ROM ID appears twice.</p>
+<ul class="mistake-list">
+<li>The reader cup is not pressing firmly on both iButton contacts.</li>
+<li>The data line has no pull-up to 3.3V.</li>
+<li>Long loose wires are adding enough noise to cause CRC errors.</li>
+<li>More than one 1-Wire device is connected during the read.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE"><span>Wiki</span><strong>1-Wire mode commands</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Web Serial Terminal</strong></a>
+<a href="../scan-unknown-i2c-device/"><span>Related</span><strong>Scan another simple bus</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>Dallas iButton or compatible 1-Wire token</li>
+<li>Reader cup, pogo contacts, or short clip leads</li>
+<li>Pull-up from data to 3.3V if the reader wiring does not already include one</li>
+<li>Serial CLI or Web Serial Terminal</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="iButton" data-wiring-right="BP">
+<li>iButton data → 1-Wire Data GPIO</li>
+<li>iButton case → Bit Pirate GND</li>
+<li>Data pull-up → 3.3V</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>1-Wire</dd><dt class="aside-dt-target">Target</dt><dd>Dallas iButton / RW1990-style token</dd><dt class="aside-dt-command">Firmware commands checked</dt><dd><code>scan</code><code>ibutton</code></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

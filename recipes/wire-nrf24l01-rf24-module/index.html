@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Wire an nRF24L01 using the documented RF24 SPI, CE and CSN connections.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Wire an nRF24L01 RF24 module | ESP32 Bit Pirate">
+<meta property="og:description" content="Wire an nRF24L01 using the documented RF24 SPI, CE and CSN connections.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-nrf24l01-rf24-module/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-06-24">
+<meta property="article:modified_time" content="2026-06-24">
+<meta property="article:author" content="Geo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wire an nRF24L01 RF24 module | ESP32 Bit Pirate">
+<meta name="twitter:description" content="Wire an nRF24L01 using the documented RF24 SPI, CE and CSN connections.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-nrf24l01-rf24-module/">
+<title>Wire an nRF24L01 RF24 module | ESP32 Bit Pirate</title>
+<link rel="icon" href="../../web-tools/web-serial-terminal/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../recipes.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Wire an nRF24L01 RF24 module","description":"Wire an nRF24L01 using the documented RF24 SPI, CE and CSN connections.","image":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png","datePublished":"2026-06-24","dateModified":"2026-06-24","author":{"@type":"Person","name":"Geo"},"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-nrf24l01-rf24-module/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ESP32 Bit Pirate","item":"https://geo-tp.github.io/ESP32-Bit-Pirate/"},{"@type":"ListItem","position":2,"name":"Recipes","item":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"},{"@type":"ListItem","position":3,"name":"Wire an nRF24L01 RF24 module","item":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-nrf24l01-rf24-module/"}]}]}</script>
+</head><body><main class="wrap"><header class="hero"><p class="eyebrow">Recipe · Beginner · RF24</p><h1>Wire an nRF24L01 RF24 module</h1><p>RF24 mode configures the SPI bus alongside CE and CSN. Select the matching GPIO roles for your board.</p></header><figure class="recipe-banner"><img src="../assets/visual-rf24.svg" alt="nRF24L01 RF24 wiring concept" width="1040" height="600"><figcaption>RF24 needs SPI plus its dedicated CE and CSN signals.</figcaption></figure><div class="recipe-layout"><article class="recipe-article"><section class="recipe-section"><h2>Documented wiring roles</h2><ul class="wiring-list"><li>CE → selected GPIO</li><li>CSN → selected SPI CS</li><li>SCK → selected SPI SCK</li><li>MISO → selected SPI MISO</li><li>MOSI → selected SPI MOSI</li><li>VCC → 3.3V</li><li>GND → GND</li></ul></section><section class="recipe-section"><h2>Configure RF24</h2><p>Run <code>config</code> in RF24 mode instead of copying another board’s pin numbers.</p></section><section class="recipe-section troubleshooting-section"><h2>Checks</h2><ul class="mistake-list"><li>The nRF24L01 module uses 3.3 V.</li><li>CE and CSN do not have the same role.</li><li>Use radio functions only in an authorized environment.</li></ul></section><nav class="link-card-list"><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/21-RF24"><span>Wiki</span><strong>21-RF24</strong></a><a href="../configure-nrf24-module/"><span>Related</span><strong>Configure nRF24L01</strong></a></nav></article><aside class="content-card aside-card"><dl><dt>Protocol</dt><dd>RF24 / nRF24L01</dd><dt>Command</dt><dd><code>config</code></dd></dl></aside></div></main><script src="../recipes.js"></script></body></html>

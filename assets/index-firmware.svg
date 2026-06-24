@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+  <title id="title">Firmware repository visual</title>
+  <desc id="desc">A dark GitHub-style source repository page for ESP32 Bit Pirate firmware.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+    <radialGradient id="cyanGlow" cx="16%" cy="20%" r="64%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".13"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
+    <radialGradient id="greenGlow" cx="88%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
+  <g stroke="#22312d" stroke-width="1.4" opacity=".72">
+    <path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/>
+    <path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/>
+    <path d="M-50 540L520 40M160 575L790 35M500 620L1070 120" opacity=".28"/>
+  </g>
+  
+  <rect x="104" y="88" width="832" height="424" rx="24" fill="#0b0d0c" stroke="#40514b" stroke-width="3"/>
+  <rect x="104" y="88" width="832" height="58" rx="24" fill="#141917"/>
+  <circle cx="144" cy="117" r="8" fill="#00ffcc"/><circle cx="174" cy="117" r="8" fill="#00ff70"/><circle cx="204" cy="117" r="8" fill="#ffc257"/>
+  <rect x="255" y="104" width="365" height="27" rx="9" fill="#0b0d0c" stroke="#2f3a36" stroke-width="2"/>
+  <path d="M274 117h16" stroke="#52635d" stroke-width="4" stroke-linecap="round"/>
+  <text x="306" y="123" fill="#9fb0a8" font-family="Menlo, Courier New, monospace" font-size="16" font-weight="700">github.com / geo-tp / ESP32-Bit-Pirate</text>
+  <g font-family="Menlo, Courier New, monospace" font-weight="700">
+    <path d="M152 183l15-9 15 9v17l-15 9-15-9z" fill="#101615" stroke="#00ffcc" stroke-width="2"/>
+    <circle cx="167" cy="191" r="4" fill="#00ffcc"/>
+    <text x="202" y="193" fill="#d8fff2" font-size="23">geo-tp /</text><text x="330" y="193" fill="#00ffcc" font-size="23">ESP32-Bit-Pirate</text>
+    <rect x="734" y="166" width="150" height="38" rx="10" fill="#172320" stroke="#00ff9966" stroke-width="2"/>
+    <text x="758" y="191" fill="#b8ffb8" font-size="17">★  Source</text>
+    <path d="M146 233h91M267 233h90M388 233h104M523 233h72" stroke="#8a9b92" stroke-width="5" stroke-linecap="round"/>
+    <path d="M146 250h91" stroke="#00ffcc" stroke-width="3"/>
+    <text x="146" y="273" fill="#d8fff2" font-size="16">Code</text><text x="267" y="273" fill="#9fb0a8" font-size="16">Issues</text><text x="388" y="273" fill="#9fb0a8" font-size="16">Pull requests</text><text x="523" y="273" fill="#9fb0a8" font-size="16">Wiki</text>
+  </g>
+  <rect x="146" y="300" width="184" height="42" rx="10" fill="#172320" stroke="#335149" stroke-width="2"/>
+  <text x="169" y="327" fill="#b8ffb8" font-family="Menlo, Courier New, monospace" font-size="17" font-weight="700">main ▾</text>
+  <rect x="350" y="300" width="534" height="42" rx="10" fill="#101615" stroke="#2f3a36" stroke-width="2"/>
+  <text x="374" y="327" fill="#9fb0a8" font-family="Menlo, Courier New, monospace" font-size="16">latest commit · firmware protocol updates</text>
+  <rect x="146" y="356" width="738" height="112" rx="14" fill="#101615" stroke="#2f3a36" stroke-width="2"/>
+  <g font-family="Menlo, Courier New, monospace" font-size="17" font-weight="700">
+    <path d="M174 386h16v18h-16zM174 423h16v18h-16z" fill="none" stroke="#00ffcc" stroke-width="2"/>
+    <text x="215" y="401" fill="#d8fff2">src/</text><text x="215" y="438" fill="#d8fff2">webui/</text>
+    <text x="510" y="401" fill="#7f9489">protocol modes and services</text><text x="510" y="438" fill="#7f9489">embedded web interface</text>
+  </g>
+
+</svg>

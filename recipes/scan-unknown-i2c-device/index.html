@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use ESP32 Bit Pirate to scan an I2C bus, find the address of an unknown module, and confirm it responds with ACK." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to scan an I2C bus with ESP32 Bit Pirate" property="og:title"/>
+<meta content="A practical ESP32 Bit Pirate recipe for finding unknown I2C devices with scan, ping and wiring checks." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to scan an I2C bus with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use ESP32 Bit Pirate to scan an I2C bus, find an unknown module address, and confirm it responds with ACK." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/" rel="canonical"/>
+<title>How to scan an I2C bus with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to scan an I2C bus with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate to scan an I2C bus, find the address of an unknown module, and confirm it responds with ACK.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to scan an I2C bus with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-unknown-i2c-device/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>I2C</li><li>Beginner</li><li>5 min</li><li>Serial CLI or Web Serial Terminal</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · I2C</p>
+<h1>How to scan an I2C bus with ESP32 Bit Pirate</h1>
+<p>I pulled a tiny sensor board from a parts box. No label, no datasheet, just four pins. Before writing code, I wanted to know if it was alive and which I2C address it used.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="I2C bus scan visual with an ESP32 board and unknown module" height="600" src="../assets/visual-i2c.svg" width="1040"/>
+<figcaption>The useful first test is not a driver. It is: power, ground, SDA/SCL, scan for ACK.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">I2C board</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">Module SDA</text><text class="wiring-pin" x="688" y="126">I2C SDA GPIO</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">Module SCL</text><text class="wiring-pin" x="688" y="148">I2C SCL GPIO</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">Module VCC</text><text class="wiring-pin" x="688" y="170">correct supply</text><line class="wiring-line wire-3" x1="254" x2="666" y1="188" y2="188"></line><text class="wiring-pin" text-anchor="end" x="232" y="192">Module GND</text><text class="wiring-pin" x="688" y="192">BP GND</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>Module SDA</span><span class="wiring-mobile-arrow">-&gt;</span><span>I2C SDA GPIO</span></div><div class="wiring-mobile-row wire-1"><span>Module SCL</span><span class="wiring-mobile-arrow">-&gt;</span><span>I2C SCL GPIO</span></div><div class="wiring-mobile-row wire-2"><span>Module VCC</span><span class="wiring-mobile-arrow">-&gt;</span><span>correct supply</span></div><div class="wiring-mobile-row wire-3"><span>Module GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div></div>
+<figcaption>Generated from the wiring summary: I2C board to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>The firmware I2C controller implements <code>scan</code> to check every valid address and print devices that ACK. The first time you enter I2C mode, Bit Pirate opens the configuration prompts automatically for SDA GPIO, SCL GPIO and frequency.</p>
+<div data-cli-commands="mode I2C
+scan
+ping 0x3C" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p><code>Found device at 0x3C</code> and <code>Found device at 0x68</code> mean two targets acknowledged on the bus. Those addresses are common for OLED displays and RTC/IMU parts, but the scan is not full identification. It tells you where to probe next.</p>
+</div>
+<div data-cli-commands="scan" data-cli-mode="I2C" data-cli-result="Found device at 0x3C
+Found device at 0x68
+Bus wiring and pull-ups are good enough for both devices to ACK." data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<p>If the scan prints <code>I2C Scan: No I2C devices found.</code>, do not jump straight to “dead board”. Check shared ground, swapped SDA/SCL, wrong voltage, missing pull-ups, and whether another controller is holding the bus. The I2C wiki also documents <code>recover</code>, which attempts to release SDA by clocking the bus.</p>
+<ul class="mistake-list">
+<li>SDA and SCL are swapped.</li>
+<li>Ground is not shared between the module and Bit Pirate.</li>
+<li>The module needs pull-ups that are not present on the board.</li>
+<li>The target board is holding SDA low after a failed transaction.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Run <code>identify &lt;addr&gt;</code> to browse known address mappings.</li>
+<li>Use <code>read &lt;addr&gt; &lt;reg&gt;</code> only after you know which register is safe to query.</li>
+<li>For EEPROM-looking devices, use the dedicated <code>eeprom [addr]</code> shell instead of raw dumps.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C"><span>Wiki</span><strong>I2C mode commands</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+<a href="../read-ibutton-id/"><span>Related</span><strong>Read a 1-Wire iButton ID</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>Unknown I2C module</li>
+<li>4 jumper wires</li>
+<li>USB Serial or Web Serial Terminal</li>
+<li>Known-safe target supply voltage before connecting VCC</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="I2C board" data-wiring-right="BP">
+<li>Module SDA → I2C SDA GPIO</li>
+<li>Module SCL → I2C SCL GPIO</li>
+<li>Module VCC → correct supply</li>
+<li>Module GND → BP GND</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>I2C</dd><dt class="aside-dt-command">Firmware commands checked</dt><dd><code>scan</code><code>ping</code></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C">05-I2C</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

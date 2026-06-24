@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+  <title id="title">HTTP/API visual</title>
+  <desc id="desc">No-text reusable HTTP/API illustration.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+    <radialGradient id="cyanGlow" cx="15%" cy="18%" r="60%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".12"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
+    <radialGradient id="greenGlow" cx="86%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
+  <g stroke="#22312d" stroke-width="1.4" opacity=".72">
+    <path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/>
+    <path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/>
+    <path d="M-50 540L520 40M160 575L790 35M500 620L1070 120" opacity=".28"/>
+  </g>
+  <rect x="120" y="100" width="390" height="390" rx="24" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><circle cx="168" cy="142" r="9" fill="#00ffcc" opacity="1"/><circle cx="202" cy="142" r="9" fill="#00ff70" opacity="1"/><circle cx="236" cy="142" r="9" fill="#ffc257" opacity="1"/><rect x="165.0" y="205" width="300.0" height="240" rx="18" fill="#172320" stroke="#335149" stroke-width="2" opacity="1"/><rect x="189.0" y="243" width="252.0" height="14" rx="7" fill="#1c302b"/><rect x="189.0" y="285" width="252.0" height="14" rx="7" fill="#1c302b"/><rect x="189.0" y="327" width="252.0" height="14" rx="7" fill="#1c302b"/><path d="M200.0 387 C250.0 340, 300.0 425, 430.0 373" fill="none" stroke="#00ffcc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="1" filter="url(#glow)"/><rect x="680" y="170" width="210" height="240" rx="24" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><circle cx="720" cy="230" r="13" fill="#00ffcc" opacity="1" filter="url(#glow)"/><circle cx="780" cy="230" r="13" fill="#00ff70" opacity="1" filter="url(#glow)"/><circle cx="840" cy="230" r="13" fill="#34b0ff" opacity="1" filter="url(#glow)"/><circle cx="720" cy="300" r="13" fill="#ffc257" opacity="1" filter="url(#glow)"/><circle cx="780" cy="300" r="13" fill="#00ffcc" opacity="1" filter="url(#glow)"/><circle cx="840" cy="300" r="13" fill="#00ff70" opacity="1" filter="url(#glow)"/><path d="M510 285 L680 230" fill="none" stroke="#00ffcc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" stroke-dasharray="10 14" filter="url(#glow)"/><path d="M510 285 L680 265" fill="none" stroke="#00ff70" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" stroke-dasharray="10 14" filter="url(#glow)"/><path d="M510 285 L680 300" fill="none" stroke="#34b0ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" stroke-dasharray="10 14" filter="url(#glow)"/><path d="M510 285 L680 335" fill="none" stroke="#00ffcc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" stroke-dasharray="10 14" filter="url(#glow)"/>
+</svg>

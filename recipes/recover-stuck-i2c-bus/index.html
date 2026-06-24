@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use the I2C recover command after a target holds SDA low or the bus stops responding." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to recover a stuck I2C bus with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use the I2C recover command after a target holds SDA low or the bus stops responding." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to recover a stuck I2C bus with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use the I2C recover command after a target holds SDA low or the bus stops responding." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/" rel="canonical"/>
+<title>How to recover a stuck I2C bus with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to recover a stuck I2C bus with ESP32 Bit Pirate",
+      "description": "Use the I2C recover command after a target holds SDA low or the bus stops responding.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to recover a stuck I2C bus with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>I2C</li><li>Beginner</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · I2C</p>
+<h1>How to recover a stuck I2C bus with ESP32 Bit Pirate</h1>
+<p>An I2C board scanned once, then disappeared. SDA looked stuck low after a failed transaction. This recipe uses the firmware recovery command before touching the soldering iron.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-i2c-recover.svg" width="1040"/>
+<figcaption>Before rewiring everything, clock the bus and send a stop condition to release a stuck target.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">I2C board</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">SDA</text><text class="wiring-pin" x="688" y="126">I2C SDA GPIO</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">SCL</text><text class="wiring-pin" x="688" y="148">I2C SCL GPIO</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">GND</text><text class="wiring-pin" x="688" y="170">BP GND</text><line class="wiring-line wire-3" x1="254" x2="666" y1="188" y2="188"></line><text class="wiring-pin" text-anchor="end" x="232" y="192">VCC</text><text class="wiring-pin" x="688" y="192">correct supply</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>SDA</span><span class="wiring-mobile-arrow">-&gt;</span><span>I2C SDA GPIO</span></div><div class="wiring-mobile-row wire-1"><span>SCL</span><span class="wiring-mobile-arrow">-&gt;</span><span>I2C SCL GPIO</span></div><div class="wiring-mobile-row wire-2"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div><div class="wiring-mobile-row wire-3"><span>VCC</span><span class="wiring-mobile-arrow">-&gt;</span><span>correct supply</span></div></div>
+<figcaption>Generated from the wiring summary: I2C board to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode i2c
+scan
+recover
+scan
+ping 0x3C" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>If the next scan finds the target again, the issue was likely a stuck transaction. If not, inspect voltage, pull-ups and wiring.</p>
+</div>
+<div data-cli-commands="recover" data-cli-mode="I2C" data-cli-result="I2C recover sequence sent
+16 clock pulses + STOP
+Run scan again to verify the bus" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>Running recovery while another master is actively driving the bus.</li>
+<li>Assuming recovery fixes missing pull-ups or wrong voltage.</li>
+<li>Keeping a target powered from a different ground reference.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Run <code>scan</code> again after recovery.</li>
+<li>Use <code>ping &lt;addr&gt;</code> if you know the address.</li>
+<li>Use <code>trace</code> or <code>monitor</code> only after the bus is stable.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C"><span>Wiki</span><strong>I2C recover command</strong></a>
+<a href="../scan-unknown-i2c-device/"><span>Related</span><strong>Scan an unknown I2C device</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>I2C target board</li>
+<li>USB Serial or Web Serial Terminal</li>
+<li>Optional logic probe for SDA/SCL</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="I2C board" data-wiring-right="BP">
+<li>SDA → I2C SDA GPIO</li>
+<li>SCL → I2C SCL GPIO</li>
+<li>GND → BP GND</li>
+<li>VCC → correct supply</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>I2C</dd><dt class="aside-dt-hardware">Hardware</dt><dd>I2C target, jumper wires</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C">05-I2C</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

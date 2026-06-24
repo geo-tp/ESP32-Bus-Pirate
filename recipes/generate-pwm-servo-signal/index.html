@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use DIO mode to output PWM, pulse a pin, or send a simple RC servo angle command." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to generate PWM or move a servo with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use DIO mode to output PWM, pulse a pin, or send a simple RC servo angle command." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to generate PWM or move a servo with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use DIO mode to output PWM, pulse a pin, or send a simple RC servo angle command." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/" rel="canonical"/>
+<title>How to generate PWM or move a servo with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to generate PWM or move a servo with ESP32 Bit Pirate",
+      "description": "Use DIO mode to output PWM, pulse a pin, or send a simple RC servo angle command.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to generate PWM or move a servo with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>DIO</li><li>Beginner</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · DIO</p>
+<h1>How to generate PWM or move a servo with ESP32 Bit Pirate</h1>
+<p>A simple PWM output is useful for testing an LED driver, input pin, optocoupler, or servo signal path.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-pwm-servo.svg" width="1040"/>
+<figcaption>Generate a quick test signal from the bench without writing a sketch.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86"></text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">Signal input</text><text class="wiring-pin" x="688" y="126">GPIO</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">GND</text><text class="wiring-pin" x="688" y="148">BP GND</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">Servo power</text><text class="wiring-pin" x="688" y="170">external supply</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>Signal input</span><span class="wiring-mobile-arrow">-&gt;</span><span>GPIO</span></div><div class="wiring-mobile-row wire-1"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div><div class="wiring-mobile-row wire-2"><span>Servo power</span><span class="wiring-mobile-arrow">-&gt;</span><span>external supply</span></div></div>
+<figcaption>Generated from the wiring summary:  to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode dio
+pwm 5 1000 75
+servo 1 90
+pulse 1 50
+reset 5" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>A stable PWM output confirms the target input path. For servos, power the servo separately and share ground with Bit Pirate.</p>
+</div>
+<div data-cli-commands="pwm 5 1000 75" data-cli-mode="DIO" data-cli-result="GPIO 5 outputs PWM
+Frequency: 1000 Hz
+Duty: 75%" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>Powering a motor or servo directly from an ESP32 GPIO.</li>
+<li>Forgetting shared ground with an external servo supply.</li>
+<li>Leaving a PWM channel attached after testing.</li>
+<li>Using GPIOs reserved by the current board.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Use <code>measure</code> on another pin to verify the generated signal.</li>
+<li>Run <code>reset &lt;gpio&gt;</code> after a test.</li>
+<li>Use the logic analyzer recipe for waveform confirmation.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/09-DIO"><span>Wiki</span><strong>DIO PWM and servo commands</strong></a>
+<a href="../measure-gpio-frequency/"><span>Related</span><strong>Measure a GPIO signal frequency</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>Target input, LED driver, or servo signal wire</li>
+<li>External power for loads when needed</li>
+<li>Shared ground</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="Target" data-wiring-right="BP">
+<li>Signal input → GPIO</li>
+<li>GND → BP GND</li>
+<li>Servo power → external supply</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>DIO</dd><dt class="aside-dt-hardware">Hardware</dt><dd>LED, servo signal input, or test pin</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/09-DIO">09-DIO</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+[
+  {
+    "file": "assets/visual-1wire-eeprom.svg",
+    "cover": "assets/covers/visual-1wire-eeprom.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-1wire.svg",
+    "cover": "assets/covers/visual-1wire.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-ble.svg",
+    "cover": "assets/covers/visual-ble.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-browser-tools.svg",
+    "cover": "assets/covers/visual-browser-tools.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-can.svg",
+    "cover": "assets/covers/visual-can.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-cell.svg",
+    "cover": "assets/covers/visual-cell.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-dio.svg",
+    "cover": "assets/covers/visual-dio.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-ds18b20.svg",
+    "cover": "assets/covers/visual-ds18b20.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-dump.svg",
+    "cover": "assets/covers/visual-dump.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-education.svg",
+    "cover": "assets/covers/visual-education.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-eeprom.svg",
+    "cover": "assets/covers/visual-eeprom.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-ethernet.svg",
+    "cover": "assets/covers/visual-ethernet.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-field-note.svg",
+    "cover": "assets/covers/visual-field-note.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-file-workflow.svg",
+    "cover": "assets/covers/visual-file-workflow.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-flash-analyze.svg",
+    "cover": "assets/covers/visual-flash-analyze.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-fm.svg",
+    "cover": "assets/covers/visual-fm.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-gpio-measure.svg",
+    "cover": "assets/covers/visual-gpio-measure.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-gps.svg",
+    "cover": "assets/covers/visual-gps.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-http-api.svg",
+    "cover": "assets/covers/visual-http-api.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-i2c-eeprom.svg",
+    "cover": "assets/covers/visual-i2c-eeprom.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-i2c-recover.svg",
+    "cover": "assets/covers/visual-i2c-recover.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-i2c.svg",
+    "cover": "assets/covers/visual-i2c.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-i2s.svg",
+    "cover": "assets/covers/visual-i2s.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-ibutton.svg",
+    "cover": "assets/covers/visual-ibutton.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-infrared.svg",
+    "cover": "assets/covers/visual-infrared.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-ir-file.svg",
+    "cover": "assets/covers/visual-ir-file.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-jtag.svg",
+    "cover": "assets/covers/visual-jtag.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-led.svg",
+    "cover": "assets/covers/visual-led.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-logic-analyzer.svg",
+    "cover": "assets/covers/visual-logic-analyzer.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-modbus.svg",
+    "cover": "assets/covers/visual-modbus.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-neopixel.svg",
+    "cover": "assets/covers/visual-neopixel.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-nfc.svg",
+    "cover": "assets/covers/visual-nfc.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-openocd.svg",
+    "cover": "assets/covers/visual-openocd.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-pinout.svg",
+    "cover": "assets/covers/visual-pinout.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-protocol-lab.svg",
+    "cover": "assets/covers/visual-protocol-lab.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-pwm-servo.svg",
+    "cover": "assets/covers/visual-pwm-servo.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-repair.svg",
+    "cover": "assets/covers/visual-repair.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-rf24.svg",
+    "cover": "assets/covers/visual-rf24.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-rfid.svg",
+    "cover": "assets/covers/visual-rfid.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-scan.svg",
+    "cover": "assets/covers/visual-scan.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-smartcard.svg",
+    "cover": "assets/covers/visual-smartcard.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-sniffer.svg",
+    "cover": "assets/covers/visual-sniffer.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-spi-eeprom.svg",
+    "cover": "assets/covers/visual-spi-eeprom.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-spi-flash.svg",
+    "cover": "assets/covers/visual-spi-flash.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-spi-sdcard.svg",
+    "cover": "assets/covers/visual-spi-sdcard.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-subghz.svg",
+    "cover": "assets/covers/visual-subghz.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-swd.svg",
+    "cover": "assets/covers/visual-swd.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-terminal-shell.svg",
+    "cover": "assets/covers/visual-terminal-shell.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-threewire.svg",
+    "cover": "assets/covers/visual-threewire.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-trigger.svg",
+    "cover": "assets/covers/visual-trigger.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-troubleshooting.svg",
+    "cover": "assets/covers/visual-troubleshooting.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-uart-autobaud.svg",
+    "cover": "assets/covers/visual-uart-autobaud.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-uart.svg",
+    "cover": "assets/covers/visual-uart.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-usb-hid.svg",
+    "cover": "assets/covers/visual-usb-hid.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-usb-host.svg",
+    "cover": "assets/covers/visual-usb-host.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-usb-storage.svg",
+    "cover": "assets/covers/visual-usb-storage.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-waveform.svg",
+    "cover": "assets/covers/visual-waveform.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-webserial.svg",
+    "cover": "assets/covers/visual-webserial.png",
+    "no_visible_text": true
+  },
+  {
+    "file": "assets/visual-wifi.svg",
+    "cover": "assets/covers/visual-wifi.png",
+    "no_visible_text": true
+  }
+]

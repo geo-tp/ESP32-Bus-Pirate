@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://geo-tp.github.io/ESP32-Bit-Pirate/sitemap.xml

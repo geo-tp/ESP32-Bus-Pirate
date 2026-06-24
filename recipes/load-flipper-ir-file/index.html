@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to load a Flipper IR file with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to load a Flipper IR file with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/" rel="canonical"/>
+<title>How to load a Flipper IR file with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to load a Flipper IR file with ESP32 Bit Pirate",
+      "description": "Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to load a Flipper IR file with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>Infrared</li><li>Intermediate</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Intermediate · Infrared</p>
+<h1>How to load a Flipper IR file with ESP32 Bit Pirate</h1>
+<p>If you already have a Flipper-style .ir file, Bit Pirate can load it from LittleFS and use the saved frames from the infrared mode.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-ir-file.svg" width="1040"/>
+<figcaption>Use saved .ir files as reusable remote profiles instead of manually entering every command.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">IR TX</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">TX GPIO</text><text class="wiring-pin" x="688" y="126">IR LED driver</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">VCC</text><text class="wiring-pin" x="688" y="148">correct supply</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">GND</text><text class="wiring-pin" x="688" y="170">BP GND</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>TX GPIO</span><span class="wiring-mobile-arrow">-&gt;</span><span>IR LED driver</span></div><div class="wiring-mobile-row wire-1"><span>VCC</span><span class="wiring-mobile-arrow">-&gt;</span><span>correct supply</span></div><div class="wiring-mobile-row wire-2"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div></div>
+<figcaption>Generated from the wiring summary: IR TX to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode infrared
+load" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>The file metadata controls protocol/frequency details. Pick one command at a time and verify the target reacts before blasting many frames.</p>
+</div>
+<div data-cli-commands="load" data-cli-mode="Infrared" data-cli-result="LittleFS remote files listed
+Selected .ir profile
+Frames available by index" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>Uploading the file to the wrong storage path.</li>
+<li>Driving an IR LED directly without checking current limits.</li>
+<li>Assuming every .ir file has only one command.</li>
+<li>Forgetting to configure the TX GPIO when using a custom board.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Use the Web UI or file tools to upload .ir files to LittleFS.</li>
+<li>Run <code>load</code> in Infrared mode.</li>
+<li>Use capture/receive first if you do not have a known file.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/11-INFRARED"><span>Wiki</span><strong>Infrared load command</strong></a>
+<a href="../capture-infrared-remote/"><span>Related</span><strong>Capture an infrared remote signal</strong></a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-LittleFS-File-System"><span>Related</span><strong>LittleFS file system</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>IR transmitter LED or supported board TX</li>
+<li>A .ir remote file</li>
+<li>LittleFS file upload</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="IR TX" data-wiring-right="BP">
+<li>TX GPIO → IR LED driver</li>
+<li>VCC → correct supply</li>
+<li>GND → BP GND</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>Infrared</dd><dt class="aside-dt-hardware">Hardware</dt><dd>IR transmitter LED, .ir file, LittleFS upload path</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/11-INFRARED">11-INFRARED</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

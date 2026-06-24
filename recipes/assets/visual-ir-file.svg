@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+  <title id="title">Infrared file visual</title>
+  <desc id="desc">No-text reusable IR file workflow illustration.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+    <radialGradient id="cyanGlow" cx="15%" cy="18%" r="60%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".12"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
+    <radialGradient id="greenGlow" cx="86%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
+  <g stroke="#22312d" stroke-width="1.4" opacity=".72">
+    <path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/>
+    <path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/>
+    <path d="M-50 540L520 40M160 575L790 35M500 620L1070 120" opacity=".28"/>
+  </g>
+  <rect x="100" y="95" width="420" height="395" rx="24" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><circle cx="148" cy="137" r="9" fill="#00ffcc" opacity="1"/><circle cx="182" cy="137" r="9" fill="#00ff70" opacity="1"/><circle cx="216" cy="137" r="9" fill="#ffc257" opacity="1"/><rect x="145.0" y="200" width="330.0" height="245" rx="18" fill="#172320" stroke="#335149" stroke-width="2" opacity="1"/><rect x="169.0" y="238" width="282.0" height="14" rx="7" fill="#1c302b"/><rect x="169.0" y="280" width="282.0" height="14" rx="7" fill="#1c302b"/><rect x="169.0" y="322" width="282.0" height="14" rx="7" fill="#1c302b"/><path d="M180.0 387 C230.0 340, 280.0 425, 440.0 373" fill="none" stroke="#00ffcc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="1" filter="url(#glow)"/><rect x="665" y="190" width="170" height="210" rx="38" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><circle cx="750" cy="295" r="25" fill="#ff6b6b" opacity="1" filter="url(#glow)"/><path d="M520 285 C585 250, 615 250, 665 275" fill="none" stroke="#00ffcc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="1" filter="url(#glow)"/><path d="M690 235 A60 60 0 0 1 810 235" fill="none" stroke="#ff6b6b" stroke-width="4" opacity="0.35" filter="url(#glow)"/><path d="M650 195 A100 100 0 0 1 850 195" fill="none" stroke="#ff6b6b" stroke-width="4" opacity="0.22" filter="url(#glow)"/><path d="M610 155 A140 140 0 0 1 890 155" fill="none" stroke="#ff6b6b" stroke-width="4" opacity="0.08" filter="url(#glow)"/>
+</svg>

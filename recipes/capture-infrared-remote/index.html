@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use Infrared mode to configure pins, receive remote control frames, and switch to raw capture when decoding is not reliable." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to capture an infrared remote signal with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use Infrared mode to configure pins, receive remote control frames, and record signals for later reuse." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to capture an infrared remote signal with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use Infrared mode to configure pins, receive remote control frames, and record signals for later reuse." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/" rel="canonical"/>
+<title>How to capture an infrared remote signal with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to capture an infrared remote signal with ESP32 Bit Pirate",
+      "description": "Use Infrared mode to configure pins, receive remote control frames, and record signals for later reuse.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to capture an infrared remote signal with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>Infrared</li><li>Beginner</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · Infrared</p>
+<h1>How to capture an infrared remote signal with ESP32 Bit Pirate</h1>
+<p>Before building a custom remote, first learn what the existing remote sends. Infrared mode can decode a signal, then fall back to raw capture when decoding is not reliable.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-infrared.svg" width="1040"/>
+<figcaption>Point the remote, capture the protocol/data, then decide if you need to record or replay it.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">IR RX</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">OUT</text><text class="wiring-pin" x="688" y="126">IR RX GPIO</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">VCC</text><text class="wiring-pin" x="688" y="148">correct supply</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">GND</text><text class="wiring-pin" x="688" y="170">BP GND</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>OUT</span><span class="wiring-mobile-arrow">-&gt;</span><span>IR RX GPIO</span></div><div class="wiring-mobile-row wire-1"><span>VCC</span><span class="wiring-mobile-arrow">-&gt;</span><span>correct supply</span></div><div class="wiring-mobile-row wire-2"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div></div>
+<figcaption>Generated from the wiring summary: IR RX to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode infrared
+receive
+raw" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>If decode works, use the protocol and command values directly. If decode is unreliable, use raw capture to inspect the received timing data instead of assuming a decoded protocol.</p>
+</div>
+<div data-cli-commands="receive" data-cli-mode="Infrared" data-cli-result="Waiting for IR signal...
+Protocol decoded
+Address / command / raw data printed by firmware" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>Using an IR LED instead of a receiver for capture.</li>
+<li>Wiring receiver OUT to the TX pin instead of RX.</li>
+<li>Testing in strong sunlight or noisy IR environments.</li>
+<li>Expecting every remote to decode into the same fields.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Use <code>setprotocol</code> before manual send commands.</li>
+<li>Use <code>raw</code> when the receive decoder does not identify the protocol reliably.</li>
+<li>Use <code>load</code> for Flipper-style .ir files.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/11-INFRARED"><span>Wiki</span><strong>Infrared mode commands</strong></a>
+<a href="../load-flipper-ir-file/"><span>Related</span><strong>Load and send a Flipper IR file</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>IR receiver module</li>
+<li>Remote control</li>
+<li>USB Serial or Web Serial Terminal</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="IR RX" data-wiring-right="BP">
+<li>OUT → IR RX GPIO</li>
+<li>VCC → correct supply</li>
+<li>GND → BP GND</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>Infrared</dd><dt class="aside-dt-hardware">Hardware</dt><dd>IR receiver module and remote control</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/11-INFRARED">11-INFRARED</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

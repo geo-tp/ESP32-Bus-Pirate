@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use ESP32 Bit Pirate and the Web SPI Flash Programmer to probe and dump a 3.3V SPI flash chip from your browser." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to dump a SPI flash chip from your browser" property="og:title"/>
+<meta content="A practical ESP32 Bit Pirate recipe for backing up a SPI flash chip with the browser Web Tool." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to dump a SPI flash chip from your browser" name="twitter:title"/>
+<meta content="Use ESP32 Bit Pirate and the Web SPI Flash Programmer to probe, dump and save a SPI flash backup." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/" rel="canonical"/>
+<title>How to dump a SPI flash chip from your browser</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to dump a SPI flash chip from your browser",
+      "description": "Use ESP32 Bit Pirate and the Web SPI Flash Programmer to probe and dump a 3.3V SPI flash chip from your browser.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": { "@type": "Organization", "name": "ESP32 Bit Pirate", "url": "https://github.com/geo-tp/ESP32-Bit-Pirate" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to dump a SPI flash chip from your browser", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-spi-flash-browser/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>SPI</li><li>Flash</li><li>Web Tool</li><li>10 min</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · SPI flash</p>
+<h1>How to dump a SPI flash chip from your browser</h1>
+<p>I had a small router board with an 8-pin flash and no firmware download. Before erase, write, or experiments, the job was simple: make a clean backup and keep it untouched.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="SPI flash dump visual with chip pins and browser tool" height="600" src="../assets/visual-spi-flash.svg" width="1040"/>
+<figcaption>For flash repair work, the first useful artifact is a known-good dump, not a clever patch.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">SPI flash</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">Flash CS GPIO</text><text class="wiring-pin" x="688" y="126">chip CS#</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">Flash SCK GPIO</text><text class="wiring-pin" x="688" y="148">chip CLK</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">Flash MISO GPIO</text><text class="wiring-pin" x="688" y="170">chip DO / IO1</text><line class="wiring-line wire-3" x1="254" x2="666" y1="188" y2="188"></line><text class="wiring-pin" text-anchor="end" x="232" y="192">Flash MOSI GPIO</text><text class="wiring-pin" x="688" y="192">chip DI / IO0</text><line class="wiring-line wire-4" x1="254" x2="666" y1="210" y2="210"></line><text class="wiring-pin" text-anchor="end" x="232" y="214">BP GND</text><text class="wiring-pin" x="688" y="214">chip GND</text><line class="wiring-line wire-0" x1="254" x2="666" y1="232" y2="232"></line><text class="wiring-pin" text-anchor="end" x="232" y="236">3.3V</text><text class="wiring-pin" x="688" y="236">chip VCC</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>Flash CS GPIO</span><span class="wiring-mobile-arrow">-&gt;</span><span>chip CS#</span></div><div class="wiring-mobile-row wire-1"><span>Flash SCK GPIO</span><span class="wiring-mobile-arrow">-&gt;</span><span>chip CLK</span></div><div class="wiring-mobile-row wire-2"><span>Flash MISO GPIO</span><span class="wiring-mobile-arrow">-&gt;</span><span>chip DO / IO1</span></div><div class="wiring-mobile-row wire-3"><span>Flash MOSI GPIO</span><span class="wiring-mobile-arrow">-&gt;</span><span>chip DI / IO0</span></div><div class="wiring-mobile-row wire-4"><span>BP GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>chip GND</span></div><div class="wiring-mobile-row wire-0"><span>3.3V</span><span class="wiring-mobile-arrow">-&gt;</span><span>chip VCC</span></div></div>
+<figcaption>Generated from the wiring summary: SPI flash to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Put Bit Pirate in flash adapter mode</h2>
+<p>The browser flash tool talks to the dedicated Flashrom serprog adapter. Start it from USB adapter mode, choose the flash adapter, enter your selected GPIOs, then let the board reboot into that USB mode.</p>
+<div data-cli-commands="mode USB
+adapters" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section command-step-section">
+<span class="step-label">Step 2</span><h2>Use the browser tool</h2>
+<ol>
+<li>Open the <a href="../../web-tools/spi-flash-programmer/">Web SPI Flash Programmer</a>.</li>
+<li>Click <strong>Connect</strong> and select the Bit Pirate serial port exposed by the adapter.</li>
+<li>Click <strong>Probe chip</strong>. Check JEDEC ID, likely chip, and capacity.</li>
+<li>If the chip ID is stable, use <strong>Dump chip</strong>.</li>
+<li>Use <strong>Save full dump</strong> and keep the original file read-only in your project folder.</li>
+</ol>
+<div data-cli-commands="Connect
+Probe chip
+Dump chip
+Save full dump" data-cli-mode="Web SPI Flash Programmer" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>What the result means</h2>
+<div class="callout success">
+<h3>Good sign</h3>
+<p>A stable JEDEC ID and the same capacity after repeated probes usually means the clip, power, and SPI lines are usable. For anything important, dump twice and compare the files before trusting the backup.</p>
+</div>
+<div data-cli-commands="Probe chip
+Dump chip" data-cli-mode="Web SPI Flash Programmer" data-cli-result="JEDEC ID: EF 40 17
+Vendor: Winbond
+Capacity: 8 MiB
+Full dump saved locally
+Next step: read a second dump and compare hashes before writing anything." data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<p>A changing JEDEC ID is usually physical: clip alignment, long wires, weak power, wrong chip voltage, or the target board pulling on the bus. Slow down the setup before increasing speed or trying a write. A bad backup is worse than no backup because it feels reassuring.</p>
+<ul class="mistake-list">
+<li>WP# or HOLD# are floating when the chip expects them high.</li>
+<li>The board is still powered and another chip is driving the SPI bus.</li>
+<li>The SOIC clip is shifted by one pin or barely touching.</li>
+<li>Only one dump was saved, so there is nothing to compare.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="../../web-tools/spi-flash-programmer/"><span>Web Tool</span><strong>SPI Flash Programmer</strong></a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters"><span>Wiki</span><strong>USB adapters</strong></a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI"><span>Wiki</span><strong>SPI mode</strong></a>
+<a href="../use-logic-analyzer-pulseview/"><span>Related</span><strong>Check SPI activity with a logic capture</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>3.3V SPI NOR flash chip, either removed or clipped in-circuit</li>
+<li>SOIC clip, test hooks, or short direct wires</li>
+<li>Chrome, Edge, or another Web Serial compatible browser</li>
+<li><a href="../../web-tools/spi-flash-programmer/">Web SPI Flash Programmer</a></li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="SPI flash" data-wiring-right="BP">
+<li>Flash CS GPIO → chip CS#</li>
+<li>Flash SCK GPIO → chip CLK</li>
+<li>Flash MISO GPIO → chip DO / IO1</li>
+<li>Flash MOSI GPIO → chip DI / IO0</li>
+<li>Bit Pirate GND → chip GND</li>
+<li>3.3V → chip VCC</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>SPI</dd><dt class="aside-dt-target">Target</dt><dd>3.3V SPI NOR flash</dd><dt class="aside-dt-command">Firmware commands checked</dt><dd><code>mode USB</code><code>adapters</code></dd><dt class="aside-dt-command">Browser actions checked</dt><dd><code>Connect</code><code>Probe chip</code><code>Dump chip</code><code>Save full dump</code></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+  <title id="title">Documentation page visual</title>
+  <desc id="desc">A compact wiki page with navigation and command reference content.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+    <radialGradient id="cyanGlow" cx="16%" cy="20%" r="64%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".13"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
+    <radialGradient id="greenGlow" cx="88%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
+  <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
+  <g stroke="#22312d" stroke-width="1.4" opacity=".72">
+    <path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/>
+    <path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/>
+    <path d="M-50 540L520 40M160 575L790 35M500 620L1070 120" opacity=".28"/>
+  </g>
+  
+  <rect x="106" y="92" width="828" height="416" rx="24" fill="#0b0d0c" stroke="#40514b" stroke-width="3"/>
+  <rect x="106" y="92" width="828" height="58" rx="24" fill="#141917"/><circle cx="146" cy="121" r="8" fill="#00ffcc"/><circle cx="176" cy="121" r="8" fill="#00ff70"/><circle cx="206" cy="121" r="8" fill="#ffc257"/>
+  <text x="252" y="128" fill="#d8fff2" font-family="Menlo, Courier New, monospace" font-size="21" font-weight="700">ESP32 Bit Pirate Wiki</text>
+  <rect x="140" y="178" width="210" height="290" rx="14" fill="#101615" stroke="#2f3a36" stroke-width="2"/>
+  <text x="170" y="219" fill="#b8ffb8" font-family="Menlo, Courier New, monospace" font-size="17" font-weight="700">Documentation</text>
+  <path d="M170 255h122M170 291h97M170 327h135M170 363h106M170 399h83" stroke="#52635d" stroke-width="7" stroke-linecap="round"/>
+  <path d="M170 255h86" stroke="#00ffcc" stroke-width="7" stroke-linecap="round"/>
+  <text x="400" y="224" fill="#f4fff9" font-family="Menlo, Courier New, monospace" font-size="29" font-weight="700">I2C mode</text>
+  <path d="M400 260h390M400 291h326" stroke="#9fb0a8" stroke-width="7" stroke-linecap="round"/>
+  <rect x="400" y="326" width="414" height="104" rx="14" fill="#101615" stroke="#00ff9966" stroke-width="2"/>
+  <text x="430" y="365" fill="#00ffcc" font-family="Menlo, Courier New, monospace" font-size="19" font-weight="700">i2c&gt; scan</text>
+  <text x="430" y="402" fill="#b8ffb8" font-family="Menlo, Courier New, monospace" font-size="17">Find connected addresses</text>
+
+</svg>

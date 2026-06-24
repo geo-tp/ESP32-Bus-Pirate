@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Wire a PN532 reader in documented I2C mode for ESP32 Bit Pirate RFID mode.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Wire a PN532 RFID reader in I2C mode | ESP32 Bit Pirate">
+<meta property="og:description" content="Wire a PN532 reader in documented I2C mode for ESP32 Bit Pirate RFID mode.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-pn532-rfid-reader-i2c/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rfid.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-06-24">
+<meta property="article:modified_time" content="2026-06-24">
+<meta property="article:author" content="Geo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wire a PN532 RFID reader in I2C mode | ESP32 Bit Pirate">
+<meta name="twitter:description" content="Wire a PN532 reader in documented I2C mode for ESP32 Bit Pirate RFID mode.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rfid.png">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-pn532-rfid-reader-i2c/">
+<title>Wire a PN532 RFID reader in I2C mode | ESP32 Bit Pirate</title>
+<link rel="icon" href="../../web-tools/web-serial-terminal/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../recipes.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Wire a PN532 RFID reader in I2C mode","description":"Wire a PN532 reader in documented I2C mode for ESP32 Bit Pirate RFID mode.","image":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rfid.png","datePublished":"2026-06-24","dateModified":"2026-06-24","author":{"@type":"Person","name":"Geo"},"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-pn532-rfid-reader-i2c/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ESP32 Bit Pirate","item":"https://geo-tp.github.io/ESP32-Bit-Pirate/"},{"@type":"ListItem","position":2,"name":"Recipes","item":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"},{"@type":"ListItem","position":3,"name":"Wire a PN532 RFID reader in I2C mode","item":"https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-pn532-rfid-reader-i2c/"}]}]}</script>
+</head><body><main class="wrap"><header class="hero"><p class="eyebrow">Recipe · Beginner · RFID</p><h1>Wire a PN532 RFID reader in I2C mode</h1><p>RFID mode expects a PN532 reader set to I2C mode, then configures the selected SDA and SCL pins.</p></header><figure class="recipe-banner"><img src="../assets/visual-rfid.svg" alt="PN532 RFID wiring concept" width="1040" height="600"><figcaption>Set the module to I2C mode before connecting the bus.</figcaption></figure><div class="recipe-layout"><article class="recipe-article"><section class="recipe-section"><h2>Documented wiring roles</h2><ul class="wiring-list"><li>SDA → selected I2C SDA</li><li>SCL → selected I2C SCL</li><li>VCC → supported module supply</li><li>GND → GND</li></ul></section><section class="recipe-section"><h2>Initialize the reader</h2><p>Enter RFID mode and run <code>config</code>. If detection fails, the Wiki recommends checking the I2C wiring, selected SDA/SCL pins and I2C mode selection on the PN532.</p></section><nav class="link-card-list"><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/20-RFID"><span>Wiki</span><strong>20-RFID</strong></a><a href="../read-rfid-tag-pn532/"><span>Related</span><strong>Read a PN532 tag UID</strong></a></nav></article><aside class="content-card aside-card"><dl><dt>Protocol</dt><dd>RFID / PN532 / I2C</dd><dt>Command</dt><dd><code>config</code></dd></dl></aside></div></main><script src="../recipes.js"></script></body></html>

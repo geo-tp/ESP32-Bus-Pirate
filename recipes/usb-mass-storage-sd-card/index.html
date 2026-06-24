@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use USB storage mode to expose the SD card over USB mass storage from ESP32 Bit Pirate." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to expose an SD card as USB storage with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use USB storage mode to expose the SD card over USB mass storage from ESP32 Bit Pirate." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to expose an SD card as USB storage with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use USB storage mode to expose the SD card over USB mass storage from ESP32 Bit Pirate." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/" rel="canonical"/>
+<title>How to expose an SD card as USB storage with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to expose an SD card as USB storage with ESP32 Bit Pirate",
+      "description": "Use USB storage mode to expose the SD card over USB mass storage from ESP32 Bit Pirate.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to expose an SD card as USB storage with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>USB</li><li>Intermediate</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Intermediate · USB</p>
+<h1>How to expose an SD card as USB storage with ESP32 Bit Pirate</h1>
+<p>When an SD card is part of the setup, USB Mass Storage mode can expose it to the host as a drive.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-usb-storage.svg" width="1040"/>
+<figcaption>Move files through the board without removing the SD card when the hardware supports it.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">SD card</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">CS</text><text class="wiring-pin" x="688" y="126">SPI CS</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">CLK</text><text class="wiring-pin" x="688" y="148">SPI CLK</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">MISO</text><text class="wiring-pin" x="688" y="170">SPI MISO</text><line class="wiring-line wire-3" x1="254" x2="666" y1="188" y2="188"></line><text class="wiring-pin" text-anchor="end" x="232" y="192">MOSI</text><text class="wiring-pin" x="688" y="192">SPI MOSI</text><line class="wiring-line wire-4" x1="254" x2="666" y1="210" y2="210"></line><text class="wiring-pin" text-anchor="end" x="232" y="214">GND</text><text class="wiring-pin" x="688" y="214">BP GND</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>CS</span><span class="wiring-mobile-arrow">-&gt;</span><span>SPI CS</span></div><div class="wiring-mobile-row wire-1"><span>CLK</span><span class="wiring-mobile-arrow">-&gt;</span><span>SPI CLK</span></div><div class="wiring-mobile-row wire-2"><span>MISO</span><span class="wiring-mobile-arrow">-&gt;</span><span>SPI MISO</span></div><div class="wiring-mobile-row wire-3"><span>MOSI</span><span class="wiring-mobile-arrow">-&gt;</span><span>SPI MOSI</span></div><div class="wiring-mobile-row wire-4"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div></div>
+<figcaption>Generated from the wiring summary: SD card to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode usb
+storage" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>The wiki notes that the storage command may take up to 30 seconds. Wait before assuming enumeration failed.</p>
+</div>
+<div data-cli-commands="storage" data-cli-mode="USB" data-cli-result="Starting USB Mass Storage
+SD card mounted
+Host storage interface exposed" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>Using wrong SPI pins for the SD card.</li>
+<li>Removing power while the host is writing.</li>
+<li>Expecting instant enumeration.</li>
+<li>Using a board without native USB device support.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Confirm the SPI pins during the mode setup before starting <code>storage</code>.</li>
+<li>Unmount/eject from the host before power cycling.</li>
+<li>Use the SPI SD shell if you only need CLI file inspection.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/12-USB"><span>Wiki</span><strong>USB storage mode</strong></a>
+<a href="../open-spi-sd-card-shell/"><span>Related</span><strong>Open the SPI SD card shell</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>SD card connected over SPI</li>
+<li>Native USB connection</li>
+<li>Host computer</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="SD card" data-wiring-right="BP">
+<li>CS → SPI CS</li>
+<li>CLK → SPI CLK</li>
+<li>MISO → SPI MISO</li>
+<li>MOSI → SPI MOSI</li>
+<li>GND → BP GND</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>USB</dd><dt class="aside-dt-hardware">Hardware</dt><dd>SD card wired to SPI and native USB board</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/12-USB">12-USB</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>

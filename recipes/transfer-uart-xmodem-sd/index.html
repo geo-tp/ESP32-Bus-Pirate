@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use ESP32 Bit Pirate UART XMODEM send or receive with SD storage for bootloaders and serial file-transfer workflows." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to transfer files over UART XMODEM with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use ESP32 Bit Pirate UART XMODEM send or receive with SD storage for bootloaders and serial file-transfer workflows." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to transfer files over UART XMODEM with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use ESP32 Bit Pirate UART XMODEM send or receive with SD storage for bootloaders and serial file-transfer workflows." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/" rel="canonical"/>
+<title>How to transfer files over UART XMODEM with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to transfer files over UART XMODEM with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate UART XMODEM send or receive with SD storage for bootloaders and serial file-transfer workflows.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": {
+        "@type": "Person",
+        "name": "Geo"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Recipes",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to transfer files over UART XMODEM with ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/transfer-uart-xmodem-sd/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>UART</li><li>Intermediate</li><li>10 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Intermediate · UART</p>
+<h1>How to transfer files over UART XMODEM with ESP32 Bit Pirate</h1>
+<p>Some bootloaders and recovery consoles still use XMODEM. Bit Pirate can send or receive files through UART while storing data on the SD card.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-file-workflow.svg" width="1040"/>
+<figcaption>Keep storage and UART setup separate: mount/check files first, then start XMODEM.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86"></text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">TX</text><text class="wiring-pin" x="688" y="126">BP RX</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">RX</text><text class="wiring-pin" x="688" y="148">BP TX</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">GND</text><text class="wiring-pin" x="688" y="170">BP GND</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>TX</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP RX</span></div><div class="wiring-mobile-row wire-1"><span>RX</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP TX</span></div><div class="wiring-mobile-row wire-2"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div></div>
+<figcaption>Generated from the wiring summary:  to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the commands below after selecting the right Bit Pirate mode and confirming the wiring.</p>
+<div data-cli-commands="mode uart
+xmodem send /firmware.bin
+xmodem recv /backup.bin" data-cli-mode="BitPirate" data-cli-result="XMODEM send /firmware.bin
+Block 1 acknowledged
+...
+Transfer complete" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success"><h3>What success looks like</h3><p>The transfer advances block by block and exits cleanly. Repeated NAKs usually mean the target is not ready, the baud rate is wrong or the file path is invalid.</p></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>File is not present on the SD card.</li>
+<li>Target is not in XMODEM receive/send mode.</li>
+<li>Baud rate mismatch.</li>
+<li>Noise or weak ground causing block retries.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul class="hardware-list">
+<li>Use a small known file to validate the path first.</li>
+<li>Keep the baud rate conservative if block retries appear.</li>
+<li>Use <code>read</code> after the transfer to check the bootloader response.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/03-UART" rel="noopener" target="_blank"><span>Wiki</span><strong>UART XMODEM command</strong></a>
+<a href="../open-spi-sd-card-shell/"><span>Related</span><strong>Open the SPI SD card shell</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>SD card mounted by the firmware</li>
+<li>Target bootloader with XMODEM support</li>
+<li>Known UART settings</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="Target" data-wiring-right="BP">
+<li>TX → BP RX</li><li>RX → BP TX</li><li>GND → BP GND</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>UART</dd><dt class="aside-dt-hardware">Hardware</dt><dd>Target UART bootloader, SD card, shared ground</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/03-UART">03-UART</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20260623-batch2"></script>
+</body>
+</html>

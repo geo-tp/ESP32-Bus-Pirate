@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use 1-Wire mode to scan the bus and decode temperature from a DS18B20 sensor." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to read a DS18B20 with ESP32 Bit Pirate" property="og:title"/>
+<meta content="Use 1-Wire mode to scan the bus and decode temperature from a DS18B20 sensor." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/assets/cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/>
+<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to read a DS18B20 with ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Use 1-Wire mode to scan the bus and decode temperature from a DS18B20 sensor." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/assets/cover.png" name="twitter:image"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/" rel="canonical"/>
+<title>How to read a DS18B20 with ESP32 Bit Pirate</title>
+<link href="../../web-tools/web-serial-terminal/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../recipes.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to read a DS18B20 with ESP32 Bit Pirate",
+      "description": "Use 1-Wire mode to scan the bus and decode temperature from a DS18B20 sensor.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/assets/cover.png",
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "author": { "@type": "Person", "name": "Geo" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
+        { "@type": "ListItem", "position": 3, "name": "How to read a DS18B20 with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/" }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>1-Wire</li><li>Beginner</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
+<a href="../">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav></div>
+<p class="eyebrow">Recipe · Beginner · 1-Wire</p>
+<h1>How to read a DS18B20 with ESP32 Bit Pirate</h1>
+<p>A DS18B20 is one of the fastest ways to check if a 1-Wire setup works. You only need data, ground, supply and a pull-up on DQ.</p>
+</header>
+<figure class="recipe-banner">
+<img alt="" height="600" src="../assets/visual-ds18b20.svg" width="1040"/>
+<figcaption>Confirm the sensor ROM first, then let the firmware decode the temperature value.</figcaption>
+</figure>
+<div class="recipe-layout">
+<article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+<p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
+<svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">
+<rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect>
+<rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+<text class="wiring-title" text-anchor="middle" x="144" y="86">DS18B20</text>
+<text class="wiring-title" text-anchor="middle" x="776" y="86">BP</text>
+<line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">DQ</text><text class="wiring-pin" x="688" y="126">1-Wire GPIO</text><line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">VDD</text><text class="wiring-pin" x="688" y="148">correct supply</text><line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">GND</text><text class="wiring-pin" x="688" y="170">BP GND</text><line class="wiring-line wire-3" x1="254" x2="666" y1="188" y2="188"></line><text class="wiring-pin" text-anchor="end" x="232" y="192">Pull-up</text><text class="wiring-pin" x="688" y="192">DQ/VDD</text>
+</svg>
+<div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>DQ</span><span class="wiring-mobile-arrow">-&gt;</span><span>1-Wire GPIO</span></div><div class="wiring-mobile-row wire-1"><span>VDD</span><span class="wiring-mobile-arrow">-&gt;</span><span>correct supply</span></div><div class="wiring-mobile-row wire-2"><span>GND</span><span class="wiring-mobile-arrow">-&gt;</span><span>BP GND</span></div><div class="wiring-mobile-row wire-3"><span>Pull-up</span><span class="wiring-mobile-arrow">-&gt;</span><span>DQ/VDD</span></div></div>
+<figcaption>Generated from the wiring summary: DS18B20 to BP.</figcaption>
+</figure>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Commands</h2>
+<p>Run the typed commands first. If the command opens an interactive shell, select the named action from the shell menu instead of treating it as another CLI command.</p>
+<div data-cli-commands="mode 1wire
+scan
+temp" data-cli-mode="BitPirate" data-cli-session=""></div>
+</section><section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success">
+<h3>What success looks like</h3>
+<p>Family code 0x28 is commonly associated with DS18B20-style temperature sensors. The important part is that scan and temp agree on a valid device.</p>
+</div>
+<div data-cli-commands="temp" data-cli-mode="1-Wire" data-cli-result="1-Wire device present
+Family code: 0x28
+Temperature: 23.50 C" data-cli-session=""></div>
+</section><section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li>No pull-up resistor on the DQ line.</li>
+<li>Connecting parasite-powered sensors without checking wiring.</li>
+<li>Leaving multiple devices on the bus while testing a simple setup.</li>
+</ul>
+</section><section class="recipe-section next-steps-section">
+<h2>Next steps</h2>
+<ul>
+<li>Run <code>read</code> to inspect ROM and scratchpad data.</li>
+<li>Use <code>scan</code> again if the temperature command becomes unstable.</li>
+<li>Move to a longer cable only after a short wiring test passes.</li>
+</ul>
+</section><section class="recipe-section">
+<h2>Go deeper</h2>
+<nav aria-label="Related links" class="link-card-list">
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE"><span>Wiki</span><strong>1-Wire mode commands</strong></a>
+<a href="../read-ibutton-id/"><span>Related</span><strong>Read an iButton ID</strong></a>
+<a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a>
+</nav>
+</section></article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card">
+<dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list">
+<li>ESP32 Bit Pirate firmware</li>
+<li>DS18B20 sensor</li>
+<li>Pull-up resistor on DQ</li>
+<li>USB Serial or Web Serial Terminal</li>
+</ul></dd><dt class="aside-dt-wiring">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list setup-list aside-setup-list" data-wiring-left="DS18B20" data-wiring-right="BP">
+<li>DQ → 1-Wire GPIO</li>
+<li>VDD → correct supply</li>
+<li>GND → BP GND</li>
+<li>Pull-up → DQ/VDD</li>
+</ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>1-Wire</dd><dt class="aside-dt-hardware">Hardware</dt><dd>DS18B20, pull-up resistor, 3 wires</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE">02-1WIRE</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl>
+</aside>
+</div>
+</main>
+<script src="../recipes.js"></script>
+</body>
+</html>
