@@ -351,6 +351,21 @@
 })();
 
 (function () {
+  const icons = {
+    "Recipes": '<svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h11a3 3 0 0 1 3 3v12H8a3 3 0 0 0-3 3z"></path><path d="M5 4.5v18M8 9h7M8 13h5"></path></svg>',
+    "Web Tools": '<svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"></rect><path d="M3 8h18M7 6h.01M10 6h.01"></path></svg>',
+    "Wiki": '<svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21.5z"></path><path d="M5 5.5v16M9 7h6M9 11h6"></path></svg>'
+  };
+
+  document.querySelectorAll(".article-top-nav a").forEach((link) => {
+    const icon = icons[link.textContent.trim()];
+    if (icon && !link.querySelector(".article-nav-icon")) {
+      link.insertAdjacentHTML("afterbegin", icon);
+    }
+  });
+})();
+
+(function () {
   const path = window.location.pathname;
   const isButtonExitBridge = [
     "/recipes/bridge-half-duplex-uart/",

@@ -55,6 +55,58 @@ a:focus-visible {
   margin-bottom: 18px;
 }
 
+.page-hero-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.page-hero-top .brand {
+  margin-bottom: 0;
+}
+
+.page-top-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.page-top-nav a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #111;
+  color: #d8fff2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.page-nav-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.page-top-nav a:hover,
+.page-top-nav a:focus-visible {
+  border-color: #00ffcc88;
+  color: #b8ffb8;
+}
+
 .tool-image {
   display: block;
   width: 100%;
@@ -670,6 +722,10 @@ body.tool-help-open {
 }
 
 @media (max-width: 760px) {
+  .page-top-nav {
+    display: none;
+  }
+
   .wrap {
     width: min(100% - 12px, 1080px);
     padding-top: 12px;

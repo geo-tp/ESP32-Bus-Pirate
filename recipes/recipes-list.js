@@ -2893,7 +2893,7 @@ window.BIT_PIRATE_RECIPES = [
     "cover": "assets/visual-file-workflow.svg",
     "time": "10 min",
     "hardware": "SubGHz file, CC1101",
-    "takeaway": "Upload a ."
+    "takeaway": "Upload a .sub file to LittleFS and load it from SubGHz mode for CC1101 playback tests."
   },
   {
     "title": "Start the Web CLI through Wi-Fi hotspot",
