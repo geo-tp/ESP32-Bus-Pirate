@@ -269,8 +269,9 @@
 
     const meta = document.createElement("div");
     meta.className = "recipe-meta";
+    const primaryTool = (recipe.tools || [])[0];
     const quickFacts = [
-      (recipe.tools || [])[0],
+      primaryTool === "Serial CLI" ? "Any CLI" : primaryTool,
       recipe.time,
     ].filter(Boolean);
 
