@@ -145,6 +145,19 @@
     html[data-theme="light"] .control-strip :is(select,.estimate-cell strong) { background:#f8fcf9 !important; border-color:#b9c9c0 !important; color:#183128 !important; box-shadow:inset 0 0 4px rgba(28,57,43,.05) !important; }
     html[data-theme="light"] .control-strip .estimate-cell strong { color:#7a5b00 !important; }
     html[data-theme="light"] .viewer-panel { background:#eef5f1 !important; border-color:#9db9aa !important; box-shadow:inset 0 0 12px rgba(28,57,43,.08) !important; }
+    /* Shared Web Tools help dialog. */
+    html[data-theme="light"] .tool-help-overlay { background:rgba(24,57,43,.26) !important; backdrop-filter:grayscale(.15) brightness(.96) blur(2px); }
+    html[data-theme="light"] .tool-help-modal { background:linear-gradient(180deg,#ffffff 0,#f5faf7 72px,#eef5f1 100%) !important; border-color:#9db9aa !important; color:#183128 !important; box-shadow:0 22px 56px rgba(31,72,53,.18), inset 0 1px 0 rgba(255,255,255,.9) !important; }
+    html[data-theme="light"] .tool-help-modal:focus { outline-color:#007f7a88; }
+    html[data-theme="light"] .tool-help-close { background:#f8fbf9 !important; border-color:#9db9aa !important; color:#24493b !important; box-shadow:inset 0 0 4px rgba(28,57,43,.05) !important; }
+    html[data-theme="light"] .tool-help-close:hover,
+    html[data-theme="light"] .tool-help-close:focus-visible { background:#e6f1ea !important; border-color:#007f7a !important; color:#075f3b !important; }
+    html[data-theme="light"] .tool-help-body h2 { border-color:rgba(0,127,122,.22) !important; color:#087345 !important; }
+    html[data-theme="light"] .tool-help-body h2::before { background:#e6f1ea !important; border-color:#9db9aa !important; color:#007f7a !important; }
+    html[data-theme="light"] .tool-help-body section { border-color:rgba(28,57,43,.10) !important; }
+    html[data-theme="light"] .tool-help-body h3 { color:#007f7a !important; }
+    html[data-theme="light"] .tool-help-body :is(p,li) { color:#355448 !important; }
+    html[data-theme="light"] .tool-help-body code { color:#075f3b !important; }
 
     /* Light artificial veil for image-heavy cards in light theme.
        The illustrations stay adapted to white cards without being washed out. */
