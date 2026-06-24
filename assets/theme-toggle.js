@@ -123,6 +123,20 @@
     html[data-theme="light"] .modal-overlay { background:rgba(24,57,43,.28) !important; }
     html[data-theme="light"] :is(.brand-signature-copy p,.site-footer-title,.terminal-topbar,.prompt-list li) { color:#24493b !important; }
     html[data-theme="light"] .terminal-topbar { background:#e3eee7 !important; border-color:#b9c9c0 !important; }
+    /* Web Serial Terminal: keep the terminal and its palette selector intentional in light mode. */
+    html[data-theme="light"] .terminal-surface { background:#eef5f1 !important; border-color:#9db9aa !important; box-shadow:inset 0 0 12px rgba(28,57,43,.09) !important; }
+    html[data-theme="light"] .terminal-surface:focus-within { border-color:#007f7a !important; box-shadow:0 0 0 3px rgba(0,127,122,.13), inset 0 0 12px rgba(28,57,43,.08) !important; }
+    html[data-theme="light"] .terminal-controls { background:#e3eee7 !important; border-color:#9db9aa !important; box-shadow:inset 0 0 4px rgba(28,57,43,.06) !important; }
+    html[data-theme="light"] .terminal-controls button,
+    html[data-theme="light"] .terminal-controls select { background:#f8fbf9 !important; color:#24493b !important; }
+    html[data-theme="light"] .terminal-controls select.theme-soft { color:#355448 !important; }
+    html[data-theme="light"] .terminal-controls select.theme-green { color:#087345 !important; }
+    html[data-theme="light"] .terminal-controls select.theme-contrast { color:#10271d !important; font-weight:700; }
+    html[data-theme="light"] .terminal-controls button:hover:not(:disabled),
+    html[data-theme="light"] .terminal-controls select:hover:not(:disabled) { background:#e6f1ea !important; color:#075f3b !important; }
+    html[data-theme="light"] .terminal-scrollbar { scrollbar-color:#8ba99a transparent; }
+    html[data-theme="light"] .terminal-scrollbar::-webkit-scrollbar-thumb { background:#8ba99a; border-color:#eef5f1; }
+    html[data-theme="light"] .terminal-scrollbar::-webkit-scrollbar-thumb:hover { background:#5f8773; }
 
     /* Light artificial veil for image-heavy cards in light theme.
        The illustrations stay adapted to white cards without being washed out. */

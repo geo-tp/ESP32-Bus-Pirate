@@ -205,6 +205,10 @@ function applyStoredPreferences() {
   terminal.setFontSize(storedFontSize);
 }
 
+function syncTerminalWithPageTheme() {
+  terminal.setPageTheme(document.documentElement.dataset.theme);
+}
+
 function showWelcome() {
   terminal.clear();
   terminal.write(WELCOME_TEXT.replace(/\n/g, "\r\n"), { log: false });
@@ -439,6 +443,12 @@ window.addEventListener("beforeunload", () => {
 setConnectedUi(false);
 terminal.setAutoScroll(true);
 applyStoredPreferences();
+syncTerminalWithPageTheme();
+
+new MutationObserver(syncTerminalWithPageTheme).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ["data-theme"]
+});
 applySerialSettings(loadSerialSettings());
 showWelcome();
 resetDownloadState();

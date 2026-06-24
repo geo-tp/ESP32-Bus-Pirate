@@ -1,5 +1,6 @@
 const TERMINAL_THEMES = Object.freeze({
-  soft: {
+  dark: {
+    soft: {
     background: "#111111",
     foreground: "#d8ddd8",
     cursor: "#00ffcc",
@@ -21,8 +22,8 @@ const TERMINAL_THEMES = Object.freeze({
     brightMagenta: "#ff9fda",
     brightCyan: "#8ffff0",
     brightWhite: "#ffffff"
-  },
-  green: {
+    },
+    green: {
     background: "#050805",
     foreground: "#00ff00",
     cursor: "#00ffcc",
@@ -44,8 +45,8 @@ const TERMINAL_THEMES = Object.freeze({
     brightMagenta: "#ff9fda",
     brightCyan: "#8ffff0",
     brightWhite: "#ffffff"
-  },
-  contrast: {
+    },
+    contrast: {
     background: "#000000",
     foreground: "#ffffff",
     cursor: "#ffffff",
@@ -66,11 +67,83 @@ const TERMINAL_THEMES = Object.freeze({
     brightBlue: "#a4ffff",
     brightMagenta: "#ff92df",
     brightCyan: "#a4ffff",
-    brightWhite: "#ffffff"
+      brightWhite: "#ffffff"
+    }
+  },
+  light: {
+    soft: {
+      background: "#f3f8f5",
+      foreground: "#1d3a2f",
+      cursor: "#007f7a",
+      cursorAccent: "#f3f8f5",
+      selectionBackground: "#007f7a33",
+      black: "#1b2b23",
+      red: "#b33b45",
+      green: "#1d3a2f",
+      yellow: "#856000",
+      blue: "#166a9a",
+      magenta: "#8a3d80",
+      cyan: "#007f7a",
+      white: "#345447",
+      brightBlack: "#65786e",
+      brightRed: "#d54c56",
+      brightGreen: "#087345",
+      brightYellow: "#a67600",
+      brightBlue: "#187cae",
+      brightMagenta: "#a84c9b",
+      brightCyan: "#008f88",
+      brightWhite: "#10271d"
+    },
+    green: {
+      background: "#eff8f0",
+      foreground: "#087345",
+      cursor: "#007f7a",
+      cursorAccent: "#eff8f0",
+      selectionBackground: "#0786532e",
+      black: "#183128",
+      red: "#b33b45",
+      green: "#087345",
+      yellow: "#856000",
+      blue: "#166a9a",
+      magenta: "#8a3d80",
+      cyan: "#007f7a",
+      white: "#345447",
+      brightBlack: "#65786e",
+      brightRed: "#d54c56",
+      brightGreen: "#00965a",
+      brightYellow: "#a67600",
+      brightBlue: "#187cae",
+      brightMagenta: "#a84c9b",
+      brightCyan: "#008f88",
+      brightWhite: "#10271d"
+    },
+    contrast: {
+      background: "#ffffff",
+      foreground: "#10271d",
+      cursor: "#10271d",
+      cursorAccent: "#ffffff",
+      selectionBackground: "#18312828",
+      black: "#10271d",
+      red: "#a52632",
+      green: "#006c42",
+      yellow: "#795800",
+      blue: "#075f91",
+      magenta: "#7b286f",
+      cyan: "#006f6a",
+      white: "#345447",
+      brightBlack: "#52665c",
+      brightRed: "#c33743",
+      brightGreen: "#087345",
+      brightYellow: "#966c00",
+      brightBlue: "#0878ad",
+      brightMagenta: "#963d89",
+      brightCyan: "#007f7a",
+      brightWhite: "#000000"
+    }
   }
 });
 
-const DEFAULT_THEME = Object.freeze(TERMINAL_THEMES.soft);
+const DEFAULT_THEME = Object.freeze(TERMINAL_THEMES.dark.soft);
 const DEFAULT_FONT_SIZE = 14;
 const MIN_FONT_SIZE = 11;
 const MAX_FONT_SIZE = 22;
@@ -99,6 +172,8 @@ export class SerialTerminal {
     this.syncingScrollbar = false;
     this.pendingBottomScroll = false;
     this.wheelLineRemainder = 0;
+    this.themeName = "soft";
+    this.pageTheme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
 
     this.term = new terminalCtor({
       allowProposedApi: false,
@@ -331,7 +406,17 @@ export class SerialTerminal {
   }
 
   setTheme(themeName) {
-    this.term.options.theme = TERMINAL_THEMES[themeName] || DEFAULT_THEME;
+    this.themeName = TERMINAL_THEMES.dark[themeName] ? themeName : "soft";
+    this.applyTheme();
+  }
+
+  setPageTheme(pageTheme) {
+    this.pageTheme = pageTheme === "light" ? "light" : "dark";
+    this.applyTheme();
+  }
+
+  applyTheme() {
+    this.term.options.theme = TERMINAL_THEMES[this.pageTheme][this.themeName] || DEFAULT_THEME;
   }
 
   setFontSize(size) {
