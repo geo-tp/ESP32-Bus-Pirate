@@ -888,6 +888,10 @@ html[data-theme="light"] .flash-btn[disabled] {
   text-decoration: none;
 }
 
+.brand-signature-link picture {
+  display: block;
+}
+
 .brand-signature-logo {
   display: block;
   width: clamp(92px, 13vw, 148px);

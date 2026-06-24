@@ -658,6 +658,10 @@ body.tool-help-open {
   border-radius: var(--radius);
 }
 
+.authority-image-link picture {
+  display: block;
+}
+
 .authority-image-link:hover .authority-image,
 .authority-image-link:focus-visible .authority-image {
   border-color: #00ffcc88;
