@@ -1,96 +1,476 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Flash ESP32 Bit Pirate firmware to supported ESP32-S3 boards and the ESP32-C5 Bus Expander from a browser using Web Serial." />
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large" />
-  <meta name="theme-color" content="#101214" />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:site_name" content="ESP32 Bit Pirate" />
-  <meta property="og:title" content="ESP32 Bit Pirate Web Flasher" />
-  <meta property="og:description" content="Flash ESP32 Bit Pirate firmware to supported ESP32-S3 boards and the ESP32-C5 Bus Expander from a browser." />
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/" />
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-square.png" /><meta property="og:image:alt" content="Preview image for ESP32 Bit Pirate Web Flasher"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1006"><meta property="og:image:height" content="785">
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ESP32 Bit Pirate Web Flasher" />
-  <meta name="twitter:description" content="Flash ESP32 Bit Pirate firmware to supported ESP32-S3 boards and the ESP32-C5 Bus Expander from a browser." />
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-square.png" /><meta name="twitter:image:alt" content="Preview image for ESP32 Bit Pirate Web Flasher">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ESP32 Bit Pirate Web Flasher","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/","description":"Flash ESP32 Bit Pirate firmware to supported ESP32-S3 boards and the ESP32-C5 Bus Expander from a browser.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
-  <title>ESP32 Bit Pirate Web Flasher</title>
-<link rel="stylesheet" href="style.css?v=20260624-light-banner-imgwash2" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Install ESP32 Bit Pirate firmware from a browser, open the Web Serial terminal after flashing, and follow practical recipes or theoretical documentation for ESP32-S3 hardware debugging workflows.">
+  <meta name="keywords" content="ESP32 Bit Pirate Web Flasher, ESP32-S3 firmware flasher, ESP32 Web Serial flashing, ESP32-S3 Web Serial terminal, Cardputer firmware, StampS3 firmware, T-Embed firmware, ESP32-C5 Bus Expander, hardware debugging firmware, browser firmware installer, ESP32 Bit Pirate documentation">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+  <meta name="theme-color" content="#121212">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="ESP32 Bit Pirate">
+  <meta property="og:title" content="ESP32 Bit Pirate Web Flasher">
+  <meta property="og:description" content="Flash ESP32 Bit Pirate firmware, open a Web Serial terminal and continue with practical recipes or command documentation from one browser workflow.">
+  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/">
+  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/og-image.png">
+  <meta property="og:image:alt" content="ESP32 Bit Pirate Web Flasher preview showing browser-based firmware flashing for ESP32-S3 boards.">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ESP32 Bit Pirate Web Flasher">
+  <meta name="twitter:description" content="Flash ESP32 Bit Pirate firmware, open a Web Serial terminal and continue with practical recipes or command documentation from one browser workflow.">
+  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/og-image.png">
+  <meta name="twitter:image:alt" content="ESP32 Bit Pirate Web Flasher preview showing browser-based firmware flashing for ESP32-S3 boards.">
+
+  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+  <title>ESP32 Bit Pirate Web Flasher | Flash, Connect and Learn</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "ESP32 Bit Pirate Web Flasher",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/",
+        "description": "Browser-based Web Serial flasher for installing ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5 Bus Expander, then continuing with Web Serial tools and documentation.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "isAccessibleForFree": true,
+        "browserRequirements": "Requires a browser with Web Serial support and HTTPS or localhost.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "ESP32 Bit Pirate",
+          "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "Flash ESP32 Bit Pirate firmware from a browser",
+        "description": "Select a supported board, connect it in bootloader mode, flash the hosted firmware manifest, then open the Web Serial terminal to verify the install.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Choose your board",
+            "text": "Select the exact ESP32-S3 or ESP32-C5 target so the correct firmware manifest is used."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Flash the firmware",
+            "text": "Connect the board by USB, enter boot mode if needed, then start the browser flashing workflow."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Open the terminal",
+            "text": "Use the Web Serial terminal after flashing to start the ESP32 Bit Pirate CLI and test the firmware."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Continue with documentation",
+            "text": "Use practical recipes for bench workflows and the wiki for command reference and theoretical documentation."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does the ESP32 Bit Pirate Web Flasher do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It installs ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5 Bus Expander directly from a compatible browser using Web Serial."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which browser should I use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use a desktop browser with Web Serial support on HTTPS or localhost. Chromium-based browsers are the most common option for this workflow."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What should I do after flashing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open the ESP32 Bit Pirate Web Serial Terminal, connect to the board and use the CLI to select a mode, scan buses, test pins or follow a recipe."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my ESP32 board not detected?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Check that the USB cable supports data, close other serial monitors, use the correct USB port and enter bootloader mode with the board-specific BOOT or reset procedure."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to install a desktop flashing tool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The firmware selection and flashing workflow runs from the web page, while the firmware binaries and manifests are loaded by the browser."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css?v=20260624-webflasher-guide-redesign3">
   <script defer src="../assets/theme-toggle.js?v=20260624-light18"></script>
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
 </head>
-<body>
-  <div class="wrap">
-    <pre class="ascii-title" aria-hidden="true">
-  ____  _ _     ____  _           _         _____ _           _               
- | __ )(_) |_  |  _ \(_)_ __ __ _| |_ ___  |  ___| | __ _ ___| |__   ___ _ __ 
- |  _ \| | __| | |_) | | '__/ _` | __/ _ \ | |_  | |/ _` / __| '_ \ / _ \ '__|
- | |_) | | |_  |  __/| | | | (_| | ||  __/ |  _| | | (_| \__ \ | | |  __/ |   
- |____/|_|\__| |_|   |_|_|  \__,_|\__\___| |_|   |_|\__,_|___/_| |_|\___|_|   
+<body class="webflasher-page">
+  <a class="skip-link" href="#flash-workflow">Skip to firmware selection</a>
 
-Online tool to flash the firmware to your ESP32-S3
-    </pre>
+  <main class="wrap">
+    <header class="hero">
+      <div class="page-hero-top">
+        <a class="brand" href="../" aria-label="ESP32 Bit Pirate home">
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span>ESP32 Bit Pirate</span>
+        </a>
+        <nav class="page-top-nav" aria-label="ESP32 Bit Pirate pages">
+          <a href="../web-tools/">
+            <svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"></path><path d="M8 10l2 2-2 2M13 14h3"></path></svg>
+            Web Tools
+          </a>
+          <a href="../recipes/">
+            <svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"></path><path d="M9 8h6M9 12h6M9 16h4"></path></svg>
+            Recipes
+          </a>
+          <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" target="_blank" rel="noopener">
+            <svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h11a3 3 0 0 1 3 3v11H8a3 3 0 0 1-3-3z"></path><path d="M8 5v14"></path></svg>
+            Docs
+          </a>
+          <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">
+            <svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>
+            GitHub
+          </a>
+        </nav>
+      </div>
 
-    <h3>ESP32 Bit Pirate Firmware (ESP32-S3)</h3>
-    <div id="boards-master" class="boards-grid" role="listbox" aria-label="Choose a master board">
-      <button class="card master-card" data-key="cardputeradv">Cardputer ADV</button>
-      <button class="card master-card" data-key="cardputer">Cardputer</button>
-      <button class="card master-card" data-key="stamps3">Stamp-S3</button>
-      <button class="card master-card" data-key="atoms3lite">Atom-S3 Lite</button>
-      <button class="card master-card" data-key="sticks3">Stick-S3</button>
-      <button class="card master-card" data-key="s3devkit">ESP32-S3 DevKit</button>
-      <button class="card master-card" data-key="tembed">T-Embed</button>
-      <button class="card master-card" data-key="tembedcc1101">T-Embed CC1101</button>
-      <button class="card master-card" data-key="tembedcc1101plus">T-Embed CC1101 Plus</button>
-      <button class="card master-card" data-key="tdisplays3">T-Display S3</button>
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">⚡</span> Browser firmware installer</p>
+          <h1>Flash the firmware in one click, then start using it.</h1>
+          <p class="lead">Install ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5 Bus Expander directly from your browser. This page is organized as a simple flow: flash the device, open the Web Serial terminal, then continue with practical recipes or theoretical documentation.</p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button" href="#flash-workflow">Select board and flash</a>
+            <a class="button secondary-button" href="../web-tools/web-serial-terminal/">Open Web Serial terminal</a>
+          </div>
+        </div>
+        <a class="hero-visual-link" href="#flash-workflow" aria-label="Jump to ESP32 Bit Pirate board selection">
+          <img class="tool-image hero-visual" src="../assets/start-flash-transparent.png" width="1254" height="1254" alt="Browser flashing ESP32 Bit Pirate firmware to a connected ESP32 board" loading="eager">
+        </a>
+      </div>
+    </header>
 
-      <button class="card master-card" data-key="xiaoesp32s3">Xiao ESP32-S3</button>
-      <button class="card master-card" data-key="s3devkitn16r8">ESP32-S3 N16R8</button>
-    </div>
-
-    <h3>ESP32 Bus Expander (ESP32-C5)</h3>
-    <div id="boards-expander" class="boards-grid" role="listbox" aria-label="Choose an expander board">
-      <button class="card expander-card" data-key="c5expander">ESP32-C5 Expander</button>
-    </div>
-
-    <div class="flash-area">
-      <esp-web-install-button id="flashEl">
-        <button id="flashBtn" class="flash-btn" slot="activate" disabled>⚡ Flash</button>
-        <span slot="unsupported">Your web browser doesn't support Web Serial. Use Chrome 89+, Edge 89+, Firefox 151+ desktop, Opera or a compatible Chromium browser.</span>
-        <span slot="not-allowed">Needs HTTPS (or localhost).</span>
-      </esp-web-install-button>
-      <small id="flashHint" class="muted">Select a board above.</small>
-    </div>
-
-    <h3>Tips (Boot Mode)</h3>
-    <section class="tips-grid">
-      <div class="tip-card"><h4>Cardputer</h4><p>Power off and unplug USB. Hold <b>G0</b> (upper-right), then plug USB while still holding.</p></div>
-      <div class="tip-card"><h4>Stamp-S3</h4><p>Press and hold the <b>BOOT</b> button <i>before</i> powering on or plugging in USB to enable flashing mode.</p></div>
-      <div class="tip-card"><h4>Atom-S3 Lite</h4><p>Power on and press the <b>RESET</b> button for 3 seconds or until the LED blinks green.</p></div>
-      <div class="tip-card"><h4>Stick-S3</h4><p>Press and hold the <b>POWER</b> button until the LED blinks green to enable flashing mode.</p></div>
-      <div class="tip-card"><h4>T-Embed</h4><p>Hold the encoder <b>center button</b>, then press <b>RESET</b>.<br>(CC1101 version: the button is next to the ESP32-S3.)</p></div>
-      <div class="tip-card"><h4>S3-Dev-Kit</h4><p>Make sure to plug USB to the COM programming port, hold the <b>BOOT</b> button and power on.</p></div>
-      <div class="tip-card"><h4>Xiao-S3</h4><p>Press and hold the <b>BOOT</b> button <i>before</i> powering on or plugging in USB to enable flashing mode.</p></div>
-      <div class="tip-card"><h4>Linux Users</h4><p>If flashing fails, run:<br><code>sudo setfacl -m u:$USER:rw /dev/ttyACM0</code><br>This grants access to the serial port.</p></div>
+    <section class="content-card guide-card" aria-labelledby="guide-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Start</span> step by step</p>
+        <h2 id="guide-title">Recommended browser workflow</h2>
+      </div>
+      <div class="guide-steps" aria-label="ESP32 Bit Pirate first run steps">
+        <a class="guide-step" href="#flash-workflow">
+          <span class="guide-step-number">01</span>
+          <strong>Flash firmware</strong>
+          <span>Select the exact board and launch the Web Serial installer.</span>
+        </a>
+        <a class="guide-step" href="../web-tools/web-serial-terminal/">
+          <span class="guide-step-number">02</span>
+          <strong>Open terminal</strong>
+          <span>Connect to the flashed board and check the ESP32 Bit Pirate CLI.</span>
+        </a>
+        <a class="guide-step" href="../recipes/">
+          <span class="guide-step-number">03</span>
+          <strong>Try a recipe</strong>
+          <span>Use practical examples for I2C, SPI, UART, GPIO, USB and more.</span>
+        </a>
+        <a class="guide-step" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" target="_blank" rel="noopener">
+          <span class="guide-step-number">04</span>
+          <strong>Read the reference</strong>
+          <span>Use the wiki for commands, modes and theoretical documentation.</span>
+        </a>
+      </div>
     </section>
 
-    <footer class="footer-actions">
-      <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" target="_blank" rel="noopener">
-        📖 Step-by-step guide for every mode and command
-      </a>
-      <a href="../web-tools/">
-        &gt;_ Web Serial Tools
-      </a>
+    <section id="flash-workflow" class="content-card flash-panel" aria-labelledby="flash-workflow-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">01</span> Choose firmware</p>
+        <h2 id="flash-workflow-title">Select your ESP32 Bit Pirate target</h2>
+        <p>Plug in your board with a USB cable and select the corresponding firmware below. The installer will guide you through the flashing process.</p>
+      </div>
+
+      <div class="board-section" aria-labelledby="master-board-title">
+        <h3 id="master-board-title">ESP32 Bit Pirate firmware (ESP32-S3)</h3>
+        <div id="boards-master" class="boards-grid" role="listbox" aria-label="Choose an ESP32-S3 board">
+          <button class="card master-card" type="button" data-key="cardputeradv">Cardputer ADV</button>
+          <button class="card master-card" type="button" data-key="cardputer">Cardputer</button>
+          <button class="card master-card" type="button" data-key="stamps3">Stamp-S3</button>
+          <button class="card master-card" type="button" data-key="atoms3lite">Atom-S3 Lite</button>
+          <button class="card master-card" type="button" data-key="sticks3">Stick-S3</button>
+          <button class="card master-card" type="button" data-key="s3devkit">ESP32-S3 DevKit</button>
+          <button class="card master-card" type="button" data-key="tembed">T-Embed</button>
+          <button class="card master-card" type="button" data-key="tembedcc1101">T-Embed CC1101</button>
+          <button class="card master-card" type="button" data-key="tembedcc1101plus">T-Embed CC1101 Plus</button>
+          <button class="card master-card" type="button" data-key="tdisplays3">T-Display S3</button>
+          <button class="card master-card" type="button" data-key="xiaoesp32s3">Xiao ESP32-S3</button>
+          <button class="card master-card" type="button" data-key="s3devkitn16r8">ESP32-S3 N16R8</button>
+        </div>
+      </div>
+
+      <div class="board-section" aria-labelledby="expander-board-title">
+        <h3 id="expander-board-title">ESP32 Bus Expander firmware (ESP32-C5)</h3>
+        <div id="boards-expander" class="boards-grid expander-grid" role="listbox" aria-label="Choose an ESP32-C5 expander board">
+          <button class="card expander-card" type="button" data-key="c5expander">ESP32-C5 Expander</button>
+        </div>
+      </div>
+
+      <div class="flash-area" aria-live="polite">
+        <esp-web-install-button id="flashEl">
+          <button id="flashBtn" class="flash-btn" type="button" slot="activate" disabled>⚡ Flash selected firmware</button>
+          <span slot="unsupported">Your web browser does not support Web Serial. Use a compatible desktop browser.</span>
+          <span slot="not-allowed">This flasher needs HTTPS or localhost.</span>
+        </esp-web-install-button>
+        <small id="flashHint" class="muted">Select a board above.</small>
+      </div>
+    </section>
+
+    <section class="content-card terminal-card" aria-labelledby="terminal-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">02</span> Verify install</p>
+        <h2 id="terminal-title">Open the Web Serial terminal after flashing</h2>
+        <p>After the install, reconnect the board normally and open the terminal from the browser. It is the quickest way to confirm that the firmware booted and to start trying commands.</p>
+      </div>
+      <div class="terminal-layout">
+        <a class="tool-card-link" href="../web-tools/web-serial-terminal/">
+          <img class="tool-image terminal-image" src="../web-tools/assets/web-serial-terminal.svg" width="520" height="300" alt="ESP32 Bit Pirate Web Serial Terminal browser tool" loading="lazy">
+          <span class="card-arrow">Open Web Serial terminal →</span>
+        </a>
+        <div class="cli-window" aria-label="Example ESP32 Bit Pirate terminal session">
+          <div class="cli-window-chrome"><span></span><span></span><span></span></div>
+          <pre><code>&gt; help
+&gt; mode i2c
+&gt; scan
+&gt; mode spi
+&gt; flash probe</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card docs-card" aria-labelledby="docs-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">03</span> Learn and troubleshoot</p>
+        <h2 id="docs-title">Choose the documentation style you need</h2>
+        <p>The project keeps practical bench workflows and theoretical command references separate, so users can either follow a task or study a protocol mode in detail.</p>
+      </div>
+      <div class="doc-grid">
+        <a class="doc-card" href="../recipes/">
+          <img class="card-cover" src="../assets/index-recipes.svg" alt="" width="520" height="300" loading="lazy">
+          <div class="card-copy">
+            <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Practical</span> Recipes</p>
+            <h3>Task-based bench guides</h3>
+            <p>Follow concrete workflows for wiring, commands, browser tools and repeatable hardware debugging tests.</p>
+            <span class="card-arrow">Read recipes →</span>
+          </div>
+        </a>
+        <a class="doc-card" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" target="_blank" rel="noopener">
+          <img class="card-cover" src="../assets/index-wiki.svg" alt="" width="520" height="300" loading="lazy">
+          <div class="card-copy">
+            <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Theoretical</span> Wiki</p>
+            <h3>Modes and command reference</h3>
+            <p>Use the wiki for mode pages, command syntax, firmware setup notes and deeper protocol explanations.</p>
+            <span class="card-arrow">Open wiki ↗</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="content-card" aria-labelledby="before-flashing-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Before</span> quick checklist</p>
+        <h2 id="before-flashing-title">Make the first flash predictable</h2>
+      </div>
+      <div class="capability-grid checklist-grid">
+        <article>
+          <h3>Use a data USB cable</h3>
+          <p>Charging-only cables can power the board without exposing a serial port. Use a known working data cable.</p>
+        </article>
+        <article>
+          <h3>Select the right USB port</h3>
+          <p>Some ESP32-S3 boards expose native USB and a separate UART bridge. Use the board port intended for flashing.</p>
+        </article>
+        <article>
+          <h3>Close other serial tools</h3>
+          <p>Serial monitors, IDEs or previous browser tabs can keep the port busy and prevent the installer from connecting.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-card" aria-labelledby="boot-mode-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Boot</span> board tips</p>
+        <h2 id="boot-mode-title">Board-specific flashing tips</h2>
+        <p>Use these hints when the browser cannot detect the target or the board does not enter download mode automatically.</p>
+      </div>
+      <div class="tips-grid">
+        <article class="tip-card"><h3>Cardputer</h3><p>Power off and unplug USB. Hold <strong>G0</strong>, then plug USB while still holding.</p></article>
+        <article class="tip-card"><h3>Stamp-S3</h3><p>Hold <strong>BOOT</strong> before powering on or plugging in USB to enable flashing mode.</p></article>
+        <article class="tip-card"><h3>Atom-S3 Lite</h3><p>Power on and press <strong>RESET</strong> for 3 seconds or until the LED blinks green.</p></article>
+        <article class="tip-card"><h3>Stick-S3</h3><p>Hold <strong>POWER</strong> until the LED blinks green to enable flashing mode.</p></article>
+        <article class="tip-card"><h3>T-Embed</h3><p>Hold the encoder <strong>center button</strong>, then press <strong>RESET</strong>. On CC1101 variants, the button is near the ESP32-S3.</p></article>
+        <article class="tip-card"><h3>S3 DevKit</h3><p>Use the COM programming port. Hold <strong>BOOT</strong>, then power on or reset.</p></article>
+        <article class="tip-card"><h3>Xiao ESP32-S3</h3><p>Hold <strong>BOOT</strong> before powering on or plugging in USB to enable flashing mode.</p></article>
+        <article class="tip-card"><h3>Linux users</h3><p>If flashing fails, grant serial access with <code>sudo setfacl -m u:$USER:rw /dev/ttyACM0</code> and adjust the device path if needed.</p></article>
+      </div>
+    </section>
+
+    <section class="content-card faq-section" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">FAQ</span> troubleshooting</p>
+        <h2 id="faq-title">Common Web Flasher issues</h2>
+        <p>These checks cover the most frequent problems when using a browser-based ESP32-S3 firmware installer.</p>
+      </div>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>The browser does not show a serial port.</summary>
+          <p>Use a desktop browser with Web Serial support, reconnect the board, try another data cable and close tools that may already own the serial port.</p>
+        </details>
+        <details class="faq-item">
+          <summary>The board is visible but flashing fails.</summary>
+          <p>Put the board in bootloader mode, select the exact board variant, then retry. On Linux, also check serial permissions for the active <code>/dev/ttyACM*</code> or <code>/dev/ttyUSB*</code> device.</p>
+        </details>
+        <details class="faq-item">
+          <summary>The terminal opens but no text appears.</summary>
+          <p>Reset the board after flashing, reconnect from the Web Serial terminal and confirm that the correct USB port is selected.</p>
+        </details>
+        <details class="faq-item">
+          <summary>I selected the wrong board.</summary>
+          <p>Return to the board selector and put your board in bootloader mode, choose the correct target and flash again.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="external-links-card ecosystem-card" aria-labelledby="ecosystem-title">
+      <div class="external-links-header">
+        <h2 id="ecosystem-title">
+          <svg class="section-title-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect></svg>
+          Part of the ESP32 Bit Pirate ecosystem
+        </h2>
+        <p>After flashing, the same project gives you the firmware, browser tools, protocol recipes, documentation, scripts and companion hardware needed to explore buses, debug boards and automate repeatable bench workflows.</p>
+      </div>
+      <div class="ecosystem-grid">
+        <article class="system-card">
+          <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">
+            <img class="card-cover" src="../assets/index-firmware.svg" alt="" width="520" height="300" loading="lazy">
+            <div class="card-copy">
+              <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Core</span> Firmware</p>
+              <h3>Protocol modes and CLI</h3>
+              <p>C++ firmware for wired buses, wireless protocols, USB adapters, device shells and hardware debugging commands.</p>
+              <span class="card-arrow">View source ↗</span>
+            </div>
+          </a>
+        </article>
+        <article class="system-card">
+          <a class="system-card-link" href="../web-tools/">
+            <img class="card-cover" src="../web-tools/assets/bit-pirate-web-tools.svg" alt="" width="520" height="300" loading="lazy">
+            <div class="card-copy">
+              <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Browser</span> Web Tools</p>
+              <h3>Serial, flash and capture tools</h3>
+              <p>Desktop-style tools for Web Serial, SPI flash, AVR, STM32, ESP32, SUMP logic capture and BPIO2 GPIO/I2C/SPI.</p>
+              <span class="card-arrow">Open tools →</span>
+            </div>
+          </a>
+        </article>
+        <article class="system-card">
+          <a class="system-card-link" href="../recipes/">
+            <img class="card-cover" src="../assets/index-recipes.svg" alt="" width="520" height="300" loading="lazy">
+            <div class="card-copy">
+              <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">How-to</span> Recipes</p>
+              <h3>Practical bench documentation</h3>
+              <p>Searchable task pages that explain wiring, commands and browser tool workflows.</p>
+              <span class="card-arrow">Read recipes →</span>
+            </div>
+          </a>
+        </article>
+        <article class="system-card">
+          <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" target="_blank" rel="noopener">
+            <img class="card-cover" src="../assets/index-wiki.svg" alt="" width="520" height="300" loading="lazy">
+            <div class="card-copy">
+              <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Wiki</span> Documentation</p>
+              <h3>Theoretical bench documentation</h3>
+              <p>Mode pages, setup notes and command references for serial, web UI and adapter workflows.</p>
+              <span class="card-arrow">Open wiki ↗</span>
+            </div>
+          </a>
+        </article>
+        <article class="system-card">
+          <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate-Scripts" target="_blank" rel="noopener">
+            <img class="card-cover" src="../assets/index-python.svg" alt="" width="520" height="300" loading="lazy">
+            <div class="card-copy">
+              <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Python</span> Automation</p>
+              <h3>Scripts over serial</h3>
+              <p>Automate scans, protocol checks, captures, reports and repeatable lab tasks.</p>
+              <span class="card-arrow">Explore scripts ↗</span>
+            </div>
+          </a>
+        </article>
+        <article class="system-card">
+          <a class="system-card-link" href="../">
+            <img class="card-cover" src="../assets/index-boards.svg" alt="" width="520" height="300" loading="lazy">
+            <div class="card-copy">
+              <p class="card-eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">Project</span> Overview</p>
+              <h3>One page for the full project</h3>
+              <p>Start from the global index to reach firmware, hardware, browser tools, recipes and support links.</p>
+              <span class="card-arrow">Open overview →</span>
+            </div>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section class="brand-signature" aria-labelledby="bit-pirate-identity-title">
+      <div class="brand-signature-card">
+        <a class="brand-signature-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">
+          <img class="brand-signature-logo" src="../web-tools/assets/bit-pirate-square.png" alt="ESP32 Bit Pirate logo, open-source ESP32-S3 hardware debugging firmware" width="512" height="512" loading="lazy">
+        </a>
+        <div class="brand-signature-copy">
+          <p class="eyebrow"><span class="eyebrow-text-mark" aria-hidden="true">ESP32 Bit Pirate</span> project</p>
+          <h2 id="bit-pirate-identity-title">Powering the open-source ecosystem.</h2>
+          <p>The Bit Pirate firmware is complemented by scripting, hardware dock, expansion boards, browser tools, documentation and practical embedded workflows for serial interfaces, protocol exploration and Wi-Fi connected debugging.</p>
+          <ul class="brand-signature-keywords" aria-label="ESP32 Bit Pirate keywords">
+            <li>ESP32-S3 firmware</li>
+            <li>hardware debugging</li>
+            <li>Web Serial tools</li>
+            <li>embedded workbench</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p class="site-footer-title">ESP32 Bit Pirate</p>
+      <nav aria-label="Project links">
+        <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" target="_blank" rel="noopener">Wiki</a>
+        <a href="../web-tools/">Web Tools</a>
+        <a href="../recipes/">Recipes</a>
+      </nav>
     </footer>
-  </div>
+  </main>
 
   <script type="module" src="scripts.js"></script>
 </body>
