@@ -128,8 +128,8 @@
        The illustrations stay adapted to white cards without being washed out. */
     html[data-theme="light"] :is(.card-cover,.recipe-cover,.tool-image,.authority-image,.brand-signature-logo,.recipe-banner img,.recipe-image-break img) {
       background:#fff !important;
-      opacity:.82 !important;
-      filter:saturate(.88) contrast(.93) brightness(1.08) !important;
+      opacity:.88 !important;
+      filter:saturate(.94) contrast(.97) brightness(1.04) !important;
       box-shadow:none !important;
     }
     html[data-theme="light"] :is(.system-card-link,.content-card-link,.recipe-card-link,.tool-card > a,.authority-card,.brand-signature-card,.recipe-banner,.recipe-image-break) {
@@ -137,8 +137,8 @@
     }
     html[data-theme="light"] :is(.system-card-link,.content-card-link,.recipe-card-link,.tool-card > a):hover :is(.card-cover,.recipe-cover,.tool-image),
     html[data-theme="light"] :is(.system-card-link,.content-card-link,.recipe-card-link,.tool-card > a):focus-visible :is(.card-cover,.recipe-cover,.tool-image) {
-      opacity:.90 !important;
-      filter:saturate(.92) contrast(.96) brightness(1.04) !important;
+      opacity:.94 !important;
+      filter:saturate(.96) contrast(.98) brightness(1.02) !important;
     }
     html[data-theme="light"] .theme-toggle { color:#17463a; }
   `;
