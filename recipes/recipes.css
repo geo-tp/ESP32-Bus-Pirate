@@ -191,6 +191,12 @@ h1 {
   line-height: 1.55;
 }
 
+.recipes-home .hero > p {
+  width: 100%;
+  max-width: none;
+  text-align: justify;
+}
+
 .hero-actions,
 .recipe-toolbar,
 .recipe-actions {

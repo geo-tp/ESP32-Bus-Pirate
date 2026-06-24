@@ -140,3 +140,75 @@ h3 {
     width: 100%;
   }
 }
+
+/* Local light-theme fixes for the webflasher only.
+   Keep the dark theme untouched and override the shared theme helper where needed. */
+html[data-theme="light"] body .ascii-title {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  background: #ffffff !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  color: #183128 !important;
+  -webkit-text-fill-color: #183128 !important;
+  text-shadow: none !important;
+  border-color: #b9c9c0 !important;
+  box-shadow: 0 10px 24px rgba(31, 72, 53, .10), inset 0 0 8px rgba(28, 57, 43, .05) !important;
+}
+
+html[data-theme="light"] body .ascii-title::before {
+  content: none !important;
+}
+
+html[data-theme="light"] body .ascii-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 8px;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(238,247,242,.78));
+}
+
+html[data-theme="light"] body img,
+html[data-theme="light"] body picture,
+html[data-theme="light"] body svg.webflasher-visual {
+  /* Pronounced light-theme wash: closer to a white veil than a subtle filter. */
+  filter: brightness(1.42) contrast(.72) saturate(.82);
+  opacity: .78;
+}
+
+html[data-theme="light"] body img:hover,
+html[data-theme="light"] body picture:hover,
+html[data-theme="light"] body svg.webflasher-visual:hover {
+  opacity: .9;
+}
+
+html[data-theme="light"] body .flash-btn,
+html[data-theme="light"] body .footer-actions a {
+  border-color: #a8c5b7 !important;
+  background: linear-gradient(135deg, #ffffff, #edf7f1) !important;
+  color: #075f3b !important;
+  text-shadow: none !important;
+  box-shadow: 0 8px 20px rgba(31, 72, 53, .10), inset 0 0 7px rgba(28, 57, 43, .06) !important;
+}
+
+html[data-theme="light"] body .flash-btn:not([disabled]) {
+  border-color: #5b9c7d !important;
+  background: linear-gradient(135deg, #eafff2, #d9f2e5) !important;
+  color: #064e34 !important;
+  box-shadow: 0 10px 24px rgba(7, 134, 83, .16), inset 0 0 8px rgba(28, 57, 43, .06) !important;
+}
+
+html[data-theme="light"] body .flash-btn:hover:not([disabled]),
+html[data-theme="light"] body .footer-actions a:hover {
+  border-color: #078653 !important;
+  box-shadow: 0 12px 28px rgba(7, 134, 83, .18), inset 0 0 8px rgba(28, 57, 43, .06) !important;
+}
+
+html[data-theme="light"] body .flash-btn[disabled] {
+  opacity: .62 !important;
+  filter: none !important;
+  color: #6b8176 !important;
+}

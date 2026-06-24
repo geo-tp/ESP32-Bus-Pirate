@@ -161,6 +161,11 @@ h1 {
   line-height: 1.55;
 }
 
+.web-tools-home .hero p {
+  width: 100%;
+  max-width: none;
+}
+
 .tool-grid,
 .faq-grid {
   display: grid;
