@@ -1093,6 +1093,11 @@ html[data-theme="light"] .brand-signature-logo {
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.36);
 }
 
+.hero-visual-link picture {
+  display: block;
+  width: 100%;
+}
+
 .hero-visual.tool-image {
   border: 0;
   background: transparent;
