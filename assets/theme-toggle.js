@@ -134,6 +134,9 @@
     html[data-theme="light"] .terminal-controls select.theme-contrast { color:#10271d !important; font-weight:700; }
     html[data-theme="light"] .terminal-controls button:hover:not(:disabled),
     html[data-theme="light"] .terminal-controls select:hover:not(:disabled) { background:#e6f1ea !important; color:#075f3b !important; }
+    html[data-theme="light"] .config-header button { background:#f8fbf9 !important; border-color:#9db9aa !important; color:#24493b !important; box-shadow:inset 0 0 4px rgba(28,57,43,.05) !important; }
+    html[data-theme="light"] .config-header button:hover,
+    html[data-theme="light"] .config-header button:focus-visible { background:#e6f1ea !important; border-color:#007f7a !important; color:#075f3b !important; }
     html[data-theme="light"] .terminal-scrollbar { scrollbar-color:#8ba99a transparent; }
     html[data-theme="light"] .terminal-scrollbar::-webkit-scrollbar-thumb { background:#8ba99a; border-color:#eef5f1; }
     html[data-theme="light"] .terminal-scrollbar::-webkit-scrollbar-thumb:hover { background:#5f8773; }
