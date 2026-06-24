@@ -560,6 +560,14 @@
       transform: translate(-50%, -50%);
     }
 
+    html[data-theme="light"] .ecosystem-grid {
+      background: none;
+    }
+
+    html[data-theme="light"] .ecosystem-grid::before {
+      display: none;
+    }
+
     .ecosystem-flow {
       position: absolute;
       z-index: 0;
@@ -575,16 +583,6 @@
       stroke: rgba(0, 255, 204, 0.30);
       stroke-width: 1.35;
       stroke-dasharray: 3 9;
-      animation: ecosystem-data-flow 7s linear infinite;
-    }
-
-    .ecosystem-flow path:nth-child(even) {
-      animation-direction: reverse;
-      animation-duration: 9s;
-    }
-
-    @keyframes ecosystem-data-flow {
-      to { stroke-dashoffset: -96; }
     }
 
     .ecosystem-grid .system-card {
@@ -650,7 +648,6 @@
         radial-gradient(circle at 50% 42%, rgba(0, 255, 153, 0.20), transparent 50%),
         linear-gradient(145deg, #19261e, #0d1110 72%) !important;
       box-shadow: 0 0 0 1px rgba(0, 255, 204, 0.08), 0 22px 55px rgba(0, 0, 0, 0.32), inset 0 0 28px rgba(0, 255, 153, 0.08);
-      animation: ecosystem-core-pulse 10s ease-in-out infinite;
     }
 
     .ecosystem-node-core::before {
@@ -679,17 +676,6 @@
 
     .ecosystem-node-core .card-eyebrow {
       color: #d8fff2;
-    }
-
-    @keyframes ecosystem-core-pulse {
-      0%, 100% {
-        transform: scale(1.035);
-        box-shadow: 0 0 0 1px rgba(0, 255, 204, 0.14), 0 0 16px rgba(0, 255, 204, 0.08), 0 22px 55px rgba(0, 0, 0, 0.32), inset 0 0 28px rgba(0, 255, 153, 0.10);
-      }
-      50% {
-        transform: scale(1.035);
-        box-shadow: 0 0 0 1px rgba(0, 255, 204, 0.22), 0 0 27px rgba(0, 255, 204, 0.16), 0 22px 55px rgba(0, 0, 0, 0.32), inset 0 0 34px rgba(0, 255, 153, 0.16);
-      }
     }
 
     .content-card,
@@ -1142,6 +1128,7 @@
         transition: none;
         animation: none;
       }
+
     }
   </style>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -1224,14 +1211,14 @@
 
       <div class="ecosystem-grid">
         <svg class="ecosystem-flow" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path d="M500 300 C418 242 282 125 140 78"></path>
-          <path d="M500 300 C500 205 500 112 500 42"></path>
-          <path d="M500 300 C582 242 718 125 860 78"></path>
-          <path d="M500 300 C358 300 188 300 66 300"></path>
-          <path d="M500 300 C642 300 812 300 934 300"></path>
-          <path d="M500 300 C418 358 282 475 140 522"></path>
-          <path d="M500 300 C500 395 500 488 500 558"></path>
-          <path d="M500 300 C582 358 718 475 860 522"></path>
+          <path id="ecosystem-flow-nw" d="M500 300 C418 242 282 125 140 78"></path>
+          <path id="ecosystem-flow-n" d="M500 300 C500 205 500 112 500 42"></path>
+          <path id="ecosystem-flow-ne" d="M500 300 C582 242 718 125 860 78"></path>
+          <path id="ecosystem-flow-w" d="M500 300 C358 300 188 300 66 300"></path>
+          <path id="ecosystem-flow-e" d="M500 300 C642 300 812 300 934 300"></path>
+          <path id="ecosystem-flow-sw" d="M500 300 C418 358 282 475 140 522"></path>
+          <path id="ecosystem-flow-s" d="M500 300 C500 395 500 488 500 558"></path>
+          <path id="ecosystem-flow-se" d="M500 300 C582 358 718 475 860 522"></path>
         </svg>
         <article class="system-card ecosystem-node-core">
           <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">
