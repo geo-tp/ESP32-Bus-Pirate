@@ -65,6 +65,7 @@ async function init() {
   viewer = new IframeVcdViewerAdapter(elements.viewerFrame);
   try {
     await viewer.initialize();
+    syncViewerTheme();
     const demo = makeDemoCapture();
     await viewer.loadCapture(demo);
     lastVcd = writeVcd(demo);
@@ -85,6 +86,15 @@ async function init() {
   elements.sampleDepth.addEventListener("change", renderEstimate);
   elements.channelList.addEventListener("change", handleChannelControlChange);
   elements.channelList.addEventListener("input", handleChannelControlChange);
+
+  new MutationObserver(syncViewerTheme).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"]
+  });
+}
+
+function syncViewerTheme() {
+  viewer?.setTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
 }
 
 async function connect() {

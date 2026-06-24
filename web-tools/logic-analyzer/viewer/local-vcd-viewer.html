@@ -7,11 +7,17 @@
   <title>Local VCD Viewer Harness</title>
   <style>
     :root { color-scheme: dark; font-family: Inter, system-ui, sans-serif; background: #101214; color: #e8eef2; }
+    :root[data-theme="light"] { color-scheme: light; background: #f3f8f5; color: #183128; }
     body { margin: 0; overflow: hidden; }
     .toolbar { display: flex; gap: 8px; align-items: center; height: 44px; padding: 0 12px; background: #171b1f; border-bottom: 1px solid #2a3036; }
     button { height: 30px; border: 1px solid #3d4751; background: #20262c; color: #e8eef2; border-radius: 6px; }
     #status { margin-left: auto; color: #9fb0bd; font-size: 13px; }
     canvas { display: block; width: 100vw; height: calc(100vh - 44px); background: #0d1013; }
+    :root[data-theme="light"] .toolbar { background: #e3eee7; border-color: #b9c9c0; }
+    :root[data-theme="light"] button { border-color: #9db9aa; background: #f8fbf9; color: #183128; }
+    :root[data-theme="light"] button:hover, :root[data-theme="light"] button:focus-visible { border-color: #007f7a; background: #e6f1ea; }
+    :root[data-theme="light"] #status { color: #52665c; }
+    :root[data-theme="light"] canvas { background: #f3f8f5; }
   </style>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
@@ -35,6 +41,11 @@
     let capture = null;
     let zoom = 1;
     let offset = 0;
+    let viewerTheme = "dark";
+    const PALETTES = {
+      dark: { empty: "#6f7d87", grid: "#27313a", trigger: "#ffd666", trace: "#4fd1c5", label: "#d6dee5" },
+      light: { empty: "#52665c", grid: "#c7d7ce", trigger: "#9a6800", trace: "#007f7a", label: "#183128" }
+    };
 
     window.parent.postMessage({ type: "viewer-ready" }, "*");
 
@@ -52,6 +63,11 @@
       }
       if (message.type === "set-trigger-marker" && capture) {
         capture.triggerIndex = message.sampleIndex;
+        draw();
+      }
+      if (message.type === "set-theme") {
+        viewerTheme = message.theme === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = viewerTheme;
         draw();
       }
       if (message.type === "reset") {
@@ -87,6 +103,7 @@
     window.addEventListener("resize", draw);
 
     function draw() {
+      const palette = PALETTES[viewerTheme];
       const ratio = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.max(1, Math.floor(rect.width * ratio));
@@ -95,7 +112,7 @@
       ctx.clearRect(0, 0, rect.width, rect.height);
 
       if (!capture) {
-        ctx.fillStyle = "#6f7d87";
+        ctx.fillStyle = palette.empty;
         ctx.fillText("No capture loaded yet.", 24, 32);
         return;
       }
@@ -122,7 +139,7 @@
           Math.ceil((offset + plotWidth) / Math.max(pixelsPerSample, 0.0001)) + 1,
         );
 
-      ctx.strokeStyle = "#27313a";
+      ctx.strokeStyle = palette.grid;
       ctx.lineWidth = 1;
       for (let x = left; x < rect.width - right; x += 80) {
         ctx.beginPath();
@@ -135,8 +152,8 @@
         const triggerX = originX + capture.triggerIndex * pixelsPerSample;
         if (triggerX >= left && triggerX <= rect.width - right) {
           ctx.save();
-          ctx.strokeStyle = "#ffd666";
-          ctx.fillStyle = "#ffd666";
+          ctx.strokeStyle = palette.trigger;
+          ctx.fillStyle = palette.trigger;
           ctx.lineWidth = 1;
           ctx.setLineDash([5, 4]);
           ctx.beginPath();
@@ -158,7 +175,7 @@
         const y = 18 + row * rowHeight;
         const low = y + rowHeight * 0.66;
         const high = y + rowHeight * 0.22;
-        ctx.strokeStyle = "#4fd1c5";
+        ctx.strokeStyle = palette.trace;
         ctx.beginPath();
         let previousLevel = ((capture.packedSamples[startSample] >> channel.bit) & 1) ? high : low;
         let previousX = originX + startSample * pixelsPerSample;
@@ -180,7 +197,7 @@
 
       channels.forEach((channel, row) => {
         const y = 18 + row * rowHeight;
-        ctx.fillStyle = "#d6dee5";
+        ctx.fillStyle = palette.label;
         ctx.fillText(channel.name, 12, y + rowHeight * 0.48);
       });
     }

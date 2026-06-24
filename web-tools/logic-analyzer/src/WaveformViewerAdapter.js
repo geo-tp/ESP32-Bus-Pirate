@@ -3,6 +3,7 @@ export class WaveformViewerAdapter {
   async loadCapture(_capture) {}
   async loadVcd(_data) {}
   reset() {}
+  setTheme(_theme) {}
   setChannelNames(_channels) {}
   setTriggerMarker(_sampleIndex, _sampleRateHz) {}
   destroy() {}
@@ -42,6 +43,10 @@ export class IframeVcdViewerAdapter extends WaveformViewerAdapter {
 
   reset() {
     this.post({ type: "reset" });
+  }
+
+  setTheme(theme) {
+    this.post({ type: "set-theme", theme });
   }
 
   setTriggerMarker(sampleIndex, sampleRateHz) {

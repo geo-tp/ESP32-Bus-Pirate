@@ -137,6 +137,11 @@
     html[data-theme="light"] .terminal-scrollbar { scrollbar-color:#8ba99a transparent; }
     html[data-theme="light"] .terminal-scrollbar::-webkit-scrollbar-thumb { background:#8ba99a; border-color:#eef5f1; }
     html[data-theme="light"] .terminal-scrollbar::-webkit-scrollbar-thumb:hover { background:#5f8773; }
+    /* Logic Analyzer: preserve a soft, intentional control strip instead of a dark inset shadow. */
+    html[data-theme="light"] .control-strip { background:linear-gradient(145deg,#ffffff,#edf5f0) !important; border-color:#a8c5b7 !important; box-shadow:0 8px 20px rgba(31,72,53,.08), inset 0 0 5px rgba(28,57,43,.05) !important; }
+    html[data-theme="light"] .control-strip :is(select,.estimate-cell strong) { background:#f8fcf9 !important; border-color:#b9c9c0 !important; color:#183128 !important; box-shadow:inset 0 0 4px rgba(28,57,43,.05) !important; }
+    html[data-theme="light"] .control-strip .estimate-cell strong { color:#7a5b00 !important; }
+    html[data-theme="light"] .viewer-panel { background:#eef5f1 !important; border-color:#9db9aa !important; box-shadow:inset 0 0 12px rgba(28,57,43,.08) !important; }
 
     /* Light artificial veil for image-heavy cards in light theme.
        The illustrations stay adapted to white cards without being washed out. */
