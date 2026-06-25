@@ -140,6 +140,21 @@ input {
   color: #d8ffd8;
 }
 
+html[data-theme="light"] .compatibility-banner {
+  border-color: #d7b56f;
+  background: #fff7e6;
+  color: #634a10;
+  box-shadow: inset 0 0 5px rgba(112, 82, 19, 0.06);
+}
+
+html[data-theme="light"] .compatibility-banner h2 {
+  color: #8a6200;
+}
+
+html[data-theme="light"] .compatibility-banner a {
+  color: #075f3b;
+}
+
 .tool-card {
   display: flex;
   flex-direction: column;
