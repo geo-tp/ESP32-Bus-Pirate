@@ -575,16 +575,21 @@ h2 {
 
 .recipe-search {
   margin: 20px 0 10px;
+  min-width: 0;
 }
 
 .recipe-search-bar {
   position: relative;
   display: grid;
   align-items: center;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .recipe-search-input {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 64px;
   padding: 18px 118px 18px 20px;
   border: 1px solid #2d5b51;
@@ -1284,14 +1289,12 @@ h2 {
 
   .recipe-search-input {
     min-height: 58px;
-    padding: 14px 102px 14px 14px;
+    padding: 14px 44px 14px 14px;
     font-size: 0.92rem;
   }
 
   .recipe-search-clear {
-    right: 54px;
-    width: 30px;
-    height: 30px;
+    display: none;
   }
 
   .recipe-search-icon {
@@ -1307,6 +1310,10 @@ h2 {
   .recipe-image-break img {
     height: auto;
     min-height: 0;
+  }
+
+  .next-steps-section > :is(ol, ul) > li {
+    padding-left: 42px;
   }
 
   .wiring-diagram svg {
@@ -1478,11 +1485,19 @@ h2 {
 }
 
 .next-steps-section li code {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
   margin: 0 0.1rem;
   border-color: rgba(184, 255, 184, 0.55);
   background: linear-gradient(135deg, rgba(0, 255, 204, 0.14), rgba(184, 255, 184, 0.08));
   color: #f2fff8;
+  overflow-wrap: normal;
+  vertical-align: middle;
+  white-space: nowrap;
   text-shadow: 0 0 8px rgba(0, 255, 204, 0.16);
+  word-break: normal;
 }
 
 .next-steps-section li {
