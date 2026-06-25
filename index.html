@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="ESP32 Bit Pirate — ESP32-S3 Hardware Debugging Ecosystem">
   <meta name="twitter:description" content="ESP32-S3 firmware, Web Flasher, Web Serial tools, recipes and companion hardware for wired buses, USB adapters, wireless protocols and embedded hardware debugging.">
   <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools-og.png"><meta name="twitter:image:alt" content="Preview image for ESP32 Bit Pirate — ESP32-S3 Hardware Debugging Ecosystem">
-  <meta name="google-site-verification" content="ZRzOB9tX2XsRJbgvgSmH0x4BufDJDpYcfKFn0CZdifA" />
+  <meta name="google-site-verification" content="ZRzOB9tX2XsRJbgvgSmH0x4BufDJDpYcfKFn0CZdifA">
   <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/">
 <script defer src="assets/theme-toggle.js?v=20260624-light18"></script>
   <title>ESP32 Bit Pirate | Hardware Debugging Firmware, Web Tools &amp; Recipes</title>
@@ -771,7 +771,6 @@
       position: absolute;
       z-index: 2;
       top: 0;
-      left: 0;
       width: 122px;
       height: 18px;
       border-radius: 999px;
@@ -779,13 +778,11 @@
       box-shadow: 0 0 40px rgba(0, 255, 204, 0.18), 0 0 72px rgba(0, 255, 153, 0.10);
       content: "";
       filter: blur(8px);
+      left: -122px;
       opacity: 0;
-      offset-anchor: center;
-      offset-path: inset(1px round var(--radius));
-      offset-rotate: auto;
       pointer-events: none;
       transition: opacity 220ms ease;
-      will-change: offset-distance;
+      will-change: left;
     }
 
     .ecosystem-node-core:hover::after,
@@ -796,7 +793,7 @@
 
     @keyframes core-liseret {
       to {
-        offset-distance: 100%;
+        left: 100%;
       }
     }
 
