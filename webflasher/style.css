@@ -271,6 +271,10 @@ h3 {
   margin-top: 18px;
 }
 
+.hero-actions .button {
+  flex: 1 1 220px;
+}
+
 .button,
 .flash-btn {
   display: inline-flex;
@@ -292,6 +296,18 @@ h3 {
 .secondary-button {
   background: linear-gradient(135deg, #17252b, #101517);
   color: #d8fff2;
+}
+
+.button-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  margin-right: 7px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
 }
 
 .button:hover,
@@ -571,7 +587,15 @@ h3 {
   }
 
   .hero-actions {
+    width: 100%;
+    align-items: stretch;
     flex-direction: column;
+  }
+
+  .hero-actions .button {
+    flex-basis: auto;
+    min-height: 44px;
+    padding-inline: 16px;
   }
 }
 
