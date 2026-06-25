@@ -42,6 +42,10 @@ body {
   font-family: var(--font-mono);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -587,6 +591,7 @@ h2 {
 }
 
 .recipe-search-input {
+  appearance: none;
   width: 100%;
   min-width: 0;
   max-width: 100%;
@@ -1290,7 +1295,7 @@ h2 {
   .recipe-search-input {
     min-height: 58px;
     padding: 14px 44px 14px 14px;
-    font-size: 0.92rem;
+    font-size: 16px;
   }
 
   .recipe-search-clear {
