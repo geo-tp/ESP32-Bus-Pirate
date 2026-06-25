@@ -1090,8 +1090,11 @@ html[data-theme="light"] .brand-signature-logo {
     text-align: center;
   }
 
-  .brand-signature-logo {
+  .brand-signature-link {
     justify-self: center;
+  }
+
+  .brand-signature-logo {
     width: clamp(150px, 42vw, 210px);
   }
 
