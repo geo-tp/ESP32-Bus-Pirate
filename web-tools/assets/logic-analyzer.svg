@@ -29,12 +29,12 @@
   <g font-family="Menlo, Courier New, monospace" font-size="9" font-weight="700">
     <text x="38" y="139" fill="#8ab4ff">D0</text>
     <text x="38" y="169" fill="#00ffcc">D1</text>
-    <text x="38" y="199" fill="#ffd166">D2</text>
+    <text x="38" y="201" fill="#ffd166">D2</text>
   </g>
   <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-    <path d="M64 142h40v-16h46v16h36v-16h68v16h54v-16h88v16h92" stroke="#8ab4ff"/>
-    <path d="M64 172h70v16h48v-16h82v16h72v-16h50v16h62" stroke="#00ffcc"/>
-    <path d="M64 202h28v-16h90v16h44v-16h112v16h38v-16h72" stroke="#ffd166"/>
+    <path d="M64 142h40v-12h46v12h36v-12h68v12h54v-12h88v12h92" stroke="#8ab4ff"/>
+    <path d="M64 172h70v12h48v-12h82v12h72v-12h50v12h62" stroke="#00ffcc"/>
+    <path d="M64 204h28v-12h90v12h44v-12h112v12h38v-12h72" stroke="#ffd166"/>
   </g>
 
   <rect x="28" y="238" width="464" height="30" rx="6" fill="#101412" stroke="#333"/>
