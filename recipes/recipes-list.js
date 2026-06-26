@@ -3454,6 +3454,91 @@ window.BIT_PIRATE_RECIPES = [
     "takeaway": "Move .ir, .sub and other small workflow files without a separate filesystem tool."
   },
   {
+    "title": "Open Python Scripting Lab",
+    "slug": "open-python-scripting-lab",
+    "description": "Run browser Python with Pyodide and Web Serial to control ESP32 Bit Pirate without installing Python locally.",
+    "date": "2026-06-26",
+    "author": "Geo",
+    "difficulty": "Beginner",
+    "type": "Recipe",
+    "icon": "🐍",
+    "mark": "LAB",
+    "protocols": [
+      "Python",
+      "Web Serial",
+      "Serial CLI"
+    ],
+    "targets": [
+      "ESP32 Bit Pirate",
+      "Browser"
+    ],
+    "workflows": [
+      "Automation",
+      "Scripting",
+      "Browser tools"
+    ],
+    "tools": [
+      "Python Scripting Lab",
+      "Web Tools"
+    ],
+    "tags": [
+      "python",
+      "python-lab",
+      "web-serial",
+      "browser-tools",
+      "automation",
+      "scripting",
+      "open-python-scripting-lab"
+    ],
+    "cover": "assets/visual-browser-tools.svg",
+    "time": "3 min",
+    "hardware": "ESP32 Bit Pirate connected over USB",
+    "takeaway": "Run a small Python workflow in the browser before installing or maintaining a local Python setup."
+  },
+  {
+    "title": "Run an I2C scan from Python Scripting Lab",
+    "slug": "run-i2c-scan-python-lab",
+    "description": "Use Python Scripting Lab to switch ESP32 Bit Pirate into I2C mode and run a repeatable browser-driven scan.",
+    "date": "2026-06-26",
+    "author": "Geo",
+    "difficulty": "Beginner",
+    "type": "Recipe",
+    "icon": "🐍",
+    "mark": "PY I2C",
+    "protocols": [
+      "I2C",
+      "Python",
+      "Web Serial"
+    ],
+    "targets": [
+      "I2C device",
+      "Sensor",
+      "ESP32 Bit Pirate"
+    ],
+    "workflows": [
+      "Identify",
+      "Automation",
+      "Scripting"
+    ],
+    "tools": [
+      "Python Scripting Lab",
+      "Web Tools"
+    ],
+    "tags": [
+      "python",
+      "python-lab",
+      "i2c",
+      "scan",
+      "web-serial",
+      "automation",
+      "run-i2c-scan-python-lab"
+    ],
+    "cover": "assets/visual-i2c.svg",
+    "time": "5 min",
+    "hardware": "I2C target, jumper wires, ESP32 Bit Pirate over USB",
+    "takeaway": "Turn the familiar I2C scan into a browser Python workflow you can edit, save and repeat."
+  },
+  {
     "title": "Use Python automation over serial",
     "slug": "use-python-automation-over-serial",
     "description": "Use serial automation from a Python script when a CLI workflow becomes repetitive or needs to run from a computer.",

@@ -190,6 +190,9 @@
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-modbus-tcp-session/</loc>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-python-scripting-lab/</loc>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/</loc>
   </url>
   <url>
@@ -266,6 +269,9 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/run-i2c-health-diagnostics/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/run-i2c-scan-python-lab/</loc>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/run-passive-wifi-sniffer-session/</loc>
