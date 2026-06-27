@@ -1,26 +1,152 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
-  <title id="title">Flash your board</title>
-  <desc id="desc">A browser sends ESP32 Bit Pirate firmware to a connected board.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-labelledby="title desc">
+  <title id="title">Flash ESP32 Bit Pirate firmware from the browser</title>
+  <desc id="desc">A responsive dark SVG hero illustration showing a browser web flasher sending firmware to an ESP32 board through USB.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
-    <radialGradient id="cyanGlow" cx="16%" cy="20%" r="64%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".13"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
-    <radialGradient id="greenGlow" cx="88%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
-    <filter id="glow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171918"/>
+      <stop offset="0.52" stop-color="#0f1312"/>
+      <stop offset="1" stop-color="#070a09"/>
+    </linearGradient>
+    <radialGradient id="leftGlow" cx="26%" cy="32%" r="62%">
+      <stop offset="0" stop-color="#00ffcc" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#00ffcc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rightGlow" cx="74%" cy="62%" r="58%">
+      <stop offset="0" stop-color="#39ff80" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#39ff80" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="46%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#17201d"/>
+      <stop offset="1" stop-color="#080b0a"/>
+    </linearGradient>
+    <linearGradient id="board" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#12231e"/>
+      <stop offset=".55" stop-color="#0b1412"/>
+      <stop offset="1" stop-color="#050807"/>
+    </linearGradient>
+    <linearGradient id="module" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#242826"/>
+      <stop offset="1" stop-color="#101312"/>
+    </linearGradient>
+    <linearGradient id="greenStroke" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00ffcc"/>
+      <stop offset="1" stop-color="#5dff78"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe7a1"/>
+      <stop offset="1" stop-color="#b8873b"/>
+    </linearGradient>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="deepShadow" x="-28%" y="-30%" width="160%" height="172%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#000" flood-opacity=".48"/>
+    </filter>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.6" fill="#72ffad" opacity=".22"/>
+    </pattern>
+    <clipPath id="roundFrame"><rect width="1200" height="675" rx="24"/></clipPath>
   </defs>
-  <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
-  <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
-  <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
-  <g stroke="#22312d" stroke-width="1.4" opacity=".72"><path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/><path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/></g>
-  <rect x="112" y="116" width="444" height="370" rx="24" fill="#070908" stroke="#2f3a36" stroke-width="3"/>
-  <rect x="112" y="116" width="444" height="56" rx="24" fill="#141917"/>
-  <circle cx="150" cy="144" r="8" fill="#00ffcc"/><circle cx="180" cy="144" r="8" fill="#00ff70"/><circle cx="210" cy="144" r="8" fill="#ffc257"/>
-  <text x="154" y="230" fill="#d8fff2" font-family="Menlo, Courier New, monospace" font-size="29" font-weight="700">ESP32 Bit Pirate</text>
-  <rect x="154" y="270" width="260" height="42" rx="10" fill="#132722" stroke="#00ffcc" stroke-width="2"/>
-  <text x="181" y="298" fill="#00ffcc" font-family="Menlo, Courier New, monospace" font-size="21" font-weight="700">FLASH FIRMWARE</text>
-  <path d="M154 360h296" stroke="#2f3a36" stroke-width="2"/><path d="M154 394h208" stroke="#b8ffb8" stroke-width="7" stroke-linecap="round"/><path d="M154 424h138" stroke="#52635d" stroke-width="7" stroke-linecap="round"/>
-  <path d="M586 302h132" stroke="#00ffcc" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/><path d="M690 258l58 44-58 44" fill="none" stroke="#00ffcc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
-  <rect x="774" y="205" width="166" height="194" rx="22" fill="#11161b" stroke="#8ab4ff77" stroke-width="3"/>
-  <rect x="820" y="245" width="74" height="106" rx="10" fill="#0b0d0c" stroke="#8ab4ff" stroke-width="5"/>
-  <path d="M805 270h15m-15 32h15m-15 32h15m74-64h15m-15 32h15m-15 32h15M842 228v17m30-17v17m-30 106v17m30-17v17" stroke="#8ab4ff" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="857" cy="298" r="8" fill="#00ff70" filter="url(#glow)"/>
+
+  <g clip-path="url(#roundFrame)">
+    <rect width="1200" height="675" fill="url(#bg)"/>
+    <rect width="1200" height="675" fill="url(#leftGlow)"/>
+    <rect width="1200" height="675" fill="url(#rightGlow)"/>
+    <rect width="1200" height="675" fill="url(#centerGlow)"/>
+
+    <!-- Extended decorative layer: useful when the hero is cropped on wide, square, or mobile layouts. -->
+    <g opacity=".50" fill="url(#dots)">
+      <rect x="-60" y="380" width="310" height="255" transform="rotate(-9 95 507)"/>
+      <rect x="930" y="44" width="355" height="260" transform="rotate(7 1107 174)"/>
+    </g>
+    <g fill="none" stroke-linecap="round">
+      <g stroke="#26352f" stroke-width="1.35" opacity=".72">
+        <path d="M54 126h184l52 50h154M1116 114H916l-54 54H704"/>
+        <path d="M86 540h188l54-48h120M1120 528H930l-54-44H744"/>
+        <path d="M104 246h178m620 0h212M72 338h210m650 0h214M142 444h190m558 0h202"/>
+        <path d="M214 82v92m142 26v76m588-156v92m106 96v92M270 572v-112m704 94v-106"/>
+      </g>
+      <g stroke="#25ff75" stroke-width="3" opacity=".42">
+        <path d="M30 282h116l42-42h88"/>
+        <path d="M1032 392h80l42-42h56"/>
+        <path d="M154 612h78l46-46h80"/>
+        <path d="M874 78h110l46-46h116"/>
+      </g>
+    </g>
+
+    <!-- Central crop-safe composition. -->
+    <g filter="url(#deepShadow)">
+      <!-- Browser flasher card -->
+      <g transform="translate(215 204)">
+        <rect width="340" height="286" rx="26" fill="url(#panel)" stroke="#31433c" stroke-width="2.4"/>
+        <rect width="340" height="58" rx="26" fill="#16201c"/>
+        <path d="M0 34c0 13 11 24 24 24h292c13 0 24-11 24-24v24H0Z" fill="#16201c"/>
+        <circle cx="38" cy="30" r="7" fill="#00ffcc" opacity=".95"/>
+        <circle cx="66" cy="30" r="7" fill="#4dff72" opacity=".95"/>
+        <circle cx="94" cy="30" r="7" fill="#ffc96b" opacity=".92"/>
+        <text x="40" y="108" fill="#e2fff6" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">ESP32 Bit Pirate</text>
+        <text x="40" y="140" fill="#8fa79f" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600">Browser firmware flasher</text>
+        <rect x="40" y="172" width="216" height="42" rx="12" fill="#10251f" stroke="#00ffcc" stroke-width="2"/>
+        <text x="68" y="199" fill="#00ffcc" font-family="Menlo, Consolas, Courier New, monospace" font-size="18" font-weight="700">FLASH STARTED</text>
+        <path d="M40 244h260" stroke="#2d3935" stroke-width="2"/>
+        <path d="M40 262h188" stroke="#a9ffb7" stroke-width="7" stroke-linecap="round"/>
+      </g>
+
+      <!-- ESP32 target board, replacing the old purple/blue chip look. -->
+      <g transform="translate(649 208) rotate(-4 170 124)">
+        <rect x="0" y="0" width="336" height="246" rx="28" fill="url(#board)" stroke="#285449" stroke-width="3"/>
+        <rect x="16" y="16" width="304" height="214" rx="18" fill="#09110f" opacity=".46"/>
+
+        <!-- Mounting holes -->
+        <circle cx="34" cy="34" r="12" fill="none" stroke="#c99d56" stroke-width="4" opacity=".82"/>
+        <circle cx="302" cy="34" r="12" fill="none" stroke="#c99d56" stroke-width="4" opacity=".82"/>
+        <circle cx="34" cy="212" r="12" fill="none" stroke="#c99d56" stroke-width="4" opacity=".82"/>
+        <circle cx="302" cy="212" r="12" fill="none" stroke="#c99d56" stroke-width="4" opacity=".82"/>
+
+        <!-- Pin rows -->
+        <g fill="url(#gold)" opacity=".95">
+          <circle cx="62" cy="31" r="4.2"/><circle cx="82" cy="31" r="4.2"/><circle cx="102" cy="31" r="4.2"/><circle cx="122" cy="31" r="4.2"/><circle cx="142" cy="31" r="4.2"/><circle cx="162" cy="31" r="4.2"/><circle cx="182" cy="31" r="4.2"/><circle cx="202" cy="31" r="4.2"/><circle cx="222" cy="31" r="4.2"/><circle cx="242" cy="31" r="4.2"/><circle cx="262" cy="31" r="4.2"/>
+          <circle cx="62" cy="215" r="4.2"/><circle cx="82" cy="215" r="4.2"/><circle cx="102" cy="215" r="4.2"/><circle cx="122" cy="215" r="4.2"/><circle cx="142" cy="215" r="4.2"/><circle cx="162" cy="215" r="4.2"/><circle cx="182" cy="215" r="4.2"/><circle cx="202" cy="215" r="4.2"/><circle cx="222" cy="215" r="4.2"/><circle cx="242" cy="215" r="4.2"/><circle cx="262" cy="215" r="4.2"/>
+        </g>
+
+        <!-- Traces -->
+        <g fill="none" stroke="#3dff86" stroke-width="2.2" stroke-linecap="round" opacity=".72">
+          <path d="M78 62h44v27h31"/>
+          <path d="M78 185h42v-31h35"/>
+          <path d="M216 89h36v-30h34"/>
+          <path d="M216 154h42v33h30"/>
+          <path d="M166 62v24"/>
+          <path d="M188 164v26"/>
+        </g>
+
+        <!-- ESP32 module/shield -->
+        <rect x="116" y="66" width="106" height="98" rx="13" fill="url(#module)" stroke="#4d5c57" stroke-width="2.2"/>
+        <rect x="131" y="82" width="76" height="16" rx="4" fill="#313835" opacity=".7"/>
+        <rect x="132" y="110" width="74" height="38" rx="7" fill="#080a09" stroke="#28302d" stroke-width="1.4"/>
+        <text x="169" y="134" text-anchor="middle" fill="#b8c7c2" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">ESP32</text>
+        <g stroke="#9aa9a4" stroke-width="2" stroke-linecap="round" opacity=".45">
+          <path d="M126 72h86"/><path d="M126 158h86"/>
+        </g>
+
+        <!-- USB-C and small components -->
+        <rect x="-8" y="98" width="42" height="50" rx="11" fill="#1d2220" stroke="#74807b" stroke-width="2.4"/>
+        <rect x="0" y="112" width="24" height="22" rx="6" fill="#050606" stroke="#b0bab5" stroke-width="1.7"/>
+        <rect x="246" y="84" width="24" height="14" rx="3" fill="#202a25" stroke="#65736e" stroke-width="1.4"/>
+        <rect x="250" y="120" width="38" height="18" rx="5" fill="#1b2f28" stroke="#3dff86" stroke-width="1.6" opacity=".86"/>
+        <circle cx="286" cy="164" r="6" fill="#39ff80" filter="url(#softGlow)"/>
+        <circle cx="260" cy="164" r="4.4" fill="#00ffcc" opacity=".75"/>
+      </g>
+    </g>
+
+    <!-- USB / flash flow -->
+    <g filter="url(#softGlow)">
+      <path d="M557 350 C595 338 625 338 661 350" fill="none" stroke="url(#greenStroke)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M643 317l42 35-46 31" fill="none" stroke="url(#greenStroke)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
 </svg>

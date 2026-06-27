@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ESP32 Bit Pirate hardware: supported ESP32-S3 boards, ESP32-C5 Bus Expander, Dock, level translation, module adapters and open hardware files.">
+  <meta name="keywords" content="ESP32 Bit Pirate hardware, ESP32-S3 supported boards, ESP32-C5 Bus Expander, Bit Pirate Hardware, ESP32 Bit Pirate Dock, Bus Pirate adapters, CC1101 adapter, NRF24 adapter, CAN adapter, open source hardware, KiCad, gerbers, BOM, 1.8V 3.3V 5V level translation, embedded debugging board, ESP32 hardware workbench">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+  <meta name="theme-color" content="#121212">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="ESP32 Bit Pirate">
+  <meta property="og:title" content="ESP32 Bit Pirate Hardware Ecosystem">
+  <meta property="og:description" content="Choose supported ESP32-S3 boards, ESP32-C5 Bus Expander, Dock hardware, level translation and module adapters for ESP32 Bit Pirate.">
+  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/">
+  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/assets/esp32-bit-pirate-hardware-og.png">
+  <meta property="og:image:alt" content="ESP32 Bit Pirate hardware ecosystem with supported boards, Bit Pirate Hardware and C5 Bus Expander">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ESP32 Bit Pirate Hardware Ecosystem">
+  <meta name="twitter:description" content="Supported ESP32-S3 boards, ESP32-C5 Bus Expander, Dock hardware, level translation and adapters for ESP32 Bit Pirate.">
+  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/assets/esp32-bit-pirate-hardware-og.png">
+  <meta name="twitter:image:alt" content="ESP32 Bit Pirate hardware ecosystem with supported boards, Bit Pirate Hardware and C5 Bus Expander">
+  <meta name="google-site-verification" content="ZRzOB9tX2XsRJbgvgSmH0x4BufDJDpYcfKFn0CZdifA">
+  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/">
+  <title>ESP32 Bit Pirate Hardware | Supported Boards, Bit Pirate Hardware &amp; C5 Expander</title>
+  <link rel="stylesheet" href="../web-tools/styles/main.css?v=20260626-footer">
+  <script defer src="../assets/theme-toggle.js?v=20260624-light18"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "ESP32 Bit Pirate Hardware Ecosystem",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/",
+        "description": "Supported ESP32-S3 boards, ESP32-C5 Bus Expander and Bit Pirate Hardware for the ESP32 Bit Pirate embedded debugging ecosystem.",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/assets/esp32-bit-pirate-dock-adapter-boards-photo.webp",
+          "width": 800,
+          "height": 602
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "ESP32 Bit Pirate",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "ESP32 Bit Pirate",
+            "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Hardware",
+            "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/"
+          }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "name": "ESP32 Bit Pirate hardware repositories",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "ESP32 Bit Pirate firmware and supported boards",
+            "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "ESP32 Bus Expander",
+            "url": "https://github.com/geo-tp/ESP32-Bus-Expander"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Bit Pirate Hardware - Dock and module adapters",
+            "url": "https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which board should I start with?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Start with an ESP32-S3 DevKit for the most GPIO and the simplest bench wiring, or use a supported M5Stack or LILYGO board when you want an integrated screen, battery or enclosure."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does the ESP32-C5 Bus Expander add?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The ESP32-C5 Bus Expander connects over UART and acts as a radio coprocessor for features such as 5 GHz Wi-Fi, with future room for 802.15.4 radio protocols."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Bit Pirate Hardware for?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bit Pirate Hardware covers the open-source Dock carrier board and supported module adapters. The Dock adds selectable 1.8 V, 3.3 V and 5 V target-side translation, adapter-friendly connectors and build files such as KiCad sources, gerbers and BOM."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+  <link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+  <style>
+    body.hardware-home {
+      --hardware-asset-bg: linear-gradient(145deg, rgba(8, 13, 12, 0.94), rgba(18, 27, 24, 0.94));
+      --hardware-asset-border: #27312b;
+      background:
+        radial-gradient(circle at 50% 100%, rgba(138, 180, 255, 0.08), transparent 32rem),
+        var(--page-bg);
+    }
+
+    .hardware-home .wrap {
+      width: min(1120px, calc(100% - 24px));
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 10px;
+    }
+
+    .section-title h2 {
+      margin-bottom: 0;
+    }
+
+    .eyebrow-mark {
+      color: var(--cyan);
+    }
+
+    main.wrap > section {
+      margin-top: clamp(18px, 2.8vw, 32px);
+    }
+
+    .hardware-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(300px, 0.96fr);
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 12px;
+    }
+
+    body.hardware-home .hero::before,
+    body.hardware-home .hero::after {
+      content: none;
+    }
+
+    .hardware-hero-copy,
+    .hardware-hero-visual,
+    .repo-card,
+    .hardware-panel,
+    .board-table-card,
+    .faq-grid article {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+      box-shadow: inset 0 0 5px #000;
+    }
+
+    .hardware-hero-copy {
+      display: flex;
+      min-height: 420px;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(22px, 4vw, 38px);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hardware-hero-copy::before {
+      content: none;
+    }
+
+    .hardware-hero-copy h1 {
+      max-width: 760px;
+      margin-bottom: 12px;
+      color: #f2fff8;
+      font-size: clamp(2rem, 4vw, 4.1rem);
+      letter-spacing: 0;
+      line-height: 0.98;
+    }
+
+    .hardware-hero-copy h1 span {
+      color: var(--green);
+    }
+
+    .hardware-lead {
+      max-width: 720px;
+      color: #d8ddd8;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions,
+    .card-actions,
+    .inline-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .hero-actions .button,
+    .card-actions .button,
+    .inline-actions .button {
+      gap: 8px;
+      margin-top: 0;
+    }
+
+    .button-icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.9;
+    }
+
+    .hardware-hero-visual {
+      display: grid;
+      min-height: 420px;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
+      align-content: stretch;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .hero-image-link,
+    .image-link {
+      display: block;
+      border-radius: var(--radius);
+      text-decoration: none;
+    }
+
+    .hero-image-link {
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .hardware-image,
+    .repo-image,
+    .gallery-image {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #181818;
+      object-fit: cover;
+      box-shadow: inset 0 0 5px #000;
+      box-sizing: border-box;
+    }
+
+    .hardware-image.is-transparent,
+    .adapter-card img {
+      background: var(--hardware-asset-bg);
+      border-color: var(--hardware-asset-border);
+      box-shadow: none;
+    }
+
+    .hardware-hero-visual .hardware-image {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hardware-hero-visual .dock-hero-image {
+      position: relative;
+      z-index: 2;
+      padding: clamp(8px, 1.8vw, 14px);
+      object-fit: contain;
+    }
+
+    html[data-theme="dark"] .hardware-hero-visual > .hero-image-link:nth-child(2) {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    html[data-theme="dark"] .hardware-hero-visual .dock-hero-image {
+      background:
+        radial-gradient(ellipse at 50% 36%, rgba(165, 165, 165, 0.24) 0%, rgba(82, 82, 82, 0.24) 38%, transparent 70%),
+        radial-gradient(ellipse at 52% 84%, rgba(29, 29, 29, 0.045) 0%, rgba(92, 92, 92, 0.075) 30%, transparent 60%),
+        linear-gradient(145deg, #1d1d1d 0%, #222222 100%, #151515 100%);
+      filter: brightness(1);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.055),
+        inset 0 -26px 44px rgba(0, 0, 0, 0.30);
+    }
+    
+    html[data-theme="dark"] .hardware-hero-visual > .hero-image-link:nth-child(2)::before,
+    html[data-theme="dark"] .hardware-hero-visual > .hero-image-link:nth-child(2)::after {
+      position: absolute;
+      right: 8%;
+      left: 8%;
+      z-index: 1;
+      content: "";
+      pointer-events: none;
+    }
+
+    html[data-theme="dark"] .hardware-hero-visual > .hero-image-link:nth-child(2)::before {
+      top: 10%;
+      height: 42%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(104, 189, 214, 0.22), transparent 68%);
+      filter: blur(18px);
+    }
+
+    html[data-theme="dark"] .hardware-hero-visual > .hero-image-link:nth-child(2)::after {
+      bottom: 11%;
+      height: 16%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.72), transparent 68%);
+      filter: blur(12px);
+    }
+
+    .hardware-hero-visual > .hero-image-link:first-child {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    .hardware-hero-visual .hero-banner {
+      height: auto;
+      aspect-ratio: auto;
+      object-fit: contain;
+      object-position: center;
+      padding: clamp(8px, 1.4vw, 12px);
+      background: rgb(20, 24, 20);
+      box-sizing: border-box;
+    }
+
+    .hero-split {
+      display: grid;
+      min-height: 0;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .hero-split .hardware-image {
+      height: 100%;
+      min-height: 210px;
+    }
+
+    .repo-grid,
+    .hardware-grid,
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .article-section,
+    .hardware-notes {
+      margin-top: clamp(18px, 3vw, 34px);
+    }
+
+    .article-card {
+      padding: clamp(18px, 3vw, 26px);
+    }
+
+    .article-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      gap: clamp(18px, 4vw, 34px);
+      align-items: center;
+    }
+
+    .article-copy {
+      max-width: 760px;
+    }
+
+    .article-copy h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.55rem, 3vw, 2.45rem);
+      letter-spacing: -0.045em;
+      line-height: 1.08;
+    }
+
+    .article-copy h3,
+    .adapter-showcase h3 {
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: var(--green-dim);
+      font-size: 1.02rem;
+    }
+
+    .article-copy p + p {
+      margin-top: 10px;
+    }
+
+    .article-visual {
+      display: grid;
+      gap: 12px;
+    }
+
+    .visual-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .visual-stack .hardware-image {
+      min-height: 180px;
+      object-fit: cover;
+    }
+
+    .adapter-showcase {
+      margin-top: clamp(18px, 3vw, 28px);
+      padding-top: clamp(16px, 2.5vw, 22px);
+      border-top: 1px solid #27312b;
+    }
+
+    .adapter-showcase > p {
+      max-width: 860px;
+      color: #d8ddd8;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .adapter-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .adapter-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid #27312b;
+      border-radius: var(--radius);
+      background: #101412;
+    }
+
+    .adapter-card img {
+      display: block;
+      width: 100%;
+      height: clamp(132px, 15vw, 176px);
+      padding: 8px;
+      border-bottom: 1px solid var(--hardware-asset-border);
+      background: var(--hardware-asset-bg);
+      object-fit: contain;
+      box-sizing: border-box;
+    }
+
+    .adapter-card p {
+      padding: 9px 10px 11px;
+      color: #d8ddd8;
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .pcbway-credit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 640px;
+      margin-top: 14px;
+      padding: 10px 12px;
+      border: 1px solid #27312b;
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .pcbway-credit p {
+      margin: 0;
+      color: #d8ddd8;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .pcbway-logo-link {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      padding: 5px 8px;
+      border-radius: 10px;
+      background: #fff;
+      text-decoration: none;
+    }
+
+    .pcbway-logo-link img {
+      display: block;
+      width: 98px;
+      height: auto;
+    }
+
+    .hardware-grid.two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .repo-card {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .repo-card:hover,
+    .repo-card:focus-within,
+    .hardware-panel:not(.article-card):hover {
+      border-color: #00ffcc88;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22), inset 0 0 5px #000;
+    }
+
+    .repo-card-body,
+    .hardware-panel {
+      padding: 16px;
+    }
+
+    .hardware-panel.article-card {
+      padding: clamp(18px, 3vw, 26px);
+    }
+
+    .repo-card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .repo-card h2,
+    .hardware-panel h2,
+    .hardware-panel h3,
+    .board-table-card h2 {
+      color: var(--green-dim);
+    }
+
+    .repo-card p,
+    .hardware-panel p,
+    .board-table-card p,
+    .board-table td,
+    .board-table th,
+    .small-note {
+      color: #d8ddd8;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .repo-image {
+      height: 190px;
+      border-width: 0 0 1px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .hardware-image.is-contain,
+    .repo-image.is-contain,
+    .gallery-image.is-contain {
+      object-fit: contain;
+      padding: 10px;
+      background: #0b0d0c;
+      box-sizing: border-box;
+    }
+
+    .dock-adapters-photo {
+      background: #0b0d0c;
+      object-position: center;
+    }
+
+    .chip-list,
+    .repo-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      list-style: none;
+    }
+
+    .chip-list li,
+    .repo-facts li,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 8px;
+      border: 1px solid #2f3a2f;
+      border-radius: var(--radius);
+      background: #111;
+      color: #b8ffb8;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .repo-facts {
+      margin-top: auto;
+    }
+
+    .status-pill {
+      margin-bottom: 10px;
+      color: var(--cyan);
+    }
+
+    .section-kicker {
+      margin-bottom: 8px;
+    }
+
+    .panel-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+      padding-left: 20px;
+      color: #d8ddd8;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .board-table-card {
+      padding: clamp(18px, 3vw, 26px);
+      overflow: hidden;
+    }
+
+    .table-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #0e1110;
+    }
+
+    .board-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    .board-table th,
+    .board-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #252d29;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .board-table th {
+      color: #d8fff2;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .board-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .board-table strong {
+      color: #f2fff8;
+    }
+
+    .board-photo {
+      display: block;
+      width: 62px;
+      height: 62px;
+      border: 1px solid #2f3a2f;
+      border-radius: var(--radius);
+      background: #fff;
+      object-fit: contain;
+    }
+
+    .board-placeholder {
+      display: grid;
+      width: 62px;
+      height: 62px;
+      place-items: center;
+      border: 1px solid #2f3a2f;
+      border-radius: var(--radius);
+      background: #111;
+      color: var(--cyan);
+      font-weight: 900;
+    }
+
+    .gallery-card {
+      min-width: 0;
+    }
+
+    .gallery-card p {
+      margin-top: 8px;
+      color: #d8ddd8;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .repo-card a:not(.button),
+    .hardware-panel a:not(.button),
+    .board-table-card a:not(.button) {
+      color: #b8ffb8;
+      font-weight: 700;
+      text-decoration-color: #00ffcc88;
+      text-underline-offset: 3px;
+    }
+
+    .repo-card a:not(.button):hover,
+    .hardware-panel a:not(.button):hover,
+    .board-table-card a:not(.button):hover {
+      color: var(--cyan);
+    }
+
+    .adapter-showcase a[href*="buspirate.com"] {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.08rem 0.42rem;
+      border: 1px solid rgba(0, 255, 204, 0.32);
+      border-radius: 999px;
+      background: rgba(0, 255, 204, 0.08);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .adapter-showcase a[href*="buspirate.com"]:hover {
+      border-color: rgba(0, 255, 204, 0.56);
+      background: rgba(0, 255, 204, 0.14);
+    }
+
+    .faq-grid {
+      margin-top: 12px;
+    }
+
+    .source-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    html[data-theme="light"] body.hardware-home {
+      --hardware-asset-bg: linear-gradient(145deg, #ffffff, #eef4f1);
+      --hardware-asset-border: #d9e3dd;
+      background: #f6f8f6;
+    }
+
+    html[data-theme="light"] .hardware-hero-copy,
+    html[data-theme="light"] .hardware-hero-visual,
+    html[data-theme="light"] .repo-card,
+    html[data-theme="light"] .hardware-panel,
+    html[data-theme="light"] .board-table-card,
+    html[data-theme="light"] .faq-grid article {
+      background: linear-gradient(145deg, #ffffff, #edf3ef);
+      box-shadow: none;
+    }
+
+    html[data-theme="light"] .hardware-hero-copy h1,
+    html[data-theme="light"] .board-table strong {
+      color: #10261c;
+    }
+
+    html[data-theme="light"] .hardware-lead,
+    html[data-theme="light"] .repo-card p,
+    html[data-theme="light"] .hardware-panel p,
+    html[data-theme="light"] .board-table-card p,
+    html[data-theme="light"] .board-table td,
+    html[data-theme="light"] .small-note,
+    html[data-theme="light"] .panel-list,
+    html[data-theme="light"] .gallery-card p,
+    html[data-theme="light"] .adapter-showcase > p,
+    html[data-theme="light"] .adapter-card p,
+    html[data-theme="light"] .pcbway-credit p {
+      color: #31443b;
+    }
+
+    html[data-theme="light"] .adapter-showcase a[href*="buspirate.com"] {
+      color: #064b39;
+      border-color: #51b998;
+      background: #e6fff5;
+      box-shadow: 0 0 0 3px rgba(0, 156, 118, 0.12);
+      text-decoration: none;
+    }
+
+    html[data-theme="light"] .adapter-showcase a[href*="buspirate.com"]:hover {
+      color: #032e24;
+      border-color: #1d8d72;
+      background: #d7fff0;
+    }
+
+    html[data-theme="light"] .table-wrap,
+    html[data-theme="light"] .chip-list li,
+    html[data-theme="light"] .repo-facts li,
+    html[data-theme="light"] .status-pill,
+    html[data-theme="light"] .board-placeholder,
+    html[data-theme="light"] .adapter-card {
+      background: #ffffff;
+    }
+
+    html[data-theme="light"] .board-table th {
+      color: #183128;
+    }
+
+    html[data-theme="light"] .pcbway-credit {
+      border-color: #d9e3dd;
+      background: #f8fbf9;
+    }
+
+    html[data-theme="light"] .hardware-image.is-contain,
+    html[data-theme="light"] .repo-image.is-contain,
+    html[data-theme="light"] .gallery-image.is-contain {
+      background: #ffffff;
+      border-color: #d9e3dd;
+    }
+
+    html[data-theme="light"] .board-table th,
+    html[data-theme="light"] .board-table td {
+      border-bottom-color: #d9e3dd;
+    }
+
+    .page-hero-top {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page-hero-top > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero-top::after {
+      content: "";
+      position: absolute;
+      top: -104px;
+      right: -128px;
+      z-index: 0;
+      width: min(58vw, 560px);
+      height: 260px;
+      border-radius: 999px;
+      background: radial-gradient(ellipse at 70% 35%, rgba(0, 255, 170, 0.12), rgba(0, 255, 204, 0.045) 42%, transparent 76%);
+      filter: blur(44px);
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .article-visual {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .article-visual::before {
+      content: "";
+      position: absolute;
+      right: 4%;
+      bottom: -16px;
+      left: 4%;
+      z-index: 0;
+      height: 48%;
+      border-radius: 999px;
+      background: radial-gradient(ellipse at center, rgba(126, 155, 190, 0.2), rgba(70, 145, 210, 0.1) 44%, transparent 74%);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+    .article-visual .image-link,
+    .article-visual .hardware-image {
+      position: relative;
+      z-index: 1;
+    }
+
+    .article-visual .hardware-image {
+      box-shadow: 0 18px 34px rgba(83, 106, 136, 0.16), 0 0 28px rgba(71, 168, 255, 0.08), inset 0 0 5px #000;
+    }
+
+    html[data-theme="light"] .article-visual::before {
+      background: radial-gradient(ellipse at center, rgba(132, 156, 182, 0.24), rgba(92, 154, 210, 0.12) 42%, transparent 74%);
+      opacity: 0.85;
+    }
+
+    html[data-theme="light"] .hardware-hero-visual > .hero-image-link:first-child {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+
+    html[data-theme="light"] .hardware-hero-visual > .hero-image-link:first-child::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(255, 255, 255, 0.18);
+      pointer-events: none;
+    }
+
+    html[data-theme="light"] .hardware-hero-visual .hero-banner {
+      background: #18241f;
+      filter: brightness(1.08) saturate(0.96);
+    }
+
+    @media (max-width: 900px) {
+      .hardware-hero,
+      .article-layout,
+      .repo-grid,
+      .hardware-grid,
+      .hardware-grid.two-col,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hardware-hero-visual {
+        min-height: 560px;
+        grid-template-rows: auto minmax(0, 1fr);
+      }
+
+      .adapter-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hardware-hero-copy {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hardware-home .wrap {
+        width: min(100% - 20px, 1120px);
+      }
+
+      .hero-split,
+      .adapter-gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-split .hardware-image {
+        min-height: 0;
+      }
+
+      .table-heading {
+        display: block;
+      }
+
+      .table-heading .status-pill {
+        margin-top: 10px;
+      }
+
+      .hero-actions,
+      .card-actions,
+      .inline-actions {
+        flex-direction: column;
+      }
+
+      .pcbway-credit {
+        align-items: flex-start;
+      }
+
+      .hero-actions .button,
+      .card-actions .button,
+      .inline-actions .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="hardware-home">
+  <main class="wrap">
+    <header class="hero">
+      <div class="page-hero-top">
+        <a class="brand" href="../" aria-label="ESP32 Bit Pirate home">
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span>ESP32 Bit Pirate</span>
+        </a>
+        <nav aria-label="Primary navigation" class="page-top-nav">
+          <a href="../#ecosystem"><svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Ecosystem</a>
+          <a href="../web-tools/"><svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"></rect><path d="M3 8h18M7 6h.01M10 6h.01"></path></svg>Web tools</a>
+          <a href="../recipes/"><svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h11a3 3 0 0 1 3 3v12H8a3 3 0 0 0-3 3z"></path><path d="M5 4.5v18M8 9h7M8 13h5"></path></svg>Recipes</a>
+          <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener"><svg class="page-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+        </nav>
+      </div>
+
+      <section class="hardware-hero" aria-labelledby="hardware-title">
+        <div class="hardware-hero-copy">
+          <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true">Hardware</span> boards · adapters · expander</p>
+          <h1 id="hardware-title">Build a better <span>bench</span> around Bit Pirate.</h1>
+          <p class="hardware-lead">Explore the ESP32 Bit Pirate hardware lineup: supported ESP32-S3 targets, Dock board, plug-in adapters for common modules such as CC1101, NRF24, CAN and serial interfaces, selectable target-side logic levels from 1.8V to 5V, and optional radio coprocessors such as ESP32-C5 for extended 5 GHz Wi-Fi experiments. This section helps you choose the right board and expansion path depending on whether you need compact standalone use, reliable bench wiring, radio analysis, bus debugging, or cleaner connections to external hardware.</p>
+          <div class="hero-actions">
+            <a class="button" href="#dock"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"></rect><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path></svg>Bit Pirate Hardware</a>
+            <a class="button secondary-button" href="#supported-boards"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="13" rx="2"></rect><path d="M8 9h8M8 13h5M7 21h10"></path></svg>Supported boards</a>
+          </div>
+        </div>
+        <aside class="hardware-hero-visual" aria-label="ESP32 Bit Pirate hardware preview">
+          <a class="hero-image-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">
+            <img class="hardware-image hero-banner" src="assets/esp32-bit-pirate-firmware-protocols-banner.webp" alt="ESP32 Bit Pirate firmware banner showing supported protocol families" width="816" height="179" loading="eager" decoding="async">
+          </a>
+          <a class="hero-image-link" href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener">
+            <img class="hardware-image dock-hero-image is-transparent" src="assets/esp32-bit-pirate-dock-render-front.webp" alt="Front render of the Bit Pirate Hardware Dock carrier board for ESP32-S3 DevKit" width="900" height="800" loading="eager" decoding="async" fetchpriority="high">
+          </a>
+        </aside>
+      </section>
+    </header>
+
+    <section id="c5-expander" class="article-section" aria-labelledby="c5-expander-title">
+      <div class="section-title section-kicker">
+        <svg class="section-title-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a8 8 0 0 1 16 0"></path><path d="M8 11a4 4 0 0 1 8 0"></path><path d="M12 11v5"></path><circle cx="12" cy="18" r="1.5"></circle></svg>
+        <h2 id="c5-expander-title">ESP32-C5 Bus Expander</h2>
+      </div>
+      <article class="hardware-panel article-card">
+        <div class="article-layout">
+          <div class="article-copy">
+            <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true">C5</span> radio coprocessor</p>
+            <h2>Keep Bit Pirate on the ESP32-S3, add a second chip for radio work.</h2>
+            <p>The ESP32-C5 Bus Expander is the companion firmware for a small ESP32-C5 board connected to the main ESP32 Bit Pirate device. The goal is not to replace the primary board: the S3 still stays the user interface, CLI endpoint, scripting target and web-tool bridge.</p>
+            <p>The C5 side handles radio features that are not available on the usual ESP32-S3 targets, starting with 5 GHz Wi-Fi experiments. The architecture also leaves room for later IEEE 802.15.4 work such as Zigbee, Thread or Matter-oriented protocol exploration.</p>
+            <div class="inline-actions">
+              <a class="button" href="https://github.com/geo-tp/ESP32-Bus-Expander" rel="noopener"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path><path d="M5 5v14h14"></path></svg>Open expander repo</a>
+            </div>
+          </div>
+          <div class="article-visual">
+            <a class="image-link" href="https://github.com/geo-tp/ESP32-Bus-Expander" rel="noopener">
+              <img class="hardware-image" src="assets/m5-cardputer-esp32-c5-bus-expander.webp" alt="M5 Cardputer running ESP32 Bit Pirate with an ESP32-C5 Bus Expander attached" width="600" height="582" loading="lazy" decoding="async">
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="dock" class="article-section" aria-labelledby="dock-title">
+      <div class="section-title section-kicker">
+        <svg class="section-title-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2"></rect><path d="M8 2v4M16 2v4M8 18v4M16 18v4M2 10h2M2 14h2M20 10h2M20 14h2"></path></svg>
+        <h2 id="dock-title">Bit Pirate Hardware</h2>
+      </div>
+      <article class="hardware-panel article-card">
+        <div class="article-layout">
+          <div class="article-copy">
+            <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true">Hardware</span> dock · adapters</p>
+            <h2>A hardware repo for the dock carrier board and module adapters.</h2>
+            <p>Bit Pirate Hardware is the shared open-hardware home for the Dock carrier board and module adapters. Drop in an ESP32-S3 DevKit, flash the Bit Pirate firmware, then use the carrier board and adapters to expose a practical bench interface instead of wiring every target or module directly to raw ESP32 GPIO.</p>
+            <p>The important part is the physical layer: the ESP32-S3 is a 3.3 V device, while real boards often expose 1.8 V flash, 3.3 V sensors or 5 V logic. The Dock board adds selectable target-side translation at 1.8 V, 3.3 V and 5 V so the tool can match the device under test before signals leave the board.</p>
+            <h3>What Bit Pirate Hardware adds</h3>
+            <ul class="panel-list">
+              <li>ESP32-S3-DevKitC-1 style carrier footprint for the reference S3 build and compatible clones with matching headers.</li>
+              <li>Selectable 1.8 V, 3.3 V or 5 V target-side operation for external peripherals.</li>
+              <li>A Bus Pirate-style 10-pin connector so original probe cables, clips and adapter boards can plug into the workflow.</li>
+              <li>Open hardware files: KiCad sources, gerbers, schematic PDF, BOM, 3D models and enclosure assets.</li>
+              <li>Supported module adapters for boards such as CC1101, NRF24, CAN and other bench modules.</li>
+            </ul>
+            <div class="pcbway-credit">
+              <a class="pcbway-logo-link" href="https://www.pcbway.com/" rel="noopener">
+                <img src="assets/pcbway-logo.svg" alt="PCBWay logo" width="128" height="35" loading="lazy">
+              </a>
+              <p>Thanks to PCBWay for helping with the Dock PCB prototype and creation.</p>
+            </div>
+            <div class="inline-actions">
+              <a class="button" href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path><path d="M5 5v14h14"></path></svg>Open hardware repo</a>
+            </div>
+          </div>
+          <div class="article-visual visual-stack">
+            <a class="image-link" href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener">
+              <img class="hardware-image" src="assets/esp32-bit-pirate-dock-pcb-photo.webp" alt="Assembled Bit Pirate Hardware Dock PCB with the 10-pin adapter connector visible" width="800" height="600" loading="lazy" decoding="async">
+            </a>
+            <a class="image-link" href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener">
+              <img class="hardware-image dock-adapters-photo" src="assets/esp32-bit-pirate-dock-adapter-boards-photo.webp" alt="ESP32 Bit Pirate Dock with plug-in adapter boards for Ethernet, NFC, sub-GHz radio and 2.4 GHz modules" width="800" height="602" loading="lazy" decoding="async">
+            </a>
+          </div>
+        </div>
+
+        <div class="adapter-showcase" aria-labelledby="dock-adapter-title">
+          <h3 id="dock-adapter-title">Original Bus Pirate adapters through the 10-pin connector</h3>
+          <p>Bit Pirate Hardware keeps the adapter story visible: the 10-pin connector is there so existing Bus Pirate probe cables and adapter planks can be reused instead of recreating every accessory from scratch. The original Bus Pirate adapter ecosystem is documented at <a href="https://buspirate.com/" rel="noopener">buspirate.com</a>.</p>
+          <div class="adapter-gallery">
+            <figure class="adapter-card">
+              <img class="adapter-asset" src="assets/bus-pirate-10-pin-shrouded-connector.webp" alt="Bus Pirate keyed 10-pin shrouded connector used for adapter compatibility" width="250" height="196" loading="lazy" decoding="async">
+              <p>10-pin connector, the bridge to the adapter ecosystem.</p>
+            </figure>
+            <figure class="adapter-card">
+              <img class="adapter-asset" src="assets/original-bus-pirate-probe-cable-kit.webp" alt="Original Bus Pirate probe cable kit with keyed 10-pin connector, hooks and breadboard pins" width="420" height="280" loading="lazy" decoding="async">
+              <p>Probe cable kit for direct clips, hooks and breadboard pins.</p>
+            </figure>
+            <figure class="adapter-card">
+              <img class="adapter-asset" src="assets/original-bus-pirate-spi-flash-adapters.webp" alt="Original Bus Pirate SPI flash adapter boards with DIP8, SOP8 and WSON8 sockets" width="420" height="327" loading="lazy" decoding="async">
+              <p>SPI flash adapters for DIP8, SOP8 and WSON8 memory work.</p>
+            </figure>
+            <figure class="adapter-card">
+              <img class="adapter-asset" src="assets/original-bus-pirate-i2c-breakout-adapter.webp" alt="Original Bus Pirate I2C adapter for Qwiic, Stemma, Grove and Breakout Garden connectors" width="420" height="321" loading="lazy" decoding="async">
+              <p>I2C breakout adapter for Qwiic, Grove and similar ecosystems.</p>
+            </figure>
+            <figure class="adapter-card">
+              <img class="adapter-asset" src="assets/original-bus-pirate-smart-card-sim-adapter.webp" alt="Original Bus Pirate smart card and SIM adapter connected through the 10-pin header" width="420" height="284" loading="lazy" decoding="async">
+              <p>Smart card and SIM adapter for card-oriented work.</p>
+            </figure>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="supported-boards" class="article-section" aria-labelledby="supported-boards-title">
+      <div class="section-title section-kicker">
+        <svg class="section-title-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="13" rx="2"></rect><path d="M8 9h8M8 13h5M7 21h10"></path></svg>
+        <h2 id="supported-boards-title">Supported ESP32 Bit Pirate boards</h2>
+      </div>
+      <article class="hardware-panel article-card board-table-card">
+        <div class="table-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true">Boards</span> supported devices</p>
+            <p>Here are all boards fully supported by ESP32 Bit Pirate, with different onboard peripherals and features depending on your debugging, flashing, radio, or embedded hardware needs.</p>          
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="board-table" aria-describedby="board-table-note">
+            <thead>
+              <tr>
+                <th scope="col">Device</th>
+                <th scope="col">Image</th>
+                <th scope="col">Hardware notes</th>
+              </tr>
+            </thead>
+            <tbody id="boards-table-body">
+              <tr><td><strong>ESP32 S3 Dev Kit</strong></td><td><img class="board-photo" src="assets/boards/esp32-s3-devkit.webp" alt="ESP32 S3 Dev Kit board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>More than 20 available GPIO, 1 button.</td></tr>
+              <tr><td><strong>LILYGO T-Display</strong></td><td><img class="board-photo" src="assets/boards/lilygo-t-display-s3.webp" alt="LILYGO T-Display S3 board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>13 GPIO, 1 Qwiic connector, screen and 2 buttons.</td></tr>
+              <tr><td><strong>LILYGO T-Embed</strong></td><td><img class="board-photo" src="assets/boards/lilygo-t-embed.webp" alt="LILYGO T-Embed board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>9 GPIO through Grove/Header, screen, encoder, speaker, microphone and SD card.</td></tr>
+              <tr><td><strong>LILYGO T-Embed CC1101</strong></td><td><img class="board-photo" src="assets/boards/lilygo-t-embed-cc1101.webp" alt="LILYGO T-Embed CC1101 board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>4 GPIO through 2x Qwiic, screen, encoder, speaker, microphone, SD card, CC1101, PN532, IR TX/RX and battery.</td></tr>
+              <tr><td><strong>LILYGO T-Embed CC1101 Plus</strong></td><td><img class="board-photo" src="assets/boards/lilygo-t-embed-cc1101.webp" alt="LILYGO T-Embed CC1101 Plus board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>4 GPIO through 2x Qwiic, screen, encoder, speaker, microphone, SD card, CC1101, NRF24, PN532, IR TX/RX and battery.</td></tr>
+              <tr><td><strong>M5 AtomS3 Lite</strong></td><td><img class="board-photo" src="assets/boards/m5-atom-s3-lite.webp" alt="M5 AtomS3 Lite board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>8 GPIO through Grove/Header, IR TX and 1 button.</td></tr>
+              <tr><td><strong>M5 Cardputer</strong></td><td><img class="board-photo" src="assets/boards/m5-cardputer.webp" alt="M5 Cardputer board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>2 GPIO through Grove, screen, keyboard, microphone, speaker, IR TX, SD card, battery and standalone mode.</td></tr>
+              <tr><td><strong>M5 Cardputer ADV</strong></td><td><img class="board-photo" src="assets/boards/m5-cardputer-adv.webp" alt="M5 Cardputer ADV board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>12 GPIO through Grove/Header, screen, keyboard, microphone, speaker, IR TX, SD card, IMU, battery and standalone mode.</td></tr>
+              <tr><td><strong>M5 StampS3</strong></td><td><img class="board-photo" src="assets/boards/m5-stamps3.webp" alt="M5 StampS3 board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>9 GPIO through exposed pins and 1 button.</td></tr>
+              <tr><td><strong>M5 Stick S3</strong></td><td><img class="board-photo" src="assets/boards/m5-sticks3.webp" alt="M5 Stick S3 board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>13 GPIO through Grove/Header, screen, microphone, speaker, IR TX/RX, IMU, 3 buttons and battery.</td></tr>
+              <tr><td><strong>Seeed Studio Xiao S3</strong></td><td><img class="board-photo" src="assets/boards/seeed-studio-xiao-esp32-s3.webp" alt="Seeed Studio Xiao ESP32-S3 board photo" width="200" height="200" loading="lazy" decoding="async"></td><td>9 GPIO through exposed pins and 1 button.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="board-table-note" class="source-note">Other ESP32-S3 based boards can be supported when they have at least 8 MB of flash. The generic S3 DevKit firmware can be flashed onto other ESP32-S3 boards, but pin mapping may differ from your hardware.</p>
+      </article>
+    </section>
+
+    <section class="hardware-notes" aria-labelledby="hardware-faq-title">
+      <div class="section-title section-kicker">
+        <svg class="section-title-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17h.01"></path><path d="M9.1 9a3 3 0 1 1 4.8 2.4c-.9.6-1.4 1.1-1.4 2.1"></path><circle cx="12" cy="12" r="9"></circle></svg>
+        <h2 id="hardware-faq-title">Hardware notes</h2>
+      </div>
+      <div class="faq-grid">
+        <article>
+          <h2>Start simple, then expand.</h2>
+          <p>An ESP32-S3 DevKit is a flexible base you can extend with modules, adapters and wiring. Choose Cardputer, T-Embed or other supported boards when you want a screen, keyboard, battery, enclosure or radio module already integrated.</p>
+        </article>
+        <article>
+          <h2>Voltage still matters.</h2>
+          <p>The ESP32 side is not a magic universal input. Use the Dock board translation path when you need 1.8 V, 3.3 V or 5 V target-side operation, and always verify the selected voltage before wiring external hardware.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p class="site-footer-title">ESP32 Bit Pirate</p>
+      <nav aria-label="Project links">
+        <a href="../">Home</a>
+        <a href="../web-tools/">Web Tools</a>
+        <a href="../recipes/">Recipes</a>
+        <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">GitHub</a>
+      </nav>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const README_URL = "https://raw.githubusercontent.com/geo-tp/ESP32-Bit-Pirate/pioarduino/README.md";
+      const tableBody = document.getElementById("boards-table-body");
+      if (!tableBody || !window.fetch) return;
+
+      const imageMap = new Map([
+        ["s3-devkit_s.jpg", "assets/boards/esp32-s3-devkit.webp"],
+        ["t_displays3_s.jpg", "assets/boards/lilygo-t-display-s3.webp"],
+        ["tembed_s.jpg", "assets/boards/lilygo-t-embed.webp"],
+        ["tembedcc1101_s.jpg", "assets/boards/lilygo-t-embed-cc1101.webp"],
+        ["atom_s.jpg", "assets/boards/m5-atom-s3-lite.webp"],
+        ["cardputer_s.png", "assets/boards/m5-cardputer.webp"],
+        ["cardputer-adv_s.jpg", "assets/boards/m5-cardputer-adv.webp"],
+        ["stamps3_s.jpg", "assets/boards/m5-stamps3.webp"],
+        ["m5sticks3_s.jpg", "assets/boards/m5-sticks3.webp"],
+        ["xiaos3_s.jpg", "assets/boards/seeed-studio-xiao-esp32-s3.webp"]
+      ]);
+
+      const cleanMarkdown = (value) => value
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/\*\*/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const getLocalImage = (repoPath) => {
+        const file = repoPath.split("/").pop();
+        return imageMap.get(file) || "";
+      };
+
+      const makeRow = ({ name, image, imageAlt, description }) => {
+        const tr = document.createElement("tr");
+        const nameTd = document.createElement("td");
+        const strong = document.createElement("strong");
+        strong.textContent = name;
+        nameTd.appendChild(strong);
+
+        const imgTd = document.createElement("td");
+        if (image) {
+          const img = document.createElement("img");
+          img.className = "board-photo";
+          img.src = image;
+          img.alt = imageAlt || `${name} board photo`;
+          img.width = 200;
+          img.height = 200;
+          img.loading = "lazy";
+          imgTd.appendChild(img);
+        } else {
+          const placeholder = document.createElement("span");
+          placeholder.className = "board-placeholder";
+          placeholder.textContent = "S3";
+          placeholder.setAttribute("aria-label", `No local image for ${name}`);
+          imgTd.appendChild(placeholder);
+        }
+
+        const descriptionTd = document.createElement("td");
+        descriptionTd.textContent = description;
+
+        tr.append(nameTd, imgTd, descriptionTd);
+        return tr;
+      };
+
+      fetch(README_URL, { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) throw new Error(`README fetch failed: ${response.status}`);
+          return response.text();
+        })
+        .then((markdown) => {
+          const section = markdown.split(/##\s+Supported Devices/i)[1]?.split(/##\s+/)[0] || "";
+          const rowPattern = /\|\s*\*\*([^*]+)\*\*\s*\|\s*!\[([^\]]*)\]\(([^)]+)\)\s*\|\s*([^|]+?)\s*(?=\|\s*(?:\|\s*)?\*\*|\|\s*-\s*\*\*Other|$)/gms;
+          const rows = [];
+          let match;
+          while ((match = rowPattern.exec(section)) !== null) {
+            rows.push({
+              name: cleanMarkdown(match[1]),
+              imageAlt: cleanMarkdown(match[2]),
+              image: getLocalImage(match[3]),
+              description: cleanMarkdown(match[4])
+            });
+          }
+
+          if (!rows.length) throw new Error("No board rows parsed from README");
+          tableBody.replaceChildren(...rows.map(makeRow));
+        })
+        .catch(() => {
+          // Keep the static fallback table when GitHub cannot be reached.
+        });
+    })();
+  </script>
+</body>
+</html>

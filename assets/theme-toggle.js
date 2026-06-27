@@ -26,11 +26,31 @@
     .theme-toggle-icon { display:grid; width:22px; height:22px; place-items:center; border-radius:50%; color:currentColor; }
     .theme-toggle-icon svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.8; }
     .theme-toggle[data-theme="light"] .theme-toggle-icon--sun, .theme-toggle[data-theme="dark"] .theme-toggle-icon--moon { background:#1f3a32; color:#b8ffb8; }
+    .nav-menu-toggle { display:none; box-sizing:border-box; width:34px; min-width:34px; height:34px; min-height:34px; padding:0; place-items:center; border:1px solid #2f3a2f; border-radius:999px; background:#111; color:#d8fff2; cursor:pointer; }
+    .nav-menu-toggle:hover, .nav-menu-toggle:focus-visible, .theme-nav-cluster.is-nav-open .nav-menu-toggle { border-color:#00ffcc88; color:#b8ffb8; }
+    .nav-menu-toggle svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; }
     .theme-toolbar { display:flex; justify-content:flex-end; margin:0 0 14px; }
     .theme-nav-cluster { display:flex; align-items:center; gap:8px; margin-left:auto; }
+    @media (max-width:760px) {
+      .page-hero-top { position:relative; z-index:1000; overflow:visible; }
+      .theme-nav-cluster { position:relative; z-index:1001; }
+      .theme-nav-cluster .nav-menu-toggle { display:inline-grid; flex:0 0 auto; }
+      .theme-nav-cluster > :is(.page-top-nav,.site-nav) { display:none; }
+      .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) { position:absolute; top:calc(100% + 8px); right:0; z-index:1002; display:flex; width:max-content; min-width:164px; max-width:calc(100vw - 24px); flex-direction:column; gap:7px; margin:0; padding:7px; border:1px solid #2f3a2f; border-radius:8px; background:rgba(17,17,17,.97); box-shadow:0 12px 30px rgba(0,0,0,.34), inset 0 0 8px rgba(0,255,204,.05); }
+      .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) a { justify-content:flex-start; width:100%; white-space:nowrap; }
+      .site-header { position:relative; padding-right:84px; }
+      .site-header > .theme-nav-cluster { position:absolute; top:0; right:0; z-index:20; gap:6px; margin-left:0; }
+      .site-header > .theme-nav-cluster .theme-toggle { position:static !important; top:auto !important; right:auto !important; }
+      html[data-theme="light"] .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) { background:rgba(255,255,255,.98) !important; border-color:#b9c9c0 !important; box-shadow:0 12px 30px rgba(31,72,53,.14), inset 0 0 5px rgba(28,57,43,.06) !important; }
+    }
+    @media (min-width:621px) and (max-width:760px) {
+      .page-hero-top { padding-top:10px; }
+      .site-header { padding-top:10px; }
+      .site-header > .theme-nav-cluster { top:10px; }
+    }
     html[data-theme="light"] { color-scheme:light; --page-bg:#f4f7f5; --panel-bg:#ffffff; --panel-bg-deep:#e7eee9; --border:#b9c9c0; --text:#183128; --muted:#52665c; --green:#078653; --green-dim:#087345; --cyan:#007f7a; }
     html[data-theme="light"] body { background:#f4f7f5 !important; color:#183128 !important; }
-    html[data-theme="light"] :is(.hero-copy,.content-card,.system-card,.recipe-card,.tool-card,.protocol-card,.faq-grid article,.faq-item,.support-card,.card,.tip-card,.notice,.modal,.config-panel,.serial-panel,.settings-panel,.recipe-search,.recipe-toolbar,.hero-terminal,.brand-mark,.site-nav a,.page-top-nav a,.article-top-nav a,.theme-toggle,.recipe-pill-list li,.tag-list li,.article-hero-tags li,.filter-button,.recipe-section,.callout,.empty-state,.wiring-mobile-row,.wiring-node,.link-card-list a,.hardware-list li,.wiring-list li,.setup-list li,.audience-list li,.external-links-card,.external-link-grid a,.capability-grid article,.compatibility-card,.link-list a,.authority-card) { background:#fff !important; border-color:#b9c9c0 !important; box-shadow:inset 0 0 5px rgba(28,57,43,.08) !important; }
+    html[data-theme="light"] :is(.hero-copy,.content-card,.system-card,.recipe-card,.tool-card,.protocol-card,.faq-grid article,.faq-item,.support-card,.card,.tip-card,.notice,.modal,.config-panel,.serial-panel,.settings-panel,.recipe-search,.recipe-toolbar,.hero-terminal,.brand-mark,.site-nav a,.page-top-nav a,.article-top-nav a,.nav-menu-toggle,.theme-toggle,.recipe-pill-list li,.tag-list li,.article-hero-tags li,.filter-button,.recipe-section,.callout,.empty-state,.wiring-mobile-row,.wiring-node,.link-card-list a,.hardware-list li,.wiring-list li,.setup-list li,.audience-list li,.external-links-card,.external-link-grid a,.capability-grid article,.compatibility-card,.link-list a,.authority-card) { background:#fff !important; border-color:#b9c9c0 !important; box-shadow:inset 0 0 5px rgba(28,57,43,.08) !important; }
     html[data-theme="light"] :is(h1,h2,h3,h4,h5,h6,.brand,.card-arrow,.button,.eyebrow,.card-eyebrow,.article-hero-tags li) { color:#087345 !important; }
     html[data-theme="light"] :is(p,li,dd,dt,label,summary,.lead,.section-intro,.muted,.recipe-date,.wiring-pin,.wiring-mobile-row span,.audience-list strong,.external-links-card p,.external-link-grid a,.link-list a) { color:#355448; }
     html[data-theme="light"] :is(pre,code,.cli-window,.terminal-body,.ascii-title) { color:#123e2e; }
@@ -175,7 +195,38 @@
       opacity:.94 !important;
       filter:saturate(.96) contrast(.98) brightness(1.02) !important;
     }
-    html[data-theme="light"] .theme-toggle { color:#17463a; }
+    html[data-theme="light"] :is(.nav-menu-toggle,.theme-toggle) { color:#17463a; }
+    html[data-theme="light"] #start .start-web-tools-card > .content-card-link {
+      --start-web-tools-cover-height:174px;
+      background:
+        linear-gradient(#fff, #fff) 0 var(--start-web-tools-cover-height) / 100% calc(100% - var(--start-web-tools-cover-height)) no-repeat,
+        radial-gradient(circle at 16% 12%, rgba(0, 255, 204, 0.14), transparent 24%),
+        radial-gradient(circle at 86% 72%, rgba(0, 255, 153, 0.11), transparent 28%),
+        linear-gradient(145deg, #11211b 0%, #0c1311 48%, #14110f 100%) !important;
+    }
+    html[data-theme="light"] #start .start-web-tools-card > .content-card-link::before {
+      position:absolute;
+      z-index:1;
+      top:0;
+      right:0;
+      left:0;
+      height:var(--start-web-tools-cover-height);
+      border-radius:8px 8px 0 0;
+      background:rgba(255,255,255,.14);
+      content:"";
+      pointer-events:none;
+    }
+    html[data-theme="light"] #start .start-web-tools-card > .content-card-link > .web-serial-start-cover {
+      height:var(--start-web-tools-cover-height) !important;
+      background-color:#0c1311 !important;
+      background-image:
+        radial-gradient(circle at 16% 12%, rgba(0, 255, 204, 0.14), transparent 24%),
+        radial-gradient(circle at 86% 72%, rgba(0, 255, 153, 0.11), transparent 28%),
+        linear-gradient(145deg, #11211b 0%, #0c1311 48%, #14110f 100%) !important;
+      opacity:1 !important;
+      filter:none !important;
+      box-shadow:inset 0 0 5px #000 !important;
+    }
   `;
   document.head.appendChild(style);
 
@@ -204,19 +255,71 @@
     return;
   }
 
+  const makeMenuButton = (nav, cluster) => {
+    if (!nav.id) {
+      nav.id = "topbar-navigation";
+    }
+
+    const menuButton = document.createElement("button");
+    menuButton.className = "nav-menu-toggle";
+    menuButton.type = "button";
+    menuButton.setAttribute("aria-controls", nav.id);
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open navigation");
+    menuButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>';
+
+    const setMenuOpen = (isOpen) => {
+      cluster.classList.toggle("is-nav-open", isOpen);
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+    };
+
+    menuButton.addEventListener("click", () => {
+      setMenuOpen(!cluster.classList.contains("is-nav-open"));
+    });
+
+    nav.addEventListener("click", (event) => {
+      if (event.target.closest("a") && window.matchMedia("(max-width: 760px)").matches) {
+        setMenuOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+      if (cluster.classList.contains("is-nav-open") && !cluster.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    });
+
+    return menuButton;
+  };
+
   const contextualNav = document.querySelector(".article-top-nav, .page-top-nav");
   if (contextualNav) {
     const cluster = document.createElement("div");
     cluster.className = "theme-nav-cluster";
     contextualNav.parentNode.insertBefore(cluster, contextualNav);
-    cluster.append(contextualNav, button);
+
+    cluster.append(contextualNav);
+    if (contextualNav.classList.contains("page-top-nav")) {
+      cluster.appendChild(makeMenuButton(contextualNav, cluster));
+    }
+    cluster.appendChild(button);
     return;
   }
 
   const mount = document.querySelector(".site-nav");
 
   if (mount) {
-    mount.appendChild(button);
+    const cluster = document.createElement("div");
+    cluster.className = "theme-nav-cluster";
+    mount.parentNode.insertBefore(cluster, mount);
+    cluster.append(mount, makeMenuButton(mount, cluster), button);
     return;
   }
 

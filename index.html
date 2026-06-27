@@ -72,6 +72,12 @@
           {
             "@type": "ListItem",
             "position": 4,
+            "name": "ESP32 Bit Pirate Hardware",
+            "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
             "name": "ESP32 Bit Pirate GitHub repository",
             "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
           }
@@ -359,6 +365,10 @@
 
     h1 span {
       color: #b8ffb8;
+    }
+
+    html[data-theme="light"] body #page-title span {
+      color: #7fdc83 !important;
     }
 
     h2 {
@@ -880,7 +890,67 @@
       box-shadow: inset 0 0 5px #000;
     }
 
+    .web-serial-start-cover {
+      height: 174px;
+      padding: 12px 14px;
+      object-fit: contain;
+      object-position: center;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(0, 255, 204, 0.14), transparent 24%),
+        radial-gradient(circle at 86% 72%, rgba(0, 255, 153, 0.11), transparent 28%),
+        linear-gradient(145deg, #11211b 0%, #0c1311 48%, #14110f 100%);
+    }
+
+    .start-web-tools-card {
+      --start-web-tools-cover-height: 174px;
+    }
+
+    .start-web-tools-card .web-serial-start-cover {
+      height: var(--start-web-tools-cover-height);
+    }
+
+    .start-web-tools-card .content-card-link {
+      background:
+        linear-gradient(var(--panel-bg), var(--panel-bg)) 0 var(--start-web-tools-cover-height) / 100% calc(100% - var(--start-web-tools-cover-height)) no-repeat,
+        radial-gradient(circle at 16% 12%, rgba(0, 255, 204, 0.14), transparent 24%),
+        radial-gradient(circle at 86% 72%, rgba(0, 255, 153, 0.11), transparent 28%),
+        linear-gradient(145deg, #11211b 0%, #0c1311 48%, #14110f 100%);
+    }
+
+    html[data-theme="light"] body .start-web-tools-card .content-card-link {
+      background:
+        linear-gradient(#fff, #fff) 0 var(--start-web-tools-cover-height) / 100% calc(100% - var(--start-web-tools-cover-height)) no-repeat,
+        radial-gradient(circle at 16% 12%, rgba(0, 255, 204, 0.14), transparent 24%),
+        radial-gradient(circle at 86% 72%, rgba(0, 255, 153, 0.11), transparent 28%),
+        linear-gradient(145deg, #11211b 0%, #0c1311 48%, #14110f 100%) !important;
+    }
+
+    html[data-theme="light"] body .start-web-tools-card .content-card-link::before {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: var(--start-web-tools-cover-height);
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: rgba(255, 255, 255, 0.14);
+      content: "";
+      pointer-events: none;
+    }
+
+    html[data-theme="light"] body .start-web-tools-card .web-serial-start-cover {
+      background:
+        radial-gradient(circle at 16% 12%, rgba(0, 255, 204, 0.14), transparent 24%),
+        radial-gradient(circle at 86% 72%, rgba(0, 255, 153, 0.11), transparent 28%),
+        linear-gradient(145deg, #11211b 0%, #0c1311 48%, #14110f 100%) !important;
+      opacity: 1 !important;
+      filter: none !important;
+      box-shadow: inset 0 0 5px #000 !important;
+    }
+
     .card-copy {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex: 1;
       flex-direction: column;
@@ -1383,6 +1453,7 @@
         <a href="#ecosystem"><svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Ecosystem</a>
         <a href="#start"><svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M5 5h11l-1.5 4L16 13H5"></path></svg>Start here</a>
         <a href="web-tools/"><svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"></rect><path d="M3 8h18M7 6h.01M10 6h.01"></path></svg>Web tools</a>
+        <a href="hardware/"><svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5" width="10" height="14" rx="2"></rect><path d="M4 8h3M4 12h3M4 16h3M17 8h3M17 12h3M17 16h3"></path></svg>Hardware</a>
         <a href="recipes/"><svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h11a3 3 0 0 1 3 3v12H8a3 3 0 0 0-3 3z"></path><path d="M5 4.5v18M8 9h7M8 13h5"></path></svg>Recipes</a>
         <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">
           <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>
@@ -1481,7 +1552,7 @@
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">Install</span> Web Flasher</p>
               <h3>Firmware one-click install</h3>
-              <p>Board manifests and ready-to-flash firmware binaries for supported devices.</p>
+              <p>Flash ESP32 Bit Pirate and companion firmware for supported devices directly from your web browser.</p>
               <span class="card-arrow">Flash firmware →</span>
             </div>
           </a>
@@ -1517,7 +1588,7 @@
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">Wiki</span> Documentation</p>
               <h3>Theoretical bench documentation</h3>
-              <p>Mode pages, setup notes and command references for serial, web UI and adapter workflows.</p>
+              <p>Mode pages, references for every command, modules wiring, tips, web UI and adapter workflows.</p>
               <span class="card-arrow">Open wiki ↗</span>
             </div>
           </a>
@@ -1528,45 +1599,45 @@
             <img class="card-cover" src="assets/index-python.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">Python</span> Automation</p>
-              <h3>Scripts over serial</h3>
+              <h3>Web Scripting Lab</h3>
               <p>Use Python workflows to automate scans, protocol checks, captures, reports and repeatable lab tasks.</p>
-              <span class="card-arrow">Open Python Scripting Lab</span>
+              <span class="card-arrow">Open Python Scripting Lab →</span>
             </div>
           </a>
         </article>
 
         <article class="system-card ecosystem-node-expander">
-          <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bus-Expander" rel="noopener">
+          <a class="system-card-link" href="hardware/#c5-expander">
             <img class="card-cover" src="assets/index-expander.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">C5</span> Bus Expander</p>
               <h3>Companion radio coprocessor</h3>
               <p>An ESP32-C5 UART companion for 5 GHz Wi-Fi features and future radio extension paths.</p>
-              <span class="card-arrow">Explore expander ↗</span>
+              <span class="card-arrow">Explore expander →</span>
             </div>
           </a>
         </article>
 
         <article class="system-card ecosystem-node-dock">
-          <a class="system-card-link" href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener">
+          <a class="system-card-link" href="hardware/#dock">
             <img class="card-cover" src="assets/index-dock.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">PCB</span> Dock &amp; adapters</p>
               <h3>Hardware extension path</h3>
               <p>A carrier-board direction for adapters, accessories and level logic from 1.8V to 5V.</p>
-              <span class="card-arrow">Explore dock ↗</span>
+              <span class="card-arrow">Explore dock →</span>
             </div>
           </a>
         </article>
 
         <article class="system-card ecosystem-node-boards">
-          <a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate#supported-devices" rel="noopener">
+          <a class="system-card-link" href="hardware/#supported-boards">
             <img class="card-cover" src="assets/index-boards.svg" alt="" width="520" height="300" loading="lazy">
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">Boards</span> Supported devices</p>
               <h3>Pick the right target board</h3>
               <p>Cardputer, S3 DevKit, T-Embed, T-Display, AtomS3 Lite, StickS3, StampS3, XIAO ESP32-S3 and more.</p>
-              <span class="card-arrow">See supported devices ↗</span>
+              <span class="card-arrow">See supported devices →</span>
             </div>
           </a>
         </article>
@@ -1595,9 +1666,9 @@
           </a>
         </article>
 
-        <article class="content-card">
+        <article class="content-card start-web-tools-card">
           <a class="content-card-link" href="web-tools/">
-            <img class="card-cover" src="web-tools/assets/bit-pirate-web-tools.svg" alt="" width="520" height="300" loading="lazy">
+            <img class="card-cover web-serial-start-cover" src="web-tools/assets/web-serial-terminal.svg" alt="Web Serial Terminal browser interface" width="520" height="300" loading="lazy">
             <div class="card-copy">
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">02</span> USB Web Tools</p>
               <h3>Use the Web Serial Terminal</h3>
@@ -1638,7 +1709,7 @@
               <p class="card-eyebrow"><span class="eyebrow-mark" aria-hidden="true">05</span> Automate · Python scripts</p>
               <h3>Turn bench actions into repeatable scripts</h3>
               <p>Automate serial sessions, protocol checks, scans, captures and reports once a manual workflow becomes useful.</p>
-              <span class="card-arrow">Open Python Scripting Lab</span>
+              <span class="card-arrow">Open Python Scripting Lab  →</span>
             </div>
           </a>
         </article>
@@ -1728,7 +1799,7 @@
 
         <details class="faq-item">
           <summary>Can I use 1.8 V to 5 V logic levels?</summary>
-          <p>The ESP32 itself uses 3.3 V GPIO logic. Use the <a href="https://github.com/AndreiVladescu/ESP32-Bit-Pirate-Dock" rel="noopener">Dock</a>’s level-adaptation path for compatible 1.8 V to 5 V target logic, verify the target voltage before connecting, and do not drive an ESP32 GPIO directly outside its safe logic range.</p>
+          <p>The ESP32 itself uses 3.3 V GPIO logic. Use the <a href="hardware/#dock">Dock</a>’s level-adaptation path for compatible 1.8 V to 5 V target logic, verify the target voltage before connecting, and do not drive an ESP32 GPIO directly outside its safe logic range.</p>
         </details>
 
       <details class="faq-item">
@@ -1766,6 +1837,7 @@
         <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">GitHub</a>
         <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener">Wiki</a>
         <a href="web-tools/">Web Tools</a>
+        <a href="hardware/">Hardware</a>
         <a href="recipes/">Recipes</a>
       </nav>
     </footer>
