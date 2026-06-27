@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as an AT command and cellular modem workbench to test UART AT devices, check modem status, inspect SIM details, verify network registration and run SMS or USSD workflows.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="AT Command Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 AT command workbench for UART AT modules, cellular modem checks, SIM inspection, network registration, SMS and USSD workflows.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-cell.png">
+<meta property="og:image:alt" content="Preview image for AT command debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AT Command Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 AT command workbench for UART AT modules, cellular modem checks, SIM status, network registration, SMS and USSD.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-cell.png">
+<meta name="twitter:image:alt" content="Preview image for AT command debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/">
+<title>AT Command Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "AT Command Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as an AT command and cellular modem workbench to test UART AT devices, check modem status, inspect SIM details, verify network registration and run SMS or USSD workflows.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 AT command debugging",
+        "ESP32 cellular modem debugging",
+        "UART AT helper",
+        "GSM LTE modem AT commands",
+        "ESP32-S3 AT command workbench"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate AT command recipes",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Use the UART AT command helper", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-uart-at-shell-modem/" },
+        { "@type": "ListItem", "position": 2, "name": "Check a cellular modem with CELL mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/" },
+        { "@type": "ListItem", "position": 3, "name": "Check GSM/LTE network registration", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-network-registration/" },
+        { "@type": "ListItem", "position": 4, "name": "Dump SIM card information from a cellular modem", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-sim-card-info-cellular-modem/" },
+        { "@type": "ListItem", "position": 5, "name": "List SIM phonebook contacts", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/list-sim-phonebook-contacts/" },
+        { "@type": "ListItem", "position": 6, "name": "Send a USSD request from a modem", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-ussd-cellular-modem/" },
+        { "@type": "ListItem", "position": 7, "name": "Send an SMS from a cellular modem", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-sms-from-cellular-modem/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate send AT commands to a modem?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can use UART mode and the AT helper to send guided AT commands to modems and serial modules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate check cellular modem and SIM status?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. CELL mode can check modem status, SIM information and network registration before SMS, USSD or other cellular workflows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I send SMS or USSD commands before checking the modem state?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Start with modem status, SIM status and network registration, then use SMS or USSD only with your own SIM and authorized service plan."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "AT command debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/" }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/23-CELL" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>CELL wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 AT command and cellular debugging</p>
+<h1 id="page-title">AT command debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical AT command workbench. Use it to talk to UART AT modules, bring up cellular modems, check SIM and network state, then continue into SMS, USSD or detailed CELL mode recipes when the basic modem path is proven.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/use-uart-at-shell-modem/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"></path><path d="m16 15 3-3-3-3"></path></svg>Start with the UART AT helper</a>
+<a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-cell.svg" alt="AT command and cellular modem debugging visual with an ESP32 board, modem and SIM card" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick AT workflow</h2>
+<p class="section-intro">Start with the electrical and UART basics, then move into modem status and SIM/network checks before sending commands that affect a real service plan.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Connect TX, RX and GND between the ESP32 Bit Pirate and the AT module or modem.</p></li>
+<li><span>02</span><p>Confirm voltage levels, modem power and baud rate before opening the AT helper.</p></li>
+<li><span>03</span><p>Send a basic AT command and wait for a clean response before deeper testing.</p></li>
+<li><span>04</span><p>Check modem status, SIM state and network registration before SMS or USSD.</p></li>
+<li><span>05</span><p>Continue with the recipe that matches the next task: status, SIM, network, phonebook, USSD or SMS.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode uart
+at
+mode cell
+status
+sim
+network
+sms
+ussd</code></pre>
+<p class="command-note">Example CLI flow. See the UART and CELL wiki pages for exact syntax, supported modem behavior and firmware-specific options.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">AT workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right AT or cellular workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>UART</span><h3>AT command helper</h3><p>Send guided AT commands to modems, GPS modules and serial devices that use command/response text protocols.</p></article>
+<article class="intent-card"><span>Status</span><h3>Modem bring-up checks</h3><p>Confirm that the modem is powered, reachable and ready before debugging a higher-level cellular workflow.</p></article>
+<article class="intent-card"><span>SIM</span><h3>SIM card inspection</h3><p>Read SIM status and identifiers so absent, locked or unready SIM states are visible early.</p></article>
+<article class="intent-card"><span>Network</span><h3>GSM/LTE registration</h3><p>Check registration state, signal information and operator visibility before trying data, USSD or messaging.</p></article>
+<article class="intent-card"><span>USSD</span><h3>Operator service requests</h3><p>Run USSD only after the SIM and network path are known good, and only on your own authorized service.</p></article>
+<article class="intent-card"><span>SMS</span><h3>Message send workflow</h3><p>Open the SMS workflow after modem, SIM and registration checks have removed the usual setup failures.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an AT workbench helps</h2>
+<p class="section-intro">AT problems can look like firmware bugs, wiring mistakes, power failures or operator issues. A small external workbench lets you separate those layers before changing target code.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Bring-up</span><h3>Before writing modem firmware</h3><p>Prove that the modem responds to basic AT commands and that the UART wiring is correct.</p></article>
+<article class="signal-card"><span>Cellular</span><h3>Before debugging the application layer</h3><p>Check SIM, registration and signal state before spending time on HTTP, MQTT or SMS code paths.</p></article>
+<article class="signal-card"><span>Serial module</span><h3>Before guessing command syntax</h3><p>Use the UART AT helper to test line endings and responses from AT-style modules in a controlled shell.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">AT hardware and service reminders</h2>
+<p class="section-intro">These checks keep the workflow practical without repeating the detailed command pages.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>TX/RX</span><p>Cross TX to RX, RX to TX and always connect a common ground before expecting a modem response.</p></article>
+<article class="note-card"><span>Voltage</span><p>Check UART voltage levels. Do not connect 5 V serial directly to a 3.3 V ESP32-S3 pin without level shifting.</p></article>
+<article class="note-card"><span>Power</span><p>Cellular modems can draw burst current. Use a proper modem supply instead of assuming USB power is enough.</p></article>
+<article class="note-card"><span>Antenna</span><p>Attach the correct antenna before registration, signal or operator tests.</p></article>
+<article class="note-card"><span>SIM</span><p>Use your own SIM card, know whether it requires a PIN and expect operator charges for SMS or USSD services.</p></article>
+<article class="note-card"><span>Authorization</span><p>Send AT commands, SMS and USSD only on hardware, SIMs and networks you own or are explicitly allowed to test.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common AT problems</h2>
+<p class="section-intro">Most AT failures are wiring, baud rate, power, SIM or registration problems. Check these before treating the modem as broken.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>No response</span><p>Check TX/RX orientation, common ground, baud rate, line ending behavior and whether the modem is awake.</p></article>
+<article class="problem-card"><span>Random text</span><p>Try the expected baud rate again, then use UART diagnostics before assuming the AT command is wrong.</p></article>
+<article class="problem-card"><span>SIM not ready</span><p>Check SIM insertion, PIN state, carrier activation and whether the modem supports the SIM/network combination.</p></article>
+<article class="problem-card"><span>Not registered</span><p>Check antenna, signal, operator availability, band support and service plan status.</p></article>
+<article class="problem-card"><span>SMS or USSD fails</span><p>Confirm modem status, SIM readiness and network registration before opening the SMS or USSD workflow.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed AT and cellular recipes</h2>
+<p class="section-intro">These pages are the task-level AT and cellular workflows. This overview keeps the protocol-level guidance here, while each recipe covers commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate AT command recipes">
+<a href="../../recipes/use-uart-at-shell-modem/"><span>AT</span><strong>Use the UART AT command helper</strong><small>Send guided AT commands to modems and serial modules.</small></a>
+<a href="../../recipes/check-cellular-modem-status/"><span>Status</span><strong>Check a cellular modem with CELL mode</strong><small>Confirm power, modem response, SIM and registration prerequisites.</small></a>
+<a href="../../recipes/check-cellular-network-registration/"><span>LTE</span><strong>Check GSM/LTE network registration</strong><small>Read registration, signal and operator state before higher-level tests.</small></a>
+<a href="../../recipes/dump-sim-card-info-cellular-modem/"><span>SIM</span><strong>Dump SIM card information from a cellular modem</strong><small>Inspect SIM state and identifiers from the modem path.</small></a>
+<a href="../../recipes/list-sim-phonebook-contacts/"><span>Phonebook</span><strong>List SIM phonebook contacts</strong><small>Read contacts stored on the SIM through CELL mode.</small></a>
+<a href="../../recipes/send-ussd-cellular-modem/"><span>USSD</span><strong>Send a USSD request from a modem</strong><small>Run an operator USSD code after modem, SIM and network checks.</small></a>
+<a href="../../recipes/send-sms-from-cellular-modem/"><span>SMS</span><strong>Send an SMS from a cellular modem</strong><small>Use the SMS workflow after confirming the cellular path is ready.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful AT references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the AT/CELL command references.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>CELL command reference</h3><p>Open the maintained firmware wiki for cellular modem status, SIM, network, SMS and USSD commands.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/23-CELL" rel="noopener" target="_blank">Open CELL command reference</a></article>
+<article class="destination-card"><h3>UART command reference</h3><p>Use UART mode documentation for serial setup, AT helper behavior and lower-level link checks.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/03-UART" rel="noopener" target="_blank">Open UART command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and hardware notes before relying on UART or cellular workflows.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">AT command debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate send AT commands to a modem?</summary>
+<p>Yes. ESP32 Bit Pirate can use UART mode and the AT helper to send guided AT commands to modems and serial modules.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate check cellular modem and SIM status?</summary>
+<p>Yes. CELL mode can check modem status, SIM information and network registration before SMS, USSD or other cellular workflows.</p>
+</details>
+<details>
+<summary>Should I send SMS or USSD commands before checking the modem state?</summary>
+<p>No. Start with modem status, SIM status and network registration, then use SMS or USSD only with your own SIM and authorized service plan.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/23-CELL" target="_blank" rel="noopener">CELL Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

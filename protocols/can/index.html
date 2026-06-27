@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a practical CAN bus workbench with an MCP2515 module to configure bitrate, check controller status, sniff frames, receive specific IDs and send controlled test frames.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="CAN Bus Debugging with ESP32 Bit Pirate and MCP2515">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 CAN workbench for MCP2515 setup, bitrate checks, frame sniffing, ID filtering and controlled test frames.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-can.png">
+<meta property="og:image:alt" content="Preview image for CAN bus debugging with ESP32 Bit Pirate and MCP2515">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CAN Bus Debugging with ESP32 Bit Pirate and MCP2515">
+<meta name="twitter:description" content="A practical ESP32-S3 CAN workbench for MCP2515 status checks, bitrate setup, sniffing, receive filters and controlled test frames.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-can.png">
+<meta name="twitter:image:alt" content="Preview image for CAN bus debugging with ESP32 Bit Pirate and MCP2515">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/">
+<title>CAN Bus Debugging with ESP32 Bit Pirate | MCP2515 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "CAN Bus Debugging with ESP32 Bit Pirate and MCP2515",
+      "description": "Use ESP32 Bit Pirate as a practical CAN bus workbench with an MCP2515 module to configure bitrate, check controller status, sniff frames, receive specific IDs and send controlled test frames.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 CAN bus debugging",
+        "MCP2515 CAN module",
+        "CAN frame sniffing",
+        "CAN bitrate configuration",
+        "CAN receive ID filter"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate CAN MCP2515 recipes",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Wire an MCP2515 CAN module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-mcp2515-can-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Check MCP2515 CAN controller status",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-mcp2515-can-status/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Sniff CAN frames with MCP2515",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Receive a specific CAN frame ID",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-specific-can-frame-id/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Send a CAN frame with MCP2515",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-can-frame-mcp2515/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate sniff CAN frames?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. With a wired MCP2515 CAN module and matching bitrate, ESP32 Bit Pirate can use CAN mode to sniff frames on an authorized test bus."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does ESP32 Bit Pirate need an MCP2515 module for CAN?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. CAN mode is built around an MCP2515 controller module connected through SPI, plus the correct CANH and CANL bus connection through a compatible transceiver."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I send CAN frames on an unknown bus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Start with wiring, bitrate, status and passive sniffing. Send frames only on a lab bus or a system you own and are explicitly allowed to test."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "CAN bus debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/17-CAN" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>CAN wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 CAN bus debugging with MCP2515</p>
+<h1 id="page-title">CAN bus debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus an MCP2515 CAN module into a practical CAN workbench. Use it to configure bitrate, check controller status, sniff frames, receive one specific identifier and send controlled standard frames on an authorized test bus.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/sniff-can-frames-mcp2515/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with a CAN sniff recipe</a>
+<a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-can.svg" alt="CAN bus debugging visual with an ESP32 board, MCP2515 module and CANH CANL bus" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick CAN workflow</h2>
+<p class="section-intro">Start passively. Confirm wiring, bitrate and MCP2515 status before trusting frames, and send only on a controlled bus where test traffic is allowed.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Wire the MCP2515 module to the ESP32 Bit Pirate SPI pins, fixed CAN CS, power and shared ground.</p></li>
+<li><span>02</span><p>Connect CANH and CANL through a compatible CAN transceiver to a safe, terminated test bus.</p></li>
+<li><span>03</span><p>Start CAN mode, configure bitrate and check the selected MCP2515 pin settings.</p></li>
+<li><span>04</span><p>Run status first, then sniff all frames or receive one known frame identifier.</p></li>
+<li><span>05</span><p>Send a controlled standard frame only after the adapter is healthy and the bus is yours to test.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode can
+config
+status
+sniff
+receive 0x123
+send 0x123</code></pre>
+<p class="command-note">Example CLI flow. See the CAN wiki for exact syntax, bitrate options, MCP2515 pin configuration and firmware-specific behavior.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">CAN workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right MCP2515 CAN workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Wire</span><h3>MCP2515 CAN module setup</h3><p>Connect the SPI control side and CANH/CANL bus side separately so wiring mistakes are easier to isolate.</p></article>
+<article class="intent-card"><span>Status</span><h3>MCP2515 status check</h3><p>Inspect controller state and error flags before assuming the target bus, bitrate or firmware command is wrong.</p></article>
+<article class="intent-card"><span>Sniff</span><h3>CAN frame sniffing</h3><p>Capture visible frames after bitrate and termination are confirmed, using passive observation as the first useful test.</p></article>
+<article class="intent-card"><span>Filter</span><h3>Receive one CAN frame ID</h3><p>Focus logging on a known identifier when a full frame stream is too noisy or you are validating a specific response.</p></article>
+<article class="intent-card"><span>Send</span><h3>Controlled standard CAN frames</h3><p>Transmit an 11-bit standard frame only on a lab bus or authorized system where test traffic cannot cause harm.</p></article>
+<article class="intent-card"><span>Diagnose</span><h3>Bitrate and bus error checks</h3><p>Separate wrong bitrate, missing termination, swapped CANH/CANL and SPI-side MCP2515 wiring before deeper analysis.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an ESP32-S3 CAN workbench helps</h2>
+<p class="section-intro">CAN debugging often starts with basic electrical and controller checks. A small external workflow can show whether the module, bitrate and bus are plausible before any application-level decoding.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Unknown bitrate</span><h3>Before parsing messages</h3><p>Match the expected CAN bitrate first. A wrong bitrate can look like a silent or broken bus even when frames are present.</p></article>
+<article class="signal-card"><span>Adapter bring-up</span><h3>Before trusting captures</h3><p>Use status to check MCP2515 state and error flags before spending time on frame filters or application data.</p></article>
+<article class="signal-card"><span>Lab validation</span><h3>Before sending traffic</h3><p>Build a controlled test bus with known termination and another node before using send workflows.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">CAN hardware reminders</h2>
+<p class="section-intro">These notes stay short. The detailed command references live in the project documentation and firmware repository.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>MCP2515 module</span><p>CAN mode uses an MCP2515 controller module connected through SPI. Keep the SPI control wiring separate from the CANH/CANL bus wiring during checks.</p></article>
+<article class="note-card"><span>Transceiver and bus</span><p>The MCP2515 controller still needs a compatible CAN transceiver path to reach CANH and CANL on a real bus or test fixture.</p></article>
+<article class="note-card"><span>Bitrate and termination</span><p>Match the bus bitrate and verify termination. Wrong bitrate or missing termination is a common cause of empty captures and controller errors.</p></article>
+<article class="note-card"><span>Authorized testing</span><p>Use read-only sniffing first. Send frames only on hardware you own or are explicitly allowed to test.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common CAN problems</h2>
+<p class="section-intro">Most CAN failures come from wrong bitrate, missing termination, CANH/CANL mistakes, SPI-side MCP2515 wiring or active transmissions on a bus that should stay passive.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>No frames visible</span><p>Check bitrate, bus activity, termination, CANH/CANL wiring and whether the MCP2515 status reports controller errors.</p></article>
+<article class="problem-card"><span>Status shows errors</span><p>Recheck bitrate, transceiver wiring, bus power, termination and whether another node is actually present on the test bus.</p></article>
+<article class="problem-card"><span>SPI probe fails</span><p>Check SCK, SI/MOSI, SO/MISO, the fixed CAN CS pin, ground and module power before touching CANH/CANL.</p></article>
+<article class="problem-card"><span>Receive filter is silent</span><p>Sniff all frames first to confirm the ID exists, then switch to <code>receive 0x123</code> for focused logging.</p></article>
+<article class="problem-card"><span>Send is not observed</span><p>Use a second node or another adapter to confirm the frame, and verify standard 11-bit ID range, bitrate and bus health.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed CAN recipes</h2>
+<p class="section-intro">These pages are the task-level MCP2515 CAN workflows. This overview keeps the protocol-level guidance here, while each recipe covers setup, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate CAN MCP2515 recipes">
+<a href="../../recipes/wire-mcp2515-can-module/"><span>Wire</span><strong>Wire an MCP2515 CAN module</strong><small>Connect SPI, fixed CAN CS, shared ground and CANH/CANL safely.</small></a>
+<a href="../../recipes/check-mcp2515-can-status/"><span>Status</span><strong>Check MCP2515 CAN controller status</strong><small>Inspect controller errors before blaming the target bus.</small></a>
+<a href="../../recipes/sniff-can-frames-mcp2515/"><span>Sniff</span><strong>Sniff CAN frames with MCP2515</strong><small>Configure bitrate and passively observe frames on a safe bus.</small></a>
+<a href="../../recipes/receive-specific-can-frame-id/"><span>Filter</span><strong>Receive a specific CAN frame ID</strong><small>Focus logging on one identifier instead of reading every frame.</small></a>
+<a href="../../recipes/send-can-frame-mcp2515/"><span>Send</span><strong>Send a CAN frame with MCP2515</strong><small>Transmit one controlled standard frame on an authorized test bus.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful CAN references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the CAN command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>CAN command reference</h3><p>Open the maintained firmware wiki for CAN mode commands, MCP2515 configuration and usage notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/17-CAN" rel="noopener" target="_blank">Open CAN command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an MCP2515 CAN module.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>Logic Analyzer</h3><p>Capture SPI-side SCK, SI, SO or CS timing when you need to inspect MCP2515 control signals.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Logic Analyzer</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">CAN debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate sniff CAN frames?</summary>
+<p>Yes. With a wired MCP2515 CAN module and matching bitrate, ESP32 Bit Pirate can use CAN mode to sniff frames on an authorized test bus.</p>
+</details>
+<details>
+<summary>Does ESP32 Bit Pirate need an MCP2515 module for CAN?</summary>
+<p>Yes. CAN mode is built around an MCP2515 controller module connected through SPI, plus the correct CANH and CANL bus connection through a compatible transceiver.</p>
+</details>
+<details>
+<summary>Should I send CAN frames on an unknown bus?</summary>
+<p>No. Start with wiring, bitrate, status and passive sniffing. Send frames only on a lab bus or a system you own and are explicitly allowed to test.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/17-CAN" target="_blank" rel="noopener">CAN Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

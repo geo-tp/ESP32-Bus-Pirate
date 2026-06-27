@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate with a Si4713 module as a practical FM and RDS workbench to wire I2C plus reset, scan the FM band, trace one frequency and inspect waterfall activity in authorized lab conditions.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="FM and RDS Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 FM / Si4713 workbench for wiring, configuration, band scan, trace and waterfall workflows.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-fm.png">
+<meta property="og:image:alt" content="Preview image for FM and RDS debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FM and RDS Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 FM workbench for Si4713 wiring, I2C setup, band scan, trace and waterfall workflows.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-fm.png">
+<meta name="twitter:image:alt" content="Preview image for FM and RDS debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/">
+<title>FM and RDS Debugging with ESP32 Bit Pirate | ESP32-S3 Radio Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "FM and RDS Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate with a Si4713 module as a practical FM and RDS workbench to wire I2C plus reset, scan the FM band, trace one frequency and inspect waterfall activity in authorized lab conditions.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 FM debugging",
+        "Si4713 module wiring",
+        "FM band scanner",
+        "FM trace waterfall",
+        "ESP32-S3 radio workbench"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate FM recipes",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Wire a Si4713 FM module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-si4713-fm-module/" },
+        { "@type": "ListItem", "position": 2, "name": "Scan the FM band with Si4713", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/" },
+        { "@type": "ListItem", "position": 3, "name": "Trace one FM frequency", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/trace-one-fm-frequency/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate work with Si4713 FM modules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. FM mode is built around an external Si4713 module connected through I2C plus a reset signal, with the module powered according to its hardware requirements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate scan the FM band?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. FM sweep and waterfall workflows can inspect FM band activity so you can observe signal strength before focusing on one frequency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use FM broadcast functions without checking local rules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Use FM workflows only in legal, controlled and authorized lab conditions, and start with scan or trace observation before any broadcast experiment."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "FM and RDS debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/" }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/22-FM" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>FM wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 FM and Si4713 debugging</p>
+<h1 id="page-title">FM and RDS debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board and a Si4713 module into a practical FM workbench. Use it to wire I2C plus reset, initialize FM mode, scan the FM band, trace one frequency and inspect waterfall activity before any controlled broadcast experiment.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/wire-si4713-fm-module/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h6M14 12h6M10 8v8M14 8v8"></path><circle cx="4" cy="12" r="2"></circle><circle cx="20" cy="12" r="2"></circle></svg>Start with Si4713 wiring</a>
+<a class="action-link" href="../../recipes/scan-fm-band-si4713/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3l2-5 4 10 3-7 2 2h4"></path></svg>Scan the FM band</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-fm.svg" alt="FM debugging visual with an ESP32 board, Si4713 module, antenna and FM band activity" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick FM workflow</h2>
+<p class="section-intro">Start with wiring and observation. Keep broadcast-related work legal, controlled and documented.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Wire SDA, SCL, reset, power and ground between the Si4713 module and the ESP32 Bit Pirate.</p></li>
+<li><span>02</span><p>Enter FM mode and run configuration so the firmware knows the selected I2C and reset pins.</p></li>
+<li><span>03</span><p>Use sweep or waterfall to observe FM band activity before focusing on one frequency.</p></li>
+<li><span>04</span><p>Trace one frequency to compare signal strength while keeping the antenna and wiring stable.</p></li>
+<li><span>05</span><p>Only continue into broadcast operations under legal low-power lab conditions.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode fm
+config
+sweep
+trace 101.7
+waterfall</code></pre>
+<p class="command-note">Example CLI flow. See the FM wiki for exact syntax, Si4713 setup prompts and firmware-specific options.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">FM workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right Si4713 workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Wire</span><h3>Si4713 module setup</h3><p>Connect I2C plus reset and confirm module power before opening FM mode.</p></article>
+<article class="intent-card"><span>Config</span><h3>FM mode initialization</h3><p>Set the selected board pins and initialize the module from the serial CLI.</p></article>
+<article class="intent-card"><span>Sweep</span><h3>FM band scan</h3><p>Inspect the FM band before choosing a single frequency for closer observation.</p></article>
+<article class="intent-card"><span>Trace</span><h3>One-frequency observation</h3><p>Track signal strength at one frequency while comparing antenna placement or test conditions.</p></article>
+<article class="intent-card"><span>Waterfall</span><h3>Activity visualization</h3><p>Use waterfall output when a visual activity baseline is more useful than one reading.</p></article>
+<article class="intent-card"><span>RDS</span><h3>Controlled FM lab work</h3><p>Keep any RDS or broadcast-related experiments constrained to authorized low-power lab conditions.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">Si4713 hardware and radio reminders</h2>
+<p class="section-intro">These checks keep the workflow practical without repeating the detailed recipe pages.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>I2C</span><p>Check SDA, SCL and common ground before assuming the module or firmware is wrong.</p></article>
+<article class="note-card"><span>Reset</span><p>The reset pin is part of the setup. Configure the selected GPIO instead of copying another board map.</p></article>
+<article class="note-card"><span>Power</span><p>Verify the module supply requirement before powering the Si4713 board.</p></article>
+<article class="note-card"><span>Antenna</span><p>Keep antenna and wiring stable while comparing sweep or trace readings.</p></article>
+<article class="note-card"><span>Authorization</span><p>Use FM workflows only where local rules and your lab setup allow them.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed FM recipes</h2>
+<p class="section-intro">These pages are the task-level FM and Si4713 workflows. This overview keeps the protocol-level guidance here, while each recipe covers setup, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate FM recipes">
+<a href="../../recipes/wire-si4713-fm-module/"><span>Wire</span><strong>Wire a Si4713 FM module</strong><small>Connect I2C and reset before initializing FM mode.</small></a>
+<a href="../../recipes/scan-fm-band-si4713/"><span>Scan</span><strong>Scan the FM band with Si4713</strong><small>Use sweep, trace and waterfall workflows to inspect FM band activity.</small></a>
+<a href="../../recipes/trace-one-fm-frequency/"><span>Trace</span><strong>Trace one FM frequency</strong><small>Observe signal strength at one selected frequency.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful FM references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the FM command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>FM command reference</h3><p>Open the maintained firmware wiki for FM mode commands and Si4713 setup.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/22-FM" rel="noopener" target="_blank">Open FM command reference</a></article>
+<article class="destination-card"><h3>I2C protocol overview</h3><p>Si4713 uses I2C, so the I2C overview helps when wiring or bus discovery fails.</p><a class="action-link" href="../i2c/">Open I2C debugging guide</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">FM debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate work with Si4713 FM modules?</summary>
+<p>Yes. FM mode is built around an external Si4713 module connected through I2C plus a reset signal, with the module powered according to its hardware requirements.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate scan the FM band?</summary>
+<p>Yes. FM sweep and waterfall workflows can inspect FM band activity so you can observe signal strength before focusing on one frequency.</p>
+</details>
+<details>
+<summary>Should I use FM broadcast functions without checking local rules?</summary>
+<p>No. Use FM workflows only in legal, controlled and authorized lab conditions, and start with scan or trace observation before any broadcast experiment.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/22-FM" target="_blank" rel="noopener">FM Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

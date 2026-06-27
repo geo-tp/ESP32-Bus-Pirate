@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a dedicated USB adapter workbench for PulseView SUMP logic capture, Flashrom serprog SPI flash, AVR ISP with AVRDUDE and OpenOCD JTAG/SWD workflows.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="USB Adapter Workflows with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 USB adapter for PulseView/SUMP logic capture, Flashrom/serprog SPI flash, AVRDUDE AVR ISP and OpenOCD JTAG/SWD.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png">
+<meta property="og:image:alt" content="Preview image for USB adapter workflows with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="USB Adapter Workflows with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 USB adapter workbench for PulseView, SUMP logic, Flashrom serprog, AVRDUDE AVR ISP and OpenOCD.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png">
+<meta name="twitter:image:alt" content="Preview image for USB adapter workflows with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/">
+<title>USB Adapter Workflows with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "USB Adapter Workflows with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as a dedicated USB adapter workbench for PulseView SUMP logic capture, Flashrom serprog SPI flash, AVR ISP with AVRDUDE and OpenOCD JTAG/SWD workflows.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 USB adapter",
+        "PulseView SUMP logic analyzer",
+        "Flashrom serprog SPI flash",
+        "AVRDUDE AVR ISP",
+        "OpenOCD JTAG SWD adapter"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate USB adapter recipes",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Choose a dedicated USB adapter mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/choose-dedicated-usb-adapter-mode/" },
+        { "@type": "ListItem", "position": 2, "name": "Use ESP32 Bit Pirate with PulseView and SUMP", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/" },
+        { "@type": "ListItem", "position": 3, "name": "Write a SPI flash image with Flashrom", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/write-spi-flash-with-flashrom/" },
+        { "@type": "ListItem", "position": 4, "name": "Program an AVR with AVRDUDE", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/program-avr-with-avrdude/" },
+        { "@type": "ListItem", "position": 5, "name": "Use ESP32 Bit Pirate as an OpenOCD JTAG adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/" },
+        { "@type": "ListItem", "position": 6, "name": "Use the USB IR Toy LIRC adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-usb-ir-toy-lirc-adapter/" },
+        { "@type": "ListItem", "position": 7, "name": "Use the SubGHz raw CDC adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-subghz-raw-cdc-adapter/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate work as a SUMP logic analyzer for PulseView?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can reboot into a SUMP-compatible logic analyzer adapter mode for PulseView or the browser Web Logic Analyzer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate work with Flashrom and serprog?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Use the Flashrom SPI adapter workflow or the browser SPI Flash Programmer when you need a serprog-compatible path for SPI flash work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate work as an AVR ISP or OpenOCD adapter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate has adapter workflows for AVRDUDE AVR ISP and OpenOCD-style JTAG/SWD work after the target wiring and voltage are known."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "USB adapter workflows", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/" }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Adapters wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 USB adapter workflows</p>
+<h1 id="page-title">USB adapter workflows with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate can reboot from the interactive CLI into dedicated USB adapter modes. Use it as a SUMP logic analyzer for PulseView, a serprog SPI flash programmer for Flashrom, an AVR ISP bridge for AVRDUDE, or an OpenOCD-style JTAG/SWD adapter after target wiring is known.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
+<a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-usb-adapters.svg" alt="USB adapter workflow visual with browser tools, firmware adapters and target hardware" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick USB adapter workflow</h2>
+<p class="section-intro">Adapter modes are dedicated USB sessions. Choose them when a host tool expects a known protocol instead of the normal ESP32 Bit Pirate CLI.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Flash ESP32 Bit Pirate and confirm the normal serial CLI works.</p></li>
+<li><span>02</span><p>Wire the target for the selected adapter: logic pins, SPI flash, AVR ISP, JTAG or SWD.</p></li>
+<li><span>03</span><p>Open USB mode and choose the dedicated adapter workflow.</p></li>
+<li><span>04</span><p>Let the board reboot or re-enumerate, then reconnect from PulseView, Flashrom, AVRDUDE, OpenOCD or a browser tool.</p></li>
+<li><span>05</span><p>Start with read-only detection before capture, erase, write, programming or debug sessions.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode usb
+adapters
+sump
+serprog
+avrdude
+openocd</code></pre>
+<p class="command-note">Example CLI flow. See the USB and adapters wiki pages for exact menu names, reboot behavior and firmware-specific options.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">USB adapter modes covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the adapter mode that matches the host-side tool.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>PulseView</span><h3>SUMP logic analyzer</h3><p>Capture digital signals from GPIOs with the Logic Sniffer / SUMP driver in PulseView or with the browser Web Logic Analyzer.</p></article>
+<article class="intent-card"><span>Flashrom</span><h3>serprog SPI flash programmer</h3><p>Expose a serprog-compatible USB CDC adapter for Flashrom, or use the browser SPI Flash Programmer for probe, read, erase and verify work.</p></article>
+<article class="intent-card"><span>AVR ISP</span><h3>AVRDUDE Bus Pirate SPI adapter</h3><p>Use the legacy Bus Pirate SPI programmer path expected by AVRDUDE for ATmega and ATtiny ISP targets.</p></article>
+<article class="intent-card"><span>OpenOCD</span><h3>JTAG/SWD adapter workflow</h3><p>Switch from pin discovery to an OpenOCD-style adapter path once target voltage, reset and debug pins are known.</p></article>
+<article class="intent-card"><span>LIRC</span><h3>USB IR Toy adapter</h3><p>Expose infrared RX/TX timing over USB CDC for LIRC tools such as mode2, xmode2 and irrecord.</p></article>
+<article class="intent-card"><span>Raw CDC</span><h3>SubGHz raw adapter</h3><p>Use a dedicated raw CDC path when external RF tooling expects a simple USB serial transport.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When a dedicated USB adapter helps</h2>
+<p class="section-intro">The normal CLI is great for interactive exploration. Adapter modes are better when a desktop or browser tool already knows the protocol it wants to speak.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Signal capture</span><h3>PulseView and SUMP</h3><p>Use SUMP when timing matters, labels need to match physical channels, or a waveform export is more useful than terminal output.</p></article>
+<article class="signal-card"><span>Firmware repair</span><h3>Flashrom and serprog</h3><p>Use serprog when Flashrom should probe, read, erase, write and verify an external SPI NOR flash chip through a known host workflow.</p></article>
+<article class="signal-card"><span>Target programming</span><h3>AVRDUDE and OpenOCD</h3><p>Use AVR ISP for AVR parts and OpenOCD for JTAG/SWD targets when toolchain integration matters more than an interactive shell.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">USB adapter hardware reminders</h2>
+<p class="section-intro">Adapter workflows still depend on careful target wiring. The host tool can only be as reliable as the electrical setup underneath it.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>Re-enumeration</span><p>Dedicated adapter modes may disconnect the normal CLI and appear as a different USB serial device. Reconnect from the host tool after switching modes.</p></article>
+<article class="note-card"><span>Voltage levels</span><p>ESP32 GPIO uses 3.3 V logic. Check target voltage before connecting SPI flash, AVR ISP, JTAG, SWD or logic analyzer inputs.</p></article>
+<article class="note-card"><span>Ground</span><p>Share ground with the target before capture, flash, programming or debug operations. Floating references create misleading failures.</p></article>
+<article class="note-card"><span>Read first</span><p>Probe, identify and read before erase, write or debug attach. Keep verified backups for flash and firmware workflows.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common USB adapter problems</h2>
+<p class="section-intro">Most failures are mode selection, serial port, wiring, target power or host-tool configuration problems.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>Tool cannot connect</span><p>Close the normal serial terminal, reselect the new USB port and confirm the board has rebooted into the adapter mode.</p></article>
+<article class="problem-card"><span>PulseView sees no activity</span><p>Check selected GPIO order, target ground, sample rate and whether the signal is actually toggling during capture.</p></article>
+<article class="problem-card"><span>Flashrom probe fails</span><p>Check CS, MISO, MOSI, SCK, target power, WP#/HOLD# and whether another controller is still driving the SPI flash.</p></article>
+<article class="problem-card"><span>AVRDUDE signature fails</span><p>Check RESET/CS, SPI direction, target power, shared ground and whether the AVR clock is too slow for the selected ISP speed.</p></article>
+<article class="problem-card"><span>OpenOCD cannot detect target</span><p>Return to pinout, VTref, reset, SWD/JTAG mode and target-specific config before blaming the adapter.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed USB adapter recipes</h2>
+<p class="section-intro">These pages are the task-level USB adapter workflows. This overview keeps the host-tool map here, while each recipe covers setup, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate USB adapter recipes">
+<a href="../../recipes/choose-dedicated-usb-adapter-mode/"><span>USB</span><strong>Choose a dedicated USB adapter mode</strong><small>Pick the adapter workflow before reconnecting from a host tool.</small></a>
+<a href="../../recipes/use-logic-analyzer-pulseview/"><span>SUMP</span><strong>Use ESP32 Bit Pirate with PulseView and SUMP</strong><small>Capture digital signals with PulseView or the Web Logic Analyzer.</small></a>
+<a href="../../recipes/write-spi-flash-with-flashrom/"><span>serprog</span><strong>Write a SPI flash image with Flashrom</strong><small>Use a Flashrom-compatible adapter for external SPI NOR chips.</small></a>
+<a href="../../recipes/program-avr-with-avrdude/"><span>AVR ISP</span><strong>Program an AVR with AVRDUDE</strong><small>Expose the Bus Pirate SPI adapter path for AVR ISP work.</small></a>
+<a href="../../recipes/use-openocd-jtag-adapter/"><span>OpenOCD</span><strong>Use ESP32 Bit Pirate as an OpenOCD JTAG adapter</strong><small>Move from pin discovery to a host-side debug workflow.</small></a>
+<a href="../../recipes/use-usb-ir-toy-lirc-adapter/"><span>LIRC</span><strong>Use the USB IR Toy LIRC adapter</strong><small>Capture and replay infrared timing through LIRC-compatible tools.</small></a>
+<a href="../../recipes/use-subghz-raw-cdc-adapter/"><span>CDC</span><strong>Use the SubGHz raw CDC adapter</strong><small>Expose a raw USB serial transport for external SubGHz tooling.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful USB adapter references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and adapter details.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>USB adapters reference</h3><p>Open the maintained firmware wiki for adapter modes, host tools and reboot behavior.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank">Open USB adapters reference</a></article>
+<article class="destination-card"><h3>USB mode reference</h3><p>Open the USB wiki page for mode selection and firmware-side USB behavior.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/12-USB" rel="noopener" target="_blank">Open USB mode reference</a></article>
+<article class="destination-card"><h3>Web Logic Analyzer</h3><p>Capture SUMP-compatible logic traces directly in a compatible browser.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Web Logic Analyzer</a></article>
+<article class="destination-card"><h3>Web SPI Flash Programmer</h3><p>Probe, read, erase, write and verify SPI flash through a serprog-compatible browser workflow.</p><a class="action-link" href="../../web-tools/spi-flash-programmer/">Open Web SPI Flash Programmer</a></article>
+<article class="destination-card"><h3>Web AVR Programmer</h3><p>Run AVRDUDE WebAssembly with Web Serial programmer profiles.</p><a class="action-link" href="../../web-tools/avr-programmer/">Open Web AVR Programmer</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">USB adapter FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate work as a SUMP logic analyzer for PulseView?</summary>
+<p>Yes. ESP32 Bit Pirate can reboot into a SUMP-compatible logic analyzer adapter mode for PulseView or the browser Web Logic Analyzer.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate work with Flashrom and serprog?</summary>
+<p>Yes. Use the Flashrom SPI adapter workflow or the browser SPI Flash Programmer when you need a serprog-compatible path for SPI flash work.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate work as an AVR ISP or OpenOCD adapter?</summary>
+<p>Yes. ESP32 Bit Pirate has adapter workflows for AVRDUDE AVR ISP and OpenOCD-style JTAG/SWD work after the target wiring and voltage are known.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" target="_blank" rel="noopener">Adapters Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

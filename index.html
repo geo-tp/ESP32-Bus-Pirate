@@ -533,6 +533,34 @@
       font-weight: 700;
     }
 
+    .protocols a,
+    .pill-list a,
+    .brand-signature-keywords a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      margin: -6px -9px;
+      padding: 6px 9px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .brand-signature-keywords a {
+      min-height: 28px;
+      margin: -5px -8px;
+      padding: 5px 8px;
+    }
+
+    .protocols a:hover,
+    .protocols a:focus-visible,
+    .pill-list a:hover,
+    .pill-list a:focus-visible,
+    .brand-signature-keywords a:hover,
+    .brand-signature-keywords a:focus-visible {
+      color: #00ffcc;
+      outline: none;
+    }
+
     section {
       scroll-margin-top: 22px;
       margin-top: 42px;
@@ -1003,6 +1031,30 @@
       color: #d8ddd8;
       font-size: 0.9rem;
       line-height: 1.55;
+    }
+
+    .protocol-card-link {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: auto;
+      color: #b8ffb8;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .protocol-card-link:hover,
+    .protocol-card-link:focus-visible {
+      color: var(--cyan);
+    }
+
+    html[data-theme="light"] .protocol-card-link {
+      color: #087345;
+    }
+
+    html[data-theme="light"] .protocol-card-link:hover,
+    html[data-theme="light"] .protocol-card-link:focus-visible {
+      color: #007f7a;
     }
 
     .faq-grid {
@@ -1485,7 +1537,7 @@
             <li><span>&gt;</span> automate from Python</li>
           </ul>
           <ul class="protocols" aria-label="Supported protocol families">
-            <li>I2C</li><li>SPI</li><li>UART</li><li>HD UART</li><li>AT</li><li>GPIO / DIO</li><li>PWM / Servo</li><li>1-Wire</li><li>2-Wire</li><li>3-Wire</li><li>SLE4442</li><li>JTAG</li><li>SWD</li><li>CAN</li><li>I2S</li><li>USB CDC</li><li>USB HID</li><li>USB MSC</li><li>USB Host</li><li>LED</li><li>Infrared</li><li>Sub-GHz</li><li>Wi-Fi</li><li>BLE</li><li>RF24</li><li>FM</li><li>Ethernet</li><li>Cellular</li><li>Web Serial</li>
+            <li><a href="protocols/i2c/">I2C</a></li><li><a href="protocols/spi/">SPI</a></li><li><a href="protocols/uart/">UART</a></li><li><a href="protocols/uart/">HD UART</a></li><li><a href="protocols/at/">AT</a></li><li><a href="protocols/dio/">GPIO / DIO</a></li><li><a href="protocols/dio/">PWM / Servo</a></li><li><a href="protocols/1wire/">1-Wire</a></li><li><a href="protocols/2wire/">2-Wire</a></li><li><a href="protocols/3wire/">3-Wire</a></li><li><a href="protocols/2wire/">SLE4442</a></li><li><a href="protocols/jtag/">JTAG</a></li><li><a href="protocols/jtag/">SWD</a></li><li><a href="protocols/can/">CAN</a></li><li><a href="protocols/i2s/">I2S</a></li><li><a href="protocols/usb-adapters/">USB CDC</a></li><li><a href="protocols/usb-adapters/">USB HID</a></li><li><a href="protocols/usb-adapters/">USB MSC</a></li><li><a href="protocols/usb-adapters/">USB Host</a></li><li><a href="protocols/dio/">LED</a></li><li><a href="protocols/infrared/">Infrared</a></li><li><a href="protocols/subghz/">Sub-GHz</a></li><li><a href="protocols/wifi/">Wi-Fi</a></li><li><a href="protocols/bluetooth/">BLE</a></li><li><a href="protocols/rf24/">RF24</a></li><li><a href="protocols/fm/">FM</a></li><li><a href="protocols/ethernet/">Ethernet</a></li><li><a href="protocols/at/">Cellular</a></li><li><a href="web-tools/web-serial-terminal/">Web Serial</a></li>
           </ul>
           <p>Use it from a serial terminal, from browser-based tools, or as a dedicated USB adapter for firmware and signal workflows.</p>
         </div>
@@ -1505,10 +1557,10 @@
           <h2 id="bit-pirate-identity-title">Powering the open-source ecosystem.</h2>
           <p>The Bit Pirate firmware is complemented by scripting, hardware dock, extension, adapters, browser tools, documentation and practical embedded workflows to enable comprehensive hardware debugging and development with serial interfaces or Wi-Fi connectivity.</p>
           <ul class="brand-signature-keywords" aria-label="ESP32 Bit Pirate keywords">
-            <li>ESP32-S3 firmware</li>
-            <li>hardware debugging</li>
-            <li>Web Serial tools</li>
-            <li>embedded workbench</li>
+            <li><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">ESP32-S3 firmware</a></li>
+            <li><a href="recipes/">hardware debugging</a></li>
+            <li><a href="web-tools/">Web Serial tools</a></li>
+            <li><a href="#protocol-workbench">embedded workbench</a></li>
           </ul>
         </div>
       </div>
@@ -1729,25 +1781,25 @@
         <article class="protocol-card">
           <h3>I2C, SPI, UART and GPIO</h3>
           <p>Scan devices, read registers, dump memories, bridge serial ports, generate pulses, inspect pin states and test embedded boards without writing a custom sketch first.</p>
-          <ul class="pill-list" aria-label="Wired protocol keywords"><li>I2C scanner</li><li>SPI flash</li><li>UART terminal</li><li>GPIO</li></ul>
+          <ul class="pill-list" aria-label="Wired protocol keywords"><li><a href="protocols/i2c/">I2C scanner</a></li><li><a href="web-tools/spi-flash-programmer/">SPI flash</a></li><li><a href="web-tools/web-serial-terminal/">UART terminal</a></li><li><a href="protocols/dio/">GPIO</a></li></ul>
         </article>
 
         <article class="protocol-card">
           <h3>Firmware and memory workflows</h3>
           <p>Flash supported ESP32 boards, read SPI NOR flash, program AVR targets, explore STM32 bootloader or ST-Link flows and keep repeatable firmware backup tasks in the browser.</p>
-          <ul class="pill-list" aria-label="Firmware workflow keywords"><li>Web flasher</li><li>flashrom</li><li>AVRDUDE</li><li>STM32</li></ul>
+          <ul class="pill-list" aria-label="Firmware workflow keywords"><li><a href="webflasher/">Web flasher</a></li><li><a href="web-tools/spi-flash-programmer/">flashrom</a></li><li><a href="web-tools/avr-programmer/">AVRDUDE</a></li><li><a href="web-tools/stm32-tool/">STM32</a></li></ul>
         </article>
 
         <article class="protocol-card">
           <h3>Signals, adapters and automation</h3>
           <p>Use SUMP logic analyzer capture, BPIO2 GPIO/I2C/SPI control, USB CDC adapter modes and Python scripts when manual debugging needs to become a repeatable test.</p>
-          <ul class="pill-list" aria-label="Signal workflow keywords"><li>SUMP</li><li>BPIO2</li><li>USB CDC</li><li>Python</li></ul>
+          <ul class="pill-list" aria-label="Signal workflow keywords"><li><a href="web-tools/logic-analyzer/">SUMP</a></li><li><a href="web-tools/bpio2/">BPIO2</a></li><li><a href="protocols/usb-adapters/">USB CDC</a></li><li><a href="web-tools/python-lab/">Python</a></li></ul>
         </article>
 
         <article class="protocol-card">
           <h3>Wireless and mixed benches</h3>
           <p>Explore Wi-Fi, BLE, infrared, Sub-GHz, RFID and companion board features alongside wired protocols so a single project can cover many real lab situations.</p>
-          <ul class="pill-list" aria-label="Wireless workflow keywords"><li>Wi-Fi</li><li>BLE</li><li>Infrared</li><li>Sub-GHz</li></ul>
+          <ul class="pill-list" aria-label="Wireless workflow keywords"><li><a href="protocols/wifi/">Wi-Fi</a></li><li><a href="protocols/bluetooth/">BLE</a></li><li><a href="protocols/infrared/">Infrared</a></li><li><a href="protocols/subghz/">Sub-GHz</a></li></ul>
         </article>
       </div>
     </section>

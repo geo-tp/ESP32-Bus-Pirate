@@ -16,6 +16,63 @@
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/</loc>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2c/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/spi/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/1wire/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/2wire/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/</loc>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/web-serial-terminal/</loc>
   </url>
   <url>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a practical JTAG and SWD workbench to scan candidate debug pins, configure scan GPIO groups, verify pinouts and move into OpenOCD adapter workflows.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="JTAG and SWD Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 JTAG and SWD workbench for pin scans, scan group configuration, pinout checks and OpenOCD adapter workflows.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png">
+<meta property="og:image:alt" content="Preview image for JTAG and SWD debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JTAG and SWD Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 JTAG and SWD workbench for pin scans, scan group configuration, pinout checks and OpenOCD adapter workflows.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png">
+<meta name="twitter:image:alt" content="Preview image for JTAG and SWD debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/">
+<title>JTAG and SWD Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "JTAG and SWD Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as a practical JTAG and SWD workbench to scan candidate debug pins, configure scan GPIO groups, verify pinouts and move into OpenOCD adapter workflows.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 JTAG debugging",
+        "ESP32 SWD pin scanner",
+        "JTAG pinout scan",
+        "OpenOCD adapter",
+        "JTAGULATOR-style scan"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate JTAG and SWD recipes",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Configure the JTAG/SWD scan pin group",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-jtag-swd-scan-pins/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Scan for SWD pins",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-swd-pinout/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Scan for a JTAG pinout",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Use OpenOCD adapter mode",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate scan for SWD pins?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can scan a selected GPIO group to look for SWDIO and SWCLK candidates before verifying the result with a normal debugger workflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate scan a JTAG pinout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The JTAG mode can run a JTAGULATOR-style scan over selected candidate pins to look for TDI, TDO, TCK and TMS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I run OpenOCD before scanning pins?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Use OpenOCD adapter mode only after target voltage, ground and the debug pinout are known or strongly confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "JTAG and SWD debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../">Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG" rel="noopener" target="_blank">JTAG wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 JTAG and SWD protocol debugging</p>
+<h1 id="page-title">JTAG and SWD debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical JTAG and SWD workbench. Use it to configure candidate GPIOs, scan for SWD pins, run JTAGULATOR-style pinout discovery and switch to OpenOCD adapter mode after the wiring is known.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/scan-swd-pinout/">Start with an SWD scan recipe</a>
+<a class="action-link" href="../../webflasher/">Flash ESP32 Bit Pirate</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-jtag.svg" alt="JTAG and SWD debug pin scanning visual with an ESP32 board and target pads" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick JTAG/SWD workflow</h2>
+<p class="section-intro">Start with voltage, ground and a limited candidate pin group. Treat scan results as candidates, then verify them with the normal debug workflow before relying on the mapping.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Confirm target voltage, power state and common ground.</p></li>
+<li><span>02</span><p>Wire only the candidate debug pads to selected ESP32 Bit Pirate GPIOs.</p></li>
+<li><span>03</span><p>Review or configure the GPIO group used by SWD and JTAG scans.</p></li>
+<li><span>04</span><p>Run an SWD scan for ARM-style SWDIO/SWCLK targets, or a JTAG scan for TDI/TDO/TCK/TMS.</p></li>
+<li><span>05</span><p>Verify the discovered pinout with OpenOCD or a known debugger setup before deeper target work.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode jtag
+config
+scan swd
+scan jtag
+openocd</code></pre>
+<p class="command-note">Example CLI flow. See the JTAG wiki for exact syntax, pin group behavior and firmware-specific options.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">JTAG and SWD workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right debug workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Configure</span><h3>JTAG/SWD scan pin group</h3><p>Review the GPIOs that the firmware will test before running a brute-force scan on unknown debug pads.</p></article>
+<article class="intent-card"><span>Scan</span><h3>SWD pin scanner</h3><p>Search a controlled candidate set for SWDIO and SWCLK when a board exposes unlabelled ARM debug pads.</p></article>
+<article class="intent-card"><span>Discover</span><h3>JTAG pinout scan</h3><p>Run a JTAGULATOR-style search for TDI, TDO, TCK and TMS instead of manually trying every wire order.</p></article>
+<article class="intent-card"><span>Verify</span><h3>OpenOCD adapter workflow</h3><p>Move from discovery to a host-side debug session only after pinout, voltage and target state are confirmed.</p></article>
+<article class="intent-card"><span>Document</span><h3>Repeatable debug mappings</h3><p>Save the candidate pinout, voltage and reset notes so later sessions start from a known-safe configuration.</p></article>
+<article class="intent-card"><span>Troubleshoot</span><h3>Locked or silent targets</h3><p>Separate wiring issues from reset, power, security lock or disabled debug interface problems.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an ESP32-S3 JTAG/SWD workbench helps</h2>
+<p class="section-intro">Debug headers are not always labelled. A small external scan workflow can reduce blind probing before you connect a full debugger or write an OpenOCD config.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Unknown board</span><h3>Before guessing pad order</h3><p>Use a limited candidate GPIO set to explore suspected debug pads without trying every JTAG or SWD combination by hand.</p></article>
+<article class="signal-card"><span>Bring-up</span><h3>Before OpenOCD</h3><p>Confirm the basic debug pinout and target voltage before switching to an adapter mode that expects known wiring.</p></article>
+<article class="signal-card"><span>Repair bench</span><h3>Before blaming the target</h3><p>Check power, reset state, strap pins and debug locks before assuming a failed scan means the interface is absent.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">JTAG/SWD hardware reminders</h2>
+<p class="section-intro">These notes stay short. The detailed command references live in the project documentation and firmware repository.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>Voltage</span><p>ESP32 GPIO uses 3.3 V logic. Confirm the target level before wiring debug pads, and use level adaptation when the target is not safe for direct GPIO connection.</p></article>
+<article class="note-card"><span>Ground</span><p>Share ground only after the target power domain is understood. A missing or unsafe ground reference can break scans or damage hardware.</p></article>
+<article class="note-card"><span>Reset state</span><p>Targets held in reset, deep sleep or low-power modes may not respond even when the JTAG or SWD pins are correct.</p></article>
+<article class="note-card"><span>Candidate pins</span><p>Keep the scan group small. JTAG permutation scans get slower and noisier as the number of candidate GPIOs grows.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common JTAG/SWD problems</h2>
+<p class="section-intro">Most failures come from voltage, reset, candidate pin choice, target lock state or using adapter mode before discovery is complete.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>No SWD pins found</span><p>Check target power, shared ground, candidate pads, reset state and whether SWD is disabled or locked.</p></article>
+<article class="problem-card"><span>JTAG scan too slow</span><p>Reduce the candidate GPIO group before running permutation scans over TDI, TDO, TCK and TMS.</p></article>
+<article class="problem-card"><span>Unstable result</span><p>Repeat the scan with shorter wires, stable target power and a smaller candidate group before documenting the mapping.</p></article>
+<article class="problem-card"><span>OpenOCD cannot connect</span><p>Return to pinout, voltage, reset and target configuration checks before changing OpenOCD scripts.</p></article>
+<article class="problem-card"><span>Wrong interface assumed</span><p>Try SWD first for likely ARM Cortex targets, and JTAG when the board or SoC documentation suggests a full JTAG chain.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed JTAG and SWD recipes</h2>
+<p class="section-intro">These pages are the task-level workflows. This overview keeps the protocol-level guidance here, while each recipe covers setup, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate JTAG and SWD recipes">
+<a href="../../recipes/configure-jtag-swd-scan-pins/"><span>Configure</span><strong>Configure the JTAG/SWD scan pin group</strong><small>Choose which GPIOs are included in SWD or JTAG brute-force scans.</small></a>
+<a href="../../recipes/scan-swd-pinout/"><span>SWD</span><strong>Scan for SWD pins</strong><small>Search for SWDIO and SWCLK on a controlled candidate pad set.</small></a>
+<a href="../../recipes/scan-jtag-pinout/"><span>JTAG</span><strong>Scan for a JTAG pinout</strong><small>Find candidate TDI, TDO, TCK and TMS wiring before adapter mode.</small></a>
+<a href="../../recipes/use-openocd-jtag-adapter/"><span>OpenOCD</span><strong>Use OpenOCD adapter mode</strong><small>Switch to host-side debugging after the wiring and voltage are confirmed.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful JTAG/SWD references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the JTAG command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>JTAG command reference</h3><p>Open the maintained firmware wiki for JTAG mode commands and behavior.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG" rel="noopener" target="_blank">Open JTAG command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring target debug pads.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>USB adapter modes</h3><p>Use the dedicated adapter workflow when switching the firmware into OpenOCD or other host-tool modes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank">Open USB adapter reference</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">JTAG and SWD debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate scan for SWD pins?</summary>
+<p>Yes. ESP32 Bit Pirate can scan a selected GPIO group to look for SWDIO and SWCLK candidates before verifying the result with a normal debugger workflow.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate scan a JTAG pinout?</summary>
+<p>Yes. The JTAG mode can run a JTAGULATOR-style scan over selected candidate pins to look for TDI, TDO, TCK and TMS.</p>
+</details>
+<details>
+<summary>Should I run OpenOCD before scanning pins?</summary>
+<p>No. Use OpenOCD adapter mode only after target voltage, ground and the debug pinout are known or strongly confirmed.</p>
+</details>
+</div>
+</section>
+
+</main>
+</body>
+</html>

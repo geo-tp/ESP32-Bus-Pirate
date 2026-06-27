@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a practical GPIO and DIO workbench to read logic levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servo signals.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="GPIO / DIO Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 GPIO and DIO workbench for logic level checks, active pin scans, microsecond pulses, frequency measurement, PWM and servo tests.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-dio.png">
+<meta property="og:image:alt" content="Preview image for GPIO and DIO debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GPIO / DIO Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 GPIO and DIO workbench for logic levels, active pin scans, pulses, PWM, servo signals and quick frequency checks.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-dio.png">
+<meta name="twitter:image:alt" content="Preview image for GPIO and DIO debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/">
+<title>GPIO / DIO Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "GPIO / DIO Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as a practical GPIO and DIO workbench to read logic levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servo signals.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 GPIO debugging",
+        "ESP32 DIO mode",
+        "GPIO logic level check",
+        "microsecond GPIO pulse",
+        "ESP32 PWM and servo test"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate GPIO and DIO recipes",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Check logic levels before wiring a target",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-logic-levels-before-wiring/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Choose the right GPIO pinout before wiring",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/choose-gpio-pinout-before-wiring/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Measure a GPIO signal frequency",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-gpio-frequency/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Sniff GPIO edges from the CLI",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-gpio-edges-cli/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Pulse a GPIO in microseconds",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/pulse-gpio-microseconds/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Generate PWM or move a servo",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/generate-pwm-servo-signal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Detect an unknown GPIO signal with wizard",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/detect-unknown-pin-with-wizard/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "Display a GPIO logic trace on the device screen",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/view-logic-on-device-screen/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "name": "Display analog GPIO values on screen",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/view-analog-gpio-on-screen/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "name": "Listen to GPIO activity as audio",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/listen-gpio-activity-as-audio/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate read GPIO logic levels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. DIO mode can show pin states, read a selected GPIO and scan for active lines before you choose a protocol-specific workflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate generate GPIO pulses or PWM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. DIO mode includes pulse, toggle, PWM and servo-oriented workflows for controlled bench tests on compatible signal inputs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate replace a logic analyzer for GPIO work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DIO mode is useful for quick checks such as levels, edges and rough frequency. Use the logic analyzer workflow when you need accurate timing or waveform capture."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "GPIO / DIO debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/09-DIO" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>DIO wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 GPIO and digital I/O debugging</p>
+<h1 id="page-title">GPIO / DIO debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical GPIO and digital I/O workbench. Use it to check logic levels, scan active pins, sniff edges, send microsecond pulses, measure rough frequency, generate PWM and test servo-style control signals before writing target firmware.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/check-logic-levels-before-wiring/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h3l2-5 4 10 3-7 2 2h2"></path></svg>Start with a logic-level check</a>
+<a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-dio.svg" alt="GPIO and DIO debugging visual with an ESP32 board, digital input pins, pulse output and logic-level signals" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick GPIO / DIO workflow</h2>
+<p class="section-intro">Start with passive checks, confirm the pin is safe, then move to output, pulse, PWM or servo tests only when the wiring and target logic level are understood.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Check the board pinout and choose a GPIO that is exposed, safe and not already reserved by onboard hardware.</p></li>
+<li><span>02</span><p>Connect common ground first, then connect only the signal you want to inspect.</p></li>
+<li><span>03</span><p>Start DIO mode and read the pin state before driving anything from the ESP32.</p></li>
+<li><span>04</span><p>Use scan, sniff or measure to decide whether the line is idle, active, clock-like or better suited to a logic analyzer capture.</p></li>
+<li><span>05</span><p>Use pulse, toggle, PWM or servo output only on inputs that are safe for 3.3 V ESP32 GPIO levels.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode dio
+pins
+read 21
+sniff 22
+measure 5 2000
+pulse 1 50
+pwm 5 1000 75
+reset 5</code></pre>
+<p class="command-note">Example CLI flow. See the DIO wiki for exact syntax, protected GPIO notes and firmware-specific behavior.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">GPIO and DIO workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right digital I/O workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Check</span><h3>GPIO logic-level checks</h3><p>Confirm whether a line is high, low, floating or unsafe before assigning it to a protocol mode or driving it as an output.</p></article>
+<article class="intent-card"><span>Scan</span><h3>Active pin discovery</h3><p>Use pin scans and quick triage workflows to find lines that are changing before trying UART, I2C, SPI or a full logic capture.</p></article>
+<article class="intent-card"><span>Sniff</span><h3>GPIO edge logging</h3><p>Log rising and falling edges from the CLI when the main question is whether a pin is alive and changing.</p></article>
+<article class="intent-card"><span>Pulse</span><h3>Microsecond trigger pulses</h3><p>Generate short reset, trigger, enable or timing pulses without writing a temporary sketch for the ESP32.</p></article>
+<article class="intent-card"><span>Measure</span><h3>Rough frequency checks</h3><p>Count transitions over a short window to decide whether a signal behaves like a clock, interrupt or periodic output.</p></article>
+<article class="intent-card"><span>Drive</span><h3>PWM and servo tests</h3><p>Generate simple PWM or servo-style control signals for lab inputs, LED drivers, optocouplers and externally powered servo tests.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an ESP32-S3 GPIO workbench helps</h2>
+<p class="section-intro">DIO mode is often the first stop before picking a real protocol. It answers whether a line is safe, exposed, idle, active or worth capturing in more detail.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Unknown pin</span><h3>Before choosing a protocol</h3><p>Use basic pin reads, scans and edge sniffing to decide whether a test pad looks like GPIO, clock, interrupt, reset or a protocol signal.</p></article>
+<article class="signal-card"><span>Bench trigger</span><h3>Before writing a helper sketch</h3><p>Use pulse, toggle or PWM when you need a quick signal generator for a reset input, enable line or simple timing experiment.</p></article>
+<article class="signal-card"><span>Board bring-up</span><h3>Before blaming firmware</h3><p>Many failures come from wrong GPIO selection, missing ground, unsafe voltage levels, floating inputs or onboard peripherals using the same pin.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">GPIO hardware reminders</h2>
+<p class="section-intro">Digital I/O looks simple, but wrong voltage, direction or pin selection can damage hardware or hide the real problem.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>Voltage levels</span><p>ESP32 GPIO is 3.3 V logic. Use the supported level-adaptation path before working with 1.8 V or 5 V targets.</p></article>
+<article class="note-card"><span>Direction</span><p>Start as input when probing unknown hardware. Only drive a line after confirming that the target input can safely accept the signal.</p></article>
+<article class="note-card"><span>Common ground</span><p>Logic reads, pulses, PWM and frequency checks need a shared reference between ESP32 Bit Pirate and the target circuit.</p></article>
+<article class="note-card"><span>Protected pins</span><p>Some GPIOs may be reserved, not exposed or connected to onboard screen, SD card, buttons, USB or radio hardware depending on the board.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common GPIO / DIO problems</h2>
+<p class="section-intro">Most digital I/O issues are wiring, direction, level or timing problems. Check these before assuming the target firmware is wrong.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>Always high or low</span><p>Check whether the line is pulled up, pulled down, floating, held by another device or using an unexpected idle state.</p></article>
+<article class="problem-card"><span>No edge output</span><p>Verify the target action is really happening, the selected GPIO matches the physical pin and common ground is connected.</p></article>
+<article class="problem-card"><span>Pulse not detected</span><p>Increase pulse width, confirm the target input threshold and use a logic analyzer when the pulse is too short to observe from the CLI.</p></article>
+<article class="problem-card"><span>PWM or servo unstable</span><p>Power loads externally, share ground, avoid driving motors from GPIO and reset the pin after testing.</p></article>
+<article class="problem-card"><span>Wrong frequency</span><p>Use DIO measurement as a rough check. Move to SUMP, PulseView or the Web Logic Analyzer when precise timing matters.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed GPIO and DIO recipes</h2>
+<p class="section-intro">These pages are the task-level digital I/O workflows. This overview keeps the protocol-level guidance here, while each recipe covers wiring, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate GPIO and DIO recipes">
+<a href="../../recipes/check-logic-levels-before-wiring/"><span>Check</span><strong>Check logic levels before wiring a target</strong><small>Confirm voltage, shared ground and GPIO direction before connecting an unknown digital target.</small></a>
+<a href="../../recipes/choose-gpio-pinout-before-wiring/"><span>Pinout</span><strong>Choose the right GPIO pinout before wiring</strong><small>Check exposed pins before assigning protocol or DIO roles.</small></a>
+<a href="../../recipes/measure-gpio-frequency/"><span>Measure</span><strong>Measure a GPIO signal frequency</strong><small>Check if a pin is alive and roughly how fast it toggles.</small></a>
+<a href="../../recipes/sniff-gpio-edges-cli/"><span>Edges</span><strong>Sniff GPIO edges from the CLI</strong><small>Find out whether a pin changes before opening a full capture.</small></a>
+<a href="../../recipes/pulse-gpio-microseconds/"><span>Pulse</span><strong>Pulse a GPIO in microseconds</strong><small>Generate a short trigger pulse without writing a sketch.</small></a>
+<a href="../../recipes/generate-pwm-servo-signal/"><span>PWM</span><strong>Generate PWM or move a servo</strong><small>Generate a quick test signal from the bench.</small></a>
+<a href="../../recipes/detect-unknown-pin-with-wizard/"><span>Wizard</span><strong>Detect an unknown GPIO signal with wizard</strong><small>Use signal triage before selecting a protocol mode.</small></a>
+<a href="../../recipes/view-logic-on-device-screen/"><span>Screen</span><strong>View GPIO logic on the device screen</strong><small>Get a quick visual signal check without opening PulseView.</small></a>
+<a href="../../recipes/view-analog-gpio-on-screen/"><span>ADC</span><strong>View analog GPIO values on screen</strong><small>Check whether a sensor output changes before writing ADC code.</small></a>
+<a href="../../recipes/listen-gpio-activity-as-audio/"><span>Audio</span><strong>Listen to GPIO activity as audio</strong><small>Use your ears as a quick activity detector for repetitive signals.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful GPIO / DIO references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the DIO command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>DIO command reference</h3><p>Open the maintained firmware wiki for DIO mode commands, examples and hardware notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/09-DIO" rel="noopener" target="_blank">Open DIO command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIO notes before wiring a target signal.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>Bit Bang GPIO controller</h3><p>Use the browser-based BPIO2 tool for direct GPIO experiments from the web interface.</p><a class="action-link" href="../../web-tools/bpio2/">Open Bit Bang GPIO browser controller</a></article>
+<article class="destination-card"><h3>Logic Analyzer</h3><p>Move from quick DIO checks to waveform capture when timing, duty cycle or protocol shape matters.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Web Logic Analyzer</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">GPIO / DIO debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate read GPIO logic levels?</summary>
+<p>Yes. DIO mode can show pin states, read a selected GPIO and scan for active lines before you choose a protocol-specific workflow.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate generate GPIO pulses or PWM?</summary>
+<p>Yes. DIO mode includes pulse, toggle, PWM and servo-oriented workflows for controlled bench tests on compatible signal inputs.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate replace a logic analyzer for GPIO work?</summary>
+<p>DIO mode is useful for quick checks such as levels, edges and rough frequency. Use the logic analyzer workflow when you need accurate timing or waveform capture.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/09-DIO" target="_blank" rel="noopener">DIO Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

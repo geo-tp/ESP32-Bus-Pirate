@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a practical I2S audio workbench to configure BCLK, LRCK and DATA pins, play test tones, record microphone samples and verify speaker or microphone wiring.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="I2S Audio Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 I2S workbench for BCLK/LRCK/DATA setup, microphone checks, speaker tests, tone generation and audio signal recording.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2s.png">
+<meta property="og:image:alt" content="Preview image for I2S audio debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="I2S Audio Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 I2S audio workbench for pin configuration, microphone recording, speaker tests and test tone generation.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2s.png">
+<meta name="twitter:image:alt" content="Preview image for I2S audio debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/">
+<title>I2S Audio Debugging with ESP32 Bit Pirate | ESP32-S3 Audio Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "I2S Audio Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as a practical I2S audio workbench to configure BCLK, LRCK and DATA pins, play test tones, record microphone samples and verify speaker or microphone wiring.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 I2S debugging",
+        "I2S microphone test",
+        "I2S speaker test",
+        "I2S test tone",
+        "ESP32-S3 audio workbench"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate I2S recipes",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Test an I2S microphone or speaker",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/test-i2s-microphone-speaker/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Play an I2S test tone",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/play-i2s-test-tone/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Record from an I2S microphone",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-i2s-microphone-signal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Listen to GPIO activity as audio",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/listen-gpio-activity-as-audio/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate test an I2S microphone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. I2S mode can record from an I2S microphone, visualize signal activity and run a microphone test to check input presence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate play an I2S test tone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. I2S mode can play tones and speaker test patterns through a compatible I2S output path after BCLK, LRCK and DATA are configured."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What I2S lines should I check first?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with BCLK, LRCK or WS, DATA, shared ground and the correct data direction for microphone input or speaker output."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "I2S audio debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/16-I2S" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>I2S wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 I2S audio debugging</p>
+<h1 id="page-title">I2S audio debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical I2S audio workbench. Use it to configure BCLK, LRCK and DATA, play repeatable test tones, record microphone activity and confirm speaker or microphone wiring before writing a custom audio sketch.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/test-i2s-microphone-speaker/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with an I2S test recipe</a>
+<a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-i2s.svg" alt="I2S audio debugging visual with an ESP32 board, microphone or speaker module, BCLK, LRCK and DATA lines" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick I2S workflow</h2>
+<p class="section-intro">Start by confirming the three signal lines and the audio direction. Use built-in tests before spending time on custom firmware or audio processing code.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Wire BCLK, LRCK or WS, DATA, VCC and GND to the I2S microphone, amplifier or audio module.</p></li>
+<li><span>02</span><p>Start I2S mode and configure pins, sample rate and bit depth for the target module.</p></li>
+<li><span>03</span><p>For output, play a known test tone or run the speaker test before trying real audio data.</p></li>
+<li><span>04</span><p>For input, run the microphone test, then record and compare silence versus sound levels.</p></li>
+<li><span>05</span><p>Use a logic analyzer on BCLK, LRCK and DATA if the audio path stays silent or unstable.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode i2s
+config
+play 440 1000
+test speaker
+test mic
+record
+reset</code></pre>
+<p class="command-note">Example CLI flow. See the I2S wiki for exact syntax, pin prompts, sample settings and firmware-specific behavior.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">I2S workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right I2S audio workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Configure</span><h3>I2S pin and sample setup</h3><p>Set BCLK, LRCK, DATA, sample rate and bit depth so the ESP32-S3 and audio module agree before any test.</p></article>
+<article class="intent-card"><span>Play</span><h3>I2S test tone output</h3><p>Generate a known tone to confirm that the output clocking, data line and speaker or amplifier path are alive.</p></article>
+<article class="intent-card"><span>Test</span><h3>I2S speaker checks</h3><p>Run repeatable speaker patterns before debugging playback data, file handling or higher-level audio code.</p></article>
+<article class="intent-card"><span>Record</span><h3>I2S microphone recording</h3><p>Record microphone activity and compare silence versus sound to confirm that the input path is producing samples.</p></article>
+<article class="intent-card"><span>Measure</span><h3>Signal visualization</h3><p>Watch level changes, peak-to-peak movement or sample activity before interpreting audio quality.</p></article>
+<article class="intent-card"><span>Debug</span><h3>Clock and data line checks</h3><p>Separate swapped BCLK/LRCK, wrong DATA direction, bad power and sample setting mistakes before replacing hardware.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an ESP32-S3 I2S workbench helps</h2>
+<p class="section-intro">I2S problems are often wiring, direction or configuration issues. A small external workflow can confirm the audio path before you add application code.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Audio bring-up</span><h3>Before writing a sketch</h3><p>Use tone and microphone tests to answer whether the module is wired and clocked correctly before writing custom firmware.</p></article>
+<article class="signal-card"><span>Direction check</span><h3>Before blaming samples</h3><p>Microphones drive DATA toward the ESP32, while speaker or amplifier paths receive DATA from the ESP32. Mixing directions creates silent tests.</p></article>
+<article class="signal-card"><span>Clock visibility</span><h3>Before changing modules</h3><p>Capture BCLK and LRCK with a logic analyzer when a module stays silent, then check whether the clocks match the expected sample setup.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">I2S hardware reminders</h2>
+<p class="section-intro">These notes stay short. The detailed command references live in the project documentation and firmware repository.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>BCLK</span><p>The bit clock must reach the I2S target. If BCLK is missing, most microphones, DACs and amplifiers will look completely silent.</p></article>
+<article class="note-card"><span>LRCK / WS</span><p>The word select or left-right clock separates audio channels and sample frames. Swapping it with BCLK is a common first wiring error.</p></article>
+<article class="note-card"><span>DATA direction</span><p>Check whether DATA is input from a microphone or output to a speaker amplifier. Direction mistakes are easy to miss on a three-wire audio bus.</p></article>
+<article class="note-card"><span>Power and levels</span><p>Use a module voltage compatible with the selected hardware path, share ground and avoid driving ESP32 GPIO outside its safe logic range.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common I2S problems</h2>
+<p class="section-intro">Most I2S failures come from swapped clocks, wrong data direction, unsupported module type, missing ground or sample settings that do not match the target.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>No microphone activity</span><p>Check DATA direction, module power, shared ground, BCLK, LRCK and whether <code>test mic</code> detects any signal before interpreting <code>record</code>.</p></article>
+<article class="problem-card"><span>No speaker output</span><p>Run a known tone first, then check BCLK, LRCK, DATA output wiring, amplifier enable pins, gain and speaker power.</p></article>
+<article class="problem-card"><span>Swapped clocks</span><p>LRCK and BCLK are easy to confuse. Use the labels WS, LRCLK, LRCK and BCLK on the module silkscreen carefully.</p></article>
+<article class="problem-card"><span>Wrong microphone type</span><p>Analog microphones do not speak I2S. Use an actual I2S digital microphone module for this workflow.</p></article>
+<article class="problem-card"><span>Unstable or distorted audio</span><p>Check sample rate, bit depth, clock stability, wire length, module voltage and whether the target expects mono or stereo framing.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed I2S recipes</h2>
+<p class="section-intro">These pages are the task-level I2S workflows. This overview keeps the protocol-level guidance here, while each recipe covers setup, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate I2S recipes">
+<a href="../../recipes/test-i2s-microphone-speaker/"><span>Test</span><strong>Test an I2S microphone or speaker</strong><small>Verify basic I2S wiring with built-in input and output checks.</small></a>
+<a href="../../recipes/play-i2s-test-tone/"><span>Play</span><strong>Play an I2S test tone</strong><small>Generate a known tone to confirm output clocks and DATA wiring.</small></a>
+<a href="../../recipes/record-i2s-microphone-signal/"><span>Record</span><strong>Record from an I2S microphone</strong><small>Confirm microphone signal activity before custom audio code.</small></a>
+<a href="../../recipes/listen-gpio-activity-as-audio/"><span>Listen</span><strong>Listen to GPIO activity as audio</strong><small>Route GPIO activity to configured I2S audio output for a quick audible signal check.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful I2S references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the I2S command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>I2S command reference</h3><p>Open the maintained firmware wiki for I2S commands, pin configuration, tests and usage notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/16-I2S" rel="noopener" target="_blank">Open I2S command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an I2S microphone, DAC or amplifier.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>Logic Analyzer</h3><p>Capture BCLK, LRCK and DATA timing when you need to inspect I2S clocks and data activity.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Logic Analyzer</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">I2S debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate test an I2S microphone?</summary>
+<p>Yes. I2S mode can record from an I2S microphone, visualize signal activity and run a microphone test to check input presence.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate play an I2S test tone?</summary>
+<p>Yes. I2S mode can play tones and speaker test patterns through a compatible I2S output path after BCLK, LRCK and DATA are configured.</p>
+</details>
+<details>
+<summary>What I2S lines should I check first?</summary>
+<p>Start with BCLK, LRCK or WS, DATA, shared ground and the correct data direction for microphone input or speaker output.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/16-I2S" target="_blank" rel="noopener">I2S Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

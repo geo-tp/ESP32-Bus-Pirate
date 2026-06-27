@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a practical Wi-Fi workbench to scan networks, find local devices, run passive 2.4 GHz sniffing, host the Web CLI and test authorized network services.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Wi-Fi Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 Wi-Fi workbench for network scans, local device discovery, passive sniffing, Web CLI hotspot and authorized service checks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-wifi.png">
+<meta property="og:image:alt" content="Preview image for Wi-Fi debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wi-Fi Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 Wi-Fi workbench for scans, local discovery, passive sniffing, Web CLI hotspot and network checks.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-wifi.png">
+<meta name="twitter:image:alt" content="Preview image for Wi-Fi debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/">
+<title>Wi-Fi Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "Wi-Fi Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as a practical Wi-Fi workbench to scan networks, find local devices, run passive 2.4 GHz sniffing, host the Web CLI and test authorized network services.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 Wi-Fi debugging",
+        "ESP32 Wi-Fi scanner",
+        "ESP32 passive Wi-Fi sniffer",
+        "ESP32 Web CLI hotspot",
+        "ESP32 network diagnostics"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate Wi-Fi recipes",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Scan Wi-Fi and find local devices", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-wifi-find-local-devices/" },
+        { "@type": "ListItem", "position": 2, "name": "Run a passive Wi-Fi sniffer session", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/run-passive-wifi-sniffer-session/" },
+        { "@type": "ListItem", "position": 3, "name": "Start a Wi-Fi access point", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/start-wifi-access-point-mode/" },
+        { "@type": "ListItem", "position": 4, "name": "Start the Web CLI through Wi-Fi hotspot", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/start-web-cli-hotspot/" },
+        { "@type": "ListItem", "position": 5, "name": "Check an HTTP endpoint", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-http-endpoint/" },
+        { "@type": "ListItem", "position": 6, "name": "Analyze a URL with HTTP APIs", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/analyze-url-with-http-apis/" },
+        { "@type": "ListItem", "position": 7, "name": "Check open ports with nmap mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-open-ports-nmap/" },
+        { "@type": "ListItem", "position": 8, "name": "Test raw TCP with nc or telnet", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/test-raw-tcp-nc-telnet/" },
+        { "@type": "ListItem", "position": 9, "name": "Open a Modbus TCP session", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-modbus-tcp-session/" },
+        { "@type": "ListItem", "position": 10, "name": "Look up a MAC address vendor", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/lookup-mac-address-vendor/" },
+        { "@type": "ListItem", "position": 11, "name": "Look up IP address details", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/lookup-ip-address-details/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate scan Wi-Fi networks and local devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can scan nearby Wi-Fi networks, connect to an authorized network and help discover local devices from the firmware CLI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate run a passive Wi-Fi sniffer session?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can use Wi-Fi sniff mode to cycle channels and display nearby 2.4 GHz packet activity from the serial CLI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate host a Web CLI over Wi-Fi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can start a Wi-Fi access point or hotspot workflow so a nearby client can open the Web CLI without an existing router."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "Wi-Fi debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/" }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/14-WIFI" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Wi-Fi wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 Wi-Fi debugging</p>
+<h1 id="page-title">Wi-Fi debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical Wi-Fi and network workbench. Use it to scan nearby networks, find local devices, run passive 2.4 GHz sniffing, start a Web CLI hotspot and test authorized HTTP, TCP, Modbus or port-check workflows.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
+<a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-wifi.svg" alt="Wi-Fi debugging visual with ESP32 board, wireless signal and local network devices" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick Wi-Fi workflow</h2>
+<p class="section-intro">Start by understanding the radio and network context. Once the board is connected or in AP mode, move to the recipe that matches the network task.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Start Wi-Fi mode from the serial CLI.</p></li>
+<li><span>02</span><p>Scan nearby networks or start a controlled access point for a lab session.</p></li>
+<li><span>03</span><p>Connect only to authorized networks and confirm IP status.</p></li>
+<li><span>04</span><p>Discover local devices, check HTTP endpoints or test known service ports.</p></li>
+<li><span>05</span><p>Use passive sniffing only for authorized lab observation of nearby 2.4 GHz activity.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode wifi
+scan
+connect
+status
+devices
+sniff</code></pre>
+<p class="command-note">Example CLI flow. See the Wi-Fi wiki for exact syntax, saved credential behavior and firmware-specific options.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">Wi-Fi workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right Wi-Fi or network workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Scan</span><h3>ESP32 Wi-Fi scanner</h3><p>List nearby networks, inspect SSIDs and confirm whether the expected lab network is visible from the bench.</p></article>
+<article class="intent-card"><span>Discover</span><h3>Local device discovery</h3><p>After connecting to your own network, identify local devices and document IP or MAC address details.</p></article>
+<article class="intent-card"><span>Sniff</span><h3>Passive Wi-Fi sniffer</h3><p>Cycle 2.4 GHz channels and observe nearby packet activity from the serial CLI for authorized lab awareness.</p></article>
+<article class="intent-card"><span>Hotspot</span><h3>Web CLI over Wi-Fi</h3><p>Start an access point or hotspot workflow when there is no existing router or when a quick browser CLI is useful.</p></article>
+<article class="intent-card"><span>HTTP</span><h3>HTTP endpoint checks</h3><p>Use Wi-Fi mode to test known local IoT endpoints or run URL analysis workflows after the network path is confirmed.</p></article>
+<article class="intent-card"><span>TCP</span><h3>Authorized service checks</h3><p>Use nmap, nc, telnet or Modbus TCP recipes to confirm whether a known host and service respond from the ESP32 network segment.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an ESP32-S3 Wi-Fi workbench helps</h2>
+<p class="section-intro">Wi-Fi debugging often sits between firmware, radio range and local network behavior. A small external tool can prove whether the network path works before changing target code.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Bring-up</span><h3>Before blaming firmware</h3><p>Scan networks, connect, check IP status and confirm that another device can see the same local services.</p></article>
+<article class="signal-card"><span>Lab access</span><h3>Before relying on infrastructure</h3><p>Use AP or hotspot mode to open the Web CLI from a phone or laptop when the normal Wi-Fi network is unavailable.</p></article>
+<article class="signal-card"><span>Network service</span><h3>Before debugging protocols</h3><p>Check ports and raw TCP reachability before moving into HTTP, Modbus or application-specific workflows.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">Wi-Fi hardware and safety reminders</h2>
+<p class="section-intro">These notes are intentionally short. The detailed command references live in the project documentation and firmware repository.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>2.4 GHz</span><p>ESP32-S3 Wi-Fi workflows are centered on 2.4 GHz behavior. Use the right companion hardware for other radio bands.</p></article>
+<article class="note-card"><span>Authorization</span><p>Run scans, sniffing and service checks only on networks and targets you own or are explicitly allowed to test.</p></article>
+<article class="note-card"><span>Signal quality</span><p>RSSI, antenna placement, USB power and board orientation can change scan results and connection stability.</p></article>
+<article class="note-card"><span>Network segment</span><p>Port checks and local discovery only see what the current Wi-Fi network, firewall and routing rules allow.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common Wi-Fi problems</h2>
+<p class="section-intro">Most Wi-Fi failures are signal, credentials, routing, firewall or mode-selection problems. Check these before changing application code.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>No network found</span><p>Check 2.4 GHz availability, signal strength, hidden SSIDs and whether the board is placed near enough to the access point.</p></article>
+<article class="problem-card"><span>Connect fails</span><p>Check credentials, security mode, DHCP behavior and whether the target network allows ESP32 clients.</p></article>
+<article class="problem-card"><span>No local devices</span><p>Confirm the ESP32 is on the same subnet, client isolation is disabled and the scan target is powered and reachable.</p></article>
+<article class="problem-card"><span>HTTP fails</span><p>Check DNS, IP address, port, path, firewall and whether the endpoint binds to the interface visible from Wi-Fi.</p></article>
+<article class="problem-card"><span>Sniffer looks quiet</span><p>Cycle channels, move closer, confirm the target traffic is 2.4 GHz and remember passive sniffing does not decrypt application data.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed Wi-Fi recipes</h2>
+<p class="section-intro">These pages are the task-level Wi-Fi and network workflows. This overview keeps the protocol-level guidance here, while each recipe covers commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate Wi-Fi recipes">
+<a href="../../recipes/scan-wifi-find-local-devices/"><span>Scan</span><strong>Scan Wi-Fi and find local devices</strong><small>Connect to your own network and discover local devices.</small></a>
+<a href="../../recipes/run-passive-wifi-sniffer-session/"><span>Sniff</span><strong>Run a passive Wi-Fi sniffer session</strong><small>Cycle 2.4 GHz channels and observe nearby packet activity.</small></a>
+<a href="../../recipes/start-wifi-access-point-mode/"><span>AP</span><strong>Start a Wi-Fi access point</strong><small>Create a controlled AP from the firmware for lab access.</small></a>
+<a href="../../recipes/start-web-cli-hotspot/"><span>Web CLI</span><strong>Start the Web CLI through Wi-Fi hotspot</strong><small>Open the browser CLI without relying on an existing router.</small></a>
+<a href="../../recipes/check-http-endpoint/"><span>HTTP</span><strong>Check an HTTP endpoint</strong><small>Verify a local IoT endpoint from Wi-Fi or Ethernet mode.</small></a>
+<a href="../../recipes/analyze-url-with-http-apis/"><span>HTTP</span><strong>Analyze a URL with HTTP APIs</strong><small>Run a URL analysis workflow after connecting to Wi-Fi.</small></a>
+<a href="../../recipes/check-open-ports-nmap/"><span>nmap</span><strong>Check open ports with nmap mode</strong><small>Check selected TCP or UDP ports on an authorized host.</small></a>
+<a href="../../recipes/test-raw-tcp-nc-telnet/"><span>TCP</span><strong>Test raw TCP with nc or telnet</strong><small>Open simple authorized TCP sessions from the firmware.</small></a>
+<a href="../../recipes/open-modbus-tcp-session/"><span>Modbus</span><strong>Open a Modbus TCP session</strong><small>Connect to an authorized Modbus TCP endpoint.</small></a>
+<a href="../../recipes/lookup-mac-address-vendor/"><span>MAC</span><strong>Look up a MAC address vendor</strong><small>Document bench devices with vendor lookup data.</small></a>
+<a href="../../recipes/lookup-ip-address-details/"><span>IP</span><strong>Look up IP address details</strong><small>Check public IP or hostname details from the CLI.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful Wi-Fi references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the Wi-Fi command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>Wi-Fi command reference</h3><p>Open the maintained firmware wiki for Wi-Fi mode commands and behavior.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/14-WIFI" rel="noopener" target="_blank">Open Wi-Fi command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and hardware notes before relying on Wi-Fi workflows.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">Wi-Fi debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate scan Wi-Fi networks and local devices?</summary>
+<p>Yes. ESP32 Bit Pirate can scan nearby Wi-Fi networks, connect to an authorized network and help discover local devices from the firmware CLI.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate run a passive Wi-Fi sniffer session?</summary>
+<p>Yes. ESP32 Bit Pirate can use Wi-Fi sniff mode to cycle channels and display nearby 2.4 GHz packet activity from the serial CLI.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate host a Web CLI over Wi-Fi?</summary>
+<p>Yes. ESP32 Bit Pirate can start a Wi-Fi access point or hotspot workflow so a nearby client can open the Web CLI without an existing router.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/14-WIFI" target="_blank" rel="noopener">Wi-Fi Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>

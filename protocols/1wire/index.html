@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use ESP32 Bit Pirate as a practical 1-Wire workbench to scan Dallas-style buses, read iButton IDs, check DS18B20 sensors, back up EEPROMs and debug timing problems.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#121212">
+<meta property="og:site_name" content="ESP32 Bit Pirate">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="1-Wire Debugging with ESP32 Bit Pirate">
+<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 1-Wire workbench for ROM scans, iButton IDs, DS18B20 sensors, EEPROM backups and timing checks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/1wire/">
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-1wire.png">
+<meta property="og:image:alt" content="Preview image for 1-Wire debugging with ESP32 Bit Pirate">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="1-Wire Debugging with ESP32 Bit Pirate">
+<meta name="twitter:description" content="A practical ESP32-S3 1-Wire workbench for ROM scans, iButton IDs, DS18B20 sensors, EEPROM backups and timing checks.">
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-1wire.png">
+<meta name="twitter:image:alt" content="Preview image for 1-Wire debugging with ESP32 Bit Pirate">
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/1wire/">
+<title>1-Wire Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<link rel="stylesheet" href="../protocols.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "1-Wire Debugging with ESP32 Bit Pirate",
+      "description": "Use ESP32 Bit Pirate as a practical 1-Wire workbench to scan Dallas-style buses, read iButton IDs, check DS18B20 sensors, back up EEPROMs and debug timing problems.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/1wire/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 1-Wire debugging",
+        "ESP32 1-Wire scanner",
+        "iButton ID reader",
+        "DS18B20 temperature sensor",
+        "1-Wire EEPROM dump",
+        "1-Wire bus timing"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate 1-Wire recipes",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Read an iButton ID", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" },
+        { "@type": "ListItem", "position": 2, "name": "Read a DS18B20 temperature sensor", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ds18b20-temperature/" },
+        { "@type": "ListItem", "position": 3, "name": "Dump a 1-Wire EEPROM", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-one-wire-eeprom/" },
+        { "@type": "ListItem", "position": 4, "name": "Sniff 1-Wire bus timing", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-one-wire-bus-timing/" },
+        { "@type": "ListItem", "position": 5, "name": "Copy an RW1990 iButton in the shell", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/copy-rw1990-ibutton-shell/" },
+        { "@type": "ListItem", "position": 6, "name": "Write a 1-Wire scratchpad test pattern", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/write-one-wire-scratchpad-pattern/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate scan a 1-Wire bus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate can scan a 1-Wire bus, show responding ROM IDs and use that result as the starting point for iButton, DS18B20 or EEPROM workflows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate read DS18B20 temperature sensors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Use the DS18B20 workflow after wiring DQ, GND, supply and the required pull-up so the firmware can confirm the sensor ROM and decode a temperature reading."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate work with iButton and 1-Wire EEPROM devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ESP32 Bit Pirate includes iButton and 1-Wire EEPROM workflows for reading IDs, backing up memory and running controlled lab tests on compatible targets."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
+        { "@type": "ListItem", "position": 2, "name": "1-Wire debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/1wire/" }
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
+<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
+<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>1-Wire wiki</a>
+</nav>
+</header>
+
+<section class="protocol-hero" aria-labelledby="page-title">
+<div>
+<p class="eyebrow">ESP32-S3 1-Wire protocol debugging</p>
+<h1 id="page-title">1-Wire debugging with ESP32 Bit Pirate</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical 1-Wire workbench. Use it to scan Dallas-style buses, read iButton IDs, check DS18B20 sensors, back up EEPROMs and debug timing or pull-up problems before writing target firmware.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
+<a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img src="../../recipes/assets/visual-1wire.svg" alt="1-Wire bus debugging visual with an ESP32 board, data line, pull-up and Dallas-style targets" width="1040" height="600">
+</figure>
+</section>
+
+<section class="protocol-band" aria-labelledby="workflow-title">
+<div class="section-head">
+<h2 id="workflow-title">Quick 1-Wire workflow</h2>
+<p class="section-intro">Start with a short, stable bus and read-only checks. Once the ROM scan is repeatable, move to the recipe that matches the device type or timing problem.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Connect GND and the 1-Wire data line.</p></li>
+<li><span>02</span><p>Add the required pull-up from DQ to the target supply unless the module already provides it.</p></li>
+<li><span>03</span><p>Start 1-Wire mode on ESP32 Bit Pirate and choose the data GPIO.</p></li>
+<li><span>04</span><p>Scan the bus to confirm a stable ROM ID before using a device-specific shell.</p></li>
+<li><span>05</span><p>Continue with DS18B20 temperature reads, iButton ID work, EEPROM backup or timing sniffing.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode 1wire
+scan
+read
+temp
+ibutton
+eeprom</code></pre>
+<p class="command-note">Example CLI flow. See the 1-Wire wiki for exact syntax, GPIO setup and firmware-specific options.</p>
+</div>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="coverage-title">
+<div class="section-head">
+<h2 id="coverage-title">1-Wire workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Use this overview to choose the right 1-Wire workflow before opening a detailed recipe.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Scan</span><h3>ESP32 1-Wire scanner</h3><p>Find Dallas-style devices on a single data line and use the ROM ID as the first clue for deeper inspection.</p></article>
+<article class="intent-card"><span>iButton</span><h3>iButton ID reader</h3><p>Read the full eight-byte ROM code from a Dallas iButton or compatible tag without writing a temporary sketch.</p></article>
+<article class="intent-card"><span>Sensor</span><h3>DS18B20 temperature read</h3><p>Confirm the sensor ROM first, then decode a temperature value after wiring, supply and pull-up are stable.</p></article>
+<article class="intent-card"><span>EEPROM</span><h3>1-Wire EEPROM backup</h3><p>Work with DS2431/DS2433-style memory devices where read-only probe, address range and verified dumps matter before writes.</p></article>
+<article class="intent-card"><span>Timing</span><h3>1-Wire timing sniff</h3><p>Observe reset, presence and bit timing when a bus is alive but higher-level reads are unstable.</p></article>
+<article class="intent-card"><span>Lab</span><h3>Scratchpad and RW1990 tests</h3><p>Run controlled lab workflows on supported writable targets after the original ID or memory content is documented.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="fit-title">
+<div class="section-head">
+<h2 id="fit-title">When an ESP32-S3 1-Wire workbench helps</h2>
+<p class="section-intro">1-Wire debugging often starts with one question: is the device really present on the data line? A small external tool can separate contact, pull-up and timing problems from firmware problems.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Sensor bring-up</span><h3>Before writing a sensor driver</h3><p>Use a DS18B20 scan and temperature read to confirm DQ, ground, supply and pull-up before integrating the sensor into target firmware.</p></article>
+<article class="signal-card"><span>Tag bench</span><h3>Before cataloging iButtons</h3><p>Read the full ROM ID repeatedly and keep the family code, serial bytes and CRC together so later comparisons remain reliable.</p></article>
+<article class="signal-card"><span>Memory work</span><h3>Before modifying EEPROM data</h3><p>For 1-Wire EEPROMs, the safe path is to identify the device and save a verified backup before any erase or write action.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="hardware-title">
+<div class="section-head">
+<h2 id="hardware-title">1-Wire hardware reminders</h2>
+<p class="section-intro">These notes are intentionally short. The detailed command references live in the project documentation and firmware repository.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>Pull-up</span><p>The DQ data line needs a pull-up to the target supply. Missing or weak pull-ups often show up as disappearing devices or CRC errors.</p></article>
+<article class="note-card"><span>Shared ground</span><p>The target and ESP32 Bit Pirate must share ground. iButtons also need reliable contact on both the data and case contacts.</p></article>
+<article class="note-card"><span>Power mode</span><p>Some sensors can be parasite-powered, but a powered three-wire setup is usually easier to debug first.</p></article>
+<article class="note-card"><span>Voltage levels</span><p>ESP32 GPIO uses 3.3 V logic. Use the supported level-adaptation path before probing targets outside the safe GPIO range.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="problems-title">
+<div class="section-head">
+<h2 id="problems-title">Common 1-Wire problems</h2>
+<p class="section-intro">Most 1-Wire failures are contact, pull-up, power, cable length or timing problems. Check these before changing target firmware.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>No device found</span><p>Check the data GPIO, common ground, target power, pull-up resistor and whether DQ is actually connected to the device data pin.</p></article>
+<article class="problem-card"><span>CRC errors</span><p>Improve contact pressure, shorten wires, verify the pull-up and repeat the read until the same ROM ID appears consistently.</p></article>
+<article class="problem-card"><span>Temperature fails</span><p>Confirm the DS18B20 family code, supply wiring and conversion timing before assuming the sensor is faulty.</p></article>
+<article class="problem-card"><span>EEPROM dump fails</span><p>Use one target at a time, confirm the device type, read a small range first and save a backup before any write or erase action.</p></article>
+<article class="problem-card"><span>Timing is unstable</span><p>Use short wiring, avoid noisy breadboard runs and sniff reset or presence timing before moving to longer cables.</p></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="recipes-title">
+<div class="section-head">
+<h2 id="recipes-title">Detailed 1-Wire recipes</h2>
+<p class="section-intro">These pages are the task-level 1-Wire workflows. This overview keeps the protocol-level guidance here, while each recipe covers wiring, commands and troubleshooting in detail.</p>
+</div>
+<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate 1-Wire recipes">
+<a href="../../recipes/read-ibutton-id/"><span>iButton</span><strong>Read an iButton ID</strong><small>Read the ROM code from a Dallas-style tag without writing a temporary sketch.</small></a>
+<a href="../../recipes/read-ds18b20-temperature/"><span>Sensor</span><strong>Read a DS18B20 temperature sensor</strong><small>Confirm the sensor ROM first, then decode a temperature reading.</small></a>
+<a href="../../recipes/dump-one-wire-eeprom/"><span>EEPROM</span><strong>Dump a 1-Wire EEPROM</strong><small>Use the EEPROM shell for a reliable backup of compatible memory devices.</small></a>
+<a href="../../recipes/sniff-one-wire-bus-timing/"><span>Sniff</span><strong>Sniff 1-Wire bus timing</strong><small>Observe reset, presence and bit timing on a Dallas-style single-wire bus.</small></a>
+<a href="../../recipes/copy-rw1990-ibutton-shell/"><span>RW1990</span><strong>Copy an RW1990 iButton in the shell</strong><small>Read a source ID and test a compatible RW1990 lab key workflow.</small></a>
+<a href="../../recipes/write-one-wire-scratchpad-pattern/"><span>Scratchpad</span><strong>Write a 1-Wire scratchpad test pattern</strong><small>Send a controlled scratchpad pattern to a supported lab device.</small></a>
+</nav>
+</section>
+
+<section class="protocol-band" aria-labelledby="references-title">
+<div class="section-head">
+<h2 id="references-title">Useful 1-Wire references</h2>
+<p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the 1-Wire command reference.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>1-Wire command reference</h3><p>Open the maintained firmware wiki for 1-Wire mode commands and behavior.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE" rel="noopener" target="_blank">Open 1-Wire command reference</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and hardware notes before wiring a target bus.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
+<article class="destination-card"><h3>Logic Analyzer</h3><p>Capture 1-Wire-like signal activity when command-level results do not explain the bus behavior.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Logic Analyzer</a></article>
+<article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
+<article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section class="protocol-band" aria-labelledby="faq-title">
+<div class="section-head">
+<h2 id="faq-title">1-Wire debugging FAQ</h2>
+<p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>Can ESP32 Bit Pirate scan a 1-Wire bus?</summary>
+<p>Yes. ESP32 Bit Pirate can scan a 1-Wire bus, show responding ROM IDs and use that result as the starting point for iButton, DS18B20 or EEPROM workflows.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate read DS18B20 temperature sensors?</summary>
+<p>Yes. Use the DS18B20 workflow after wiring DQ, GND, supply and the required pull-up so the firmware can confirm the sensor ROM and decode a temperature reading.</p>
+</details>
+<details>
+<summary>Can ESP32 Bit Pirate work with iButton and 1-Wire EEPROM devices?</summary>
+<p>Yes. ESP32 Bit Pirate includes iButton and 1-Wire EEPROM workflows for reading IDs, backing up memory and running controlled lab tests on compatible targets.</p>
+</details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE" target="_blank" rel="noopener">1-Wire Wiki</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>
