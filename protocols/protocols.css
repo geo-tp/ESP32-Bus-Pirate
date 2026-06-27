@@ -31,7 +31,7 @@ body {
 body {
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 12% -4rem, rgba(0, 255, 204, 0.12), transparent 30rem),
+    radial-gradient(circle at calc(50% - min(28rem, 34vw)) -4rem, rgba(0, 255, 204, 0.12), transparent 30rem),
     radial-gradient(circle at calc(50% + min(28rem, 34vw)) 4rem, rgba(0, 255, 0, 0.08), transparent 28rem),
     var(--page-bg);
 }
@@ -216,6 +216,7 @@ h2 {
 .intent-grid,
 .signal-grid,
 .destination-grid,
+.protocol-hub-grid,
 .recipe-index-grid,
 .note-grid,
 .problem-grid {
@@ -418,6 +419,75 @@ h2 {
   box-shadow: 0 10px 24px rgba(0, 255, 204, 0.06), inset 0 0 5px #000;
   text-decoration: none;
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.protocol-hub-card {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #00ffcc44;
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(0, 255, 204, 0.085), transparent 36%),
+    linear-gradient(145deg, #17211f, #0f1211);
+  box-shadow: 0 10px 24px rgba(0, 255, 204, 0.055), inset 0 0 5px #000;
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.protocol-hub-card span {
+  color: var(--cyan);
+  font-size: 0.74rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.protocol-hub-card strong {
+  color: #d8fff2;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.protocol-hub-card small {
+  color: #d8ddd8;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.protocol-hub-card em {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 5px 8px;
+  border: 1px solid rgba(0, 255, 204, 0.24);
+  border-radius: calc(var(--radius) - 2px);
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.protocol-hub-card::after {
+  content: "Open workflow";
+  justify-self: start;
+  margin-top: 6px;
+  color: #b8ffb8;
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.protocol-hub-card:hover,
+.protocol-hub-card:focus-visible {
+  border-color: #00ffcc88;
+  box-shadow: 0 14px 28px rgba(0, 255, 204, 0.12), inset 0 0 5px #000;
+  transform: translateY(-2px);
 }
 
 .recipe-index-grid a::after {
