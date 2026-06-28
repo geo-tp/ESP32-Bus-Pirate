@@ -2304,6 +2304,50 @@ h2 {
   display: none !important;
 }
 
+/* Mobile reliability: keep Next steps as a simple readable list, not card rows. */
+@media (max-width: 760px) {
+  .next-steps-section > :is(ol, ul) {
+    display: grid;
+    gap: 7px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .next-steps-section > ul {
+    list-style: none;
+  }
+
+  .next-steps-section > ol {
+    list-style: none;
+  }
+
+  .next-steps-section > :is(ol, ul) > li {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .next-steps-section > :is(ol, ul) > li::before {
+    content: none;
+  }
+
+  .next-steps-section li code {
+    display: inline;
+    max-width: none;
+    overflow: visible;
+    margin: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
 
 /* V13 wiring visual label: keep one compact title for generated view. */
 .wiring-visual-section {

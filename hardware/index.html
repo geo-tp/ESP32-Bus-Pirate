@@ -681,12 +681,35 @@
 
     .panel-list {
       display: grid;
-      gap: 9px;
+      gap: 8px;
       margin-top: 12px;
-      padding-left: 20px;
+      padding-left: 0;
+      list-style: none;
       color: #d8ddd8;
       font-size: 0.9rem;
       line-height: 1.55;
+    }
+
+    .panel-list li {
+      position: relative;
+      min-width: 0;
+      padding: 10px 12px 10px 16px;
+      border: 1px solid #283028;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(0, 255, 204, 0.025), transparent 38%),
+        #101312;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.24);
+      overflow-wrap: anywhere;
+    }
+
+    .panel-list li::before {
+      content: "";
+      position: absolute;
+      inset: 9px auto 9px 0;
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(0, 255, 204, 0.45), rgba(0, 255, 0, 0.18));
     }
 
     .board-table-card {
@@ -850,6 +873,15 @@
     html[data-theme="light"] .adapter-card p,
     html[data-theme="light"] .pcbway-credit p {
       color: #31443b;
+    }
+
+    html[data-theme="light"] .panel-list li {
+      border-color: #d9e3dd;
+      background:
+        linear-gradient(90deg, rgba(0, 135, 111, 0.035), transparent 38%),
+        #f8fbf9;
+      color: #21382f;
+      box-shadow: none;
     }
 
     html[data-theme="light"] .adapter-showcase a[href*="buspirate.com"] {
