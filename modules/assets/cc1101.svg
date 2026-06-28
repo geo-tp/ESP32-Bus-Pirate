@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">ESP32 Bit Pirate CC1101 Sub-GHz module workflow icon</title>
+<desc id="desc">Decorative module illustration for the CC1101 Sub-GHz module page in the ESP32 Bit Pirate module and target chip hub.</desc>
+<rect width="128" height="128" rx="22" fill="#0d1110"/>
+<circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
+<circle cx="28" cy="112" r="46" fill="#00ff00" opacity="0.06"/>
+<circle cx="60" cy="60" r="18" fill="none" stroke="#00ffcc" stroke-width="4"/><path d="M86 34c14 14 14 38 0 52M102 18c23 23 23 61 0 84" fill="none" stroke="#00ffcc" stroke-width="4" stroke-linecap="round"/><rect x="30" y="78" width="60" height="34" rx="6" fill="#121a17" stroke="#00ff00" stroke-width="3"/><path d="M42 92h36M42 102h22" stroke="#b8ffb8" stroke-width="3" stroke-linecap="round"/>
+</svg>

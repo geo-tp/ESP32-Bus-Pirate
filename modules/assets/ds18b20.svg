@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">ESP32 Bit Pirate DS18B20 1-Wire sensor workflow icon</title>
+<desc id="desc">Decorative module illustration for the DS18B20 1-Wire sensor page in the ESP32 Bit Pirate module and target chip hub.</desc>
+<rect width="128" height="128" rx="22" fill="#0d1110"/>
+<circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
+<circle cx="28" cy="112" r="46" fill="#00ff00" opacity="0.06"/>
+<circle cx="64" cy="54" r="25" fill="#121a17" stroke="#00ffcc" stroke-width="4"/><path d="M64 79v38M48 96h32" stroke="#00ff00" stroke-width="4" stroke-linecap="round"/><path d="M54 54h20M64 44v20" stroke="#b8ffb8" stroke-width="4" stroke-linecap="round"/>
+</svg>

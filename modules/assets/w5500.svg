@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">ESP32 Bit Pirate W5500 Ethernet module workflow icon</title>
+<desc id="desc">Decorative module illustration for the W5500 Ethernet module page in the ESP32 Bit Pirate module and target chip hub.</desc>
+<rect width="128" height="128" rx="22" fill="#0d1110"/>
+<circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
+<circle cx="28" cy="112" r="46" fill="#00ff00" opacity="0.06"/>
+<rect x="36" y="28" width="56" height="70" rx="7" fill="#121a17" stroke="#00ffcc" stroke-width="4"/><path d="M48 42h32v22H48zM44 98h40v12H44z" fill="#0a0d0c" stroke="#00ff00" stroke-width="3"/><path d="M52 74h24M52 84h24M56 110v8M72 110v8" stroke="#b8ffb8" stroke-width="3" stroke-linecap="round"/>
+</svg>

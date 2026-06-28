@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">ESP32 Bit Pirate PN532 NFC/RFID module workflow icon</title>
+<desc id="desc">Decorative module illustration for the PN532 NFC/RFID module page in the ESP32 Bit Pirate module and target chip hub.</desc>
+<rect width="128" height="128" rx="22" fill="#0d1110"/>
+<circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
+<circle cx="28" cy="112" r="46" fill="#00ff00" opacity="0.06"/>
+<rect x="30" y="38" width="76" height="58" rx="10" fill="#121a17" stroke="#00ffcc" stroke-width="4"/><path d="M50 50c18-12 36-12 54 0M50 64c18-10 36-10 54 0M50 78c18-8 36-8 54 0" fill="none" stroke="#00ff00" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="104" r="6" fill="#b8ffb8"/>
+</svg>

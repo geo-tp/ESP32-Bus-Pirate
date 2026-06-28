@@ -1,0 +1,63 @@
+{
+  "cc1101": {
+    "file": "cc1101-photo.webp",
+    "source": "TinyTronics CC1101 product image",
+    "url": "https://www.tinytronics.nl/en/communication-and-signals/wireless/rf/433mhz/cc1101-433mhz-wireless-rf-transceiver-module"
+  },
+  "nrf24l01": {
+    "file": "nrf24l01-photo.webp",
+    "source": "Funduino nRF24L01+ PA+LNA product image",
+    "url": "https://funduinoshop.com/en/electronic-modules/wireless-iot/radio-technology/nrf24l01-pa-lna-wireless-transceiver-smd-2.4g"
+  },
+  "si4713": {
+    "file": "si4713-photo.webp",
+    "source": "Adafruit Si4713 product image",
+    "url": "https://www.adafruit.com/product/1958"
+  },
+  "cellular-at-modem": {
+    "file": "cellular-at-modem-photo.webp",
+    "source": "Besomi SIM800L / cellular modem product image",
+    "url": "https://besomi.com/product/sim800l-v2-0-gsm-gprs-module/"
+  },
+  "mcp2515": {
+    "file": "mcp2515-photo.webp",
+    "source": "AZ-Delivery MCP2515 CAN bus module product image",
+    "url": "https://www.az-delivery.de/en/products/mcp2515-can-bus-modul-kompatibel-mit-arduino"
+  },
+  "w5500": {
+    "file": "w5500-photo.webp",
+    "source": "AZ-Delivery W5500 Ethernet module product image",
+    "url": "https://www.az-delivery.de/en/products/ethernet-modul-w5500"
+  },
+  "i2c-eeprom": {
+    "file": "i2c-eeprom-photo.webp",
+    "source": "Wikimedia Commons STMicroelectronics 24C02 photo",
+    "url": "https://commons.wikimedia.org/wiki/File:Hewlett-Packard_DeskJet_710C_-_controller_board_-_STMicroelectronis_24C02-7811.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "93cxx-eeprom": {
+    "file": "93cxx-eeprom-photo.webp",
+    "source": "Core Electronics / Adafruit Bus Pirate 5 SOIC/SOP8 SPI Flash Adapter product image",
+    "url": "https://core-electronics.com.au/bus-pirate-5-soic-sop8-spi-flash-adapter.html"
+  },
+  "sle4442": {
+    "file": "sle4442-photo.webp",
+    "source": "ID Cards Direct FM4442/SLE4442 product image",
+    "url": "https://www.idcardsdirect.co.uk/fudan-fm4442-sle4442-contact-chip-pvc-smart-card.html"
+  },
+  "pn532": {
+    "file": "pn532-photo.webp",
+    "source": "Microless PN532 NFC RFID V3 module product image",
+    "url": "https://uae.microless.com/product/uiotec-pn532-nfc-rfid-v3-module-kits-for-arduino-android-red/"
+  },
+  "spi-nor-flash": {
+    "file": "spi-nor-flash-photo.webp",
+    "source": "Core Electronics / Adafruit Bus Pirate 5 SOIC/SOP8 SPI Flash Adapter product image",
+    "url": "https://core-electronics.com.au/bus-pirate-5-soic-sop8-spi-flash-adapter.html"
+  },
+  "ibutton": {
+    "file": "ibutton-photo.webp",
+    "source": "Tutoduino iButton DS1990A photo",
+    "url": "https://tutoduino.fr/cle-dallas-ibutton/"
+  }
+}

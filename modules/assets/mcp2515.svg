@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">ESP32 Bit Pirate MCP2515 CAN module workflow icon</title>
+<desc id="desc">Decorative module illustration for the MCP2515 CAN module page in the ESP32 Bit Pirate module and target chip hub.</desc>
+<rect width="128" height="128" rx="22" fill="#0d1110"/>
+<circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
+<circle cx="28" cy="112" r="46" fill="#00ff00" opacity="0.06"/>
+<rect x="22" y="48" width="84" height="42" rx="8" fill="#121a17" stroke="#00ffcc" stroke-width="4"/><path d="M34 62h60M34 76h60" stroke="#00ff00" stroke-width="4" stroke-linecap="round"/><circle cx="40" cy="104" r="9" fill="#0a0d0c" stroke="#b8ffb8" stroke-width="4"/><circle cx="88" cy="104" r="9" fill="#0a0d0c" stroke="#b8ffb8" stroke-width="4"/>
+</svg>

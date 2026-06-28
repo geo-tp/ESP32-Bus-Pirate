@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">ESP32 Bit Pirate Cellular AT modem workflow icon</title>
+<desc id="desc">Decorative module illustration for the Cellular AT modem page in the ESP32 Bit Pirate module and target chip hub.</desc>
+<rect width="128" height="128" rx="22" fill="#0d1110"/>
+<circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
+<circle cx="28" cy="112" r="46" fill="#00ff00" opacity="0.06"/>
+<rect x="26" y="38" width="76" height="62" rx="10" fill="#121a17" stroke="#00ffcc" stroke-width="4"/><path d="M42 56h44M42 70h30M42 84h44" stroke="#b8ffb8" stroke-width="3" stroke-linecap="round"/><path d="M102 50l18-18M108 56l18-18" stroke="#00ff00" stroke-width="4" stroke-linecap="round"/>
+</svg>
