@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-<title id="title">ESP32 Bit Pirate SPI NOR flash chip workflow icon</title>
+<title id="title">ESP32 Bit Pirate SPI NOR flash chip reading and writing icon</title>
 <desc id="desc">Decorative module illustration for the SPI NOR flash chip page in the ESP32 Bit Pirate module and target chip hub.</desc>
 <rect width="128" height="128" rx="22" fill="#0d1110"/>
 <circle cx="102" cy="20" r="42" fill="#00ffcc" opacity="0.08"/>
