@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-label="ESP32 Bit Pirate modules and target chips">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102b24"/>
+      <stop offset=".52" stop-color="#101817"/>
+      <stop offset="1" stop-color="#0b1210"/>
+    </linearGradient>
+    <linearGradient id="trace" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#12d6a8"/>
+      <stop offset=".58" stop-color="#18e3bd"/>
+      <stop offset="1" stop-color="#77a7de"/>
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1040" height="600" rx="22" fill="url(#bg)"/>
+  <g opacity=".18" stroke="#31524b" stroke-width="1">
+    <path d="M70 150h900M70 230h900M70 310h900M70 390h900M70 470h900"/>
+    <path d="M170 70v460M330 70v460M490 70v460M650 70v460M810 70v460"/>
+  </g>
+  <g opacity=".26" fill="none" stroke="#0ad6a9" stroke-width="1.4">
+    <path d="M160 190h190M690 190h190M205 430h220M650 430h260"/>
+    <path d="M520 116v70M520 410v74"/>
+  </g>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="url(#trace)" stroke-width="4" opacity=".75">
+      <path d="M365 200l70 40"/>
+      <path d="M676 210l-72 42"/>
+      <path d="M355 360l82-42"/>
+      <path d="M656 358l-58-38"/>
+      <path d="M657 303h178"/>
+      <path d="M365 303h-84"/>
+    </g>
+    <g fill="#14d6ad" filter="url(#softGlow)">
+      <circle cx="365" cy="303" r="5"/>
+      <circle cx="520" cy="188" r="5"/>
+      <circle cx="520" cy="416" r="5"/>
+      <circle cx="675" cy="303" r="5"/>
+      <circle cx="783" cy="298" r="5"/>
+      <circle cx="974" cy="298" r="5"/>
+    </g>
+  </g>
+
+  <g id="core">
+    <rect x="385" y="198" width="270" height="212" rx="32" fill="#101d1a" stroke="#49625b" stroke-width="3"/>
+    <rect x="463" y="244" width="114" height="88" rx="13" fill="#121d21" stroke="#77a7de" stroke-width="3"/>
+    <path d="M482 263h76M482 287h55M482 311h76" stroke="#79a8df" stroke-width="5" stroke-linecap="round"/>
+    <path d="M440 353h160" stroke="#20e68e" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#d2b255">
+      <circle cx="437" cy="262" r="4"/><circle cx="437" cy="284" r="4"/><circle cx="437" cy="306" r="4"/><circle cx="437" cy="328" r="4"/>
+      <circle cx="603" cy="262" r="4"/><circle cx="603" cy="284" r="4"/><circle cx="603" cy="306" r="4"/><circle cx="603" cy="328" r="4"/>
+    </g>
+    <g stroke="#60706b" stroke-width="3">
+      <circle cx="425" cy="238" r="12"/><circle cx="615" cy="238" r="12"/>
+      <circle cx="425" cy="368" r="12"/><circle cx="615" cy="368" r="12"/>
+    </g>
+  </g>
+
+  <g id="memory">
+    <rect x="150" y="96" width="216" height="148" rx="26" fill="#10211d" stroke="#49625b" stroke-width="3"/>
+    <rect x="173" y="119" width="174" height="102" rx="15" fill="#0e1d1a" stroke="#1a735f" stroke-width="2"/>
+    <rect x="216" y="139" width="86" height="62" rx="9" fill="#10241f" stroke="#15d2aa" stroke-width="4"/>
+    <path d="M234 158h48M234 179h34M216 208h58" stroke="#17d5ad" stroke-width="4" stroke-linecap="round"/>
+    <path d="M302 170h26v-24M302 178h26v18" stroke="#16b998" stroke-width="3"/>
+    <g fill="#d3b457">
+      <rect x="196" y="147" width="12" height="8" rx="1"/><rect x="196" y="166" width="12" height="8" rx="1"/><rect x="196" y="185" width="12" height="8" rx="1"/>
+      <rect x="308" y="147" width="12" height="8" rx="1"/><rect x="308" y="185" width="12" height="8" rx="1"/>
+    </g>
+  </g>
+
+  <g id="rfid">
+    <rect x="675" y="86" width="230" height="168" rx="27" fill="#101923" stroke="#536684" stroke-width="3"/>
+    <rect x="701" y="111" width="178" height="116" rx="17" fill="#10151d" stroke="#26334c" stroke-width="2"/>
+    <circle cx="784" cy="170" r="20" stroke="#15d5a9" stroke-width="3"/>
+    <g fill="#d3b457">
+      <circle cx="714" cy="132" r="4"/><circle cx="865" cy="132" r="4"/><circle cx="714" cy="208" r="4"/><circle cx="865" cy="208" r="4"/>
+    </g>
+  </g>
+
+  <g id="rf24">
+    <rect x="104" y="332" width="250" height="168" rx="24" fill="#111923" stroke="#536684" stroke-width="3"/>
+    <rect x="128" y="355" width="200" height="122" rx="17" fill="#10151d" stroke="#27344c" stroke-width="2"/>
+    <rect x="160" y="382" width="92" height="66" rx="10" fill="#111a22" stroke="#77a7de" stroke-width="4"/>
+    <path d="M179 403h54M179 425h34" stroke="#7ba8df" stroke-width="4" stroke-linecap="round"/>
+    <g stroke="#d3b457" stroke-width="5" stroke-linecap="round">
+      <path d="M105 394h38"/><path d="M105 424h38"/><path d="M105 454h38"/>
+    </g>
+  </g>
+
+  <g id="can">
+    <rect x="690" y="338" width="240" height="162" rx="27" fill="#10211d" stroke="#49625b" stroke-width="3"/>
+    <rect x="715" y="359" width="198" height="118" rx="18" fill="#0d1e1a" stroke="#176f5d" stroke-width="2"/>
+    <rect x="747" y="392" width="82" height="56" rx="9" fill="#10251f" stroke="#14d2aa" stroke-width="4"/>
+    <path d="M766 411h35M766 430h35" stroke="#15d5ad" stroke-width="4" stroke-linecap="round"/>
+    <rect x="849" y="383" width="42" height="76" rx="9" fill="#221f17" stroke="#d3b457" stroke-width="3"/>
+    <path d="M862 399h18M862 420h18M862 442h18" stroke="#d3b457" stroke-width="3" stroke-linecap="round"/>
+    <path d="M829 420h20M788 448v24" stroke="#17b998" stroke-width="3"/>
+  </g>
+
+  <g id="sensor">
+    <rect x="815" y="244" width="132" height="108" rx="19" fill="#111d1a" stroke="#4b625b" stroke-width="3"/>
+    <circle cx="881" cy="298" r="31" fill="none" stroke="#7a8984" stroke-width="5"/>
+    <circle cx="881" cy="298" r="14" fill="none" stroke="#14d4aa" stroke-width="4"/>
+  </g>
+</svg>

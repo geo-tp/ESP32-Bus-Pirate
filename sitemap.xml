@@ -10,6 +10,50 @@
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/</loc>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/cardputer/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/cardputer-adv/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/t-embed-s3/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/t-embed-cc1101/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/esp32-s3-devkit/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/m5stick-s3/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/stamp-s3/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/atom-s3-lite/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/t-display-s3/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/xiao-esp32-s3/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/</loc>
   </url>
   <url>
@@ -17,63 +61,135 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/cc1101/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/spi-nor-flash/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/mcp2515/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/nrf24l01/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/w5500/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/si4713/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/cellular-at-modem/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/i2c-eeprom/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/93cxx-eeprom/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/sle4442/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/ibutton/</loc>
+    <lastmod>2026-06-28</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/pn532/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2c/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/spi/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/1wire/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/2wire/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/</loc>
+    <lastmod>2026-06-28</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/web-serial-terminal/</loc>

@@ -293,9 +293,23 @@ h3 {
   transition: transform 0.06s ease, box-shadow 0.2s, border-color 0.2s, filter 0.2s;
 }
 
+.hero-actions .button {
+  border-color: rgba(0, 255, 153, 0.38);
+  background: linear-gradient(145deg, #15351f, #102018);
+  color: #d8ffe7;
+  box-shadow: 0 10px 24px rgba(0, 255, 153, 0.08), inset 0 0 5px #000;
+}
+
 .secondary-button {
   background: linear-gradient(135deg, #17252b, #101517);
   color: #d8fff2;
+}
+
+.hero-actions .secondary-button {
+  border-color: rgba(0, 183, 255, 0.42);
+  background: linear-gradient(145deg, #102533, #10171d);
+  color: #d9f4ff;
+  box-shadow: 0 10px 24px rgba(0, 183, 255, 0.07), inset 0 0 5px #000;
 }
 
 .button-icon {
@@ -323,6 +337,20 @@ h3 {
   opacity: 0.48;
   cursor: not-allowed;
   filter: grayscale(30%);
+}
+
+html[data-theme="light"] .hero-actions .button {
+  border-color: rgba(0, 135, 86, 0.26);
+  background: linear-gradient(145deg, #e9fff2, #dff8eb);
+  color: #174b31;
+  box-shadow: 0 10px 22px rgba(20, 60, 45, 0.08);
+}
+
+html[data-theme="light"] .hero-actions .secondary-button {
+  border-color: rgba(0, 120, 180, 0.24);
+  background: linear-gradient(145deg, #edf9ff, #e4f2f8);
+  color: #174255;
+  box-shadow: 0 10px 22px rgba(20, 60, 70, 0.08);
 }
 
 .info-card {
