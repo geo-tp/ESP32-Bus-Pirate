@@ -38,13 +38,14 @@ body.modules-page {
 .button-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
 .breadcrumb { margin:14px 0; color:var(--muted); font-size:.78rem; }
 .breadcrumb a { color:#b8ffb8; text-decoration:none; }
-.quick-workflow { display:grid; grid-template-columns:minmax(0,.9fr) minmax(280px,.7fr); gap:16px; align-items:stretch; }
+.quick-workflow { display:grid; grid-template-columns:minmax(0,.9fr) minmax(280px,.7fr); gap:16px; align-items:stretch; min-width:0; }
+.quick-workflow > * { min-width:0; }
 .task-steps { display:grid; gap:10px; list-style:none; counter-reset:steps; }
 .task-steps li { display:grid; grid-template-columns:auto minmax(0,1fr); gap:10px; align-items:start; padding:12px; border:1px solid #27312b; border-radius:var(--radius); background:rgba(0,0,0,.18); }
 .task-steps span { display:grid; width:34px; height:34px; place-items:center; border:1px solid rgba(0,255,204,.28); border-radius:999px; color:#00ffcc; background:#111; font-weight:900; font-size:.78rem; }
-.command-card { display:flex; flex-direction:column; gap:10px; padding:15px; border:1px solid #00ffcc33; border-radius:var(--radius); background:linear-gradient(145deg,#101817,#0d0f0e); box-shadow:inset 0 0 5px #000; }
-.command-card pre { overflow:auto; padding:14px; border:1px solid #2f3a2f; border-radius:var(--radius); background:#080a09; }
-.command-card code { font-family:var(--font-mono); font-size:.88rem; line-height:1.55; }
+.command-card { display:flex; flex-direction:column; min-width:0; max-width:100%; gap:10px; padding:15px; border:1px solid #00ffcc33; border-radius:var(--radius); background:linear-gradient(145deg,#101817,#0d0f0e); box-shadow:inset 0 0 5px #000; }
+.command-card pre { max-width:100%; overflow-x:auto; overflow-y:hidden; padding:14px; border:1px solid #2f3a2f; border-radius:var(--radius); background:#080a09; }
+.command-card code { display:block; min-width:100%; width:max-content; font-family:var(--font-mono); font-size:.88rem; line-height:1.55; white-space:pre; }
 .plain-list { display:grid; gap:10px; max-width:920px; padding-left:18px; }
 .plain-list strong { color:#eefcf7; }
 .note-grid { margin-top:4px; }
