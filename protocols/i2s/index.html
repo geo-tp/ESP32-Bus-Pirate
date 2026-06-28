@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical I2S audio workbench to configure BCLK, LRCK and DATA pins, play test tones, record microphone samples and verify speaker or microphone wiring.">
+<meta name="description" content="Use Bit Pirate as an ESP32 I2S audio workbench for BCLK/LRCK/DATA wiring, test tones, microphone capture and speaker checks.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="I2S Audio Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 I2S workbench for BCLK/LRCK/DATA setup, microphone checks, speaker tests, tone generation and audio signal recording.">
-<meta property="og:type" content="website">
+<meta content="ESP32 I2S Audio Debugging" property="og:title"/>
+<meta property="og:description" content="Use Bit Pirate as an ESP32 I2S audio workbench for BCLK/LRCK/DATA wiring, test tones, microphone capture and speaker checks.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2s.png">
 <meta property="og:image:alt" content="Preview image for I2S audio debugging with ESP32 Bit Pirate">
@@ -18,21 +18,20 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="I2S Audio Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 I2S audio workbench for pin configuration, microphone recording, speaker tests and test tone generation.">
+<meta content="ESP32 I2S Audio Debugging | Bit Pirate" name="twitter:title"/>
+<meta name="twitter:description" content="Debug ESP32 I2S audio wiring, BCLK/LRCK/DATA pins, test tones, microphone capture and speaker output with Bit Pirate.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2s.png">
 <meta name="twitter:image:alt" content="Preview image for I2S audio debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/">
-<title>I2S Audio Debugging with ESP32 Bit Pirate | ESP32-S3 Audio Workbench</title>
+<title>ESP32 I2S Audio Debugging | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "I2S Audio Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a practical I2S audio workbench to configure BCLK, LRCK and DATA pins, play test tones, record microphone samples and verify speaker or microphone wiring.",
+      "name": "ESP32 I2S Audio Debugging",
+      "description": "Use Bit Pirate as an ESP32 I2S audio workbench for BCLK/LRCK/DATA wiring, test tones, microphone capture and speaker checks.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,7 +44,9 @@
         "I2S speaker test",
         "I2S test tone",
         "ESP32-S3 audio workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
@@ -128,10 +129,37 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/"
         }
       ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 I2S Audio Debugging",
+      "description": "Use Bit Pirate as an ESP32 I2S audio workbench for BCLK/LRCK/DATA wiring, test tones, microphone capture and speaker checks.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2s/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 I2S debugging",
+        "I2S microphone test",
+        "I2S speaker test",
+        "I2S test tone",
+        "ESP32-S3 audio workbench"
+      ]
     }
   ]
-}
-</script>
+}</script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
@@ -152,8 +180,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 I2S audio debugging</p>
-<h1 id="page-title">I2S audio debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical I2S audio workbench. Use it to configure BCLK, LRCK and DATA, play repeatable test tones, record microphone activity and confirm speaker or microphone wiring before writing a custom audio sketch.</p>
+<h1 id="page-title">I2S audio debugging on ESP32</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into an I2S audio debugging workbench. Use it to configure BCLK, LRCK and DATA pins, play test tones, record microphone samples and verify speaker or microphone wiring.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/test-i2s-microphone-speaker/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with an I2S test recipe</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
@@ -265,7 +293,7 @@ reset</code></pre>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>I2S command reference</h3><p>Open the maintained firmware wiki for I2S commands, pin configuration, tests and usage notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/16-I2S" rel="noopener" target="_blank">Open I2S command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an I2S microphone, DAC or amplifier.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an I2S microphone, DAC or amplifier.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>Logic Analyzer</h3><p>Capture BCLK, LRCK and DATA timing when you need to inspect I2S clocks and data activity.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Logic Analyzer</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>

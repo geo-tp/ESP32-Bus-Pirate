@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical JTAG and SWD workbench to scan candidate debug pins, configure scan GPIO groups, verify pinouts and move into OpenOCD adapter workflows.">
+<meta name="description" content="Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="JTAG and SWD Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 JTAG and SWD workbench for pin scans, scan group configuration, pinout checks and OpenOCD adapter workflows.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 JTAG and SWD Pin Scan Debugging">
+<meta property="og:description" content="Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png">
 <meta property="og:image:alt" content="Preview image for JTAG and SWD debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JTAG and SWD Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 JTAG and SWD workbench for pin scans, scan group configuration, pinout checks and OpenOCD adapter workflows.">
+<meta name="twitter:title" content="ESP32 JTAG and SWD Pin Scan Debugging">
+<meta name="twitter:description" content="Scan JTAG or SWD candidate pins, verify target pinouts and move into OpenOCD adapter workflows with ESP32 Bit Pirate.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png">
 <meta name="twitter:image:alt" content="Preview image for JTAG and SWD debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/">
-<title>JTAG and SWD Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<title>ESP32 JTAG and SWD Pin Scan Debugging | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "JTAG and SWD Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a practical JTAG and SWD workbench to scan candidate debug pins, configure scan GPIO groups, verify pinouts and move into OpenOCD adapter workflows.",
+      "name": "ESP32 JTAG and SWD Pin Scan Debugging",
+      "description": "Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,7 +46,9 @@
         "JTAG pinout scan",
         "OpenOCD adapter",
         "JTAGULATOR-style scan"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
@@ -128,9 +131,38 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/"
         }
       ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 JTAG and SWD Pin Scan Debugging",
+      "description": "Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 JTAG debugging",
+        "ESP32 SWD pin scanner",
+        "JTAG pinout scan",
+        "OpenOCD adapter",
+        "JTAGULATOR-style scan"
+      ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -152,8 +184,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 JTAG and SWD protocol debugging</p>
-<h1 id="page-title">JTAG and SWD debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical JTAG and SWD workbench. Use it to configure candidate GPIOs, scan for SWD pins, run JTAGULATOR-style pinout discovery and switch to OpenOCD adapter mode after the wiring is known.</p>
+<h1 id="page-title">JTAG and SWD pin debugging</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a JTAG and SWD pin scanning workbench. Use it to scan candidate debug pins, configure GPIO groups, verify pinouts and move into OpenOCD adapter workflows.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/scan-swd-pinout/">Start with an SWD scan recipe</a>
 <a class="action-link" href="../../webflasher/">Flash ESP32 Bit Pirate</a>
@@ -263,7 +295,7 @@ openocd</code></pre>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>JTAG command reference</h3><p>Open the maintained firmware wiki for JTAG mode commands and behavior.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG" rel="noopener" target="_blank">Open JTAG command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring target debug pads.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring target debug pads.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>USB adapter modes</h3><p>Use the dedicated adapter workflow when switching the firmware into OpenOCD or other host-tool modes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank">Open USB adapter reference</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate with a W5500 module as a practical Ethernet workbench to wire SPI plus IRQ, get DHCP, check link status, ping hosts, test HTTP, scan ports, open TCP sessions and debug Modbus TCP.">
+<meta name="description" content="Use Bit Pirate with W5500 as an ESP32 Ethernet workbench for DHCP, link checks, ping, HTTP, raw TCP, port scans and Modbus TCP.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Ethernet W5500 Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 Ethernet / W5500 workbench for wiring, DHCP, link status, ping, HTTP, nmap, raw TCP and Modbus TCP workflows.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 W5500 Ethernet Debugging and TCP Tests">
+<meta property="og:description" content="Use Bit Pirate with W5500 as an ESP32 Ethernet workbench for DHCP, link checks, ping, HTTP, raw TCP, port scans and Modbus TCP.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-ethernet.png">
 <meta property="og:image:alt" content="Preview image for Ethernet W5500 debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Ethernet W5500 Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 Ethernet workbench for W5500 wiring, DHCP, link status, ping, HTTP, nmap, raw TCP and Modbus TCP workflows.">
+<meta name="twitter:title" content="ESP32 W5500 Ethernet Debugging and TCP Tests">
+<meta name="twitter:description" content="Wire W5500 to ESP32 Bit Pirate and test DHCP, link status, ping, HTTP, raw TCP, port scanning and Modbus TCP workflows.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-ethernet.png">
 <meta name="twitter:image:alt" content="Preview image for Ethernet W5500 debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/">
-<title>Ethernet W5500 Debugging with ESP32 Bit Pirate | ESP32-S3 Network Workbench</title>
+<title>ESP32 W5500 Ethernet Debugging and TCP Tests | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "Ethernet W5500 Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate with a W5500 module as a practical Ethernet workbench to wire SPI plus IRQ, get DHCP, check link status, ping hosts, test HTTP, scan ports, open TCP sessions and debug Modbus TCP.",
+      "name": "ESP32 W5500 Ethernet Debugging and TCP Tests",
+      "description": "Use Bit Pirate with W5500 as an ESP32 Ethernet workbench for DHCP, link checks, ping, HTTP, raw TCP, port scans and Modbus TCP.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,18 +46,50 @@
         "ESP32 W5500 DHCP",
         "Ethernet network diagnostics",
         "ESP32-S3 wired network workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate Ethernet recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Wire a W5500 Ethernet module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-w5500-ethernet-module/" },
-        { "@type": "ListItem", "position": 2, "name": "Connect a W5500 Ethernet module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/connect-w5500-ethernet/" },
-        { "@type": "ListItem", "position": 3, "name": "Check an HTTP endpoint", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-http-endpoint/" },
-        { "@type": "ListItem", "position": 4, "name": "Check open ports with nmap mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-open-ports-nmap/" },
-        { "@type": "ListItem", "position": 5, "name": "Test raw TCP with nc or telnet", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/test-raw-tcp-nc-telnet/" },
-        { "@type": "ListItem", "position": 6, "name": "Open a Modbus TCP session", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-modbus-tcp-session/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Wire a W5500 Ethernet module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-w5500-ethernet-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Connect a W5500 Ethernet module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/connect-w5500-ethernet/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Check an HTTP endpoint",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-http-endpoint/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Check open ports with nmap mode",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-open-ports-nmap/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Test raw TCP with nc or telnet",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/test-raw-tcp-nc-telnet/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Open a Modbus TCP session",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-modbus-tcp-session/"
+        }
       ]
     },
     {
@@ -91,13 +124,57 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "Ethernet W5500 debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Ethernet W5500 debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 W5500 Ethernet Debugging and TCP Tests",
+      "description": "Use Bit Pirate with W5500 as an ESP32 Ethernet workbench for DHCP, link checks, ping, HTTP, raw TCP, port scans and Modbus TCP.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 Ethernet debugging",
+        "W5500 module wiring",
+        "ESP32 W5500 DHCP",
+        "Ethernet network diagnostics",
+        "ESP32-S3 wired network workbench"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -119,8 +196,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 Ethernet and W5500 debugging</p>
-<h1 id="page-title">Ethernet W5500 debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board and a W5500 module into a practical wired network workbench. Use it to wire SPI plus IRQ, get DHCP, confirm link status, ping hosts, discover local devices and continue into HTTP, nmap, raw TCP or Modbus TCP recipes.</p>
+<h1 id="page-title">W5500 Ethernet testing on ESP32</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus a W5500 module into an Ethernet debugging workbench. Use it to wire SPI plus IRQ, get DHCP, check link status, ping hosts, test HTTP, scan ports, open TCP sessions and debug Modbus TCP.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/wire-w5500-ethernet-module/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h6M14 12h6M10 8v8M14 8v8"></path><circle cx="4" cy="12" r="2"></circle><circle cx="20" cy="12" r="2"></circle></svg>Start with W5500 wiring</a>
 <a class="action-link" href="../../recipes/connect-w5500-ethernet/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v8H4z"></path><path d="M8 16v3M16 16v3M8 5v3M16 5v3"></path></svg>Connect Ethernet and check DHCP</a>
@@ -147,6 +224,7 @@
 <div class="command-panel">
 <pre class="command-block"><code>mode ethernet
 config
+connect
 status
 ping 192.168.1.1
 discovery 3000
@@ -163,7 +241,7 @@ http get http://192.168.1.10/status</code></pre>
 <p class="section-intro">Use this overview to choose the right W5500 or wired network workflow before opening a detailed recipe.</p>
 </div>
 <div class="intent-grid">
-<article class="intent-card"><span>Wire</span><h3>W5500 module setup</h3><p>Connect SPI, chip select, IRQ, ground and optional reset before opening Ethernet mode.</p></article>
+<article class="intent-card"><span>Wire</span><h3>W5500 module setup</h3><p>Connect SPI, chip select, required IRQ, ground and optional reset before opening Ethernet mode.</p></article>
 <article class="intent-card"><span>DHCP</span><h3>Link and IP status</h3><p>Check whether the module has link, DHCP, gateway and DNS before testing higher-level services.</p></article>
 <article class="intent-card"><span>Ping</span><h3>Reachability baseline</h3><p>Ping known local targets so routing and basic LAN connectivity are proven first.</p></article>
 <article class="intent-card"><span>HTTP</span><h3>Local endpoint checks</h3><p>Use a wired path to test known IoT HTTP endpoints when Wi-Fi behavior is uncertain.</p></article>
@@ -179,7 +257,7 @@ http get http://192.168.1.10/status</code></pre>
 </div>
 <div class="note-grid">
 <article class="note-card"><span>SPI</span><p>Check SCK, MISO, MOSI and chip select before assuming DHCP or Ethernet mode is broken.</p></article>
-<article class="note-card"><span>IRQ</span><p>The W5500 interrupt signal is part of the module setup. Map it to an available input GPIO.</p></article>
+<article class="note-card"><span>IRQ</span><p>The W5500 interrupt signal is required by the firmware setup. Map IRQ to an available input GPIO; reset remains optional.</p></article>
 <article class="note-card"><span>Power</span><p>Use a stable module supply and a real Ethernet cable before debugging link status.</p></article>
 <article class="note-card"><span>Network</span><p>DHCP, firewall rules, VLANs and client isolation can all change what the ESP32 can reach.</p></article>
 <article class="note-card"><span>Authorization</span><p>Run discovery, port checks and TCP tests only on networks and hosts you own or are allowed to test.</p></article>
@@ -193,7 +271,7 @@ http get http://192.168.1.10/status</code></pre>
 </div>
 <nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate Ethernet recipes">
 <a href="../../recipes/wire-w5500-ethernet-module/"><span>Wire</span><strong>Wire a W5500 Ethernet module</strong><small>Connect SPI, chip select and IRQ before configuring Ethernet mode.</small></a>
-<a href="../../recipes/connect-w5500-ethernet/"><span>Connect</span><strong>Connect a W5500 Ethernet module</strong><small>Get DHCP, check link status, ping and discover local devices.</small></a>
+<a href="../../recipes/connect-w5500-ethernet/"><span>Connect</span><strong>Connect a W5500 Ethernet module</strong><small>Run config/connect, get DHCP, check link status, ping and discover local devices.</small></a>
 <a href="../../recipes/check-http-endpoint/"><span>HTTP</span><strong>Check an HTTP endpoint</strong><small>Verify a local web endpoint after Ethernet status is valid.</small></a>
 <a href="../../recipes/check-open-ports-nmap/"><span>nmap</span><strong>Check open ports with nmap mode</strong><small>Check selected ports on an authorized LAN target.</small></a>
 <a href="../../recipes/test-raw-tcp-nc-telnet/"><span>TCP</span><strong>Test raw TCP with nc or telnet</strong><small>Open simple authorized TCP sessions from the firmware.</small></a>
@@ -208,7 +286,7 @@ http get http://192.168.1.10/status</code></pre>
 </div>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
-<article class="destination-card"><h3>Ethernet command reference</h3><p>Open the maintained firmware wiki for W5500 setup, status, ping, discovery, HTTP, nmap and TCP workflows.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/18-ETHERNET" rel="noopener" target="_blank">Open Ethernet command reference</a></article>
+<article class="destination-card"><h3>Ethernet command reference</h3><p>Open the maintained firmware wiki for W5500 setup, connect/status, ping, discovery, HTTP, nmap and TCP workflows.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/18-ETHERNET" rel="noopener" target="_blank">Open Ethernet command reference</a></article>
 <article class="destination-card"><h3>SPI protocol overview</h3><p>W5500 uses SPI plus extra control signals, so SPI wiring checks are useful before debugging network behavior.</p><a class="action-link" href="../spi/">Open SPI debugging guide</a></article>
 <article class="destination-card"><h3>Wi-Fi protocol overview</h3><p>Compare wired Ethernet with Wi-Fi when you need to separate radio instability from network service behavior.</p><a class="action-link" href="../wifi/">Open Wi-Fi debugging guide</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>

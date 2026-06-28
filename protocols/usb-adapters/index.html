@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a dedicated USB adapter workbench for PulseView SUMP logic capture, Flashrom serprog SPI flash, AVR ISP with AVRDUDE and OpenOCD JTAG/SWD workflows.">
+<meta name="description" content="Use Bit Pirate as an ESP32 USB adapter workbench for PulseView SUMP capture, Flashrom serprog, AVRDUDE ISP and OpenOCD JTAG/SWD.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="USB Adapter Workflows with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 USB adapter for PulseView/SUMP logic capture, Flashrom/serprog SPI flash, AVRDUDE AVR ISP and OpenOCD JTAG/SWD.">
-<meta property="og:type" content="website">
+<meta content="ESP32 USB Adapter Modes: SUMP, Flashrom, AVR" property="og:title"/>
+<meta property="og:description" content="Use Bit Pirate as an ESP32 USB adapter workbench for PulseView SUMP capture, Flashrom serprog, AVRDUDE ISP and OpenOCD JTAG/SWD.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png">
 <meta property="og:image:alt" content="Preview image for USB adapter workflows with ESP32 Bit Pirate">
@@ -18,21 +18,20 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="USB Adapter Workflows with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 USB adapter workbench for PulseView, SUMP logic, Flashrom serprog, AVRDUDE AVR ISP and OpenOCD.">
+<meta content="ESP32 USB Adapter Modes: SUMP, Flashrom, AVR | Bit Pirate" name="twitter:title"/>
+<meta name="twitter:description" content="Use ESP32 Bit Pirate as USB adapter firmware for SUMP logic capture, Flashrom serprog, AVRDUDE ISP and OpenOCD JTAG/SWD.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png">
 <meta name="twitter:image:alt" content="Preview image for USB adapter workflows with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/">
-<title>USB Adapter Workflows with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<title>ESP32 USB Adapter Modes: SUMP, Flashrom, AVR | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "USB Adapter Workflows with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a dedicated USB adapter workbench for PulseView SUMP logic capture, Flashrom serprog SPI flash, AVR ISP with AVRDUDE and OpenOCD JTAG/SWD workflows.",
+      "name": "ESP32 USB Adapter Modes: SUMP, Flashrom, AVR",
+      "description": "Use Bit Pirate as an ESP32 USB adapter workbench for PulseView SUMP capture, Flashrom serprog, AVRDUDE ISP and OpenOCD JTAG/SWD.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,19 +44,56 @@
         "Flashrom serprog SPI flash",
         "AVRDUDE AVR ISP",
         "OpenOCD JTAG SWD adapter"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate USB adapter recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Choose a dedicated USB adapter mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/choose-dedicated-usb-adapter-mode/" },
-        { "@type": "ListItem", "position": 2, "name": "Use ESP32 Bit Pirate with PulseView and SUMP", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/" },
-        { "@type": "ListItem", "position": 3, "name": "Write a SPI flash image with Flashrom", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/write-spi-flash-with-flashrom/" },
-        { "@type": "ListItem", "position": 4, "name": "Program an AVR with AVRDUDE", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/program-avr-with-avrdude/" },
-        { "@type": "ListItem", "position": 5, "name": "Use ESP32 Bit Pirate as an OpenOCD JTAG adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/" },
-        { "@type": "ListItem", "position": 6, "name": "Use the USB IR Toy LIRC adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-usb-ir-toy-lirc-adapter/" },
-        { "@type": "ListItem", "position": 7, "name": "Use the SubGHz raw CDC adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-subghz-raw-cdc-adapter/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Choose a dedicated USB adapter mode",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/choose-dedicated-usb-adapter-mode/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Use ESP32 Bit Pirate with PulseView and SUMP",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Write a SPI flash image with Flashrom",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/write-spi-flash-with-flashrom/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Program an AVR with AVRDUDE",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/program-avr-with-avrdude/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Use ESP32 Bit Pirate as an OpenOCD JTAG adapter",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Use the USB IR Toy LIRC adapter",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-usb-ir-toy-lirc-adapter/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Use the SubGHz raw CDC adapter",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-subghz-raw-cdc-adapter/"
+        }
       ]
     },
     {
@@ -92,14 +128,56 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "USB adapter workflows", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "USB adapter workflows",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 USB Adapter Modes: SUMP, Flashrom, AVR",
+      "description": "Use Bit Pirate as an ESP32 USB adapter workbench for PulseView SUMP capture, Flashrom serprog, AVRDUDE ISP and OpenOCD JTAG/SWD.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 USB adapter",
+        "PulseView SUMP logic analyzer",
+        "Flashrom serprog SPI flash",
+        "AVRDUDE AVR ISP",
+        "OpenOCD JTAG SWD adapter"
       ]
     }
   ]
-}
-</script>
+}</script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
@@ -120,8 +198,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 USB adapter workflows</p>
-<h1 id="page-title">USB adapter workflows with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate can reboot from the interactive CLI into dedicated USB adapter modes. Use it as a SUMP logic analyzer for PulseView, a serprog SPI flash programmer for Flashrom, an AVR ISP bridge for AVRDUDE, or an OpenOCD-style JTAG/SWD adapter after target wiring is known.</p>
+<h1 id="page-title">USB adapter workflows for hardware tools</h1>
+<p class="lead">ESP32 Bit Pirate can reboot into dedicated USB adapter workflows for common bench tools. Use one-shot modes for PulseView SUMP logic capture, Flashrom serprog SPI flash access, AVRDUDE ISP programming and OpenOCD JTAG/SWD sessions.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
 <a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical Bluetooth and BLE workbench to scan nearby devices, test BLE HID keyboard and mouse workflows, pair with your own host and troubleshoot BLE state from the serial CLI.">
+<meta name="description" content="Use Bit Pirate as an ESP32 BLE workbench to scan devices, test HID keyboard or mouse behavior, pair with a host and recover BLE state.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Bluetooth and BLE Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 Bluetooth workbench for BLE scanning, HID keyboard tests, HID mouse movement and pairing checks.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 BLE Scanner and HID Debugging">
+<meta property="og:description" content="Use Bit Pirate as an ESP32 BLE workbench to scan devices, test HID keyboard or mouse behavior, pair with a host and recover BLE state.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-ble.png">
 <meta property="og:image:alt" content="Preview image for Bluetooth and BLE debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bluetooth and BLE Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 Bluetooth workbench for BLE scanning, HID keyboard tests, mouse movement and pairing checks.">
+<meta name="twitter:title" content="ESP32 BLE Scanner and HID Debugging">
+<meta name="twitter:description" content="Scan BLE devices, test HID keyboard or mouse workflows, pair with a host and recover BLE state from the ESP32 Bit Pirate CLI.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-ble.png">
 <meta name="twitter:image:alt" content="Preview image for Bluetooth and BLE debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/">
-<title>Bluetooth and BLE Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<title>ESP32 BLE Scanner and HID Debugging | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "Bluetooth and BLE Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a practical Bluetooth and BLE workbench to scan nearby devices, test BLE HID keyboard and mouse workflows, pair with your own host and troubleshoot BLE state from the serial CLI.",
+      "name": "ESP32 BLE Scanner and HID Debugging",
+      "description": "Use Bit Pirate as an ESP32 BLE workbench to scan devices, test HID keyboard or mouse behavior, pair with a host and recover BLE state.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,16 +46,38 @@
         "ESP32 BLE mouse",
         "Bluetooth debugging",
         "ESP32-S3 BLE workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate Bluetooth recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Scan nearby Bluetooth devices", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-bluetooth-devices/" },
-        { "@type": "ListItem", "position": 2, "name": "Test BLE HID keyboard and mouse mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-ble-hid-server/" },
-        { "@type": "ListItem", "position": 3, "name": "Start a BLE HID keyboard server", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/start-ble-hid-keyboard-server/" },
-        { "@type": "ListItem", "position": 4, "name": "Use BLE mouse movement", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-ble-mouse-movement/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Scan nearby Bluetooth devices",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-bluetooth-devices/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Test BLE HID keyboard and mouse mode",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-ble-hid-server/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Start a BLE HID keyboard server",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/start-ble-hid-keyboard-server/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Use BLE mouse movement",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-ble-mouse-movement/"
+        }
       ]
     },
     {
@@ -89,13 +112,57 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "Bluetooth and BLE debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Bluetooth and BLE debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 BLE Scanner and HID Debugging",
+      "description": "Use Bit Pirate as an ESP32 BLE workbench to scan devices, test HID keyboard or mouse behavior, pair with a host and recover BLE state.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 BLE scanner",
+        "ESP32 BLE HID keyboard",
+        "ESP32 BLE mouse",
+        "Bluetooth debugging",
+        "ESP32-S3 BLE workbench"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -117,8 +184,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 Bluetooth and BLE debugging</p>
-<h1 id="page-title">Bluetooth and BLE debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical Bluetooth workbench. Use it to scan nearby BLE devices, start a BLE HID server, send controlled keyboard text, test small mouse movements and reset Bluetooth state before deeper pairing or HID experiments.</p>
+<h1 id="page-title">Bluetooth and BLE testing on ESP32</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a Bluetooth and BLE scanning workbench. Use it to scan nearby devices, test BLE HID keyboard and mouse workflows, pair with your own host and troubleshoot BLE state from the serial CLI.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/scan-bluetooth-devices/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0M8 12a4 4 0 0 1 8 0M10 16a2 2 0 0 1 4 0"></path><path d="M12 18h.01"></path></svg>Start with Bluetooth scanning</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
@@ -190,7 +257,7 @@ reset</code></pre>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>Bluetooth command reference</h3><p>Open the maintained firmware wiki for Bluetooth scan, BLE HID server, keyboard, mouse and reset commands.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/13-BLUETOOTH" rel="noopener" target="_blank">Open Bluetooth command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards before relying on Bluetooth or BLE HID workflows.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards before relying on Bluetooth or BLE HID workflows.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>USB HID workflow</h3><p>Compare BLE HID with wired USB HID when pairing adds too much uncertainty.</p><a class="action-link" href="../../recipes/use-usb-hid-keyboard-mouse/">Open USB HID keyboard and mouse recipe</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>

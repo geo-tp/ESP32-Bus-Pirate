@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical infrared workbench to capture IR remote signals, decode protocols, record .ir files, replay frames and use USB IR Toy / LIRC workflows.">
+<meta name="description" content="Use Bit Pirate as an ESP32 infrared workbench to capture IR remotes, decode protocols, record .ir files, replay frames and test LIRC flows.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Infrared Remote Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 infrared workbench for IR capture, protocol decode, .ir files, replay workflows and USB IR Toy / LIRC adapter use.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 Infrared Remote Capture and Replay">
+<meta property="og:description" content="Use Bit Pirate as an ESP32 infrared workbench to capture IR remotes, decode protocols, record .ir files, replay frames and test LIRC flows.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-infrared.png">
 <meta property="og:image:alt" content="Preview image for infrared remote debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Infrared Remote Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 infrared workbench for remote capture, decode, .ir files, replay tests and USB IR Toy / LIRC workflows.">
+<meta name="twitter:title" content="ESP32 Infrared Remote Capture and Replay">
+<meta name="twitter:description" content="Capture IR remote signals, decode protocols, record .ir files, replay frames and test USB IR Toy/LIRC workflows with ESP32.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-infrared.png">
 <meta name="twitter:image:alt" content="Preview image for infrared remote debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/">
-<title>Infrared Remote Debugging with ESP32 Bit Pirate | ESP32-S3 IR Workbench</title>
+<title>ESP32 Infrared Remote Capture and Replay | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "Infrared Remote Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a practical infrared workbench to capture IR remote signals, decode protocols, record .ir files, replay frames and use USB IR Toy / LIRC workflows.",
+      "name": "ESP32 Infrared Remote Capture and Replay",
+      "description": "Use Bit Pirate as an ESP32 infrared workbench to capture IR remotes, decode protocols, record .ir files, replay frames and test LIRC flows.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,7 +46,9 @@
         "Flipper IR file replay",
         "USB IR Toy LIRC adapter",
         "ESP32-S3 infrared workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
@@ -134,9 +137,38 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/"
         }
       ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 Infrared Remote Capture and Replay",
+      "description": "Use Bit Pirate as an ESP32 infrared workbench to capture IR remotes, decode protocols, record .ir files, replay frames and test LIRC flows.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/infrared/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 infrared remote debugging",
+        "IR remote capture",
+        "Flipper IR file replay",
+        "USB IR Toy LIRC adapter",
+        "ESP32-S3 infrared workbench"
+      ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -158,8 +190,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 infrared remote debugging</p>
-<h1 id="page-title">Infrared remote debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical infrared workbench. Use it to capture remote-control signals, decode common protocols, record reusable .ir files, replay controlled frames and bridge to desktop LIRC tools through the USB IR Toy adapter mode.</p>
+<h1 id="page-title">Infrared remote capture and replay</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into an infrared remote capture and replay workbench. Use it to capture IR signals, decode protocols, record .ir files, replay frames and test USB IR Toy or LIRC workflows.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/capture-infrared-remote/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3m12 0h3M7 7l2 2m8-2-2 2M7 17l2-2m8 2-2-2"></path><circle cx="12" cy="12" r="3"></circle></svg>Start with an IR capture recipe</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
@@ -273,7 +305,7 @@ remote</code></pre>
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>Infrared command reference</h3><p>Open the maintained firmware wiki for Infrared mode commands, .ir files, replay, remote shell and pin configuration.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/11-INFRARED" rel="noopener" target="_blank">Open Infrared command reference</a></article>
 <article class="destination-card"><h3>USB IR Toy adapter reference</h3><p>Open the adapter wiki for USB CDC IR Toy / LIRC workflows and desktop tool examples.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters#usb-ir-toy--lirc-adapter" rel="noopener" target="_blank">Open USB IR Toy adapter reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an IR receiver or transmitter.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an IR receiver or transmitter.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>LittleFS file manager</h3><p>Use the Web UI file tools when you need to upload or manage <code>.ir</code> remote files on the device.</p><a class="action-link" href="../../recipes/manage-littlefs-files-webui/">Manage LittleFS files from the Web UI</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>

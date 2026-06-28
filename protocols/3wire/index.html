@@ -3,36 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical 3-Wire Microwire EEPROM workbench to probe 93Cxx chips, choose x8 or x16 organization, dump memory safely and troubleshoot CS, SK, DI and DO wiring.">
+<meta name="description" content="Use Bit Pirate as an ESP32 3-Wire Microwire workbench for 93Cxx EEPROM probe, x8/x16 checks, safe dumps and wiring debug.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="3-Wire Microwire EEPROM Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 3-Wire workbench for 93Cxx Microwire EEPROM probing, safe dumps, controlled writes and wiring diagnostics.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 3-Wire 93Cxx Microwire EEPROM reading">
+<meta property="og:description" content="Use Bit Pirate as an ESP32 3-Wire Microwire workbench for 93Cxx EEPROM probe, x8/x16 checks, safe dumps and wiring debug.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-3wire.png">
-<meta property="og:image:alt" content="Preview image for 3-Wire Microwire EEPROM debugging with ESP32 Bit Pirate">
+<meta property="og:image:alt" content="Preview image for 3-Wire Microwire EEPROM reading with ESP32 Bit Pirate">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="3-Wire Microwire EEPROM Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 3-Wire workbench for 93Cxx Microwire EEPROM probes, dumps, write tests and wiring diagnostics.">
+<meta name="twitter:title" content="ESP32 3-Wire 93Cxx Microwire EEPROM reading">
+<meta name="twitter:description" content="Probe 93Cxx Microwire EEPROMs, check x8/x16 organization, dump safely and debug CS/SK/DI/DO wiring from ESP32.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-3wire.png">
-<meta name="twitter:image:alt" content="Preview image for 3-Wire Microwire EEPROM debugging with ESP32 Bit Pirate">
+<meta name="twitter:image:alt" content="Preview image for 3-Wire Microwire EEPROM reading with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/">
-<title>3-Wire Microwire EEPROM Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<title>ESP32 3-Wire 93Cxx Microwire EEPROM reading | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "3-Wire Microwire EEPROM Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a practical 3-Wire Microwire EEPROM workbench to probe 93Cxx chips, choose x8 or x16 organization, dump memory safely and troubleshoot CS, SK, DI and DO wiring.",
+      "name": "ESP32 3-Wire 93Cxx Microwire EEPROM reading",
+      "description": "Use Bit Pirate as an ESP32 3-Wire Microwire workbench for 93Cxx EEPROM probe, x8/x16 checks, safe dumps and wiring debug.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/",
       "isPartOf": {
         "@type": "WebSite",
@@ -40,12 +41,14 @@
         "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
       },
       "about": [
-        "ESP32 3-Wire EEPROM debugging",
+        "ESP32 3-Wire EEPROM reading",
         "93Cxx Microwire EEPROM dump",
         "93C46 EEPROM reader",
         "Microwire EEPROM x8 x16 organization",
         "3WIRE EEPROM shell"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
@@ -118,13 +121,42 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "3-Wire Microwire EEPROM debugging",
+          "name": "3-Wire Microwire EEPROM reading",
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/"
         }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 3-Wire 93Cxx Microwire EEPROM reading",
+      "description": "Use Bit Pirate as an ESP32 3-Wire Microwire workbench for 93Cxx EEPROM probe, x8/x16 checks, safe dumps and wiring debug.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/3wire/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 3-Wire EEPROM reading",
+        "93Cxx Microwire EEPROM dump",
+        "93C46 EEPROM reader",
+        "Microwire EEPROM x8 x16 organization",
+        "3WIRE EEPROM shell"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -145,16 +177,16 @@
 
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
-<p class="eyebrow">ESP32-S3 3-Wire Microwire EEPROM debugging</p>
-<h1 id="page-title">3-Wire Microwire EEPROM debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical 3-Wire EEPROM workbench. Use it to probe 93C46, 93C56, 93C66, 93C76 or 93C86 Microwire chips, choose the correct x8 or x16 organization, create safe dumps and troubleshoot CS, SK, DI and DO wiring before any write or erase operation.</p>
+<p class="eyebrow">ESP32-S3 3-Wire Microwire EEPROM reading</p>
+<h1 id="page-title">3-Wire Microwire EEPROM reading</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a 3-Wire Microwire EEPROM workbench. Use it to probe 93Cxx chips, choose x8 or x16 organization, dump memory safely and troubleshoot CS, SK, DI and DO wiring.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/dump-microwire-93c-eeprom/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with a 93Cxx dump recipe</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
 </div>
 </div>
 <figure class="hero-visual">
-<img src="../../recipes/assets/visual-3wire.svg" alt="3-Wire Microwire EEPROM debugging visual with an ESP32 board and 93Cxx EEPROM" width="1040" height="600">
+<img src="../../recipes/assets/visual-3wire.svg" alt="3-Wire Microwire EEPROM reading visual with an ESP32 board and 93Cxx EEPROM" width="1040" height="600">
 </figure>
 </section>
 
@@ -254,7 +286,7 @@ eeprom</code></pre>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>3WIRE command reference</h3><p>Open the maintained firmware wiki for 3WIRE mode, EEPROM shell commands and 93Cxx notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/08-3WIRE" rel="noopener" target="_blank">Open 3WIRE command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring a Microwire EEPROM.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring a Microwire EEPROM.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>Logic Analyzer</h3><p>Capture CS, SK, DI or DO timing when you need to inspect the physical signal behavior.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Logic Analyzer</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>

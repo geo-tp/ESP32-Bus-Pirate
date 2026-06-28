@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate with an nRF24L01 module as a practical RF24 workbench to wire SPI plus CE and CSN, scan 2.4 GHz channel activity, sweep channels, send payloads and receive RF24 packets.">
+<meta name="description" content="Use Bit Pirate with nRF24L01 as an ESP32 RF24 workbench for SPI wiring, CE/CSN checks, channel scans, payload send and receive.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="RF24 nRF24L01 Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 RF24 workbench for nRF24L01 wiring, configuration, channel scan, sweep, waterfall, send and receive workflows.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 nRF24L01 RF24 Debugging and Channel Scan">
+<meta property="og:description" content="Use Bit Pirate with nRF24L01 as an ESP32 RF24 workbench for SPI wiring, CE/CSN checks, channel scans, payload send and receive.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png">
 <meta property="og:image:alt" content="Preview image for RF24 nRF24L01 debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="RF24 nRF24L01 Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 RF24 workbench for nRF24L01 wiring, configuration, 2.4 GHz channel scan, sweep, send and receive workflows.">
+<meta name="twitter:title" content="ESP32 nRF24L01 RF24 Debugging and Channel Scan">
+<meta name="twitter:description" content="Wire nRF24L01 to ESP32 Bit Pirate, check CE/CSN, scan channels and send or receive RF24 payloads from the CLI.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png">
 <meta name="twitter:image:alt" content="Preview image for RF24 nRF24L01 debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/">
-<title>RF24 nRF24L01 Debugging with ESP32 Bit Pirate | ESP32-S3 Radio Workbench</title>
+<title>ESP32 nRF24L01 RF24 Debugging and Channel Scan | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "RF24 nRF24L01 Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate with an nRF24L01 module as a practical RF24 workbench to wire SPI plus CE and CSN, scan 2.4 GHz channel activity, sweep channels, send payloads and receive RF24 packets.",
+      "name": "ESP32 nRF24L01 RF24 Debugging and Channel Scan",
+      "description": "Use Bit Pirate with nRF24L01 as an ESP32 RF24 workbench for SPI wiring, CE/CSN checks, channel scans, payload send and receive.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,18 +46,50 @@
         "RF24 channel scanner",
         "nRF24L01 send receive payloads",
         "ESP32-S3 2.4 GHz radio workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate RF24 recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Wire an nRF24L01 RF24 module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-nrf24l01-rf24-module/" },
-        { "@type": "ListItem", "position": 2, "name": "Configure an nRF24L01 module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-nrf24-module/" },
-        { "@type": "ListItem", "position": 3, "name": "Scan 2.4 GHz RF24 channel activity", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-rf24-channel-activity/" },
-        { "@type": "ListItem", "position": 4, "name": "Sweep RF24 channels for activity", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sweep-rf24-channels-activity/" },
-        { "@type": "ListItem", "position": 5, "name": "Send a small RF24 payload", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-rf24-payload/" },
-        { "@type": "ListItem", "position": 6, "name": "Receive RF24 payloads", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-rf24-payloads/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Wire an nRF24L01 RF24 module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-nrf24l01-rf24-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Configure an nRF24L01 module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-nrf24-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Scan 2.4 GHz RF24 channel activity",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-rf24-channel-activity/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Sweep RF24 channels for activity",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sweep-rf24-channels-activity/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Send a small RF24 payload",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-rf24-payload/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Receive RF24 payloads",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-rf24-payloads/"
+        }
       ]
     },
     {
@@ -91,13 +124,57 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "RF24 nRF24L01 debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "RF24 nRF24L01 debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 nRF24L01 RF24 Debugging and Channel Scan",
+      "description": "Use Bit Pirate with nRF24L01 as an ESP32 RF24 workbench for SPI wiring, CE/CSN checks, channel scans, payload send and receive.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 RF24 debugging",
+        "nRF24L01 module wiring",
+        "RF24 channel scanner",
+        "nRF24L01 send receive payloads",
+        "ESP32-S3 2.4 GHz radio workbench"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -119,8 +196,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 RF24 and nRF24L01 debugging</p>
-<h1 id="page-title">RF24 nRF24L01 debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board and an nRF24L01 module into a practical RF24 workbench. Use it to wire SPI plus CE and CSN, configure a known channel, scan 2.4 GHz activity, sweep channels, send a small payload and receive RF24 packets from your own lab transmitter.</p>
+<h1 id="page-title">nRF24L01 RF24 radio debugging</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus an nRF24L01 module into an RF24 debugging workbench. Use it to wire SPI plus CE and CSN, scan 2.4 GHz channel activity, sweep channels, send payloads and receive RF24 packets.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/wire-nrf24l01-rf24-module/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h6M14 12h6M10 8v8M14 8v8"></path><circle cx="4" cy="12" r="2"></circle><circle cx="20" cy="12" r="2"></circle></svg>Start with nRF24L01 wiring</a>
 <a class="action-link" href="../../recipes/scan-rf24-channel-activity/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3l2-5 4 10 3-7 2 2h4"></path></svg>Scan RF24 channel activity</a>
@@ -147,6 +224,7 @@
 <div class="command-panel">
 <pre class="command-block"><code>mode rf24
 config
+setchannel
 scan
 sweep
 waterfall
@@ -194,7 +272,7 @@ send hello</code></pre>
 <article class="note-card"><span>CE and CSN</span><p>CE and CSN are different signals. Do not treat both as generic SPI chip select pins.</p></article>
 <article class="note-card"><span>SPI pins</span><p>Check SCK, MISO, MOSI and CSN separately from CE when the module fails to initialize.</p></article>
 <article class="note-card"><span>Antenna</span><p>Use the right module orientation and antenna placement before judging receive range or channel activity.</p></article>
-<article class="note-card"><span>Authorization</span><p>Use send and receive workflows only with devices and channels you own or are explicitly allowed to test.</p></article>
+<article class="note-card"><span>Authorization</span><p>Use send, receive and any interference/jam-style workflows only with devices and channels you own or are explicitly allowed to test.</p></article>
 </div>
 </section>
 
@@ -234,9 +312,9 @@ send hello</code></pre>
 </div>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
-<article class="destination-card"><h3>RF24 command reference</h3><p>Open the maintained firmware wiki for RF24 mode commands, nRF24L01 setup, scan, sweep, waterfall, send and receive workflows.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/21-RF24" rel="noopener" target="_blank">Open RF24 command reference</a></article>
+<article class="destination-card"><h3>RF24 command reference</h3><p>Open the maintained firmware wiki for RF24 mode commands, nRF24L01 setup, setchannel, scan, sweep, waterfall, send, receive and jam warnings.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/21-RF24" rel="noopener" target="_blank">Open RF24 command reference</a></article>
 <article class="destination-card"><h3>SPI protocol overview</h3><p>nRF24L01 uses SPI plus CE and CSN, so SPI wiring checks are useful before debugging radio behavior.</p><a class="action-link" href="../spi/">Open SPI debugging guide</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an nRF24L01 module.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an nRF24L01 module.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
 <article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>

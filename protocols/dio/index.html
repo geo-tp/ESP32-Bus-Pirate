@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical GPIO and DIO workbench to read logic levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servo signals.">
+<meta name="description" content="Use Bit Pirate as an ESP32 GPIO workbench to read levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servos.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="GPIO / DIO Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 GPIO and DIO workbench for logic level checks, active pin scans, microsecond pulses, frequency measurement, PWM and servo tests.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 GPIO, PWM, Servo and DIO Debugging">
+<meta property="og:description" content="Use Bit Pirate as an ESP32 GPIO workbench to read levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servos.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-dio.png">
 <meta property="og:image:alt" content="Preview image for GPIO and DIO debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GPIO / DIO Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 GPIO and DIO workbench for logic levels, active pin scans, pulses, PWM, servo signals and quick frequency checks.">
+<meta name="twitter:title" content="ESP32 GPIO, PWM, Servo and DIO Debugging">
+<meta name="twitter:description" content="Read logic levels, scan pins, pulse outputs, measure frequency, generate PWM and test servos with ESP32 Bit Pirate.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-dio.png">
 <meta name="twitter:image:alt" content="Preview image for GPIO and DIO debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/">
-<title>GPIO / DIO Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<title>ESP32 GPIO, PWM, Servo and DIO Debugging | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "GPIO / DIO Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as a practical GPIO and DIO workbench to read logic levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servo signals.",
+      "name": "ESP32 GPIO, PWM, Servo and DIO Debugging",
+      "description": "Use Bit Pirate as an ESP32 GPIO workbench to read levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servos.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,7 +46,9 @@
         "GPIO logic level check",
         "microsecond GPIO pulse",
         "ESP32 PWM and servo test"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
@@ -164,9 +167,38 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/"
         }
       ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 GPIO, PWM, Servo and DIO Debugging",
+      "description": "Use Bit Pirate as an ESP32 GPIO workbench to read levels, scan active pins, pulse outputs, measure frequency, generate PWM and test servos.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 GPIO debugging",
+        "ESP32 DIO mode",
+        "GPIO logic level check",
+        "microsecond GPIO pulse",
+        "ESP32 PWM and servo test"
+      ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -188,8 +220,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 GPIO and digital I/O debugging</p>
-<h1 id="page-title">GPIO / DIO debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical GPIO and digital I/O workbench. Use it to check logic levels, scan active pins, sniff edges, send microsecond pulses, measure rough frequency, generate PWM and test servo-style control signals before writing target firmware.</p>
+<h1 id="page-title">Digital I/O testing and signal control</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a GPIO, DIO, PWM and servo debugging workbench. Use it to list pins, read logic levels, scan active pins, pulse outputs, measure frequency, generate PWM and test simple digital devices.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/check-logic-levels-before-wiring/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h3l2-5 4 10 3-7 2 2h2"></path></svg>Start with a logic-level check</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
@@ -281,6 +313,17 @@ reset 5</code></pre>
 </div>
 </section>
 
+<section class="protocol-band" aria-labelledby="board-choice-title">
+<div class="section-head">
+<h2 id="board-choice-title">Board choice for GPIO work</h2>
+<p class="section-intro">DIO workflows depend on exposed pins. Pick a board with enough accessible GPIO before planning pulses, frequency checks or unknown-pin discovery.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>ESP32-S3 DevKit</span><p><a href="../../boards/esp32-s3-devkit/">Use the DevKit board page</a> for the broadest GPIO access and Dock-friendly wiring.</p></article>
+<article class="note-card"><span>Compact boards</span><p><a href="../../boards/stamp-s3/">StampS3</a>, <a href="../../boards/m5stick-s3/">M5StickS3</a> and <a href="../../boards/xiao-esp32-s3/">XIAO ESP32-S3</a> can work well when the pin budget fits the fixture.</p></article>
+</div>
+</section>
+
 <section class="protocol-band" aria-labelledby="recipes-title">
 <div class="section-head">
 <h2 id="recipes-title">Detailed GPIO and DIO recipes</h2>
@@ -308,7 +351,7 @@ reset 5</code></pre>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>DIO command reference</h3><p>Open the maintained firmware wiki for DIO mode commands, examples and hardware notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/09-DIO" rel="noopener" target="_blank">Open DIO command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIO notes before wiring a target signal.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIO notes before wiring a target signal.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>Bit Bang GPIO controller</h3><p>Use the browser-based BPIO2 tool for direct GPIO experiments from the web interface.</p><a class="action-link" href="../../web-tools/bpio2/">Open Bit Bang GPIO browser controller</a></article>
 <article class="destination-card"><h3>Logic Analyzer</h3><p>Move from quick DIO checks to waveform capture when timing, duty cycle or protocol shape matters.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Web Logic Analyzer</a></article>

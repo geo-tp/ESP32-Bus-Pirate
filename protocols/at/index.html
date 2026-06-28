@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as an AT command and cellular modem workbench to test UART AT devices, check modem status, inspect SIM details, verify network registration and run SMS or USSD workflows.">
+<meta name="description" content="Use Bit Pirate as an ESP32 AT command workbench for UART modems, SIM checks, network registration, SMS and USSD tests.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="AT Command Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 AT command workbench for UART AT modules, cellular modem checks, SIM inspection, network registration, SMS and USSD workflows.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 AT Command and Cellular Modem Debugging">
+<meta property="og:description" content="Use Bit Pirate as an ESP32 AT command workbench for UART modems, SIM checks, network registration, SMS and USSD tests.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-cell.png">
 <meta property="og:image:alt" content="Preview image for AT command debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AT Command Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 AT command workbench for UART AT modules, cellular modem checks, SIM status, network registration, SMS and USSD.">
+<meta name="twitter:title" content="ESP32 AT Command and Cellular Modem Debugging">
+<meta name="twitter:description" content="Test UART AT modems from ESP32 Bit Pirate: status, SIM details, network registration, SMS and USSD workflows.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-cell.png">
 <meta name="twitter:image:alt" content="Preview image for AT command debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/">
-<title>AT Command Debugging with ESP32 Bit Pirate | ESP32-S3 Workbench</title>
+<title>ESP32 AT Command and Cellular Modem Debugging | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "AT Command Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate as an AT command and cellular modem workbench to test UART AT devices, check modem status, inspect SIM details, verify network registration and run SMS or USSD workflows.",
+      "name": "ESP32 AT Command and Cellular Modem Debugging",
+      "description": "Use Bit Pirate as an ESP32 AT command workbench for UART modems, SIM checks, network registration, SMS and USSD tests.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,19 +46,56 @@
         "UART AT helper",
         "GSM LTE modem AT commands",
         "ESP32-S3 AT command workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate AT command recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Use the UART AT command helper", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-uart-at-shell-modem/" },
-        { "@type": "ListItem", "position": 2, "name": "Check a cellular modem with CELL mode", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/" },
-        { "@type": "ListItem", "position": 3, "name": "Check GSM/LTE network registration", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-network-registration/" },
-        { "@type": "ListItem", "position": 4, "name": "Dump SIM card information from a cellular modem", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-sim-card-info-cellular-modem/" },
-        { "@type": "ListItem", "position": 5, "name": "List SIM phonebook contacts", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/list-sim-phonebook-contacts/" },
-        { "@type": "ListItem", "position": 6, "name": "Send a USSD request from a modem", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-ussd-cellular-modem/" },
-        { "@type": "ListItem", "position": 7, "name": "Send an SMS from a cellular modem", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-sms-from-cellular-modem/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Use the UART AT command helper",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-uart-at-shell-modem/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Check a cellular modem with CELL mode",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Check GSM/LTE network registration",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-network-registration/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Dump SIM card information from a cellular modem",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-sim-card-info-cellular-modem/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "List SIM phonebook contacts",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/list-sim-phonebook-contacts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Send a USSD request from a modem",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-ussd-cellular-modem/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Send an SMS from a cellular modem",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-sms-from-cellular-modem/"
+        }
       ]
     },
     {
@@ -92,13 +130,57 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "AT command debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AT command debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 AT Command and Cellular Modem Debugging",
+      "description": "Use Bit Pirate as an ESP32 AT command workbench for UART modems, SIM checks, network registration, SMS and USSD tests.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 AT command debugging",
+        "ESP32 cellular modem debugging",
+        "UART AT helper",
+        "GSM LTE modem AT commands",
+        "ESP32-S3 AT command workbench"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -120,8 +202,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 AT command and cellular debugging</p>
-<h1 id="page-title">AT command debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical AT command workbench. Use it to talk to UART AT modules, bring up cellular modems, check SIM and network state, then continue into SMS, USSD or detailed CELL mode recipes when the basic modem path is proven.</p>
+<h1 id="page-title">AT command and modem debugging</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into an AT command and cellular modem debugging workbench. Use it to test UART AT devices, check modem status, inspect SIM details, verify network registration and run SMS or USSD workflows.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/use-uart-at-shell-modem/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"></path><path d="m16 15 3-3-3-3"></path></svg>Start with the UART AT helper</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
@@ -240,7 +322,7 @@ ussd</code></pre>
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>CELL command reference</h3><p>Open the maintained firmware wiki for cellular modem status, SIM, network, SMS and USSD commands.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/23-CELL" rel="noopener" target="_blank">Open CELL command reference</a></article>
 <article class="destination-card"><h3>UART command reference</h3><p>Use UART mode documentation for serial setup, AT helper behavior and lower-level link checks.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/03-UART" rel="noopener" target="_blank">Open UART command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and hardware notes before relying on UART or cellular workflows.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and hardware notes before relying on UART or cellular workflows.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
 <article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Use the source repository for firmware code, issues, releases and project-level documentation.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate with a Si4713 module as a practical FM and RDS workbench to wire I2C plus reset, scan the FM band, trace one frequency and inspect waterfall activity in authorized lab conditions.">
+<meta name="description" content="Use Bit Pirate with Si4713 as an ESP32 FM/RDS workbench to wire I2C plus reset, scan FM bands, trace frequency activity and test RDS.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="FM and RDS Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 FM / Si4713 workbench for wiring, configuration, band scan, trace and waterfall workflows.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 FM and RDS Debugging with Si4713">
+<meta property="og:description" content="Use Bit Pirate with Si4713 as an ESP32 FM/RDS workbench to wire I2C plus reset, scan FM bands, trace frequency activity and test RDS.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-fm.png">
 <meta property="og:image:alt" content="Preview image for FM and RDS debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="FM and RDS Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 FM workbench for Si4713 wiring, I2C setup, band scan, trace and waterfall workflows.">
+<meta name="twitter:title" content="ESP32 FM and RDS Debugging with Si4713">
+<meta name="twitter:description" content="Wire a Si4713 module to ESP32 Bit Pirate, scan FM bands, trace frequency activity and test RDS workflows in a lab setup.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-fm.png">
 <meta name="twitter:image:alt" content="Preview image for FM and RDS debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/">
-<title>FM and RDS Debugging with ESP32 Bit Pirate | ESP32-S3 Radio Workbench</title>
+<title>ESP32 FM and RDS Debugging with Si4713 | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "FM and RDS Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate with a Si4713 module as a practical FM and RDS workbench to wire I2C plus reset, scan the FM band, trace one frequency and inspect waterfall activity in authorized lab conditions.",
+      "name": "ESP32 FM and RDS Debugging with Si4713",
+      "description": "Use Bit Pirate with Si4713 as an ESP32 FM/RDS workbench to wire I2C plus reset, scan FM bands, trace frequency activity and test RDS.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,15 +46,32 @@
         "FM band scanner",
         "FM trace waterfall",
         "ESP32-S3 radio workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate FM recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Wire a Si4713 FM module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-si4713-fm-module/" },
-        { "@type": "ListItem", "position": 2, "name": "Scan the FM band with Si4713", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/" },
-        { "@type": "ListItem", "position": 3, "name": "Trace one FM frequency", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/trace-one-fm-frequency/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Wire a Si4713 FM module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-si4713-fm-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Scan the FM band with Si4713",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Trace one FM frequency",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/trace-one-fm-frequency/"
+        }
       ]
     },
     {
@@ -88,13 +106,57 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "FM and RDS debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "FM and RDS debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 FM and RDS Debugging with Si4713",
+      "description": "Use Bit Pirate with Si4713 as an ESP32 FM/RDS workbench to wire I2C plus reset, scan FM bands, trace frequency activity and test RDS.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 FM debugging",
+        "Si4713 module wiring",
+        "FM band scanner",
+        "FM trace waterfall",
+        "ESP32-S3 radio workbench"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -116,8 +178,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 FM and Si4713 debugging</p>
-<h1 id="page-title">FM and RDS debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board and a Si4713 module into a practical FM workbench. Use it to wire I2C plus reset, initialize FM mode, scan the FM band, trace one frequency and inspect waterfall activity before any controlled broadcast experiment.</p>
+<h1 id="page-title">FM and RDS testing with Si4713</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus a Si4713 module into an FM and RDS debugging workbench. Use it to wire I2C plus reset, scan the FM band, trace one frequency and inspect waterfall activity in authorized lab conditions.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/wire-si4713-fm-module/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h6M14 12h6M10 8v8M14 8v8"></path><circle cx="4" cy="12" r="2"></circle><circle cx="20" cy="12" r="2"></circle></svg>Start with Si4713 wiring</a>
 <a class="action-link" href="../../recipes/scan-fm-band-si4713/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3l2-5 4 10 3-7 2 2h4"></path></svg>Scan the FM band</a>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate as a practical CAN bus workbench with an MCP2515 module to configure bitrate, check controller status, sniff frames, receive specific IDs and send controlled test frames.">
+<meta name="description" content="Use Bit Pirate with MCP2515 as an ESP32 CAN bus workbench to set bitrate, check status, sniff frames and send controlled test traffic.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="CAN Bus Debugging with ESP32 Bit Pirate and MCP2515">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 CAN workbench for MCP2515 setup, bitrate checks, frame sniffing, ID filtering and controlled test frames.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 CAN Bus Debugging with MCP2515">
+<meta property="og:description" content="Use Bit Pirate with MCP2515 as an ESP32 CAN bus workbench to set bitrate, check status, sniff frames and send controlled test traffic.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-can.png">
 <meta property="og:image:alt" content="Preview image for CAN bus debugging with ESP32 Bit Pirate and MCP2515">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CAN Bus Debugging with ESP32 Bit Pirate and MCP2515">
-<meta name="twitter:description" content="A practical ESP32-S3 CAN workbench for MCP2515 status checks, bitrate setup, sniffing, receive filters and controlled test frames.">
+<meta name="twitter:title" content="ESP32 CAN Bus Debugging with MCP2515">
+<meta name="twitter:description" content="Wire MCP2515 to ESP32 Bit Pirate, configure bitrate, check controller status, sniff CAN frames and send controlled test traffic.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-can.png">
 <meta name="twitter:image:alt" content="Preview image for CAN bus debugging with ESP32 Bit Pirate and MCP2515">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/">
-<title>CAN Bus Debugging with ESP32 Bit Pirate | MCP2515 Workbench</title>
+<title>ESP32 CAN Bus Debugging with MCP2515 | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "CAN Bus Debugging with ESP32 Bit Pirate and MCP2515",
-      "description": "Use ESP32 Bit Pirate as a practical CAN bus workbench with an MCP2515 module to configure bitrate, check controller status, sniff frames, receive specific IDs and send controlled test frames.",
+      "name": "ESP32 CAN Bus Debugging with MCP2515",
+      "description": "Use Bit Pirate with MCP2515 as an ESP32 CAN bus workbench to set bitrate, check status, sniff frames and send controlled test traffic.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,7 +46,9 @@
         "CAN frame sniffing",
         "CAN bitrate configuration",
         "CAN receive ID filter"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
@@ -134,9 +137,38 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/"
         }
       ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 CAN Bus Debugging with MCP2515",
+      "description": "Use Bit Pirate with MCP2515 as an ESP32 CAN bus workbench to set bitrate, check status, sniff frames and send controlled test traffic.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 CAN bus debugging",
+        "MCP2515 CAN module",
+        "CAN frame sniffing",
+        "CAN bitrate configuration",
+        "CAN receive ID filter"
+      ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -158,8 +190,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 CAN bus debugging with MCP2515</p>
-<h1 id="page-title">CAN bus debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus an MCP2515 CAN module into a practical CAN workbench. Use it to configure bitrate, check controller status, sniff frames, receive one specific identifier and send controlled standard frames on an authorized test bus.</p>
+<h1 id="page-title">CAN bus debugging with MCP2515</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus an MCP2515 module into a CAN bus debugging workbench. Use it to configure bitrate, check controller status, sniff frames, receive specific IDs and send controlled test frames.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/sniff-can-frames-mcp2515/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with a CAN sniff recipe</a>
 <a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
@@ -271,7 +303,7 @@ send 0x123</code></pre>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
 <article class="destination-card"><h3>CAN command reference</h3><p>Open the maintained firmware wiki for CAN mode commands, MCP2515 configuration and usage notes.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/17-CAN" rel="noopener" target="_blank">Open CAN command reference</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an MCP2515 CAN module.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring an MCP2515 CAN module.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>Logic Analyzer</h3><p>Capture SPI-side SCK, SI, SO or CS timing when you need to inspect MCP2515 control signals.</p><a class="action-link" href="../../web-tools/logic-analyzer/">Open Logic Analyzer</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>

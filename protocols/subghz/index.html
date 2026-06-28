@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use ESP32 Bit Pirate with a CC1101 module as a practical Sub-GHz workbench to wire the radio, scan RSSI, sweep frequencies, receive frames, trace raw pulses, record signals to LittleFS and load Flipper-style .sub files.">
+<meta name="description" content="Use Bit Pirate with CC1101 as an ESP32 Sub-GHz workbench for wiring, RSSI scan, frequency sweep, frame receive and .sub files.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <meta name="theme-color" content="#121212">
 <meta property="og:site_name" content="ESP32 Bit Pirate">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Sub-GHz CC1101 Debugging with ESP32 Bit Pirate">
-<meta property="og:description" content="Use ESP32 Bit Pirate as an ESP32-S3 Sub-GHz / CC1101 workbench for wiring, scan, sweep, receive, trace, record, LittleFS and .sub file workflows.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="ESP32 CC1101 Sub-GHz Signal Debugging">
+<meta property="og:description" content="Use Bit Pirate with CC1101 as an ESP32 Sub-GHz workbench for wiring, RSSI scan, frequency sweep, frame receive and .sub files.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/">
 <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-subghz.png">
 <meta property="og:image:alt" content="Preview image for Sub-GHz CC1101 debugging with ESP32 Bit Pirate">
@@ -18,21 +18,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sub-GHz CC1101 Debugging with ESP32 Bit Pirate">
-<meta name="twitter:description" content="A practical ESP32-S3 Sub-GHz workbench for CC1101 wiring, scan, sweep, receive, raw pulse trace, LittleFS recording and .sub file workflows.">
+<meta name="twitter:title" content="ESP32 CC1101 Sub-GHz Signal Debugging">
+<meta name="twitter:description" content="Wire CC1101 to ESP32 Bit Pirate, scan RSSI, sweep frequencies, receive frames, trace raw pulses and handle .sub files.">
 <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-subghz.png">
 <meta name="twitter:image:alt" content="Preview image for Sub-GHz CC1101 debugging with ESP32 Bit Pirate">
 <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/">
-<title>Sub-GHz CC1101 Debugging with ESP32 Bit Pirate | ESP32-S3 Radio Workbench</title>
+<title>ESP32 CC1101 Sub-GHz Signal Debugging | Bit Pirate</title>
 <link rel="stylesheet" href="../protocols.css">
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "Sub-GHz CC1101 Debugging with ESP32 Bit Pirate",
-      "description": "Use ESP32 Bit Pirate with a CC1101 module as a practical Sub-GHz workbench to wire the radio, scan RSSI, sweep frequencies, receive frames, trace raw pulses, record signals to LittleFS and load Flipper-style .sub files.",
+      "name": "ESP32 CC1101 Sub-GHz Signal Debugging",
+      "description": "Use Bit Pirate with CC1101 as an ESP32 Sub-GHz workbench for wiring, RSSI scan, frequency sweep, frame receive and .sub files.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,19 +46,56 @@
         "Sub-GHz RSSI scan",
         "Flipper SubGHz .sub files",
         "ESP32-S3 radio workbench"
-      ]
+      ],
+      "inLanguage": "en",
+      "dateModified": "2026-06-28"
     },
     {
       "@type": "ItemList",
       "name": "ESP32 Bit Pirate Sub-GHz recipes",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Wire a CC1101 Sub-GHz module", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-cc1101-subghz-module/" },
-        { "@type": "ListItem", "position": 2, "name": "Find active Sub-GHz frequencies", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/" },
-        { "@type": "ListItem", "position": 3, "name": "Sweep SubGHz frequency activity", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sweep-subghz-frequency-activity/" },
-        { "@type": "ListItem", "position": 4, "name": "Receive and analyze a Sub-GHz frame", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-subghz-frame/" },
-        { "@type": "ListItem", "position": 5, "name": "Record a SubGHz signal to LittleFS", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-subghz-signal-littlefs/" },
-        { "@type": "ListItem", "position": 6, "name": "Load a Flipper SubGHz .sub file", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-subghz-flipper-sub-file/" },
-        { "@type": "ListItem", "position": 7, "name": "Use the SubGHz Raw CDC adapter", "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-subghz-raw-cdc-adapter/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Wire a CC1101 Sub-GHz module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-cc1101-subghz-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Find active Sub-GHz frequencies",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Sweep SubGHz frequency activity",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sweep-subghz-frequency-activity/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Receive and analyze a Sub-GHz frame",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-subghz-frame/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Record a SubGHz signal to LittleFS",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-subghz-signal-littlefs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Load a Flipper SubGHz .sub file",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-subghz-flipper-sub-file/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Use the SubGHz Raw CDC adapter",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-subghz-raw-cdc-adapter/"
+        }
       ]
     },
     {
@@ -76,7 +114,7 @@
           "name": "Can ESP32 Bit Pirate find active Sub-GHz frequencies?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. SubGHz scan and sweep workflows help locate RSSI peaks before moving to receive, trace, record or file-based workflows."
+            "text": "Yes. SubGHz scan, sweep and waterfall workflows help locate RSSI peaks before moving to receive, trace, record, ear or file-based workflows."
           }
         },
         {
@@ -92,13 +130,57 @@
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
-        { "@type": "ListItem", "position": 2, "name": "Supported protocols", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" },
-        { "@type": "ListItem", "position": 3, "name": "Sub-GHz CC1101 debugging", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Sub-GHz CC1101 debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 CC1101 Sub-GHz Signal Debugging",
+      "description": "Use Bit Pirate with CC1101 as an ESP32 Sub-GHz workbench for wiring, RSSI scan, frequency sweep, frame receive and .sub files.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/subghz/",
+      "inLanguage": "en",
+      "dateModified": "2026-06-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 Sub-GHz debugging",
+        "CC1101 module wiring",
+        "Sub-GHz RSSI scan",
+        "Flipper SubGHz .sub files",
+        "ESP32-S3 radio workbench"
       ]
     }
   ]
 }
+
 </script>
 <script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
 <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
@@ -120,8 +202,8 @@
 <section class="protocol-hero" aria-labelledby="page-title">
 <div>
 <p class="eyebrow">ESP32-S3 Sub-GHz and CC1101 debugging</p>
-<h1 id="page-title">Sub-GHz CC1101 debugging with ESP32 Bit Pirate</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board and a CC1101 radio module into a practical Sub-GHz workbench. Use it to wire the module, find RSSI peaks, receive frames, inspect raw timing, record signals to LittleFS and load compatible Flipper-style <code>.sub</code> files during controlled lab tests.</p>
+<h1 id="page-title">Sub-GHz radio debugging with CC1101</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus a CC1101 module into a Sub-GHz signal debugging workbench. Use it to wire the radio, scan RSSI, sweep frequencies, receive frames, trace raw pulses, record signals to LittleFS and load Flipper-style .sub files.</p>
 <div class="hero-actions">
 <a class="action-link" href="../../recipes/wire-cc1101-subghz-module/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h6M14 12h6M10 8v8M14 8v8"></path><circle cx="4" cy="12" r="2"></circle><circle cx="20" cy="12" r="2"></circle></svg>Start with CC1101 wiring</a>
 <a class="action-link" href="../../recipes/scan-subghz-frequency-cc1101/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3l2-5 4 10 3-7 2 2h4"></path></svg>Find active Sub-GHz frequencies</a>
@@ -141,9 +223,9 @@
 <ol class="step-list">
 <li><span>01</span><p>Wire the CC1101 module with SPI, chip select, GDO0, 3.3 V power and common ground.</p></li>
 <li><span>02</span><p>Open SubGHz mode, confirm the pin mapping and set a frequency that matches your own test device or lab signal.</p></li>
-<li><span>03</span><p>Use <code>scan</code> or <code>sweep</code> to find activity before trying to receive a frame.</p></li>
+<li><span>03</span><p>Use <code>scan</code>, <code>sweep</code> or <code>waterfall</code> to find activity before trying to receive a frame.</p></li>
 <li><span>04</span><p>Use <code>receive</code> and <code>trace</code> to inspect payloads, raw pulses or likely encoding details.</p></li>
-<li><span>05</span><p>Use <code>record</code>, <code>load</code> and LittleFS file workflows when a signal needs to be reused in an authorized bench test.</p></li>
+<li><span>05</span><p>Use <code>record</code>, <code>load</code>, <code>ear</code> and LittleFS file workflows when a signal needs to be reused or inspected in an authorized bench test.</p></li>
 </ol>
 <div class="command-panel">
 <pre class="command-block"><code>mode subghz
@@ -151,10 +233,12 @@ config
 setfrequency
 scan
 sweep
+waterfall
 receive
 trace
 record
-load</code></pre>
+load
+ear</code></pre>
 <p class="command-note">Example CLI flow. See the SubGHz wiki for exact syntax, CC1101 pin prompts, supported commands and firmware-specific behavior.</p>
 </div>
 </div>
@@ -167,7 +251,7 @@ load</code></pre>
 </div>
 <div class="intent-grid">
 <article class="intent-card"><span>Wire</span><h3>CC1101 module setup</h3><p>Connect SPI, chip select, GDO0, 3.3 V and ground, then confirm the selected board exposes safe GPIOs for the radio module.</p></article>
-<article class="intent-card"><span>Scan</span><h3>RSSI peak discovery</h3><p>Use scan to check whether a known band has visible activity before decoding or recording anything.</p></article>
+<article class="intent-card"><span>Scan</span><h3>RSSI peak discovery</h3><p>Use scan, sweep or waterfall to check whether a known band has visible activity before decoding or recording anything.</p></article>
 <article class="intent-card"><span>Sweep</span><h3>Frequency activity map</h3><p>Sweep a frequency range to locate useful areas for a known own transmitter, remote, sensor or lab generator.</p></article>
 <article class="intent-card"><span>Receive</span><h3>Frame capture and analysis</h3><p>Receive frames, inspect likely encoding and use trace workflows when a simple decoded result is not enough.</p></article>
 <article class="intent-card"><span>Record</span><h3>LittleFS signal storage</h3><p>Record symbols or raw timing into device storage so a working bench capture can be reused later.</p></article>
@@ -181,9 +265,9 @@ load</code></pre>
 <p class="section-intro">Sub-GHz debugging is usually about confirming hardware, frequency, signal quality and file handling before building a custom radio workflow.</p>
 </div>
 <div class="signal-grid">
-<article class="signal-card"><span>Unknown activity</span><h3>Before trying a decoder</h3><p>Use scan and sweep first to confirm that the antenna and CC1101 are seeing real activity on the expected band.</p></article>
+<article class="signal-card"><span>Unknown activity</span><h3>Before trying a decoder</h3><p>Use scan, sweep or waterfall first to confirm that the antenna and CC1101 are seeing real activity on the expected band.</p></article>
 <article class="signal-card"><span>Known own device</span><h3>Before recording a signal</h3><p>Use receive and trace against a device you own or are explicitly authorized to test, then decide whether recording is useful.</p></article>
-<article class="signal-card"><span>File workflow</span><h3>Before repeating manual tests</h3><p>Use LittleFS and compatible <code>.sub</code> files when the same signal needs to be loaded across multiple sessions.</p></article>
+<article class="signal-card"><span>File workflow</span><h3>Before repeating manual tests</h3><p>Use LittleFS and compatible <code>.sub</code> files when the same signal needs to be loaded across multiple sessions; reserve send, replay, jam or bruteforce-style transmit tests for legal, controlled lab targets only.</p></article>
 </div>
 </section>
 
@@ -215,6 +299,17 @@ load</code></pre>
 </div>
 </section>
 
+<section class="protocol-band" aria-labelledby="board-choice-title">
+<div class="section-head">
+<h2 id="board-choice-title">Board choice for Sub-GHz</h2>
+<p class="section-intro">For integrated CC1101 workflows, use a T-Embed CC1101 firmware target. For an external CC1101 module on raw pins, use a GPIO-friendly board and verify the SPI/GDO mapping first.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>T-Embed CC1101</span><p><a href="../../boards/t-embed-cc1101/">Use the T-Embed CC1101 board page</a> for the integrated CC1101 and CC1101 Plus variants.</p></article>
+<article class="note-card"><span>ESP32-S3 DevKit</span><p><a href="../../boards/esp32-s3-devkit/">Use the DevKit board page</a> when wiring an external CC1101 module through the Dock or raw GPIO.</p></article>
+</div>
+</section>
+
 <section class="protocol-band" aria-labelledby="recipes-title">
 <div class="section-head">
 <h2 id="recipes-title">Detailed Sub-GHz recipes</h2>
@@ -238,10 +333,10 @@ load</code></pre>
 </div>
 <div class="destination-grid">
 <article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install the firmware on a supported ESP32-S3 board from a compatible browser.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
-<article class="destination-card"><h3>SubGHz command reference</h3><p>Open the maintained firmware wiki for SubGHz mode commands, CC1101 setup, scan, sweep, receive, trace, record and load workflows.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/19-SUBGHZ" rel="noopener" target="_blank">Open SubGHz command reference</a></article>
+<article class="destination-card"><h3>SubGHz command reference</h3><p>Open the maintained firmware wiki for SubGHz mode commands, CC1101 setup, scan, sweep, receive, trace, record, load and ear workflows.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/19-SUBGHZ" rel="noopener" target="_blank">Open SubGHz command reference</a></article>
 <article class="destination-card"><h3>SPI protocol overview</h3><p>CC1101 uses SPI for the radio module link, so SPI wiring checks are useful before debugging radio behavior.</p><a class="action-link" href="../spi/">Open SPI debugging guide</a></article>
 <article class="destination-card"><h3>USB adapter overview</h3><p>Use the USB adapter page when the Raw CDC path is a better fit than the interactive CLI.</p><a class="action-link" href="../usb-adapters/">Open USB adapter guide</a></article>
-<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring a CC1101 module.</p><a class="action-link" href="../../hardware/#supported-boards">View supported ESP32-S3 boards</a></article>
+<article class="destination-card"><h3>Supported ESP32-S3 boards</h3><p>Check compatible boards and exposed GPIOs before wiring a CC1101 module.</p><a class="action-link" href="../../boards/">Compare supported ESP32-S3 boards</a></article>
 <article class="destination-card"><h3>Web Serial Terminal</h3><p>Use a compatible browser to connect to the ESP32 Bit Pirate serial CLI.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal for ESP32 Bit Pirate</a></article>
 <article class="destination-card"><h3>LittleFS file manager</h3><p>Use the Web UI file tools when you need to upload or manage <code>.sub</code> files on the device.</p><a class="action-link" href="../../recipes/manage-littlefs-files-webui/">Manage LittleFS files from the Web UI</a></article>
 <article class="destination-card"><h3>All hardware debugging recipes</h3><p>Browse the complete recipe index for other buses, firmware tasks, signal capture and hardware workflows.</p><a class="action-link" href="../../recipes/">Browse all hardware debugging recipes</a></article>
@@ -261,7 +356,7 @@ load</code></pre>
 </details>
 <details>
 <summary>Can ESP32 Bit Pirate find active Sub-GHz frequencies?</summary>
-<p>Yes. SubGHz scan and sweep workflows help locate RSSI peaks before moving to receive, trace, record or file-based workflows.</p>
+<p>Yes. SubGHz scan, sweep and waterfall workflows help locate RSSI peaks before moving to receive, trace, record, ear or file-based workflows.</p>
 </details>
 <details>
 <summary>Can ESP32 Bit Pirate use Flipper-style .sub files?</summary>
