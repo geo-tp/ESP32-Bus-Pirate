@@ -676,13 +676,22 @@ html[data-theme="light"] .module-hero .module-visual img[src$="module-target-chi
 }
 
 html[data-theme="light"] .modules-page .module-card.has-visual .module-card-top {
-  margin: 10px 10px 0;
-  padding: 12px;
-  border: 1px solid rgba(0,135,111,.13);
-  border-radius: calc(var(--radius) - 5px);
-  background:
-    radial-gradient(circle at 88% 18%, rgba(255,255,255,.78), transparent 7rem),
-    linear-gradient(145deg, #eef7f3, #e6f2ed);
+  margin: 0;
+  padding: 14px 14px 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(0,135,111,.10);
+  border-radius: 0;
+  background: transparent;
+}
+html[data-theme="light"] .modules-page .module-card.has-visual .module-card-media {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+html[data-theme="light"] .modules-page .module-card.has-visual:hover .module-card-media,
+html[data-theme="light"] .modules-page .module-card.has-visual:focus-visible .module-card-media {
+  border-color: transparent;
+  box-shadow: none;
 }
 html[data-theme="light"] .modules-page .module-card.has-visual p {
   padding-top: 14px;
