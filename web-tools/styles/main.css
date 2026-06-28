@@ -609,6 +609,17 @@ html[data-theme="light"] .site-footer a:focus-visible {
   list-style: none;
 }
 
+.protocol-list a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.protocol-list a:hover,
+.protocol-list a:focus-visible {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .external-links-card {
   display: grid;
   gap: 10px;

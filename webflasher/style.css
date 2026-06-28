@@ -988,6 +988,17 @@ html[data-theme="light"] .flash-btn[disabled] {
   font-weight: 700;
 }
 
+.brand-signature-keywords a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-signature-keywords a:hover,
+.brand-signature-keywords a:focus-visible {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .site-footer {
   display: flex;
   flex-wrap: wrap;
@@ -1051,6 +1062,11 @@ html[data-theme="light"] .site-footer a {
   border-color: #b9c9c0 !important;
   color: #17463a !important;
   box-shadow: inset 0 0 5px rgba(28, 57, 43, 0.08) !important;
+}
+
+html[data-theme="light"] .brand-signature-keywords a:hover,
+html[data-theme="light"] .brand-signature-keywords a:focus-visible {
+  color: #0d2f26 !important;
 }
 
 html[data-theme="light"] .guide-step span:last-child,
