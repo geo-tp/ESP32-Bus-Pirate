@@ -2164,6 +2164,103 @@ h2 {
   margin-top: 0;
 }
 
+
+/* V14 recipes index cards: clearer covers, accents and compact metadata. */
+.recipes-home .recipe-grid {
+  gap: 18px;
+}
+
+.recipes-home .recipe-card {
+  border-color: rgba(0, 255, 204, 0.20);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(0, 255, 204, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(22, 27, 25, 0.98), rgba(10, 12, 11, 0.98));
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16), inset 0 0 5px #000;
+}
+
+.recipes-home .recipe-card::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(0, 255, 204, 0.82), rgba(184, 255, 184, 0.62), transparent 82%);
+  content: "";
+  opacity: 0.86;
+  pointer-events: none;
+}
+
+.recipes-home .recipe-card:nth-child(2n)::before {
+  background: linear-gradient(90deg, rgba(127, 220, 255, 0.66), rgba(0, 255, 204, 0.72), transparent 82%);
+}
+
+.recipes-home .recipe-card:hover {
+  border-color: rgba(0, 255, 204, 0.52);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.23), inset 0 0 7px rgba(0, 255, 204, 0.08);
+}
+
+.recipes-home .recipe-card-link {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 2%, rgba(0, 255, 204, 0.10), transparent 30%),
+    linear-gradient(145deg, rgba(18, 24, 21, 0.66), rgba(9, 11, 10, 0.16));
+}
+
+.recipes-home .recipe-cover {
+  border-bottom-color: rgba(0, 255, 204, 0.18);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(0, 255, 204, 0.15), transparent 30%),
+    linear-gradient(145deg, #121816, #080a09);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.04), inset 0 0 5px #000;
+}
+
+.recipes-home .recipe-card .eyebrow,
+.recipes-home .recipe-card h2,
+.recipes-home .recipe-card .recipe-description,
+.recipes-home .recipe-card .recipe-meta,
+.recipes-home .recipe-card .recipe-date,
+.recipes-home .recipe-card .recipe-pill-list {
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+.recipes-home .recipe-card .eyebrow {
+  margin-top: 15px;
+  margin-bottom: 9px;
+}
+
+.recipes-home .recipe-card h2 {
+  margin-bottom: 8px;
+  color: #f4fff9;
+  font-size: 1.02rem;
+  line-height: 1.28;
+}
+
+.recipes-home .recipe-description {
+  margin-bottom: 12px;
+  color: #d8ddd8;
+  font-size: 0.88rem;
+}
+
+.recipes-home .recipe-facts-list {
+  gap: 7px;
+  margin-top: auto;
+  padding-bottom: 16px;
+}
+
+.recipes-home .recipe-facts-list li {
+  min-height: 30px;
+  border-color: rgba(0, 255, 204, 0.22);
+  background: rgba(0, 255, 204, 0.055);
+  color: #caffca;
+}
+
+.recipes-home .recipe-card .eyebrow-text-mark {
+  border-color: rgba(0, 255, 204, 0.30);
+  background: rgba(0, 255, 204, 0.075);
+}
+
 .wiring-diagram-main figcaption {
   color: #aebbb7;
 }
