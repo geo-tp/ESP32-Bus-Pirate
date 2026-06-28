@@ -710,21 +710,17 @@ html[data-theme="light"] .command-card code {
 }
 
 
-/* Modules light-theme detail photo frame fix: remove the remaining dark rim around hero photos. */
+/* Modules light-theme detail photo frame fix: keep only the photo well, no stacked white outer box. */
 html[data-theme="light"] .module-profile .module-visual {
-  border-color: #d8e5df;
-  background:
-    radial-gradient(circle at 50% 34%, rgba(0,135,111,.09), transparent 13rem),
-    linear-gradient(145deg, #ffffff 0%, #edf6f1 100%);
-  box-shadow: 0 14px 30px rgba(20,60,45,.10), inset 0 0 0 1px rgba(255,255,255,.72);
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
 }
 html[data-theme="light"] .module-profile .module-visual::before {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.12)),
-    radial-gradient(circle at 72% 22%, rgba(0,135,111,.08), transparent 12rem);
+  background: none;
 }
 html[data-theme="light"] .module-profile .module-visual::after {
-  border-color: rgba(0,135,111,.12);
+  border-color: transparent;
 }
 html[data-theme="light"] .module-profile .module-visual .module-card-photo {
   filter: drop-shadow(0 18px 24px rgba(20,60,45,.18));
