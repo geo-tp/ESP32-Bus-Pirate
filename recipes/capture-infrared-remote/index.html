@@ -17,7 +17,7 @@
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to capture an infrared remote signal with ESP32 Bit Pirate" name="twitter:title"/>
@@ -36,7 +36,7 @@
       "description": "Use Infrared mode to configure pins, receive remote control frames, and record signals for later reuse.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": { "@type": "Person", "name": "Geo" },
       "publisher": {
         "@type": "Organization",
@@ -54,6 +54,35 @@
         { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
         { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
         { "@type": "ListItem", "position": 3, "name": "How to capture an infrared remote signal with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/capture-infrared-remote/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need an IR receiver or an IR LED to capture a remote?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use an IR receiver module for capture. An IR LED is for transmit or replay. For the receiver, wire OUT to the configured RX GPIO, use the correct supply, and share ground with the ESP32 Bit Pirate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does decode fail but raw capture still shows pulses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The remote may use an unsupported protocol, unusual timings, repeat frames, or a noisy reception path. Raw capture is still useful because it preserves timing for comparison or later analysis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I make an infrared capture more reliable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Reduce sunlight and reflective glare, aim the remote at the receiver, keep the range moderate, and capture the same button several times. Stable repeated timing is more useful than one lucky decode."
+          }
+        }
       ]
     }
   ]
@@ -124,6 +153,22 @@ Address / command / raw data printed by firmware" data-cli-session=""></div>
 <li>Use <code>raw</code> when the receive decoder does not identify the protocol reliably.</li>
 <li>Use <code>load</code> for Flipper-style .ir files.</li>
 </ul>
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq">
+<h2 id="faq-title">Infrared capture FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item">
+<summary>Do I need an IR receiver or an IR LED to capture a remote?</summary>
+<p>Use an IR receiver module for capture. An IR LED is for transmit or replay. For the receiver, wire OUT to the configured RX GPIO, use the correct supply, and share ground with the ESP32 Bit Pirate.</p>
+</details>
+<details class="recipe-faq-item">
+<summary>Why does decode fail but raw capture still shows pulses?</summary>
+<p>The remote may use an unsupported protocol, unusual timings, repeat frames, or a noisy reception path. Raw capture is still useful because it preserves timing for comparison or later analysis.</p>
+</details>
+<details class="recipe-faq-item">
+<summary>How do I make an infrared capture more reliable?</summary>
+<p>Reduce sunlight and reflective glare, aim the remote at the receiver, keep the range moderate, and capture the same button several times. Stable repeated timing is more useful than one lucky decode.</p>
+</details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../protocols/infrared/"><span>Protocols</span><strong>More infrared workflows: Infrared remote debugging with ESP32 Bit Pirate</strong></a>
@@ -146,6 +191,6 @@ Address / command / raw data printed by firmware" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

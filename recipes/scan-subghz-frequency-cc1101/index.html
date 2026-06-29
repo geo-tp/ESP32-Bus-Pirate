@@ -13,16 +13,16 @@
 <meta content="Use ESP32 Bit Pirate SubGHz scan and sweep workflows with a CC1101 module to find RSSI peaks in common sub-GHz bands." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to find active Sub-GHz frequencies with ESP32 Bit Pirate and CC1101"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/assets/cover.png" property="og:image"/><meta content="Preview image for How to find active Sub-GHz frequencies with ESP32 Bit Pirate and CC1101" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to find active Sub-GHz frequencies with ESP32 Bit Pirate and CC1101" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate SubGHz scan and sweep workflows with a CC1101 module to find RSSI peaks in common sub-GHz bands." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to find active Sub-GHz frequencies with ESP32 Bit Pirate and CC1101">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to find active Sub-GHz frequencies with ESP32 Bit Pirate and CC1101" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/" rel="canonical"/>
 <title>How to find active Sub-GHz frequencies with ESP32 Bit Pirate and CC1101</title>
 <link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
@@ -36,7 +36,7 @@
       "description": "Use ESP32 Bit Pirate SubGHz scan and sweep workflows with a CC1101 module to find RSSI peaks in common sub-GHz bands.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": {
         "@type": "Person",
         "name": "Geo"
@@ -73,22 +73,51 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-subghz-frequency-cc1101/"
         }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does a Sub-GHz scan decode the signal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Scan and sweep find RSSI peaks or active areas. Decoding comes later, after tuning the receiver and capturing repeatable pulse timing from a signal you are authorized to analyze."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the strongest Sub-GHz peak move slightly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Small offsets can come from transmitter tolerance, receiver tuning, antenna placement or nearby interference. Fine-tune around the peak before assuming the exact nominal frequency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Sub-GHz bands should I scan first?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start only with bands that are legal and relevant in your region and lab setup. Common device families may use areas around 315, 433, 868 or 915 MHz, but rules and allowed use vary by location."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>SubGHz</li><li>Intermediate</li><li>10 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Intermediate · SubGHz</p>
 <h1>How to find active Sub-GHz frequencies with CC1101</h1>
@@ -140,6 +169,19 @@ Sweep confidence high around selected band" data-cli-session=""></div>
 <li>Use <code>trace</code> to see whether GDO0 toggles.</li>
 <li>Use <code>record</code> only for your own lab signal.</li>
 </ul>
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq">
+<h2 id="faq-title">Sub-GHz frequency scan FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item">
+<summary>Does a scan decode the signal?</summary>
+<p>No. Scan and sweep find RSSI peaks or active areas. Decoding comes later, after tuning the receiver and capturing repeatable pulse timing from a signal you are authorized to analyze.</p>
+</details>
+<details class="recipe-faq-item"><summary>What should I do with a strong Sub-GHz peak?</summary><p>Use it as a candidate frequency for narrower listening, trace, receive or record workflows. The scan is the discovery step, not the final protocol interpretation.</p></details>
+<details class="recipe-faq-item">
+<summary>Which bands should I scan first?</summary>
+<p>Start only with bands that are legal and relevant in your region and lab setup. Common device families may use areas around 315, 433, 868 or 915 MHz, but rules and allowed use vary by location.</p>
+</details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/cc1101/"><span>Module</span><strong>CC1101 Sub-GHz module overview</strong></a><a href="../../protocols/subghz/"><span>Protocol</span><strong>Sub-GHz protocol overview</strong></a>
@@ -158,6 +200,6 @@ Sweep confidence high around selected band" data-cli-session=""></div>
 </ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>SubGHz</dd><dt class="aside-dt-hardware">Hardware</dt><dd>CC1101 module, antenna, SPI wiring</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/19-SUBGHZ">19-SUBGHZ</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
 </div>
 </main>
-<script src="../recipes.js?v=20260623-batch2"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

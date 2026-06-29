@@ -13,16 +13,16 @@
 <meta content="Use USB storage mode to expose the SD card over USB mass storage from ESP32 Bit Pirate." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to expose an SD card as USB storage with ESP32 Bit Pirate"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png" property="og:image"/><meta content="Preview image for How to expose an SD card as USB storage with ESP32 Bit Pirate" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
 <meta content="2026-06-23" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to expose an SD card as USB storage with ESP32 Bit Pirate" name="twitter:title"/>
 <meta content="Use USB storage mode to expose the SD card over USB mass storage from ESP32 Bit Pirate." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to expose an SD card as USB storage with ESP32 Bit Pirate">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to expose an SD card as USB storage with ESP32 Bit Pirate" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/usb-mass-storage-sd-card/" rel="canonical"/>
 <title>How to expose an SD card as USB storage with ESP32 Bit Pirate</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -59,18 +59,18 @@
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>USB</li><li>Intermediate</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Intermediate · USB</p>
 <h1>How to expose an SD card as USB storage</h1>
@@ -123,7 +123,7 @@ Host storage interface exposed" data-cli-session=""></div>
 <li>Unmount/eject from the host before power cycling.</li>
 <li>Use the SPI SD shell if you only need CLI file inspection.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">USB mass storage SD card FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What changes when SD is exposed as USB mass storage?</summary><p>The host computer sees the Bit Pirate SD card like a removable drive. During that session, treat the card as shared storage and avoid simultaneous conflicting access paths.</p></details><details class="recipe-faq-item"><summary>What is the safest way to disconnect?</summary><p>Unmount or eject the drive from the host first, then reset or unplug the board. Removing power during a host write can corrupt the filesystem.</p></details><details class="recipe-faq-item"><summary>When should I use the SPI SD shell instead?</summary><p>Use the SPI SD shell for quick CLI inspection, small file checks or bench debugging. Use USB mass storage when the host needs direct file access or bulk copying.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/12-USB"><span>Wiki</span><strong>USB storage mode</strong></a>
@@ -147,6 +147,6 @@ Host storage interface exposed" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

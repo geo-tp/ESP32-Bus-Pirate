@@ -1,19 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" preserveAspectRatio="none" role="img" aria-labelledby="title desc">
   <title id="title">Cellular visual</title>
-  <desc id="desc">No-text reusable cellular illustration.</desc>
+  <desc id="desc">No-text reusable cellular modem, SIM and radio network illustration.</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
     <radialGradient id="cyanGlow" cx="15%" cy="18%" r="60%"><stop offset="0" stop-color="#00ffcc" stop-opacity=".12"/><stop offset="1" stop-color="#00ffcc" stop-opacity="0"/></radialGradient>
     <radialGradient id="greenGlow" cx="86%" cy="82%" r="65%"><stop offset="0" stop-color="#00ff70" stop-opacity=".10"/><stop offset="1" stop-color="#00ff70" stop-opacity="0"/></radialGradient>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="card" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#101817"/><stop offset="1" stop-color="#0d1211"/></linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
+
   <rect width="1040" height="600" rx="18" fill="url(#bg)"/>
   <rect width="1040" height="600" rx="18" fill="url(#cyanGlow)"/>
   <rect width="1040" height="600" rx="18" fill="url(#greenGlow)"/>
+
   <g stroke="#22312d" stroke-width="1.4" opacity=".72">
     <path d="M70 470h900M70 390h900M70 310h900M70 230h900M70 150h900"/>
     <path d="M170 72v456M330 72v456M490 72v456M650 72v456M810 72v456"/>
     <path d="M-50 540L520 40M160 575L790 35M500 620L1070 120" opacity=".28"/>
   </g>
-  <rect x="390" y="140" width="260" height="350" rx="28" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><circle cx="520" cy="435" r="15" fill="#00ff70" opacity="1" filter="url(#glow)"/><circle cx="520" cy="260" r="12" fill="#00ff70" opacity="1" filter="url(#glow)"/><path d="M455 195 A92 92 0 0 1 585 195" fill="none" stroke="#00ff70" stroke-width="5" opacity=".65" filter="url(#glow)"/><path d="M400 140 A170 170 0 0 1 640 140" fill="none" stroke="#00ff70" stroke-width="4" opacity=".35" filter="url(#glow)"/><path d="M340 80 A250 250 0 0 1 700 80" fill="none" stroke="#00ff70" stroke-width="3" opacity=".20" filter="url(#glow)"/><rect x="110" y="120" width="100" height="70" rx="16" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><rect x="285" y="450" width="100" height="70" rx="16" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><rect x="460" y="120" width="100" height="70" rx="16" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><rect x="635" y="450" width="100" height="70" rx="16" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/><rect x="810" y="120" width="100" height="70" rx="16" fill="#101615" stroke="#40514b" stroke-width="2" opacity="1"/>
+
+  <!-- subtle radio links -->
+  <g fill="none" stroke="#00ff70" stroke-width="2" opacity=".16">
+    <path d="M248 160 C330 185 360 210 396 248"/>
+    <path d="M792 160 C708 185 680 214 644 252"/>
+    <path d="M382 470 C422 430 450 420 472 396"/>
+    <path d="M660 470 C620 430 594 420 568 396"/>
+  </g>
+
+  <!-- main cellular module -->
+  <rect x="390" y="128" width="260" height="365" rx="30" fill="url(#card)" stroke="#40514b" stroke-width="2.2"/>
+  <rect x="410" y="148" width="220" height="325" rx="22" fill="none" stroke="#1e332e" stroke-width="1.2" opacity=".9"/>
+
+  <!-- antenna/radio icon -->
+  <g fill="none" stroke="#00ff70" stroke-linecap="round" filter="url(#softGlow)">
+    <path d="M520 178v70" stroke-width="4" opacity=".9"/>
+    <path d="M493 248h54" stroke-width="4" opacity=".75"/>
+    <path d="M520 178l-28 70M520 178l28 70" stroke-width="2.5" opacity=".42"/>
+    <path d="M472 205 A68 68 0 0 1 568 205" stroke-width="4" opacity=".55"/>
+    <path d="M438 170 A115 115 0 0 1 602 170" stroke-width="3" opacity=".34"/>
+    <path d="M405 137 A160 160 0 0 1 635 137" stroke-width="2.4" opacity=".22"/>
+  </g>
+  <circle cx="520" cy="178" r="7" fill="#00ff70" filter="url(#glow)"/>
+
+  <!-- modem chip -->
+  <g opacity=".96">
+    <rect x="451" y="252" width="138" height="70" rx="14" fill="#0f1514" stroke="#40514b" stroke-width="2"/>
+    <rect x="472" y="269" width="96" height="36" rx="8" fill="#111d19" stroke="#00ff70" stroke-width="1.6" opacity=".58"/>
+    <g stroke="#40514b" stroke-width="2" stroke-linecap="round" opacity=".75">
+      <path d="M444 264h-15M444 280h-15M444 296h-15M444 312h-15"/>
+      <path d="M596 264h15M596 280h15M596 296h15M596 312h15"/>
+    </g>
+  </g>
+
+  <!-- SIM card -->
+  <g opacity=".97">
+    <path d="M456 352h108l24 24v76H456z" fill="#101615" stroke="#40514b" stroke-width="2"/>
+    <path d="M564 352v24h24" fill="none" stroke="#40514b" stroke-width="2"/>
+    <rect x="475" y="375" width="28" height="22" rx="4" fill="#00ff70" opacity=".22" stroke="#00ff70" stroke-width="1.4"/>
+    <rect x="510" y="375" width="28" height="22" rx="4" fill="#00ff70" opacity=".22" stroke="#00ff70" stroke-width="1.4"/>
+    <rect x="475" y="405" width="28" height="22" rx="4" fill="#00ff70" opacity=".18" stroke="#00ff70" stroke-width="1.4"/>
+    <rect x="510" y="405" width="28" height="22" rx="4" fill="#00ff70" opacity=".18" stroke="#00ff70" stroke-width="1.4"/>
+  </g>
+
+  <!-- status dots -->
+  <circle cx="596" cy="382" r="7" fill="#00ff70" opacity=".85" filter="url(#glow)"/>
+  <circle cx="596" cy="416" r="5" fill="#00ff70" opacity=".55" filter="url(#softGlow)"/>
+
+  <!-- connected devices/cards -->
+  <g fill="#101615" stroke="#40514b" stroke-width="2">
+    <rect x="110" y="115" width="112" height="78" rx="17"/>
+    <rect x="286" y="448" width="110" height="72" rx="17"/>
+    <rect x="644" y="448" width="110" height="72" rx="17"/>
+    <rect x="818" y="115" width="112" height="78" rx="17"/>
+  </g>
+
+  <g fill="none" stroke="#00ff70" stroke-linecap="round" opacity=".62" filter="url(#softGlow)">
+    <!-- phone/sensor outlines -->
+    <rect x="143" y="132" width="46" height="44" rx="7" stroke-width="2" opacity=".38"/>
+    <path d="M154 168h24" stroke-width="2" opacity=".46"/>
+    <path d="M323 484h36M323 498h28" stroke-width="3" opacity=".45"/>
+    <circle cx="371" cy="484" r="5" fill="#00ff70" stroke="none" opacity=".65"/>
+    <path d="M684 467v34M672 501h47" stroke-width="3" opacity=".43"/>
+    <path d="M668 475 A24 24 0 0 1 719 475" stroke-width="2" opacity=".42"/>
+    <path d="M848 158h16M848 170h28M848 182h42" stroke-width="4" opacity=".48"/>
+    <path d="M890 145 A30 30 0 0 1 905 170" stroke-width="2" opacity=".34"/>
+  </g>
+
+  <!-- link endpoints -->
+  <g fill="#00ff70" opacity=".55" filter="url(#softGlow)">
+    <circle cx="248" cy="160" r="4"/>
+    <circle cx="792" cy="160" r="4"/>
+    <circle cx="382" cy="470" r="4"/>
+    <circle cx="660" cy="470" r="4"/>
+  </g>
 </svg>

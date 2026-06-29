@@ -13,16 +13,16 @@
 <meta content="Use ESP32 Bit Pirate CELL mode to query modem, SIM, network and operator status over a UART-connected cellular module." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to check a cellular modem with ESP32 Bit Pirate CELL mode"><meta property="og:image:type" content="image/png">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/assets/cover.png" property="og:image"/><meta content="Preview image for How to check a cellular modem with ESP32 Bit Pirate CELL mode" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-23" property="article:published_time">
+<meta content="2026-06-23" property="article:modified_time">
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to check a cellular modem with ESP32 Bit Pirate CELL mode" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate CELL mode to query modem, SIM, network and operator status over a UART-connected cellular module." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to check a cellular modem with ESP32 Bit Pirate CELL mode">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to check a cellular modem with ESP32 Bit Pirate CELL mode" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/check-cellular-modem-status/" rel="canonical"/>
 <title>How to check a cellular modem with ESP32 Bit Pirate CELL mode</title>
 <link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
@@ -77,18 +77,18 @@
   ]
 }
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>CELL</li><li>Intermediate</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Intermediate · CELL</p>
 <h1>How to check a cellular modem in CELL mode</h1>
@@ -141,7 +141,7 @@ Signal level and operator info" data-cli-session=""></div>
 <li>Use <code>sms</code> or <code>ussd</code> only after registration is confirmed.</li>
 <li>Log modem and network output before debugging the application layer.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">cellular modem status FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does modem status prove?</summary><p>It proves that the UART path to the modem is alive and that basic modem information can be queried. It is the foundation for SIM, operator and network-registration checks.</p></details><details class="recipe-faq-item"><summary>What is the difference between modem, SIM and network checks?</summary><p>Modem checks prove AT communication, SIM checks prove subscriber-card state, and network checks prove registration with an operator. Each layer can pass or fail independently.</p></details><details class="recipe-faq-item"><summary>Which command should I run first when debugging CELL mode?</summary><p>Start with modem because it proves the AT interface and module firmware respond. Then check sim, network and operator before using SMS, calls or USSD.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/cellular-at-modem/"><span>Module</span><strong>Cellular AT modem overview</strong></a><a href="../../protocols/at/"><span>Protocols</span><strong>More AT workflows: AT command debugging with ESP32 Bit Pirate</strong></a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/23-CELL" rel="noopener" target="_blank"><span>Wiki</span><strong>CELL mode</strong></a>
@@ -159,6 +159,6 @@ Signal level and operator info" data-cli-session=""></div>
 </ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>CELL</dd><dt class="aside-dt-hardware">Hardware</dt><dd>SIMCom-compatible modem, antenna, SIM card, UART wiring</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/23-CELL">23-CELL</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
 </div>
 </main>
-<script src="../recipes.js?v=20260623-batch2"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

@@ -13,16 +13,16 @@
 <meta content="Use CAN mode with an MCP2515 module to configure bitrate, check status and capture CAN frames." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to sniff CAN frames with ESP32 Bit Pirate and MCP2515"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/assets/cover.png" property="og:image"/><meta content="Preview image for How to sniff CAN frames with ESP32 Bit Pirate and MCP2515" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to sniff CAN frames with ESP32 Bit Pirate and MCP2515" name="twitter:title"/>
 <meta content="Use CAN mode with an MCP2515 module to configure bitrate, check status and capture CAN frames." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to sniff CAN frames with ESP32 Bit Pirate and MCP2515">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to sniff CAN frames with ESP32 Bit Pirate and MCP2515" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/" rel="canonical"/>
 <title>How to sniff CAN frames with ESP32 Bit Pirate and MCP2515</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -36,7 +36,7 @@
       "description": "Use CAN mode with an MCP2515 module to configure bitrate, check status and capture CAN frames.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": { "@type": "Person", "name": "Geo" },
       "publisher": {
         "@type": "Organization",
@@ -55,22 +55,51 @@
         { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
         { "@type": "ListItem", "position": 3, "name": "How to sniff CAN frames with ESP32 Bit Pirate and MCP2515", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/sniff-can-frames-mcp2515/" }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does CAN sniff mode show no frames?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The bus may be silent, the bitrate may be wrong, CANH and CANL may be swapped, termination may be missing, or the MCP2515 may not be connected to a transceiver and real CAN bus."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use status before sniffing CAN traffic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Status gives a quick baseline for controller state and error flags. If status already shows problems, fix bitrate, wiring and termination before trusting captures."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can sniffing affect the CAN bus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A passive receive workflow is much safer than transmitting, but a connected CAN node can still affect electrical loading and acknowledgements depending on mode and transceiver wiring. Use a lab or authorized bus."
+          }
+        }
+      ]
     }
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>CAN</li><li>Intermediate</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Intermediate · CAN</p>
 <h1>How to sniff CAN frames with MCP2515</h1>
@@ -126,6 +155,19 @@ DATA: AA BB 01 02 03 04 05 06" data-cli-session=""></div>
 <li>Use <code>receive &lt;id&gt;</code> to focus on one frame ID.</li>
 <li>Use <code>send &lt;id&gt;</code> only on a bus you control.</li>
 </ul>
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq">
+<h2 id="faq-title">CAN sniffing FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item"><summary>What does passive CAN sniffing tell me?</summary><p>Passive sniffing shows observed CAN identifiers, payload bytes and bus activity without intentionally injecting frames. It is the right first step before active send tests.</p></details>
+<details class="recipe-faq-item">
+<summary>Should I use <code>status</code> before sniffing?</summary>
+<p>Yes. Status gives a quick baseline for controller state and error flags. If status already shows problems, fix bitrate, wiring and termination before trusting captures.</p>
+</details>
+<details class="recipe-faq-item">
+<summary>Can sniffing affect the CAN bus?</summary>
+<p>A passive receive workflow is much safer than transmitting, but a connected CAN node can still affect electrical loading and acknowledgements depending on mode and transceiver wiring. Use a lab or authorized bus.</p>
+</details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/mcp2515/"><span>Module</span><strong>MCP2515 CAN module overview</strong></a>
@@ -151,6 +193,6 @@ DATA: AA BB 01 02 03 04 05 06" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

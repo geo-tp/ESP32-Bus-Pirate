@@ -37,6 +37,46 @@ window.BIT_PIRATE_RECIPES = [
     "takeaway": "A quick address scan before you lose an hour chasing the wrong example code."
   },
   {
+    "title": "Identify an unknown I2C device",
+    "slug": "identify-unknown-i2c-device",
+    "description": "Use scan, discovery, identify and ping to narrow down an unknown I2C address before safe register reads.",
+    "date": "2026-06-29",
+    "author": "Geo",
+    "difficulty": "Beginner",
+    "type": "Recipe",
+    "icon": "🔎",
+    "mark": "I²C",
+    "protocols": [
+      "I2C"
+    ],
+    "targets": [
+      "Unknown module",
+      "Sensor",
+      "EEPROM"
+    ],
+    "workflows": [
+      "Identify",
+      "Debug"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web Serial Terminal"
+    ],
+    "tags": [
+      "beginner",
+      "i2c",
+      "identify",
+      "discovery",
+      "scan",
+      "sensor",
+      "debugging"
+    ],
+    "cover": "assets/visual-i2c.svg",
+    "time": "6 min",
+    "hardware": "Unknown I2C module, 4 jumper wires",
+    "takeaway": "Turn an ACK address into a safer identification workflow before reading registers."
+  },
+  {
     "title": "Dump a SPI flash chip from your browser",
     "slug": "dump-spi-flash-browser",
     "description": "Read and save a SPI NOR flash dump with the browser SPI flash programmer workflow.",
@@ -3579,47 +3619,6 @@ window.BIT_PIRATE_RECIPES = [
     "takeaway": "Move from manual commands to repeatable host-side tests."
   },
   {
-    "title": "Run a daily bench startup checklist",
-    "slug": "daily-bench-startup-checklist",
-    "description": "Run a short startup sequence to verify serial access, firmware status, mode switching and a safe read-only command before connecting a target.",
-    "date": "2026-06-23",
-    "author": "Geo",
-    "difficulty": "Beginner",
-    "type": "Recipe",
-    "icon": "✅",
-    "mark": "START",
-    "protocols": [
-      "General commands",
-      "Serial CLI"
-    ],
-    "targets": [
-      "ESP32-S3 board",
-      "Bench setup"
-    ],
-    "workflows": [
-      "Setup",
-      "Checklist"
-    ],
-    "tools": [
-      "Serial CLI",
-      "Web Serial Terminal"
-    ],
-    "tags": [
-      "general-commands",
-      "serial-cli",
-      "esp32-s3-board",
-      "bench-setup",
-      "setup",
-      "checklist",
-      "daily-bench-startup-checklist",
-      "run-a-daily-bench-startup-checklist"
-    ],
-    "cover": "assets/visual-repair.svg",
-    "time": "5 min",
-    "hardware": "ESP32-S3 board, Bench setup",
-    "takeaway": "Catch terminal, firmware or setup issues before wiring an unknown board."
-  },
-  {
     "title": "Configure an nRF24L01 module",
     "slug": "configure-nrf24-module",
     "description": "Configure SPI pins, CE/CSN and the RF24 channel before using nRF24L01 send, receive or sweep commands.",
@@ -4724,6 +4723,48 @@ window.BIT_PIRATE_RECIPES = [
     "time": "5 min",
     "hardware": "ESP32 Bit Pirate firmware with native USB",
     "takeaway": "Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy or SubGHz tool modes."
+  },
+  {
+    "title": "Use ESP32 as a USB-UART dongle",
+    "slug": "use-usb-uart-adapter",
+    "description": "Turn ESP32 Bit Pirate into a dedicated USB-UART adapter for boot logs, serial consoles, AT modules and pyserial tools.",
+    "date": "2026-06-29",
+    "author": "Geo",
+    "difficulty": "Beginner",
+    "type": "Recipe",
+    "icon": "🔌",
+    "mark": "USB",
+    "protocols": [
+      "USB",
+      "UART"
+    ],
+    "targets": [
+      "UART console",
+      "AT module",
+      "Microcontroller"
+    ],
+    "workflows": [
+      "Connect & control",
+      "Debug"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Host terminal",
+      "pyserial"
+    ],
+    "tags": [
+      "beginner",
+      "usb",
+      "uart",
+      "serial",
+      "adapter",
+      "cdc",
+      "pyserial"
+    ],
+    "cover": "assets/visual-usb-adapters.svg",
+    "time": "5 min",
+    "hardware": "ESP32 Bit Pirate firmware, target UART device, three jumper wires",
+    "takeaway": "Use an ESP32 as a practical USB-to-serial adapter when desktop tools need a CDC serial port."
   },
   {
     "title": "Configure the JTAG/SWD scan pin group",

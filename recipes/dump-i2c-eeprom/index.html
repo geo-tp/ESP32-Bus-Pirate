@@ -17,7 +17,7 @@
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to dump an I2C EEPROM with ESP32 Bit Pirate" name="twitter:title"/>
@@ -36,7 +36,7 @@
       "description": "Use the I2C EEPROM shell to probe, read and dump common 24XX / AT24C EEPROM chips.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-i2c-eeprom/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": { "@type": "Person", "name": "Geo" },
       "publisher": {
         "@type": "Organization",
@@ -54,6 +54,35 @@
         { "@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/" },
         { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
         { "@type": "ListItem", "position": 3, "name": "How to dump an I2C EEPROM with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/dump-i2c-eeprom/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should I probe an I2C EEPROM before dumping it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Probe first so the tool can confirm the device ACKs and choose a sensible address width, size and page behavior. Blind raw reads can miss data or wrap addresses on small EEPROMs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 0x50 always the I2C EEPROM address?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Many 24xx EEPROMs use a base 7-bit address around 0x50, but address pins and some larger devices can change which addresses respond. Scan the bus before opening the EEPROM shell."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can dumping an I2C EEPROM modify its contents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A read-only dump should not modify EEPROM contents, but wiring errors, wrong voltage or accidental write/erase actions can. Make a backup before any write, verify write-protect pins and avoid erase commands on unknown boards."
+          }
+        }
       ]
     }
   ]
@@ -124,6 +153,22 @@ Addressing and page size selected before reads" data-cli-session=""></div>
 <li>Use <code>Read bytes</code> on a small range before dumping everything.</li>
 <li>Use <code>Dump EEPROM</code> only after the probe result is stable.</li>
 </ul>
+</section><section class="recipe-section recipe-faq" aria-labelledby="faq-title">
+<h2 id="faq-title">I2C EEPROM dump FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item">
+<summary>Why probe before dumping the EEPROM?</summary>
+<p>Probe first so the shell can confirm the chip responds and choose a sensible geometry before reading. Serial EEPROM families differ in density, address width and page behavior, so a blind raw dump can wrap or miss data on the wrong assumptions.</p>
+</details>
+<details class="recipe-faq-item">
+<summary>Is <code>0x50</code> always the EEPROM address?</summary>
+<p>No. Many 24xx parts use a base 7-bit address near <code>0x50</code>, but address pins and larger memories can make more than one address respond. Scan first, then open the EEPROM shell with the address you actually found.</p>
+</details>
+<details class="recipe-faq-item">
+<summary>Can a dump damage or change the EEPROM contents?</summary>
+<p>A read-only dump should not change contents, but wrong voltage, wiring mistakes or accidental write/erase actions can. Treat unknown boards as evidence: back up before writing, check write-protect pins, and avoid erase actions until the dump is verified.</p>
+</details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/i2c-eeprom/"><span>Module</span><strong>I2C EEPROM module overview</strong></a>
@@ -148,6 +193,6 @@ Addressing and page size selected before reads" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

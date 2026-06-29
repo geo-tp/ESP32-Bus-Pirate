@@ -212,13 +212,85 @@
 
   if (!canEnhanceIndex) {
     // Keep the static, crawlable cards visible if an older cached recipes-list.js
-    // is loaded by the browser. This avoids hiding newly added recipes.
+    // is loaded by the browser. This avoids hiding newly added recipes while
+    // preserving basic search/filter behavior instead of making the toolbar inert.
     if (grid) {
       grid.hidden = true;
     }
-    if (count) {
-      count.textContent = `${staticCardCount} recipe${staticCardCount === 1 ? "" : "s"}`;
+
+    const staticCards = staticGrid ? Array.from(staticGrid.querySelectorAll(".recipe-card")) : [];
+    const getStaticCardText = (card) => normalize(card.textContent || "");
+    const staticMatchesProtocol = (text) => {
+      const selected = normalize(activeFilters.protocol);
+      if (selected === "all") {
+        return true;
+      }
+      const aliases = PROTOCOL_FILTERS[selected];
+      return aliases ? aliases.some((alias) => text.includes(alias)) : text.includes(selected);
+    };
+    const staticMatchesTask = (text) => {
+      const selected = normalize(activeFilters.task);
+      if (selected === "all") {
+        return true;
+      }
+      return (TASK_FILTERS[selected] || []).some((term) => text.includes(term));
+    };
+    const staticMatchesDifficulty = (text) => {
+      const selected = normalize(activeFilters.difficulty);
+      return selected === "all" || text.includes(selected);
+    };
+    const staticMatchesSearch = (text) => {
+      const words = normalize(activeQuery).split(/\s+/).filter(Boolean);
+      return !words.length || words.every((word) => text.includes(word));
+    };
+    const renderStaticFallback = () => {
+      let visibleCount = 0;
+      staticCards.forEach((card) => {
+        const text = getStaticCardText(card);
+        const visible = staticMatchesSearch(text)
+          && staticMatchesProtocol(text)
+          && staticMatchesTask(text)
+          && staticMatchesDifficulty(text);
+        card.hidden = !visible;
+        if (visible) {
+          visibleCount += 1;
+        }
+      });
+      if (empty) {
+        empty.hidden = visibleCount > 0;
+      }
+      if (count) {
+        count.textContent = `${visibleCount} recipe${visibleCount === 1 ? "" : "s"}`;
+      }
+      if (clearSearch) {
+        clearSearch.hidden = activeQuery.length === 0;
+      }
+    };
+
+    selects.forEach((select) => {
+      select.addEventListener("change", () => {
+        activeFilters[select.dataset.recipeSelect] = select.value;
+        renderStaticFallback();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        activeQuery = searchInput.value;
+        renderStaticFallback();
+      });
     }
+
+    if (clearSearch && searchInput) {
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        activeQuery = "";
+        searchInput.focus();
+        renderStaticFallback();
+      });
+    }
+
+    renderStaticFallback();
     return;
   }
 
@@ -635,7 +707,7 @@
     const node = walker.currentNode;
     const parent = node.parentElement;
 
-    if (node.nodeValue.trim() && parent && !parent.closest("a, code, script, style")) {
+    if (node.nodeValue.trim() && parent && !parent.closest("a, code, script, style, h1, h2, h3, h4, h5, h6, summary, button")) {
       textNodes.push(node);
     }
   }

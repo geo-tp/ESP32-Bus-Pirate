@@ -13,16 +13,16 @@
 <meta content="A practical ESP32 Bit Pirate recipe for capturing digital signals with the SUMP logic analyzer adapter." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for ESP32 logic analyzer with PulseView and SUMP"><meta property="og:image:type" content="image/png">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/assets/cover.png" property="og:image"/><meta content="Preview image for ESP32 logic analyzer with PulseView and SUMP" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-23" property="article:published_time">
+<meta content="2026-06-23" property="article:modified_time">
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="ESP32 logic analyzer with PulseView and SUMP" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate as a SUMP-compatible logic analyzer with PulseView or the Web Logic Analyzer." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for ESP32 logic analyzer with PulseView and SUMP">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/assets/cover.png" name="twitter:image"/><meta content="Preview image for ESP32 logic analyzer with PulseView and SUMP" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-logic-analyzer-pulseview/" rel="canonical"/>
 <title>ESP32 logic analyzer with PulseView and SUMP</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -52,18 +52,18 @@
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>SUMP</li><li>PulseView</li><li>Web Logic Analyzer</li><li>10 min</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Beginner · Logic Analyzer</p>
 <h1>SUMP logic analyzer with PulseView</h1>
@@ -90,7 +90,7 @@
 <section class="recipe-section command-step-section">
 <span class="step-label">Step 1</span><h2>Start the SUMP adapter</h2>
 <p>The logic analyzer is a dedicated USB adapter mode, not a normal CLI capture command. Start it from USB adapters, choose the SUMP logic analyzer, enter up to eight GPIOs, then reconnect from PulseView or the Web Tool after the board reboots.</p>
-<div data-cli-commands="mode USB
+<div data-cli-commands="mode usb
 adapters" data-cli-mode="BitPirate" data-cli-session=""></div>
 </section><section class="recipe-section command-step-section">
 <span class="step-label">Step 2</span><h2>Capture in PulseView or the browser</h2>
@@ -123,7 +123,7 @@ The startup order is confirmed and can be shared as VCD or CSV." data-cli-sessio
 <li>The capture window is too short and misses the reset or button event.</li>
 <li>The sample rate is too low for the pulse width you are trying to measure.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">SUMP logic analyzer FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Why is SUMP a USB adapter instead of a normal CLI command?</summary><p>PulseView and sigrok expect a SUMP/Open Bench Logic Sniffer style device over a serial port. Adapter mode reboots Bit Pirate into that dedicated host-tool protocol.</p></details><details class="recipe-faq-item"><summary>How does the SUMP capture map into PulseView?</summary><p>Bit Pirate streams sampled GPIO channels through the SUMP-compatible adapter, and PulseView handles timeline display, cursors, triggers and protocol decoders on the host.</p></details><details class="recipe-faq-item"><summary>What should I capture before decoding a real bus?</summary><p>Capture one known transition first, such as a button press, reset pulse or test square wave. That validates channel order and timing before you spend time on protocol decoding.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
 <a href="../../web-tools/logic-analyzer/"><span>Web Tool</span><strong>Web Logic Analyzer</strong></a>
@@ -148,6 +148,6 @@ The startup order is confirmed and can be shared as VCD or CSV." data-cli-sessio
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

@@ -905,21 +905,79 @@ h2 {
 }
 
 .link-card-list a {
+  position: relative;
   display: grid;
   gap: 5px;
   min-width: min(100%, 220px);
-  padding: 11px;
-  border: 1px solid #283028;
+  padding: 11px 34px 11px 11px;
+  border: 1px solid #315248;
   border-radius: var(--radius);
-  background: #101514;
+  background:
+    linear-gradient(90deg, rgba(0, 255, 204, 0.075), transparent 58%),
+    #101514;
   color: #d8fff2;
+  cursor: pointer;
   text-decoration: none;
+}
+
+.link-card-list a::after {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  color: rgba(0, 255, 204, 0.82);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+  content: "›";
+  transform: translateY(-50%);
+  transition: transform 160ms ease, color 160ms ease;
 }
 
 .link-card-list a:hover,
 .link-card-list a:focus-visible {
   border-color: #00ffcc88;
+  background:
+    linear-gradient(90deg, rgba(0, 255, 204, 0.12), rgba(184, 255, 184, 0.035) 62%, transparent),
+    #101817;
   color: #b8ffb8;
+}
+
+.link-card-list a:hover::after,
+.link-card-list a:focus-visible::after {
+  color: #b8ffb8;
+  transform: translate(3px, -50%);
+}
+
+.recipe-faq {
+  display: grid;
+  gap: 12px;
+}
+
+.recipe-faq-list {
+  display: grid;
+  gap: 12px;
+}
+
+.recipe-faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+  box-shadow: inset 0 0 5px #000;
+}
+
+.recipe-faq-item summary {
+  cursor: pointer;
+  padding: 15px 16px;
+  color: #f4fff9;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.recipe-faq-item p {
+  padding: 0 16px 16px;
+  color: #d8ddd8;
+  font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 .link-card-list span {
@@ -1317,10 +1375,6 @@ h2 {
     min-height: 0;
   }
 
-  .next-steps-section > :is(ol, ul) > li {
-    padding-left: 42px;
-  }
-
   .wiring-diagram svg {
     display: none;
   }
@@ -1489,26 +1543,6 @@ h2 {
   box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.035);
 }
 
-.next-steps-section li code {
-  display: inline-block;
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  margin: 0 0.1rem;
-  border-color: rgba(184, 255, 184, 0.55);
-  background: linear-gradient(135deg, rgba(0, 255, 204, 0.14), rgba(184, 255, 184, 0.08));
-  color: #f2fff8;
-  overflow-wrap: normal;
-  vertical-align: middle;
-  white-space: nowrap;
-  text-shadow: 0 0 8px rgba(0, 255, 204, 0.16);
-  word-break: normal;
-}
-
-.next-steps-section li {
-  align-items: start;
-}
-
 /* Replace raw article bullets and 1. 2. lists with cards that match the tool UI. */
 .recipe-section > ol,
 .recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) {
@@ -1602,7 +1636,7 @@ h2 {
 .snapshot-card,
 .aside-card dd,
 .link-card-list a {
-  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .hardware-list li:hover,
@@ -2164,7 +2198,6 @@ h2 {
   margin-top: 0;
 }
 
-
 /* V14 recipes index cards: clearer covers, accents and compact metadata. */
 .recipes-home .recipe-grid {
   gap: 18px;
@@ -2219,10 +2252,29 @@ h2 {
 .recipes-home .recipe-card h2,
 .recipes-home .recipe-card .recipe-description,
 .recipes-home .recipe-card .recipe-meta,
-.recipes-home .recipe-card .recipe-date,
-.recipes-home .recipe-card .recipe-pill-list {
+.recipes-home .recipe-card .recipe-date {
+  margin-right: 14px;
+  margin-left: 14px;
   padding-right: 16px;
   padding-left: 16px;
+}
+
+.recipes-home .recipe-card-link > .recipe-pill-list {
+  margin-right: 14px;
+  margin-left: 14px;
+  padding-right: 16px;
+  padding-left: 16px;
+  align-self: stretch;
+  justify-content: flex-start;
+}
+
+.recipes-home .recipe-meta .recipe-pill-list {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: 0;
+  padding-left: 0;
+  justify-content: flex-start;
 }
 
 .recipes-home .recipe-card .eyebrow {
@@ -2365,4 +2417,202 @@ h2 {
 
 .wiring-visual-section .wiring-diagram {
   margin-top: 0;
+}
+
+/* Final Next steps pattern: styled, stable, non-interactive, no inline badges. */
+.next-steps-section > :is(ol, ul) {
+  display: grid !important;
+  gap: 9px !important;
+  margin-top: 10px !important;
+  padding-left: 0 !important;
+  list-style: none !important;
+}
+
+.next-steps-section > :is(ol, ul) > li {
+  position: relative !important;
+  display: block !important;
+  min-height: 42px !important;
+  padding: 10px 12px 10px 36px !important;
+  border: 1px solid #283028 !important;
+  border-radius: var(--radius) !important;
+  background:
+    linear-gradient(90deg, rgba(0, 255, 204, 0.055), transparent 42%),
+    #101514 !important;
+  color: #d8ddd8 !important;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.35) !important;
+  cursor: default !important;
+  line-height: 1.55 !important;
+  overflow-wrap: anywhere !important;
+  transform: none !important;
+  transition: none !important;
+  word-break: normal !important;
+}
+
+.next-steps-section > :is(ol, ul) > li::before {
+  position: absolute !important;
+  left: 13px !important;
+  top: 11px !important;
+  display: block !important;
+  width: 3px !important;
+  height: calc(100% - 22px) !important;
+  min-height: 18px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(var(--cyan), var(--green-dim)) !important;
+  color: transparent !important;
+  box-shadow: none !important;
+  content: "" !important;
+  transform: none !important;
+}
+
+.next-steps-section > :is(ol, ul) > li:hover,
+.next-steps-section > :is(ol, ul) > li:focus,
+.next-steps-section > :is(ol, ul) > li:focus-within {
+  border-color: #283028 !important;
+  background:
+    linear-gradient(90deg, rgba(0, 255, 204, 0.055), transparent 42%),
+    #101514 !important;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.35) !important;
+  transform: none !important;
+}
+
+.next-steps-section li code {
+  display: inline !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: 800 !important;
+  line-height: inherit !important;
+  overflow: visible !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  vertical-align: baseline !important;
+  word-break: normal !important;
+}
+
+/* V14 Next steps refinement: darker cards, readable inline commands, safe responsive grid. */
+.next-steps-section {
+  border-color: #26312d !important;
+  background:
+    linear-gradient(145deg, rgba(22, 28, 26, 0.96), rgba(13, 16, 15, 0.99)) !important;
+}
+
+.next-steps-section > :is(ol, ul) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)) !important;
+  gap: 10px !important;
+}
+
+.next-steps-section > :is(ol, ul) > li {
+  min-height: 64px !important;
+  padding: 12px 13px 12px 34px !important;
+  border-color: #24312c !important;
+  background:
+    linear-gradient(135deg, rgba(0, 255, 204, 0.026), rgba(0, 255, 0, 0.012) 48%, transparent 100%),
+    #0f1413 !important;
+  color: #d4dad6 !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.015), inset 0 0 9px rgba(0, 0, 0, 0.38) !important;
+}
+
+.next-steps-section > :is(ol, ul) > li::before {
+  left: 13px !important;
+  top: 12px !important;
+  width: 3px !important;
+  height: calc(100% - 24px) !important;
+  background: linear-gradient(180deg, rgba(0, 255, 204, 0.34), rgba(14, 168, 107, 0.28)) !important;
+}
+
+.next-steps-section > :is(ol, ul) > li:hover,
+.next-steps-section > :is(ol, ul) > li:focus,
+.next-steps-section > :is(ol, ul) > li:focus-within {
+  border-color: #2b4039 !important;
+  background:
+    linear-gradient(135deg, rgba(0, 255, 204, 0.038), rgba(0, 255, 0, 0.018) 48%, transparent 100%),
+    #101615 !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 255, 204, 0.035), inset 0 0 9px rgba(0, 0, 0, 0.38) !important;
+}
+
+.next-steps-section li code {
+  display: inline !important;
+  max-width: 100% !important;
+  padding: 0.08em 0.34em !important;
+  border: 1px solid rgba(0, 255, 204, 0.18) !important;
+  border-radius: 6px !important;
+  background: rgba(0, 255, 204, 0.04) !important;
+  color: #cffff6 !important;
+  font-size: 0.92em !important;
+  font-weight: 800 !important;
+  line-height: inherit !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  box-decoration-break: clone !important;
+  -webkit-box-decoration-break: clone !important;
+  box-shadow: none !important;
+}
+
+.next-steps-section li a {
+  display: inline !important;
+  max-width: 100% !important;
+  padding: 0.04em 0.28em !important;
+  border-radius: 6px !important;
+  background: rgba(0, 255, 204, 0.035) !important;
+  color: #d8fff2 !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+  overflow-wrap: anywhere !important;
+  box-decoration-break: clone !important;
+  -webkit-box-decoration-break: clone !important;
+}
+
+.next-steps-section li a:hover,
+.next-steps-section li a:focus-visible {
+  background: rgba(0, 255, 204, 0.07) !important;
+  color: #f0fff9 !important;
+}
+
+@media (max-width: 760px) {
+  .next-steps-section > :is(ol, ul) {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .next-steps-section > :is(ol, ul) > li {
+    min-height: 0 !important;
+    padding: 10px 11px 10px 30px !important;
+  }
+
+  .next-steps-section > :is(ol, ul) > li::before {
+    left: 11px !important;
+    top: 10px !important;
+    height: calc(100% - 20px) !important;
+  }
+}
+
+/* Recipe FAQ light theme polish: keep accordion cards soft on white panels. */
+html[data-theme="light"] .recipe-faq-item {
+  border-color: #c6d5cd !important;
+  background:
+    linear-gradient(145deg, #ffffff, #f3f8f5) !important;
+  box-shadow: 0 8px 18px rgba(31, 72, 53, 0.07), inset 0 0 4px rgba(28, 57, 43, 0.04) !important;
+}
+
+html[data-theme="light"] .recipe-faq-item[open] {
+  border-color: #a8c5b7 !important;
+  background:
+    linear-gradient(145deg, #ffffff, #edf7f1) !important;
+  box-shadow: 0 10px 22px rgba(31, 72, 53, 0.09), inset 0 0 5px rgba(28, 57, 43, 0.05) !important;
+}
+
+html[data-theme="light"] .recipe-faq-item summary {
+  color: #183128 !important;
+}
+
+html[data-theme="light"] .recipe-faq-item p {
+  color: #355448 !important;
 }

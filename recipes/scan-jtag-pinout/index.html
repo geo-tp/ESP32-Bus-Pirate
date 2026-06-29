@@ -13,16 +13,16 @@
 <meta content="Use ESP32 Bit Pirate JTAG mode to scan candidate GPIOs for TDI, TDO, TCK and TMS on your own target board." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to scan for a JTAG pinout with ESP32 Bit Pirate"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/assets/cover.png" property="og:image"/><meta content="Preview image for How to scan for a JTAG pinout with ESP32 Bit Pirate" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
 <meta content="2026-06-23" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to scan for a JTAG pinout with ESP32 Bit Pirate" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate JTAG mode to scan candidate GPIOs for TDI, TDO, TCK and TMS on your own target board." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to scan for a JTAG pinout with ESP32 Bit Pirate">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to scan for a JTAG pinout with ESP32 Bit Pirate" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/" rel="canonical"/>
 <title>How to scan for a JTAG pinout with ESP32 Bit Pirate</title>
 <link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
@@ -77,18 +77,18 @@
   ]
 }
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>JTAG/SWD</li><li>Advanced</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Advanced · JTAG/SWD</p>
 <h1>How to scan for a JTAG pinout</h1>
@@ -137,7 +137,7 @@ Possible TDI/TDO/TCK/TMS assignment printed" data-cli-session=""></div>
 <li>Try SWD scan if the target is ARM-based.</li>
 <li>Use OpenOCD adapter mode after confirming pinout.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">JTAG pinout scan FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What pins does JTAG scan try to identify?</summary><p>It searches candidate GPIO permutations for JTAG signals such as TDI, TDO, TCK and TMS, and optionally reset-related behavior depending on the target setup.</p></details><details class="recipe-faq-item"><summary>How should I choose candidate pins for a JTAG scan?</summary><p>Start from visual clues, continuity checks, likely headers and nearby labels, then keep the candidate group small. Fewer candidates make the scan faster and the result easier to review.</p></details><details class="recipe-faq-item"><summary>Does a detected pinout guarantee debug access?</summary><p>No. It gives a candidate mapping. The target may still have debug locked, wrong reset state, unsupported voltage, or an OpenOCD configuration issue.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG" rel="noopener" target="_blank"><span>Wiki</span><strong>JTAG scan command</strong></a>
@@ -155,6 +155,6 @@ Possible TDI/TDO/TCK/TMS assignment printed" data-cli-session=""></div>
 </ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>JTAG/SWD</dd><dt class="aside-dt-hardware">Hardware</dt><dd>Own target board with candidate JTAG pads</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG">15-JTAG</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
 </div>
 </main>
-<script src="../recipes.js?v=20260623-batch2"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

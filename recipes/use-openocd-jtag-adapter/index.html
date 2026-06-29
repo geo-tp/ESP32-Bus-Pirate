@@ -4,25 +4,25 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Use ESP32 Bit Pirate JTAG mode openocd command to switch the device into an OpenOCD-compatible adapter workflow after pinout is known." name="description"/>
+<meta content="Use the ESP32 Bit Pirate OpenOCD USB adapter workflow after a JTAG or SWD pinout is known." name="description"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="ESP32 Bit Pirate" property="og:site_name"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter" property="og:title"/>
-<meta content="Use ESP32 Bit Pirate JTAG mode openocd command to switch the device into an OpenOCD-compatible adapter workflow after pinout is known." property="og:description"/>
+<meta content="Use the ESP32 Bit Pirate OpenOCD USB adapter workflow after a JTAG or SWD pinout is known." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/assets/cover.png" property="og:image"/><meta content="Preview image for How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
 <meta content="2026-06-23" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter" name="twitter:title"/>
-<meta content="Use ESP32 Bit Pirate JTAG mode openocd command to switch the device into an OpenOCD-compatible adapter workflow after pinout is known." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter">
+<meta content="Use the ESP32 Bit Pirate OpenOCD USB adapter workflow after a JTAG or SWD pinout is known." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/" rel="canonical"/>
 <title>How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter</title>
 <link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
@@ -33,7 +33,7 @@
     {
       "@type": "TechArticle",
       "headline": "How to use ESP32 Bit Pirate as an OpenOCD JTAG adapter",
-      "description": "Use ESP32 Bit Pirate JTAG mode openocd command to switch the device into an OpenOCD-compatible adapter workflow after pinout is known.",
+      "description": "Use the ESP32 Bit Pirate OpenOCD USB adapter workflow after a JTAG or SWD pinout is known.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-openocd-jtag-adapter/assets/cover.png",
       "datePublished": "2026-06-23",
       "dateModified": "2026-06-23",
@@ -77,18 +77,18 @@
   ]
 }
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>JTAG/SWD</li><li>Advanced</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Advanced · JTAG/SWD</p>
 <h1>How to use an OpenOCD JTAG adapter</h1>
@@ -116,9 +116,9 @@
 <span class="step-label">Step 1</span><h2>Commands</h2>
 <p>Run the commands below after selecting the right Bit Pirate mode and confirming the wiring.</p>
 <div data-cli-commands="mode jtag
-openocd" data-cli-mode="BitPirate" data-cli-result="Switching to OpenOCD adapter mode
-Reconnect host tool if required
-Start OpenOCD with matching adapter config" data-cli-session=""></div>
+openocd" data-cli-mode="BitPirate" data-cli-result="Switch to OpenOCD adapter workflow
+Device reboots into USB CDC adapter mode
+Start OpenOCD with matching target config" data-cli-session=""></div>
 </section><section class="recipe-section result-section">
 <h2>Result</h2>
 <div class="callout success"><h3>What success looks like</h3><p>The host sees the expected adapter interface and OpenOCD can attempt target detection. If the target fails, return to pinout/power checks first.</p></div>
@@ -137,7 +137,7 @@ Start OpenOCD with matching adapter config" data-cli-session=""></div>
 <li>Keep a known-good OpenOCD config beside the project.</li>
 <li>Document target voltage, reset and boot strap requirements.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">OpenOCD JTAG/SWD adapter FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Should I scan pins before OpenOCD?</summary><p>Yes. OpenOCD adapter mode expects a known JTAG or SWD mapping. Use the scan recipes first when the target pads are not labelled or not trusted.</p></details><details class="recipe-faq-item"><summary>What role does Bit Pirate play in an OpenOCD session?</summary><p>Bit Pirate acts as the USB-facing transport adapter. OpenOCD still provides the target configuration, reset strategy and debug protocol logic for the MCU or SoC you are investigating.</p></details><details class="recipe-faq-item"><summary>Is Bit Pirate a replacement for a high-speed debug probe?</summary><p>No. The USB adapter is useful for bring-up, recovery, experiments and low-speed debug access, but dedicated JTAG/SWD probes are better for production flashing and heavy debug sessions.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG" rel="noopener" target="_blank"><span>Wiki</span><strong>JTAG openocd command</strong></a>
@@ -156,6 +156,6 @@ Start OpenOCD with matching adapter config" data-cli-session=""></div>
 </ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>JTAG/SWD</dd><dt class="aside-dt-hardware">Hardware</dt><dd>Known JTAG/SWD target pinout</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG">15-JTAG</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
 </div>
 </main>
-<script src="../recipes.js?v=20260623-batch2"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

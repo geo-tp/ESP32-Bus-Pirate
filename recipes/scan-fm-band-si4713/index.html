@@ -140,7 +140,7 @@ Trace 101.7 MHz signal strength" data-cli-session=""></div>
 <li>Use <code>waterfall</code> for a visual overview.</li>
 <li>Only enter <code>broadcast</code> in a legal controlled setup.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">FM band scan FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does FM sweep show?</summary><p>It scans the 88 to 108 MHz FM band and estimates activity so you can see likely local stations or busy parts of the band.</p></details><details class="recipe-faq-item"><summary>Why do all frequencies look flat?</summary><p>The Si4713 may not be configured, the reset pin or I2C wiring may be wrong, the antenna may be missing, or the local signal level may be too low for the setup.</p></details><details class="recipe-faq-item"><summary>Does scanning transmit FM?</summary><p>No. sweep, trace and waterfall are observation workflows. Broadcast operations are separate and should only be used legally at very low power in a controlled setup.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/si4713/"><span>Module</span><strong>Si4713 FM module overview</strong></a><a href="../../protocols/fm/"><span>Protocols</span><strong>More FM workflows: FM and RDS debugging with ESP32 Bit Pirate</strong></a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/22-FM" rel="noopener" target="_blank"><span>Wiki</span><strong>FM mode</strong></a>
@@ -158,6 +158,6 @@ Trace 101.7 MHz signal strength" data-cli-session=""></div>
 </ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>FM</dd><dt class="aside-dt-hardware">Hardware</dt><dd>Si4713 module, I2C wiring, reset pin</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/22-FM">22-FM</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
 </div>
 </main>
-<script src="../recipes.js?v=20260623-batch2"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

@@ -13,16 +13,16 @@
 <meta content="Use the I2C recover command after a target holds SDA low or the bus stops responding." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to recover a stuck I2C bus with ESP32 Bit Pirate"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png" property="og:image"/><meta content="Preview image for How to recover a stuck I2C bus with ESP32 Bit Pirate" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to recover a stuck I2C bus with ESP32 Bit Pirate" name="twitter:title"/>
 <meta content="Use the I2C recover command after a target holds SDA low or the bus stops responding." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to recover a stuck I2C bus with ESP32 Bit Pirate">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to recover a stuck I2C bus with ESP32 Bit Pirate" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/" rel="canonical"/>
 <title>How to recover a stuck I2C bus with ESP32 Bit Pirate</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -36,7 +36,7 @@
       "description": "Use the I2C recover command after a target holds SDA low or the bus stops responding.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": { "@type": "Person", "name": "Geo" },
       "publisher": {
         "@type": "Organization",
@@ -55,22 +55,51 @@
         { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
         { "@type": "ListItem", "position": 3, "name": "How to recover a stuck I2C bus with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/recover-stuck-i2c-bus/" }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does I2C bus recovery actually do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Recovery toggles SCL and sends a stop condition so a target that is stuck mid-transaction can release SDA. It is a bus-state reset, not a fix for wrong wiring, missing pullups or bad voltage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should I avoid running I2C recover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Avoid it while another master is actively controlling the bus or when the target is in the middle of a critical operation. On a shared system, isolate the bench setup before forcing clocks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if recovery does not bring the device back?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Power-cycle the target, then check pullups, voltage, ground, SDA/SCL order and whether a device is physically holding the line low. A repeated failure usually points to hardware or bus loading."
+          }
+        }
+      ]
     }
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>I2C</li><li>Beginner</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Beginner · I2C</p>
 <h1>How to recover a stuck I2C bus</h1>
@@ -125,6 +154,19 @@ Run scan again to verify the bus" data-cli-session=""></div>
 <li>Use <code>ping &lt;addr&gt;</code> if you know the address.</li>
 <li>Use <code>trace</code> or <code>monitor</code> only after the bus is stable.</li>
 </ul>
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq">
+<h2 id="faq-title">I2C bus recovery FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item">
+<summary>What does I2C bus recovery actually do?</summary>
+<p>Recovery toggles SCL and sends a stop condition so a target that is stuck mid-transaction can release SDA. It is a bus-state reset, not a fix for wrong wiring, missing pullups or bad voltage.</p>
+</details>
+<details class="recipe-faq-item">
+<summary>When should I avoid running I2C recover?</summary>
+<p>Avoid it while another master is actively controlling the bus or when the target is in the middle of a critical operation. On a shared system, isolate the bench setup before forcing clocks.</p>
+</details>
+<details class="recipe-faq-item"><summary>What does I2C recovery actually try to do?</summary><p>Recovery attempts to clock the bus so a target that is holding SDA can release the line. It is a bus-state recovery helper, not a substitute for correct wiring or target power.</p></details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/i2c-eeprom/"><span>Module</span><strong>I2C EEPROM module overview</strong></a>
@@ -149,6 +191,6 @@ Run scan again to verify the bus" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

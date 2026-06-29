@@ -13,16 +13,16 @@
 <meta content="Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to load a Flipper IR file with ESP32 Bit Pirate"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png" property="og:image"/><meta content="Preview image for How to load a Flipper IR file with ESP32 Bit Pirate" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to load a Flipper IR file with ESP32 Bit Pirate" name="twitter:title"/>
 <meta content="Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to load a Flipper IR file with ESP32 Bit Pirate">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to load a Flipper IR file with ESP32 Bit Pirate" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/" rel="canonical"/>
 <title>How to load a Flipper IR file with ESP32 Bit Pirate</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -36,7 +36,7 @@
       "description": "Upload .ir files to LittleFS, load them in Infrared mode, and send saved remote frames.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": { "@type": "Person", "name": "Geo" },
       "publisher": {
         "@type": "Organization",
@@ -55,22 +55,51 @@
         { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" },
         { "@type": "ListItem", "position": 3, "name": "How to load a Flipper IR file with ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/load-flipper-ir-file/" }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where should I put the .ir file before loading it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload the file to the device filesystem path expected by the Infrared mode and LittleFS workflow, then run load and select the saved profile from the firmware menu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does a loaded .ir file not control the device?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The file may target a different device model, the IR transmitter may be too weak, or the file may contain several commands and the selected entry is not the one you expected. Test one command at a time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I edit a .ir file manually?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, but keep the format intact. A small formatting error can make the file fail to load or send the wrong signal, so keep an original copy before editing."
+          }
+        }
+      ]
     }
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>Infrared</li><li>Intermediate</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Intermediate · Infrared</p>
 <h1>How to load a Flipper IR file</h1>
@@ -123,6 +152,19 @@ Frames available by index" data-cli-session=""></div>
 <li>Run <code>load</code> in Infrared mode.</li>
 <li>Use capture/receive first if you do not have a known file.</li>
 </ul>
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq">
+<h2 id="faq-title">Flipper IR file FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item">
+<summary>Where should I put the .ir file before loading it?</summary>
+<p>Upload the file to the device filesystem path expected by the Infrared mode and LittleFS workflow, then run <code>load</code> and select the saved profile from the firmware menu.</p>
+</details>
+<details class="recipe-faq-item"><summary>What information does a Flipper .ir file contribute?</summary><p>A .ir file provides protocol or raw timing data captured elsewhere. Bit Pirate uses that stored signal description as an input for replay-oriented infrared tests.</p></details>
+<details class="recipe-faq-item">
+<summary>Can I edit a .ir file manually?</summary>
+<p>Yes, but keep the format intact. A small formatting error can make the file fail to load or send the wrong signal, so keep an original copy before editing.</p>
+</details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../protocols/infrared/"><span>Protocols</span><strong>More infrared workflows: Infrared remote debugging with ESP32 Bit Pirate</strong></a>
@@ -145,6 +187,6 @@ Frames available by index" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

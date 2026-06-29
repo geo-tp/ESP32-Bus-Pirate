@@ -13,16 +13,16 @@
 <meta content="A practical ESP32 Bit Pirate recipe for reading a Dallas iButton ID over 1-Wire." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to read an iButton ID with ESP32"><meta property="og:image:type" content="image/png">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png" property="og:image"/><meta content="Preview image for How to read an iButton ID with ESP32" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-23" property="article:published_time">
+<meta content="2026-06-23" property="article:modified_time">
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to read an iButton ID with ESP32" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate to scan a 1-Wire bus and read a Dallas iButton ROM ID." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to read an iButton ID with ESP32">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to read an iButton ID with ESP32" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-ibutton-id/" rel="canonical"/>
 <title>How to read an iButton ID with ESP32</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -52,18 +52,18 @@
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>1-Wire</li><li>iButton</li><li>Serial CLI</li><li>5 min</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Beginner · 1-Wire</p>
 <h1>How to read an iButton ID</h1>
@@ -116,7 +116,7 @@ Same value twice means the contact and pull-up are probably stable." data-cli-se
 <li>Long loose wires are adding enough noise to cause CRC errors.</li>
 <li>More than one 1-Wire device is connected during the read.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">iButton ID read FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does the iButton ROM ID contain?</summary><p>A 1-Wire iButton ROM contains a family code, serial number and CRC byte. Reading it as a unit helps document the device without touching writable memory areas.</p></details><details class="recipe-faq-item"><summary>What makes an iButton ROM ID useful in the lab?</summary><p>The ROM ID combines a family code, serial number and CRC, so it is a compact identifier for comparing keys, documenting tests and confirming that the same device is being read across repeated sessions.</p></details><details class="recipe-faq-item"><summary>Should I use the iButton shell for normal key work?</summary><p>Yes. The iButton shell keeps Dallas ROM ID read and RW1990 lab-copy workflows separate from generic 1-Wire bytecode, which makes repeated tests safer and easier to document.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/ibutton/"><span>Module</span><strong>1-Wire iButton module overview</strong></a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/02-1WIRE"><span>Wiki</span><strong>1-Wire mode commands</strong></a>
@@ -140,6 +140,6 @@ Same value twice means the contact and pull-up are probably stable." data-cli-se
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

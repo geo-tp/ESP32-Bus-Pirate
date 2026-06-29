@@ -13,16 +13,16 @@
 <meta content="Use ESP32 Bit Pirate UART bridge mode to interact with a board console once RX, TX, voltage and baud rate are known." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to bridge a UART console with ESP32 Bit Pirate"><meta property="og:image:type" content="image/png">
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/assets/cover.png" property="og:image"/><meta content="Preview image for How to bridge a UART console with ESP32 Bit Pirate" property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width">
+<meta content="630" property="og:image:height">
 <meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-29" property="article:modified_time"/>
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to bridge a UART console with ESP32 Bit Pirate" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate UART bridge mode to interact with a board console once RX, TX, voltage and baud rate are known." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to bridge a UART console with ESP32 Bit Pirate">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/assets/cover.png" name="twitter:image"/><meta content="Preview image for How to bridge a UART console with ESP32 Bit Pirate" name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/" rel="canonical"/>
 <title>How to bridge a UART console with ESP32 Bit Pirate</title>
 <link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
@@ -36,7 +36,7 @@
       "description": "Use ESP32 Bit Pirate UART bridge mode to interact with a board console once RX, TX, voltage and baud rate are known.",
       "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/assets/cover.png",
       "datePublished": "2026-06-23",
-      "dateModified": "2026-06-23",
+      "dateModified": "2026-06-29",
       "author": {
         "@type": "Person",
         "name": "Geo"
@@ -73,22 +73,51 @@
           "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/bridge-uart-console/"
         }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When should I use UART bridge mode instead of one-shot write commands?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use bridge mode when the target has an interactive console, bootloader menu or login prompt. Use one-shot write/read commands when you only need to send a short probe such as AT or reset and keep control in the Bit Pirate shell."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What must be checked before connecting Bit Pirate TX to a target UART RX pin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Confirm the target logic voltage, share ground, and make sure the target RX pin tolerates the ESP32 Bit Pirate output level. Start passively with target TX to Bit Pirate RX when you are unsure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does UART output look garbled in bridge mode?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Garbled UART text usually means the baud rate, parity, stop bits or line polarity do not match the target. Recheck the detected baud rate and use a passive read before typing into the target console."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>UART</li><li>Beginner</li><li>3 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Beginner · UART</p>
 <h1>How to bridge a UART console</h1>
@@ -140,6 +169,19 @@ Press a device button to stop" data-cli-session=""></div>
 <li>Use <code>swap</code> if RX/TX are reversed in the firmware config.</li>
 <li>Use <code>xmodem</code> only when the target bootloader explicitly supports it.</li>
 </ul>
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq">
+<h2 id="faq-title">UART bridge FAQ</h2>
+<div class="recipe-faq-list">
+<details class="recipe-faq-item">
+<summary>When is bridge mode better than <code>write</code> and <code>read</code>?</summary>
+<p>Use bridge mode for an interactive UART console, bootloader menu or shell where you need to type and immediately see replies. Keep <code>write</code> and <code>read</code> for short probes when you want to stay inside the Bit Pirate command prompt.</p>
+</details>
+<details class="recipe-faq-item"><summary>Why start with target TX before full bridge?</summary><p>Listening to target TX first is passive and usually enough to learn baud rate, boot text and prompt style. It gives context before you actively drive the target RX line.</p></details>
+<details class="recipe-faq-item">
+<summary>Why is the console text readable at first, then broken in bridge mode?</summary>
+<p>The usual causes are a baud rate mismatch, parity/stop-bit mismatch, reset-time autobaud behavior, or RX/TX wiring that only works in one direction. Re-run passive <code>read</code>, confirm the UART settings, then enter <code>bridge</code> again.</p>
+</details>
+</div>
 </section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
@@ -159,6 +201,6 @@ Press a device button to stop" data-cli-session=""></div>
 </ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>UART</dd><dt class="aside-dt-hardware">Hardware</dt><dd>Target UART RX/TX header, shared ground</dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/03-UART">03-UART</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-06-23</dd></dl></aside>
 </div>
 </main>
-<script src="../recipes.js?v=20260623-batch2"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>

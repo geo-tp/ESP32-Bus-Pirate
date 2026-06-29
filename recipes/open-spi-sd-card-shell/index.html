@@ -129,7 +129,7 @@ firmware.bin" data-cli-session=""></div>
 <li>Use <code>mkdir</code>, <code>touch</code> or <code>rm</code> carefully.</li>
 <li>Use USB mass storage if you want host-side file copy.</li>
 </ul>
-</section><section class="recipe-section">
+</section><section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">SPI SD card shell FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does a clean ls result prove?</summary><p>It confirms that SPI wiring, chip select, card power and the FAT/FAT32 filesystem are good enough for basic file access.</p></details><details class="recipe-faq-item"><summary>Why do large SD card operations feel slow?</summary><p>The SD card shell runs over SPI and serial output, so large directory listings or file reads can take several seconds. Start with small files while validating the setup.</p></details><details class="recipe-faq-item"><summary>Can this replace a normal USB card reader?</summary><p>No. It is a bench shell for quick inspection and simple file operations. Use USB mass storage mode or a real card reader when you need fast bulk transfers.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI"><span>Wiki</span><strong>SPI SD card shell</strong></a>
@@ -154,6 +154,6 @@ firmware.bin" data-cli-session=""></div>
 </aside>
 </div>
 </main>
-<script src="../recipes.js"></script>
+<script src="../recipes.js?v=20260629-recipesfix1"></script>
 </body>
 </html>
