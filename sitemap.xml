@@ -288,9 +288,6 @@
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/create-command-alias-shortcuts/</loc>
   </url>
   <url>
-    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/daily-bench-startup-checklist/</loc>
-  </url>
-  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/detect-uart-baudrate-autobaud/</loc>
   </url>
   <url>
@@ -625,5 +622,11 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-w5500-ethernet-module/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-usb-uart-adapter/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/identify-unknown-i2c-device/</loc>
   </url>
 </urlset>
