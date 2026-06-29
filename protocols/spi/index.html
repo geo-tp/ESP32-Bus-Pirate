@@ -1,30 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use Bit Pirate as an ESP32 SPI workbench to read JEDEC IDs, dump SPI flash, inspect EEPROMs, test SD cards and debug wiring.">
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-<meta name="theme-color" content="#121212">
-<meta property="og:site_name" content="ESP32 Bit Pirate">
-<meta property="og:locale" content="en_US">
-<meta property="og:title" content="ESP32 SPI Flash Debugging and JEDEC Probe">
-<meta property="og:description" content="Use Bit Pirate as an ESP32 SPI workbench to read JEDEC IDs, dump SPI flash, inspect EEPROMs, test SD cards and debug wiring.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/spi/">
-<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-spi.png">
-<meta property="og:image:alt" content="Preview image for SPI debugging with ESP32 Bit Pirate">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ESP32 SPI Flash Debugging and JEDEC Probe">
-<meta name="twitter:description" content="Read JEDEC IDs, dump SPI flash, inspect EEPROMs, test SD cards and debug wiring with an ESP32-S3 Bit Pirate workbench.">
-<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-spi.png">
-<meta name="twitter:image:alt" content="Preview image for SPI debugging with ESP32 Bit Pirate">
-<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/spi/">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use Bit Pirate as an ESP32 SPI workbench to read JEDEC IDs, dump SPI flash, inspect EEPROMs, test SD cards and debug wiring." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 SPI Flash Debugging and JEDEC Probe" property="og:title"/>
+<meta content="Use Bit Pirate as an ESP32 SPI workbench to read JEDEC IDs, dump SPI flash, inspect EEPROMs, test SD cards and debug wiring." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/spi/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-spi.png" property="og:image"/>
+<meta content="SPI bus debugging visual with an ESP32 board and memory or module targets." property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ESP32 SPI Flash Debugging and JEDEC Probe" name="twitter:title"/>
+<meta content="Read JEDEC IDs, dump SPI flash, inspect EEPROMs, test SD cards and debug wiring with an ESP32-S3 Bit Pirate workbench." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-spi.png" name="twitter:image"/>
+<meta content="SPI bus debugging visual with an ESP32 board and memory or module targets." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/spi/" rel="canonical"/>
 <title>ESP32 SPI Flash Debugging and JEDEC Probe | Bit Pirate</title>
-<link rel="stylesheet" href="../protocols.css">
+<link href="../protocols.css" rel="stylesheet"/>
 <script type="application/ld+json">
 
 {
@@ -206,39 +207,37 @@
 }
 
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
 <main class="protocol-page">
 <header class="protocol-header">
-<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
-<nav class="page-top-nav top-nav" aria-label="Primary destinations">
-<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
-<a href="../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>SPI wiki</a>
+<a aria-label="ESP32 Bit Pirate home" class="brand" href="../../"><span aria-hidden="true" class="brand-mark">B</span><span>ESP32 Bit Pirate</span></a>
+<nav aria-label="Primary destinations" class="page-top-nav top-nav">
+<a href="../../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>SPI wiki</a>
 </nav>
 </header>
-
-<section class="protocol-hero" aria-labelledby="page-title">
+<section aria-labelledby="page-title" class="protocol-hero">
 <div>
 <p class="eyebrow">ESP32-S3 SPI protocol debugging</p>
 <h1 id="page-title">Probe, read and write SPI flash with ESP32</h1>
 <p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a practical SPI flash and module debugging workbench. Use it to read JEDEC IDs, inspect SPI flash chips, back up EEPROMs, test SD cards and debug common wiring problems before writing target firmware.</p>
 <div class="hero-actions">
-<a class="action-link" href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
-<a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>
+<a class="action-link" href="../../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
+<a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>
 </div>
 </div>
 <figure class="hero-visual">
-<img src="../../recipes/assets/visual-spi.svg" alt="SPI bus debugging visual with an ESP32 board and memory or module targets" width="1040" height="600">
+<img alt="SPI bus debugging visual with an ESP32 board and memory or module targets" height="600" src="../../recipes/assets/visual-spi.svg" width="1040"/>
 </figure>
 </section>
-
-<section class="protocol-band" aria-labelledby="workflow-title">
+<section aria-labelledby="workflow-title" class="protocol-band">
 <div class="section-head">
 <h2 id="workflow-title">Quick SPI workflow</h2>
 <p class="section-intro">Start with a read-only probe. Once chip select, clock, MOSI, MISO, power and ground are confirmed, move to the recipe that matches the device or memory operation.</p>
@@ -261,8 +260,7 @@ sd</code></pre>
 </div>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="coverage-title">
+<section aria-labelledby="coverage-title" class="protocol-band">
 <div class="section-head">
 <h2 id="coverage-title">SPI workflows covered by ESP32 Bit Pirate</h2>
 <p class="section-intro">Use this overview to choose the right SPI workflow before opening a detailed recipe.</p>
@@ -276,8 +274,7 @@ sd</code></pre>
 <article class="intent-card"><span>Modules</span><h3>SPI module wiring</h3><p>Use SPI as the control bus for CC1101, nRF24L01, W5500, MCP2515 and other module workflows that add extra GPIO roles.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="fit-title">
+<section aria-labelledby="fit-title" class="protocol-band">
 <div class="section-head">
 <h2 id="fit-title">When an ESP32-S3 SPI workbench helps</h2>
 <p class="section-intro">SPI debugging often starts with a physical question: is the chip selected, powered and answering? A small external tool can separate wiring problems from firmware problems before deeper work.</p>
@@ -288,8 +285,7 @@ sd</code></pre>
 <article class="signal-card"><span>Module setup</span><h3>Before blaming the radio or controller</h3><p>Many CC1101, nRF24L01, W5500 and MCP2515 failures are pin mapping, chip-select, interrupt, supply or level problems.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="hardware-title">
+<section aria-labelledby="hardware-title" class="protocol-band">
 <div class="section-head">
 <h2 id="hardware-title">SPI hardware reminders</h2>
 <p class="section-intro">These notes are intentionally short. The detailed command references live in the project documentation and firmware repository.</p>
@@ -301,8 +297,7 @@ sd</code></pre>
 <article class="note-card"><span>Shared bus</span><p>In-circuit flash access may fail if the original board still powers the chip or another controller drives the same SPI lines.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="problems-title">
+<section aria-labelledby="problems-title" class="protocol-band">
 <div class="section-head">
 <h2 id="problems-title">Common SPI problems</h2>
 <p class="section-intro">Most SPI failures are wiring, chip-select, power, bus contention or speed problems. Check these before changing target firmware.</p>
@@ -315,13 +310,12 @@ sd</code></pre>
 <article class="problem-card"><span>Module not detected</span><p>Recheck CS/CSN, extra pins such as CE, GDO0, IRQ or RESET, and confirm the module uses the expected 3.3 V supply.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="recipes-title">
+<section aria-labelledby="recipes-title" class="protocol-band">
 <div class="section-head">
 <h2 id="recipes-title">Detailed SPI recipes</h2>
 <p class="section-intro">These pages are the task-level SPI workflows. This overview keeps the protocol-level guidance here, while each recipe covers wiring, commands and troubleshooting in detail.</p>
 </div>
-<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate SPI recipes">
+<nav aria-label="ESP32 Bit Pirate SPI recipes" class="recipe-index-grid">
 <a href="../../recipes/read-spi-flash-jedec-id/"><span>Probe</span><strong>Read a SPI flash JEDEC ID</strong><small>Confirm CS, CLK, MOSI, MISO and power before a full dump.</small></a>
 <a href="../../recipes/dump-spi-flash-browser/"><span>Backup</span><strong>Dump a SPI flash chip from your browser</strong><small>Make a clean flash backup using the browser SPI programmer.</small></a>
 <a href="../../recipes/analyze-spi-flash-cli/"><span>Inspect</span><strong>Analyze a SPI flash from the CLI</strong><small>Probe, search and inspect content before deciding what to dump.</small></a>
@@ -335,8 +329,7 @@ sd</code></pre>
 <a href="../../recipes/wire-mcp2515-can-module/"><span>CAN</span><strong>Wire an MCP2515 CAN module</strong><small>Separate SPI control wiring from CANH/CANL bus wiring.</small></a>
 </nav>
 </section>
-
-<section class="protocol-band" aria-labelledby="references-title">
+<section aria-labelledby="references-title" class="protocol-band">
 <div class="section-head">
 <h2 id="references-title">Useful SPI references</h2>
 <p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the SPI command reference.</p>
@@ -354,8 +347,7 @@ sd</code></pre>
 <article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Check firmware source, issues and releases that affect SPI support.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="faq-title">
+<section aria-labelledby="faq-title" class="protocol-band">
 <div class="section-head">
 <h2 id="faq-title">SPI debugging FAQ</h2>
 <p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
@@ -375,7 +367,6 @@ sd</code></pre>
 </details>
 </div>
 </section>
-
 <footer class="site-footer">
 <p class="site-footer-title">ESP32 Bit Pirate</p>
 <nav aria-label="Project links">
@@ -383,8 +374,8 @@ sd</code></pre>
 <a href="../../webflasher/">Web Flasher</a>
 <a href="../../recipes/">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI" target="_blank" rel="noopener">SPI Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI" rel="noopener" target="_blank">SPI Wiki</a>
 </nav>
 </footer>
 </main>

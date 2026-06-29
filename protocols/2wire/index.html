@@ -1,30 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Probe SLE4442 smartcards with Bit Pirate on ESP32: ATR, security status, safe memory dumps and CLK/IO/RST wiring checks.">
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-<meta name="theme-color" content="#121212">
-<meta property="og:site_name" content="ESP32 Bit Pirate">
-<meta property="og:locale" content="en_US">
-<meta property="og:title" content="ESP32 2-Wire SLE4442 Smartcard Debugging">
-<meta property="og:description" content="Probe SLE4442 smartcards with Bit Pirate on ESP32: ATR, security status, safe memory dumps and CLK/IO/RST wiring checks.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/2wire/">
-<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-2wire.png">
-<meta property="og:image:alt" content="Preview image for 2-Wire SLE4442 smartcard debugging with ESP32 Bit Pirate">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ESP32 2-Wire SLE4442 Smartcard Debugging">
-<meta name="twitter:description" content="Debug SLE4442 smartcards with ESP32 Bit Pirate: ATR probe, security status, memory dumps and CLK/IO/RST checks.">
-<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-2wire.png">
-<meta name="twitter:image:alt" content="Preview image for 2-Wire SLE4442 smartcard debugging with ESP32 Bit Pirate">
-<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/2wire/">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Probe SLE4442 smartcards with Bit Pirate on ESP32: ATR, security status, safe memory dumps and CLK/IO/RST wiring checks." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 2-Wire SLE4442 Smartcard Debugging" property="og:title"/>
+<meta content="Probe SLE4442 smartcards with Bit Pirate on ESP32: ATR, security status, safe memory dumps and CLK/IO/RST wiring checks." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/2wire/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-2wire.png" property="og:image"/>
+<meta content="2-Wire SLE4442 smartcard debugging visual with an ESP32 board and smartcard socket." property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ESP32 2-Wire SLE4442 Smartcard Debugging" name="twitter:title"/>
+<meta content="Debug SLE4442 smartcards with ESP32 Bit Pirate: ATR probe, security status, memory dumps and CLK/IO/RST checks." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-2wire.png" name="twitter:image"/>
+<meta content="2-Wire SLE4442 smartcard debugging visual with an ESP32 board and smartcard socket." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/2wire/" rel="canonical"/>
 <title>ESP32 2-Wire SLE4442 Smartcard Debugging | Bit Pirate</title>
-<link rel="stylesheet" href="../protocols.css">
+<link href="../protocols.css" rel="stylesheet"/>
 <script type="application/ld+json">
 
 {
@@ -158,39 +159,37 @@
 }
 
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
 <main class="protocol-page">
 <header class="protocol-header">
-<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
-<nav class="page-top-nav top-nav" aria-label="Primary destinations">
-<a href="../../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
-<a href="../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/07-2WIRE" rel="noopener" target="_blank"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>2WIRE wiki</a>
+<a aria-label="ESP32 Bit Pirate home" class="brand" href="../../"><span aria-hidden="true" class="brand-mark">B</span><span>ESP32 Bit Pirate</span></a>
+<nav aria-label="Primary destinations" class="page-top-nav top-nav">
+<a href="../../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/07-2WIRE" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>2WIRE wiki</a>
 </nav>
 </header>
-
-<section class="protocol-hero" aria-labelledby="page-title">
+<section aria-labelledby="page-title" class="protocol-hero">
 <div>
 <p class="eyebrow">ESP32-S3 2-Wire SLE4442 smartcard debugging</p>
 <h1 id="page-title">Read and dump SLE4442 smartcards with ESP32</h1>
 <p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a 2-Wire SLE4442 smartcard debugging workbench. Use it to probe ATR, inspect security status, dump memory safely and troubleshoot CLK, IO, RST and supply wiring.</p>
 <div class="hero-actions">
-<a class="action-link" href="../../recipes/probe-sle4442-smartcard-atr/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with an ATR probe recipe</a>
-<a class="action-link" href="../../webflasher/"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
+<a class="action-link" href="../../recipes/probe-sle4442-smartcard-atr/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 6h8M8 10h8"></path></svg>Start with an ATR probe recipe</a>
+<a class="action-link" href="../../webflasher/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"></path></svg>Flash ESP32 Bit Pirate</a>
 </div>
 </div>
 <figure class="hero-visual">
-<img src="../../recipes/assets/visual-2wire.svg" alt="2-Wire SLE4442 smartcard debugging visual with an ESP32 board and smartcard socket" width="1040" height="600">
+<img alt="2-Wire SLE4442 smartcard debugging visual with an ESP32 board and smartcard socket" height="600" src="../../recipes/assets/visual-2wire.svg" width="1040"/>
 </figure>
 </section>
-
-<section class="protocol-band" aria-labelledby="workflow-title">
+<section aria-labelledby="workflow-title" class="protocol-band">
 <div class="section-head">
 <h2 id="workflow-title">Quick 2-Wire smartcard workflow</h2>
 <p class="section-intro">Start with read-only checks. Confirm wiring, card response and security status before attempting any unlock, write, PSC or protection operation on a lab card you are allowed to test.</p>
@@ -212,8 +211,7 @@ sniff</code></pre>
 </div>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="coverage-title">
+<section aria-labelledby="coverage-title" class="protocol-band">
 <div class="section-head">
 <h2 id="coverage-title">2-Wire workflows covered by ESP32 Bit Pirate</h2>
 <p class="section-intro">Use this overview to choose the right SLE4442 or SLE44XX workflow before opening a detailed recipe.</p>
@@ -227,8 +225,7 @@ sniff</code></pre>
 <article class="intent-card"><span>Troubleshoot</span><h3>Card contact and supply checks</h3><p>Separate wiring, contact, power and protocol-family mistakes before blaming the card or shell command.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="fit-title">
+<section aria-labelledby="fit-title" class="protocol-band">
 <div class="section-head">
 <h2 id="fit-title">When an ESP32-S3 2-Wire workbench helps</h2>
 <p class="section-intro">SLE44XX cards are easy to confuse with other smartcard or memory interfaces. A small external workflow helps confirm the protocol family and capture safe baseline data.</p>
@@ -239,8 +236,7 @@ sniff</code></pre>
 <article class="signal-card"><span>Bring-up</span><h3>Before changing PSC state</h3><p>Record ATR, supply voltage, retry counter and card behavior before any unlock, PSC or protect action.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="hardware-title">
+<section aria-labelledby="hardware-title" class="protocol-band">
 <div class="section-head">
 <h2 id="hardware-title">2-Wire smartcard hardware reminders</h2>
 <p class="section-intro">These notes stay short. The detailed command references live in the project documentation and firmware repository.</p>
@@ -252,8 +248,7 @@ sniff</code></pre>
 <article class="note-card"><span>Protocol family</span><p>SLE44XX 2-Wire is not I2C and not ISO7816 UART. Use the matching 2WIRE mode and smartcard shell.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="problems-title">
+<section aria-labelledby="problems-title" class="protocol-band">
 <div class="section-head">
 <h2 id="problems-title">Common 2-Wire smartcard problems</h2>
 <p class="section-intro">Most failures come from card orientation, missing reset wiring, supply instability, confusing protocol families or attempting risky actions too early.</p>
@@ -266,20 +261,18 @@ sniff</code></pre>
 <article class="problem-card"><span>Dump looks unstable</span><p>Repeat the read with shorter wires, clean contacts and stable supply before comparing memory contents.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="recipes-title">
+<section aria-labelledby="recipes-title" class="protocol-band">
 <div class="section-head">
 <h2 id="recipes-title">Detailed 2-Wire smartcard recipes</h2>
 <p class="section-intro">These pages are the task-level SLE4442 workflows. This overview keeps the protocol-level guidance here, while each recipe covers setup, commands and troubleshooting in detail.</p>
 </div>
-<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate 2-Wire SLE4442 recipes">
+<nav aria-label="ESP32 Bit Pirate 2-Wire SLE4442 recipes" class="recipe-index-grid">
 <a href="../../recipes/probe-sle4442-smartcard-atr/"><span>Probe</span><strong>Probe an SLE4442 smartcard ATR</strong><small>Read the ATR before any memory, write or security operation.</small></a>
 <a href="../../recipes/read-sle4442-smartcard/"><span>Read</span><strong>Read an SLE4442 smartcard</strong><small>Use the smartcard shell for probe, security check and dump workflows.</small></a>
 <a href="../../recipes/check-sle4442-security-status/"><span>Security</span><strong>Check SLE4442 security status</strong><small>Record retry counter and protection state before risky smartcard actions.</small></a>
 </nav>
 </section>
-
-<section class="protocol-band" aria-labelledby="references-title">
+<section aria-labelledby="references-title" class="protocol-band">
 <div class="section-head">
 <h2 id="references-title">Useful 2-Wire references</h2>
 <p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the 2WIRE command reference.</p>
@@ -294,8 +287,7 @@ sniff</code></pre>
 <article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Check firmware source, issues and releases that affect 2-Wire support.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="faq-title">
+<section aria-labelledby="faq-title" class="protocol-band">
 <div class="section-head">
 <h2 id="faq-title">2-Wire smartcard FAQ</h2>
 <p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
@@ -315,7 +307,6 @@ sniff</code></pre>
 </details>
 </div>
 </section>
-
 <footer class="site-footer">
 <p class="site-footer-title">ESP32 Bit Pirate</p>
 <nav aria-label="Project links">
@@ -323,8 +314,8 @@ sniff</code></pre>
 <a href="../../webflasher/">Web Flasher</a>
 <a href="../../recipes/">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" target="_blank" rel="noopener">GitHub</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/07-2WIRE" target="_blank" rel="noopener">2WIRE Wiki</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/07-2WIRE" rel="noopener" target="_blank">2WIRE Wiki</a>
 </nav>
 </footer>
 </main>

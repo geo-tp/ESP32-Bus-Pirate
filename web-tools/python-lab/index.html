@@ -1,163 +1,155 @@
-<!doctype html>
-<html lang="en" translate="no" class="notranslate">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="dark">
-  <meta name="description" content="Run ESP32 Bit Pirate Python scripts in your browser with Pyodide, Web Serial and scripts loaded from ESP32-Bit-Pirate-Scripts.">
-  <meta name="google" content="notranslate">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-  <meta name="author" content="ESP32 Bit Pirate">
-  <meta name="application-name" content="Python Scripting Lab">
-  <meta name="theme-color" content="#101412">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="ESP32 Bit Pirate">
-  <meta property="og:title" content="Python Scripting Lab for ESP32 Bit Pirate">
-  <meta property="og:description" content="Experimental browser Python scripting lab using Pyodide, Web Serial and scripts loaded from ESP32-Bit-Pirate-Scripts.">
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/python-lab/">
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/python-lab-og.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Preview image for Python Scripting Lab for ESP32 Bit Pirate">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Python Scripting Lab for ESP32 Bit Pirate">
-  <meta name="twitter:description" content="Run ESP32 Bit Pirate Python scripts in your browser with Pyodide, Web Serial and scripts loaded from ESP32-Bit-Pirate-Scripts.">
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/python-lab-og.png">
-  <meta name="twitter:image:alt" content="Preview image for Python Scripting Lab for ESP32 Bit Pirate">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/python-lab/">
-  <title>Python Scripting Lab for ESP32 Bit Pirate</title>
+<!DOCTYPE html>
 
-  <link rel="stylesheet" href="../web-serial-terminal/vendor/xterm/xterm.css">
-  <link rel="stylesheet" href="src/styles.css?v=20260626-code-actions-fill">
-  <script defer src="../../assets/theme-toggle.js?v=20260624-light20"></script>
-  <script defer src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-  <link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-  <link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<html class="notranslate" lang="en" translate="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="dark" name="color-scheme"/>
+<meta content="Run ESP32 Bit Pirate Python scripts in your browser with Pyodide, Web Serial and scripts loaded from ESP32-Bit-Pirate-Scripts." name="description"/>
+<meta content="notranslate" name="google"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="ESP32 Bit Pirate" name="author"/>
+<meta content="Python Scripting Lab" name="application-name"/>
+<meta content="#101412" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="Python Scripting Lab for ESP32 Bit Pirate" property="og:title"/>
+<meta content="Experimental browser Python scripting lab using Pyodide, Web Serial and scripts loaded from ESP32-Bit-Pirate-Scripts." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/python-lab/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/python-lab-og.png" property="og:image"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="Python Scripting Lab for ESP32 Bit Pirate preview card." property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Python Scripting Lab for ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Run ESP32 Bit Pirate Python scripts in your browser with Pyodide, Web Serial and scripts loaded from ESP32-Bit-Pirate-Scripts." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/python-lab-og.png" name="twitter:image"/>
+<meta content="Python Scripting Lab for ESP32 Bit Pirate preview card." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/python-lab/" rel="canonical"/>
+<title>Python Scripting Lab for ESP32 Bit Pirate</title>
+<link href="../web-serial-terminal/vendor/xterm/xterm.css" rel="stylesheet"/>
+<link href="src/styles.css?v=20260626-code-actions-fill" rel="stylesheet"/>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light20"></script>
+<script defer="" src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
-  <main class="app-shell">
-    <noscript>
-      <section class="compatibility-banner">
-        <h2>JavaScript is required</h2>
-        <p>Python Scripting Lab needs JavaScript, Pyodide and Web Serial support.</p>
-      </section>
-    </noscript>
-
-    <section id="compatibilityBanner" class="compatibility-banner" hidden>
-      <h2>Web Serial is not available in this browser</h2>
-      <p>Use Chrome, Edge, Firefox 151+ desktop, Opera or another compatible Chromium browser over HTTPS or localhost.</p>
-    </section>
-
-    <section class="tool-card" aria-label="Python Scripting Lab tool">
-      <div class="toolbar" aria-label="Python Scripting Lab controls">
-        <div class="toolbar-brand" aria-label="Python Scripting Lab">
-          <a class="brand-mark" href="../" aria-label="ESP32 Bit Pirate web tools">B</a>
-          <a class="tool-home-link" href="../">Python Scripting Lab</a>
-        </div>
-
-        <div class="toolbar-actions">
-          <button class="help-icon-button" type="button" data-help-open aria-label="Open Python Scripting Lab help" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
-          </button>
-          <button id="connectButton" type="button" class="primary">Connect</button>
-        </div>
-      </div>
-
-      <div class="workspace">
-        <section class="editor-panel" aria-label="Python editor">
-          <header class="panel-header">
-            <h2>Code View</h2>
-            <div class="panel-actions">
-              <div class="code-file-actions">
-                <select id="exampleSelect" aria-label="Load example script">
-                  <option value="">Scripts</option>
-                </select>
-                <button id="importCodeButton" type="button">Import</button>
-                <button id="saveCodeButton" type="button">Save</button>
-              </div>
-              <div class="code-run-actions">
-                <button id="runButton" class="run-button" type="button" disabled aria-label="Run Python script">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8 5v14l11-7z"></path>
-                  </svg>
-                  <span class="button-label">Run</span>
-                </button>
-                <button id="stopButton" type="button" disabled aria-label="Stop Python script">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <rect x="7" y="7" width="10" height="10" rx="1"></rect>
-                  </svg>
-                  <span class="button-label">Stop</span>
-                </button>
-              </div>
-            </div>
-          </header>
-          <div id="editor" class="editor-surface">
-            <div id="editorLoading" class="editor-loading" role="status" aria-live="polite">
-              <span class="loading-dot" aria-hidden="true"></span>
+<main class="app-shell">
+<noscript>
+<section class="compatibility-banner">
+<h2>JavaScript is required</h2>
+<p>Python Scripting Lab needs JavaScript, Pyodide and Web Serial support.</p>
+</section>
+</noscript>
+<section class="compatibility-banner" hidden="" id="compatibilityBanner">
+<h2>Web Serial is not available in this browser</h2>
+<p>Use Chrome, Edge, Firefox 151+ desktop, Opera or another compatible Chromium browser over HTTPS or localhost.</p>
+</section>
+<section aria-label="Python Scripting Lab tool" class="tool-card">
+<div aria-label="Python Scripting Lab controls" class="toolbar">
+<div aria-label="Python Scripting Lab" class="toolbar-brand">
+<a aria-label="ESP32 Bit Pirate web tools" class="brand-mark" href="../">B</a>
+<a class="tool-home-link" href="../">Python Scripting Lab</a>
+</div>
+<div class="toolbar-actions">
+<button aria-expanded="false" aria-label="Open Python Scripting Lab help" class="help-icon-button" data-help-open="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+</button>
+<button class="primary" id="connectButton" type="button">Connect</button>
+</div>
+</div>
+<div class="workspace">
+<section aria-label="Python editor" class="editor-panel">
+<header class="panel-header">
+<h2>Code View</h2>
+<div class="panel-actions">
+<div class="code-file-actions">
+<select aria-label="Load example script" id="exampleSelect">
+<option value="">Scripts</option>
+</select>
+<button id="importCodeButton" type="button">Import</button>
+<button id="saveCodeButton" type="button">Save</button>
+</div>
+<div class="code-run-actions">
+<button aria-label="Run Python script" class="run-button" disabled="" id="runButton" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+<span class="button-label">Run</span>
+</button>
+<button aria-label="Stop Python script" disabled="" id="stopButton" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<rect height="10" rx="1" width="10" x="7" y="7"></rect>
+</svg>
+<span class="button-label">Stop</span>
+</button>
+</div>
+</div>
+</header>
+<div class="editor-surface" id="editor">
+<div aria-live="polite" class="editor-loading" id="editorLoading" role="status">
+<span aria-hidden="true" class="loading-dot"></span>
               Loading editor...
             </div>
-          </div>
-          <textarea id="fallbackEditor" class="fallback-editor" spellcheck="false"></textarea>
-          <input id="importCodeInput" type="file" accept=".py,.txt,text/x-python,text/plain" hidden>
-        </section>
-
-        <div id="splitDivider" class="split-divider" role="separator" aria-label="Resize Code View and Output panels" aria-orientation="vertical" tabindex="0"></div>
-
-        <section class="output-panel" aria-label="Python and serial output">
-          <header class="panel-header">
-            <h2>Output</h2>
-            <div class="panel-actions">
-              <label class="raw-toggle" title="Mirror raw Bit Pirate serial data into the output console while scripts run.">
-                <input id="rawSerialToggle" type="checkbox">
-                <span>Show raw serial</span>
-              </label>
-              <button id="saveOutputButton" type="button" disabled>Save</button>
-              <button id="clearButton" type="button">Clear</button>
-            </div>
-          </header>
-          <div id="generatedFilesPanel" class="generated-files" hidden>
-            <div class="generated-files-title">Generated files</div>
-            <div id="generatedFilesList" class="generated-files-list"></div>
-          </div>
-          <div id="consoleTerminal" class="terminal-surface"></div>
-        </section>
-      </div>
-    </section>
-  </main>
-
-  <section id="toolHelpContent" class="tool-help-source" hidden>
-    <h2 id="toolHelpTitle">Python Scripting Lab help</h2>
-    <section>
-      <h3>What it does</h3>
-      <p>Run small ESP32 Bit Pirate Python workflows directly in the browser. Pyodide runs Python locally, while JavaScript bridges Python calls to Web Serial for the Bit Pirate CLI or BPIO2 adapter mode.</p>
-      <p>For readability, common Bit Pirate calls such as <code>bp.connect()</code>, <code>bp.cmd("help")</code> and BPIO2 transfers can be written without <code>await</code>. Python Scripting Lab adds the required awaits before execution.</p>
-    </section>
-    <section>
-      <h3>Script source</h3>
-      <p>The Scripts menu is loaded automatically from the <a href="https://github.com/geo-tp/ESP32-Bit-Pirate-Scripts" target="_blank" rel="noopener">ESP32-Bit-Pirate-Scripts</a> GitHub repository. Selecting a script fetches that file from GitHub, converts common bit-pirate package calls to the browser API, then inserts the converted script into the editor.</p>
-      <p>Those repository scripts are not limited to this web tool: they can also be used with a normal local Python setup when you want to run automation outside the browser.</p>
-    </section>
-    <section>
-      <h3>Generated files</h3>
-      <p>Scripts that write files create them inside Pyodide's temporary in-browser filesystem, usually under <code>/home/pyodide</code>. After a run, new or modified files appear in Output with a Download button.</p>
-    </section>
-    <section>
-      <h3>Connection</h3>
-      <ul>
-        <li>CLI scripts use the normal ESP32 Bit Pirate serial console port.</li>
-        <li>BPIO2 scripts require the Bit Pirate USB adapter mode for BPIO2 GPIO/SPI/I2C.</li>
-        <li>Python Scripting Lab keeps a connection open between runs until Disconnect is clicked.</li>
-        <li>No local Python, pyserial, COM port or /dev/tty access is used inside the web tool.</li>
-      </ul>
-    </section>
-  </section>
-
-  <script src="../web-serial-terminal/vendor/xterm/xterm.min.js"></script>
-  <script src="../web-serial-terminal/vendor/xterm/addon-fit.min.js"></script>
-  <script type="module" src="../shared/help-modal.js"></script>
-  <script type="module" src="src/app.js?v=20260626-code-actions-fill"></script>
+</div>
+<textarea class="fallback-editor" id="fallbackEditor" spellcheck="false"></textarea>
+<input accept=".py,.txt,text/x-python,text/plain" hidden="" id="importCodeInput" type="file"/>
+</section>
+<div aria-label="Resize Code View and Output panels" aria-orientation="vertical" class="split-divider" id="splitDivider" role="separator" tabindex="0"></div>
+<section aria-label="Python and serial output" class="output-panel">
+<header class="panel-header">
+<h2>Output</h2>
+<div class="panel-actions">
+<label class="raw-toggle" title="Mirror raw Bit Pirate serial data into the output console while scripts run.">
+<input id="rawSerialToggle" type="checkbox"/>
+<span>Show raw serial</span>
+</label>
+<button disabled="" id="saveOutputButton" type="button">Save</button>
+<button id="clearButton" type="button">Clear</button>
+</div>
+</header>
+<div class="generated-files" hidden="" id="generatedFilesPanel">
+<div class="generated-files-title">Generated files</div>
+<div class="generated-files-list" id="generatedFilesList"></div>
+</div>
+<div class="terminal-surface" id="consoleTerminal"></div>
+</section>
+</div>
+</section>
+</main>
+<section class="tool-help-source" hidden="" id="toolHelpContent">
+<h2 id="toolHelpTitle">Python Scripting Lab help</h2>
+<section>
+<h3>What it does</h3>
+<p>Run small ESP32 Bit Pirate Python workflows directly in the browser. Pyodide runs Python locally, while JavaScript bridges Python calls to Web Serial for the Bit Pirate CLI or BPIO2 adapter mode.</p>
+<p>For readability, common Bit Pirate calls such as <code>bp.connect()</code>, <code>bp.cmd("help")</code> and BPIO2 transfers can be written without <code>await</code>. Python Scripting Lab adds the required awaits before execution.</p>
+</section>
+<section>
+<h3>Script source</h3>
+<p>The Scripts menu is loaded automatically from the <a href="https://github.com/geo-tp/ESP32-Bit-Pirate-Scripts" rel="noopener" target="_blank">ESP32-Bit-Pirate-Scripts</a> GitHub repository. Selecting a script fetches that file from GitHub, converts common bit-pirate package calls to the browser API, then inserts the converted script into the editor.</p>
+<p>Those repository scripts are not limited to this web tool: they can also be used with a normal local Python setup when you want to run automation outside the browser.</p>
+</section>
+<section>
+<h3>Generated files</h3>
+<p>Scripts that write files create them inside Pyodide's temporary in-browser filesystem, usually under <code>/home/pyodide</code>. After a run, new or modified files appear in Output with a Download button.</p>
+</section>
+<section>
+<h3>Connection</h3>
+<ul>
+<li>CLI scripts use the normal ESP32 Bit Pirate serial console port.</li>
+<li>BPIO2 scripts require the Bit Pirate USB adapter mode for BPIO2 GPIO/SPI/I2C.</li>
+<li>Python Scripting Lab keeps a connection open between runs until Disconnect is clicked.</li>
+<li>No local Python, pyserial, COM port or /dev/tty access is used inside the web tool.</li>
+</ul>
+</section>
+</section>
+<script src="../web-serial-terminal/vendor/xterm/xterm.min.js"></script>
+<script src="../web-serial-terminal/vendor/xterm/addon-fit.min.js"></script>
+<script src="../shared/help-modal.js" type="module"></script>
+<script src="src/app.js?v=20260626-code-actions-fill" type="module"></script>
 </body>
 </html>

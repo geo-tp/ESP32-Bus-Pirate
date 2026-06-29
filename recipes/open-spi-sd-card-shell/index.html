@@ -13,16 +13,16 @@
 <meta content="Use SPI mode to open the SD card shell and run simple file commands like ls, cat, touch and mkdir." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to open the SPI SD card shell with ESP32 Bit Pirate"><meta property="og:image:type" content="image/png">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/assets/cover.png" property="og:image"/><meta content="Stylized SD card on an SPI bus." property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-23" property="article:published_time">
+<meta content="2026-06-23" property="article:modified_time">
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to open the SPI SD card shell with ESP32 Bit Pirate" name="twitter:title"/>
 <meta content="Use SPI mode to open the SD card shell and run simple file commands like ls, cat, touch and mkdir." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to open the SPI SD card shell with ESP32 Bit Pirate">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/assets/cover.png" name="twitter:image"/><meta content="Stylized SD card on an SPI bus." name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/open-spi-sd-card-shell/" rel="canonical"/>
 <title>How to open the SPI SD card shell with ESP32 Bit Pirate</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -59,25 +59,25 @@
   ]
 }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>SPI</li><li>Beginner</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Beginner · SPI</p>
 <h1>How to open the SPI SD card shell</h1>
 <p>SPI mode includes an SD card shell for quick file inspection and basic file operations.</p>
 </header>
 <figure class="recipe-banner">
-<img alt="" height="600" src="../assets/visual-spi-sdcard.svg" width="1040"/>
+<img alt="Stylized SD card on an SPI bus." height="600" src="../assets/visual-spi-sdcard.svg" width="1040"/>
 <figcaption>Check files from the bench without moving the card or adding a temporary sketch.</figcaption>
 </figure>
 <div class="recipe-layout">
@@ -129,7 +129,7 @@ firmware.bin" data-cli-session=""></div>
 <li>Use <code>mkdir</code>, <code>touch</code> or <code>rm</code> carefully.</li>
 <li>Use USB mass storage if you want host-side file copy.</li>
 </ul>
-</section><section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">SPI SD card shell FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does a clean ls result prove?</summary><p>It confirms that SPI wiring, chip select, card power and the FAT/FAT32 filesystem are good enough for basic file access.</p></details><details class="recipe-faq-item"><summary>Why do large SD card operations feel slow?</summary><p>The SD card shell runs over SPI and serial output, so large directory listings or file reads can take several seconds. Start with small files while validating the setup.</p></details><details class="recipe-faq-item"><summary>Can this replace a normal USB card reader?</summary><p>No. It is a bench shell for quick inspection and simple file operations. Use USB mass storage mode or a real card reader when you need fast bulk transfers.</p></details></div></section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">SPI SD card shell FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does a clean ls result prove?</summary><p>It confirms that SPI wiring, chip select, card power and the FAT/FAT32 filesystem are good enough for basic file access.</p></details><details class="recipe-faq-item"><summary>Why do large SD card operations feel slow?</summary><p>The SD card shell runs over SPI and serial output, so large directory listings or file reads can take several seconds. Start with small files while validating the setup.</p></details><details class="recipe-faq-item"><summary>Can this replace a normal USB card reader?</summary><p>No. It is a bench shell for quick inspection and simple file operations. Use USB mass storage mode or a real card reader when you need fast bulk transfers.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list">
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/06-SPI"><span>Wiki</span><strong>SPI SD card shell</strong></a>

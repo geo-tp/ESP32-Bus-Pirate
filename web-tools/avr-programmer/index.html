@@ -1,299 +1,269 @@
-<!doctype html>
-<html lang="en" translate="no" class="notranslate">
+<!DOCTYPE html>
+
+<html class="notranslate" lang="en" translate="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles.">
-  <meta name="google" content="notranslate">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-  <meta name="theme-color" content="#121212">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="Web Serial Tools">
-  <meta property="og:title" content="Web AVR Programmer with AVRDUDE WebAssembly">
-  <meta property="og:description" content="Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles.">
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/avr-programmer/">
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/avr-programmer-og.png"><meta property="og:image:alt" content="Preview image for Web AVR Programmer with AVRDUDE WebAssembly"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Web AVR Programmer with AVRDUDE WebAssembly">
-  <meta name="twitter:description" content="Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles.">
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/avr-programmer-og.png"><meta name="twitter:image:alt" content="Preview image for Web AVR Programmer with AVRDUDE WebAssembly">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/avr-programmer/">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web AVR Programmer with AVRDUDE WebAssembly","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/avr-programmer/","description":"Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
-  <title>Web AVR Programmer with AVRDUDE WebAssembly</title>
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles." name="description"/>
+<meta content="notranslate" name="google"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="Web Serial Tools" property="og:site_name"/>
+<meta content="Web AVR Programmer with AVRDUDE WebAssembly" property="og:title"/>
+<meta content="Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/avr-programmer/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/avr-programmer-og.png" property="og:image"/><meta content="Web AVR Programmer with AVRDUDE WebAssembly preview card." property="og:image:alt"/><meta content="image/png" property="og:image:type"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Web AVR Programmer with AVRDUDE WebAssembly" name="twitter:title"/>
+<meta content="Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/avr-programmer-og.png" name="twitter:image"/><meta content="Web AVR Programmer with AVRDUDE WebAssembly preview card." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/avr-programmer/" rel="canonical"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web AVR Programmer with AVRDUDE WebAssembly","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/avr-programmer/","description":"Program AVR microcontrollers directly from your browser using AVRDUDE WebAssembly and Web Serial programmer profiles.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
+<title>Web AVR Programmer with AVRDUDE WebAssembly</title>
+<script>
     window.coi = {
       coepCredentialless: () => false,
       coepDegrade: () => false,
     };
   </script>
-  <script src="coi-serviceworker.js"></script>
-<link rel="stylesheet" href="../styles/main.css">
-  <link rel="stylesheet" href="src/styles.css">
-<script defer src="../../assets/theme-toggle.js?v=20260624-light20"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<script src="coi-serviceworker.js"></script>
+<link href="../styles/main.css" rel="stylesheet"/>
+<link href="src/styles.css" rel="stylesheet"/>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light20"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
-  <main class="wrap avr-wrap">
-    <noscript>
-      <section class="notice error">This Web AVR programmer requires JavaScript and Web Serial.</section>
-    </noscript>
-
-    <section id="serialUnsupported" class="notice error" hidden>
+<main class="wrap avr-wrap">
+<noscript>
+<section class="notice error">This Web AVR programmer requires JavaScript and Web Serial.</section>
+</noscript>
+<section class="notice error" hidden="" id="serialUnsupported">
       Web Serial is not available in this browser. Use Chrome, Edge, or another compatible Chromium browser over HTTPS or localhost.
     </section>
-
-    <section id="coiUnsupported" class="notice error" hidden></section>
-
-    <section class="programmer-shell" aria-label="Web AVR Programmer">
-      <div class="toolbar">
-        <div class="toolbar-brand" aria-label="Web AVR Programmer">
-          <a class="brand-mark" href="../" aria-label="ESP32 Bit Pirate home">B</a>
-          <div>
-            <h1>Web AVR Programmer</h1>
-          </div>
-        </div>
-
-        <div class="toolbar-actions">
-          <button class="help-icon-button" type="button" data-help-open aria-label="Open Web AVR Programmer help" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
-          </button>
-          <button id="connectButton" class="button action-button primary" type="button">Connect</button>
-          <button id="disconnectButton" class="button action-button" type="button" disabled hidden>Disconnect</button>
-          <span id="connectionStatus" class="status-pill">Disconnected</span>
-        </div>
-      </div>
-
-      <div class="mode-tabs" role="tablist" aria-label="AVR operations">
-        <button class="mode-tab is-active" type="button" role="tab" aria-selected="true" data-mode-tab="target">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1"></rect><path d="M9 2v3"></path><path d="M15 2v3"></path><path d="M9 19v3"></path><path d="M15 19v3"></path><path d="M2 9h3"></path><path d="M2 15h3"></path><path d="M19 9h3"></path><path d="M19 15h3"></path></svg>
+<section class="notice error" hidden="" id="coiUnsupported"></section>
+<section aria-label="Web AVR Programmer" class="programmer-shell">
+<div class="toolbar">
+<div aria-label="Web AVR Programmer" class="toolbar-brand">
+<a aria-label="ESP32 Bit Pirate home" class="brand-mark" href="../">B</a>
+<div>
+<h1>Web AVR Programmer</h1>
+</div>
+</div>
+<div class="toolbar-actions">
+<button aria-expanded="false" aria-label="Open Web AVR Programmer help" class="help-icon-button" data-help-open="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+</button>
+<button class="button action-button primary" id="connectButton" type="button">Connect</button>
+<button class="button action-button" disabled="" hidden="" id="disconnectButton" type="button">Disconnect</button>
+<span class="status-pill" id="connectionStatus">Disconnected</span>
+</div>
+</div>
+<div aria-label="AVR operations" class="mode-tabs" role="tablist">
+<button aria-selected="true" class="mode-tab is-active" data-mode-tab="target" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><rect height="10" rx="1" width="10" x="7" y="7"></rect><path d="M9 2v3"></path><path d="M15 2v3"></path><path d="M9 19v3"></path><path d="M15 19v3"></path><path d="M2 9h3"></path><path d="M2 15h3"></path><path d="M19 9h3"></path><path d="M19 15h3"></path></svg>
           Target
         </button>
-        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="flash">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="flash" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
           Flash
         </button>
-        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="eeprom">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7c0-1.7 3.1-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.3-7-3Z"></path><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7"></path><path d="M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="eeprom" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M5 7c0-1.7 3.1-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.3-7-3Z"></path><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7"></path><path d="M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"></path></svg>
           EEPROM
         </button>
-        <button class="mode-tab danger-tab" type="button" role="tab" aria-selected="false" data-mode-tab="erase">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
+<button aria-selected="false" class="mode-tab danger-tab" data-mode-tab="erase" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
           Erase
         </button>
-      </div>
-
-      <div class="workspace">
-        <section class="work-panel" aria-label="Operation configuration">
-          <section class="mode-panel" data-mode-panel="flash" hidden>
-            <input id="flashFile" type="file" accept=".hex,.ihex,.bin,application/octet-stream,text/plain" hidden>
-            <label class="drop-zone file-picker" for="flashFile">
-              <strong>Click to choose a Flash image</strong>
-              <span id="flashFileName">Intel HEX and raw BIN files are supported.</span>
-            </label>
-
-            <div class="memory-operation-info">
-              <div><span>Memory</span><strong>Program Flash</strong></div>
-              <div><span>Read output</span><strong>Intel HEX</strong></div>
-              <div><span>Write input</span><strong>HEX or BIN</strong></div>
-            </div>
-
-            <div class="operation-note">
+</div>
+<div class="workspace">
+<section aria-label="Operation configuration" class="work-panel">
+<section class="mode-panel" data-mode-panel="flash" hidden="">
+<input accept=".hex,.ihex,.bin,application/octet-stream,text/plain" hidden="" id="flashFile" type="file"/>
+<label class="drop-zone file-picker" for="flashFile">
+<strong>Click to choose a Flash image</strong>
+<span id="flashFileName">Intel HEX and raw BIN files are supported.</span>
+</label>
+<div class="memory-operation-info">
+<div><span>Memory</span><strong>Program Flash</strong></div>
+<div><span>Read output</span><strong>Intel HEX</strong></div>
+<div><span>Write input</span><strong>HEX or BIN</strong></div>
+</div>
+<div class="operation-note">
               Reading creates a complete Flash backup. Writing and verification use the selected image and the currently detected or manually selected AVR target.
             </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="eeprom" hidden>
-            <input id="eepromFile" type="file" accept=".hex,.eep,.bin,application/octet-stream,text/plain" hidden>
-            <label class="drop-zone file-picker" for="eepromFile">
-              <strong>Click to choose an EEPROM image</strong>
-              <span id="eepromFileName">Intel HEX, EEP and raw BIN files are supported.</span>
-            </label>
-
-            <div class="memory-operation-info">
-              <div><span>Memory</span><strong>EEPROM</strong></div>
-              <div><span>Read output</span><strong>Intel HEX</strong></div>
-              <div><span>Write input</span><strong>HEX, EEP or BIN</strong></div>
-            </div>
-
-            <div class="operation-note">
+</section>
+<section class="mode-panel" data-mode-panel="eeprom" hidden="">
+<input accept=".hex,.eep,.bin,application/octet-stream,text/plain" hidden="" id="eepromFile" type="file"/>
+<label class="drop-zone file-picker" for="eepromFile">
+<strong>Click to choose an EEPROM image</strong>
+<span id="eepromFileName">Intel HEX, EEP and raw BIN files are supported.</span>
+</label>
+<div class="memory-operation-info">
+<div><span>Memory</span><strong>EEPROM</strong></div>
+<div><span>Read output</span><strong>Intel HEX</strong></div>
+<div><span>Write input</span><strong>HEX, EEP or BIN</strong></div>
+</div>
+<div class="operation-note">
               EEPROM availability and size depend on the selected device. A signature check is performed before writing when a target has already been detected.
             </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="erase" hidden>
-            <div class="erase-panel">
-              <div class="danger-message">
-                <strong>Erase the selected AVR</strong>
-                <span>This removes the target Flash and may also affect EEPROM depending on its fuse and device configuration.</span>
-              </div>
-
-              <dl class="info-list erase-info">
-                <div><dt>Target</dt><dd id="eraseTarget">Use detected or selected AVR</dd></div>
-                <div><dt>Operation</dt><dd>AVRDUDE chip erase</dd></div>
-                <div><dt>Confirmation</dt><dd>Required before the operation starts</dd></div>
-              </dl>
-            </div>
-          </section>
-
-          <section class="mode-panel is-active" data-mode-panel="target">
-            <div class="form-grid target-grid">
-              <label for="programmerProfile">Programmer</label>
-              <select id="programmerProfile">
-                <option value="buspirate" selected>Bit Pirate / Bus Pirate ISP</option>
-                <option value="arduino">Arduino bootloader</option>
-                <option value="stk500v1">STK500v1 / ArduinoISP</option>
-                <option value="stk500v2">STK500v2</option>
-                <option value="avr109">AVR109 bootloader</option>
-                <option value="serialupdi">SerialUPDI</option>
-                <option value="jtag2updi">JTAG2UPDI</option>
-              </select>
-
-              <label for="programmerBaudRate">Baudrate</label>
-              <input id="programmerBaudRate" type="number" min="1" step="1" inputmode="numeric" value="115200">
-
-              <label id="busPirateSpiLabel" for="busPirateSpiFrequency">Bus Pirate SCK</label>
-              <select id="busPirateSpiFrequency">
-                <option value="0">30 kHz</option>
-                <option value="1" selected>125 kHz</option>
-                <option value="2">250 kHz</option>
-                <option value="3">1 MHz</option>
-                <option value="4">2 MHz</option>
-                <option value="5">2.6 MHz</option>
-                <option value="6">4 MHz</option>
-                <option value="7">8 MHz</option>
-              </select>
-
-              <label for="targetMode">Target mode</label>
-              <select id="targetMode">
-                <option value="auto">Auto Detect</option>
-                <option value="manual">Manual Selection</option>
-              </select>
-
-              <label for="partSearch">Target AVR</label>
-              <input id="partSearch" list="partOptions" value="ATmega328P" spellcheck="false">
-              <datalist id="partOptions"></datalist>
-            </div>
-
-            <div class="target-help">
-              <strong>Auto Detect reads the AVR signature when an operation starts.</strong>
-              <span>Use Detect AVR to identify the target immediately, or switch to Manual Selection when the device is already known.</span>
-            </div>
-
-            <details class="wiring-panel">
-              <summary>ISP wiring</summary>
-              <ul>
-                <li>MOSI - Target MOSI</li>
-                <li>MISO - Target MISO</li>
-                <li>SCK - Target SCK</li>
-                <li>CS/RESET - Target RESET</li>
-                <li>GND - Target GND</li>
-              </ul>
-              <p>Use a common ground and compatible logic levels. Use a level shifter when needed; incorrect voltage can damage the programmer or the target.</p>
-            </details>
-          </section>
-        </section>
-
-        <aside class="side-panel" aria-label="Target and operation information">
-          <article class="tool-card compact-card device-card">
-            <div class="device-status-grid">
-              <div><span>Programmer</span><strong id="programmerStatus">-</strong></div>
-              <div><span>Target AVR</span><strong id="targetStatus">-</strong></div>
-              <div><span>Signature</span><strong id="signatureStatus">-</strong></div>
-              <div><span>AVRDUDE</span><strong id="wasmVersion">Not loaded</strong></div>
-            </div>
-
-            <dl class="info-list device-info-list">
-              <div><dt>Part</dt><dd id="partName">-</dd></div>
-              <div><dt>AVRDUDE ID</dt><dd id="partId">-</dd></div>
-              <div><dt>Signature</dt><dd id="signatureValue">-</dd></div>
-              <div><dt>Flash size</dt><dd id="flashSize">-</dd></div>
-              <div><dt>EEPROM size</dt><dd id="eepromSize">-</dd></div>
-              <div><dt>Page size</dt><dd id="pageSize">-</dd></div>
-              <div><dt>Interface</dt><dd id="programmingInterface">Bus Pirate Raw SPI / ISP</dd></div>
-            </dl>
-          </article>
-
-          <article class="tool-card compact-card output-card">
-            <p class="eyebrow">Operation output</p>
-            <pre id="avrdudeOutput" class="log-output user-output" aria-live="polite">Powered by AVRDUDE WebAssembly. Select a Web Serial programmer profile, then connect.</pre>
-          </article>
-        </aside>
-      </div>
-
-      <article class="content-card action-strip">
-        <div class="primary-area">
-          <div class="mode-actions" data-mode-actions="flash" hidden>
-            <button id="readFlashButton" class="button action-button" type="button" disabled>Read Flash</button>
-            <button id="writeFlashButton" class="button action-button primary" type="button" disabled>Write Flash</button>
-            <button id="verifyFlashButton" class="button action-button" type="button" disabled>Verify Flash</button>
-          </div>
-
-          <div class="mode-actions" data-mode-actions="eeprom" hidden>
-            <button id="readEepromButton" class="button action-button" type="button" disabled>Read EEPROM</button>
-            <button id="writeEepromButton" class="button action-button primary" type="button" disabled>Write EEPROM</button>
-          </div>
-
-          <div class="mode-actions" data-mode-actions="erase" hidden>
-            <button id="eraseButton" class="button action-button danger" type="button" disabled>Erase Chip</button>
-          </div>
-
-          <div class="mode-actions is-active" data-mode-actions="target">
-            <button id="detectButton" class="button action-button primary" type="button" disabled>Detect AVR</button>
-          </div>
-
-          <span id="operationStatus">Idle</span>
-          <span id="actionHint" class="action-hint">Connect the programmer to begin.</span>
-        </div>
-
-        <div class="progress-stack">
-          <div class="progress-row">
-            <div class="progress-track" aria-hidden="true"><span id="progressBar"></span></div>
-            <span id="progressText">Idle</span>
-          </div>
-        </div>
-      </article>
-
-      <details class="content-card log-card">
-        <summary>Technical Log</summary>
-        <div class="log-header">
-          <div class="toolbar-actions">
-            <button id="copyLogButton" class="button action-button subtle" type="button">Copy</button>
-            <button id="downloadLogButton" class="button action-button subtle" type="button">Download</button>
-            <button id="clearLogButton" class="button action-button subtle" type="button">Clear</button>
-          </div>
-        </div>
-        <pre id="technicalLog" class="log-output" aria-live="polite"></pre>
-      </details>
-    </section>
-  </main>
-
-  <section id="toolHelpContent" class="tool-help-source" hidden>
-    <h2 id="toolHelpTitle">Web AVR Programmer help</h2>
-    <section>
-      <h3>What it does</h3>
-      <p>Runs AVRDUDE in the browser to detect AVR chips, read Flash, write firmware, verify images and perform chip erase operations.</p>
-    </section>
-    <section>
-      <h3>Adapters</h3>
-      <ul>
-        <li>Bus Pirate Raw SPI/ISP is the main profile for in-system programming.</li>
-        <li>AVR109 and other serial bootloader profiles work when the target already has a compatible bootloader.</li>
-        <li>For ISP, connect MOSI, MISO, SCK, RESET, GND and a voltage reference that matches the target.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>Connection</h3>
-      <ol>
-        <li>Select the programmer profile and target detection mode.</li>
-        <li>Click Connect and choose the Web Serial port for the programmer.</li>
-        <li>Use Detect AVR before writing when the exact part is unknown.</li>
-      </ol>
-    </section>
-  </section>
-  <script type="module" src="../shared/help-modal.js"></script>
-  <script type="module" src="src/App.js"></script>
+</section>
+<section class="mode-panel" data-mode-panel="erase" hidden="">
+<div class="erase-panel">
+<div class="danger-message">
+<strong>Erase the selected AVR</strong>
+<span>This removes the target Flash and may also affect EEPROM depending on its fuse and device configuration.</span>
+</div>
+<dl class="info-list erase-info">
+<div><dt>Target</dt><dd id="eraseTarget">Use detected or selected AVR</dd></div>
+<div><dt>Operation</dt><dd>AVRDUDE chip erase</dd></div>
+<div><dt>Confirmation</dt><dd>Required before the operation starts</dd></div>
+</dl>
+</div>
+</section>
+<section class="mode-panel is-active" data-mode-panel="target">
+<div class="form-grid target-grid">
+<label for="programmerProfile">Programmer</label>
+<select id="programmerProfile">
+<option selected="" value="buspirate">Bit Pirate / Bus Pirate ISP</option>
+<option value="arduino">Arduino bootloader</option>
+<option value="stk500v1">STK500v1 / ArduinoISP</option>
+<option value="stk500v2">STK500v2</option>
+<option value="avr109">AVR109 bootloader</option>
+<option value="serialupdi">SerialUPDI</option>
+<option value="jtag2updi">JTAG2UPDI</option>
+</select>
+<label for="programmerBaudRate">Baudrate</label>
+<input id="programmerBaudRate" inputmode="numeric" min="1" step="1" type="number" value="115200"/>
+<label for="busPirateSpiFrequency" id="busPirateSpiLabel">Bus Pirate SCK</label>
+<select id="busPirateSpiFrequency">
+<option value="0">30 kHz</option>
+<option selected="" value="1">125 kHz</option>
+<option value="2">250 kHz</option>
+<option value="3">1 MHz</option>
+<option value="4">2 MHz</option>
+<option value="5">2.6 MHz</option>
+<option value="6">4 MHz</option>
+<option value="7">8 MHz</option>
+</select>
+<label for="targetMode">Target mode</label>
+<select id="targetMode">
+<option value="auto">Auto Detect</option>
+<option value="manual">Manual Selection</option>
+</select>
+<label for="partSearch">Target AVR</label>
+<input id="partSearch" list="partOptions" spellcheck="false" value="ATmega328P"/>
+<datalist id="partOptions"></datalist>
+</div>
+<div class="target-help">
+<strong>Auto Detect reads the AVR signature when an operation starts.</strong>
+<span>Use Detect AVR to identify the target immediately, or switch to Manual Selection when the device is already known.</span>
+</div>
+<details class="wiring-panel">
+<summary>ISP wiring</summary>
+<ul>
+<li>MOSI - Target MOSI</li>
+<li>MISO - Target MISO</li>
+<li>SCK - Target SCK</li>
+<li>CS/RESET - Target RESET</li>
+<li>GND - Target GND</li>
+</ul>
+<p>Use a common ground and compatible logic levels. Use a level shifter when needed; incorrect voltage can damage the programmer or the target.</p>
+</details>
+</section>
+</section>
+<aside aria-label="Target and operation information" class="side-panel">
+<article class="tool-card compact-card device-card">
+<div class="device-status-grid">
+<div><span>Programmer</span><strong id="programmerStatus">-</strong></div>
+<div><span>Target AVR</span><strong id="targetStatus">-</strong></div>
+<div><span>Signature</span><strong id="signatureStatus">-</strong></div>
+<div><span>AVRDUDE</span><strong id="wasmVersion">Not loaded</strong></div>
+</div>
+<dl class="info-list device-info-list">
+<div><dt>Part</dt><dd id="partName">-</dd></div>
+<div><dt>AVRDUDE ID</dt><dd id="partId">-</dd></div>
+<div><dt>Signature</dt><dd id="signatureValue">-</dd></div>
+<div><dt>Flash size</dt><dd id="flashSize">-</dd></div>
+<div><dt>EEPROM size</dt><dd id="eepromSize">-</dd></div>
+<div><dt>Page size</dt><dd id="pageSize">-</dd></div>
+<div><dt>Interface</dt><dd id="programmingInterface">Bus Pirate Raw SPI / ISP</dd></div>
+</dl>
+</article>
+<article class="tool-card compact-card output-card">
+<p class="eyebrow">Operation output</p>
+<pre aria-live="polite" class="log-output user-output" id="avrdudeOutput">Powered by AVRDUDE WebAssembly. Select a Web Serial programmer profile, then connect.</pre>
+</article>
+</aside>
+</div>
+<article class="content-card action-strip">
+<div class="primary-area">
+<div class="mode-actions" data-mode-actions="flash" hidden="">
+<button class="button action-button" disabled="" id="readFlashButton" type="button">Read Flash</button>
+<button class="button action-button primary" disabled="" id="writeFlashButton" type="button">Write Flash</button>
+<button class="button action-button" disabled="" id="verifyFlashButton" type="button">Verify Flash</button>
+</div>
+<div class="mode-actions" data-mode-actions="eeprom" hidden="">
+<button class="button action-button" disabled="" id="readEepromButton" type="button">Read EEPROM</button>
+<button class="button action-button primary" disabled="" id="writeEepromButton" type="button">Write EEPROM</button>
+</div>
+<div class="mode-actions" data-mode-actions="erase" hidden="">
+<button class="button action-button danger" disabled="" id="eraseButton" type="button">Erase Chip</button>
+</div>
+<div class="mode-actions is-active" data-mode-actions="target">
+<button class="button action-button primary" disabled="" id="detectButton" type="button">Detect AVR</button>
+</div>
+<span id="operationStatus">Idle</span>
+<span class="action-hint" id="actionHint">Connect the programmer to begin.</span>
+</div>
+<div class="progress-stack">
+<div class="progress-row">
+<div aria-hidden="true" class="progress-track"><span id="progressBar"></span></div>
+<span id="progressText">Idle</span>
+</div>
+</div>
+</article>
+<details class="content-card log-card">
+<summary>Technical Log</summary>
+<div class="log-header">
+<div class="toolbar-actions">
+<button class="button action-button subtle" id="copyLogButton" type="button">Copy</button>
+<button class="button action-button subtle" id="downloadLogButton" type="button">Download</button>
+<button class="button action-button subtle" id="clearLogButton" type="button">Clear</button>
+</div>
+</div>
+<pre aria-live="polite" class="log-output" id="technicalLog"></pre>
+</details>
+</section>
+</main>
+<section class="tool-help-source" hidden="" id="toolHelpContent">
+<h2 id="toolHelpTitle">Web AVR Programmer help</h2>
+<section>
+<h3>What it does</h3>
+<p>Runs AVRDUDE in the browser to detect AVR chips, read Flash, write firmware, verify images and perform chip erase operations.</p>
+</section>
+<section>
+<h3>Adapters</h3>
+<ul>
+<li>Bus Pirate Raw SPI/ISP is the main profile for in-system programming.</li>
+<li>AVR109 and other serial bootloader profiles work when the target already has a compatible bootloader.</li>
+<li>For ISP, connect MOSI, MISO, SCK, RESET, GND and a voltage reference that matches the target.</li>
+</ul>
+</section>
+<section>
+<h3>Connection</h3>
+<ol>
+<li>Select the programmer profile and target detection mode.</li>
+<li>Click Connect and choose the Web Serial port for the programmer.</li>
+<li>Use Detect AVR before writing when the exact part is unknown.</li>
+</ol>
+</section>
+</section>
+<script src="../shared/help-modal.js" type="module"></script>
+<script src="src/App.js" type="module"></script>
 </body>
 </html>

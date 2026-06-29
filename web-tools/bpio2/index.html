@@ -1,31 +1,32 @@
-<!doctype html>
-<html lang="en" translate="no" class="notranslate">
+<!DOCTYPE html>
+
+<html class="notranslate" lang="en" translate="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Control GPIO, I2C and SPI devices from your browser through a BPIO2-compatible adapter. Scan I2C, transfer SPI bytes and build simple hardware sequences without writing firmware.">
-  <meta name="google" content="notranslate">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-  <meta name="theme-color" content="#121212">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="ESP32 Bit Pirate">
-  <meta property="og:title" content="Web BPIO2 GPIO, I2C and SPI Controller">
-  <meta property="og:description" content="Use BPIO2 from the browser to control GPIOs, scan I2C devices, transfer SPI data and automate simple hardware sequences.">
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/bpio2/">
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bpio2-og.png"><meta property="og:image:alt" content="Preview image for Web BPIO2 GPIO, I2C and SPI Controller">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Web BPIO2 GPIO, I2C and SPI Controller">
-  <meta name="twitter:description" content="Control GPIO, I2C and SPI devices through a BPIO2-compatible USB adapter directly from your browser.">
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bpio2-og.png"><meta name="twitter:image:alt" content="Preview image for Web BPIO2 GPIO, I2C and SPI Controller">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/bpio2/">
-  <title>Web BPIO2 GPIO, I2C and SPI Controller | ESP32 Bit Pirate</title>
-<link rel="stylesheet" href="../styles/main.css">
-  <link rel="stylesheet" href="src/styles.css">
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Control GPIO, I2C and SPI devices from your browser through a BPIO2-compatible adapter. Scan I2C, transfer SPI bytes and build simple hardware sequences without writing firmware." name="description"/>
+<meta content="notranslate" name="google"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="Web BPIO2 GPIO, I2C and SPI Controller" property="og:title"/>
+<meta content="Use BPIO2 from the browser to control GPIOs, scan I2C devices, transfer SPI data and automate simple hardware sequences." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/bpio2/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bpio2-og.png" property="og:image"/><meta content="Web BPIO2 GPIO, I2C and SPI Controller preview card." property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Web BPIO2 GPIO, I2C and SPI Controller" name="twitter:title"/>
+<meta content="Control GPIO, I2C and SPI devices through a BPIO2-compatible USB adapter directly from your browser." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bpio2-og.png" name="twitter:image"/><meta content="Web BPIO2 GPIO, I2C and SPI Controller preview card." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/bpio2/" rel="canonical"/>
+<title>Web BPIO2 GPIO, I2C and SPI Controller | ESP32 Bit Pirate</title>
+<link href="../styles/main.css" rel="stylesheet"/>
+<link href="src/styles.css" rel="stylesheet"/>
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -50,279 +51,256 @@
     }
   }
   </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light20"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light20"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
-  <main class="wrap bpio-wrap">
-    <noscript>
-      <section class="notice error">This BPIO2 web tool requires JavaScript and Web Serial.</section>
-    </noscript>
-
-    <section id="serialUnsupported" class="notice error" hidden>
+<main class="wrap bpio-wrap">
+<noscript>
+<section class="notice error">This BPIO2 web tool requires JavaScript and Web Serial.</section>
+</noscript>
+<section class="notice error" hidden="" id="serialUnsupported">
       Web Serial is not available in this browser. Use Chrome, Edge, Firefox 151+, Opera or another compatible desktop browser over HTTPS or localhost.
     </section>
-
-    <section class="bpio-shell" aria-label="BPIO2 bit bang I/O controller">
-      <div class="toolbar">
-        <div class="toolbar-brand" aria-label="Web BPIO2 Controller">
-          <a class="brand-mark" href="../" aria-label="ESP32 Bit Pirate home">B</a>
-          <h1>Web Bit-Bang I/O Controller</h1>
-        </div>
-
-        <div class="toolbar-actions">
-          <button class="help-icon-button" type="button" data-help-open aria-label="Open BPIO2 help" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
-          </button>
-          <button id="connectButton" class="button action-button primary" type="button">Connect</button>
-          <button id="disconnectButton" class="button action-button" type="button" disabled hidden>Disconnect</button>
-          <span id="connectionStatus" class="status-pill" aria-live="polite">Disconnected</span>
-        </div>
-      </div>
-
-      <section class="overview-grid">
-        <article class="tool-card compact-card adapter-card">
-          <p class="eyebrow">Adapter</p>
-          <dl class="info-list">
-            <div><dt>Firmware</dt><dd id="firmwareVersion">-</dd></div>
-            <div><dt>BPIO2</dt><dd id="bpioVersion">-</dd></div>
-            <div><dt>Current mode</dt><dd id="currentMode">-</dd></div>
-            <div><dt>SPI limit</dt><dd id="spiLimit">-</dd></div>
-            <div><dt>I2C limit</dt><dd id="i2cLimit">-</dd></div>
-          </dl>
-        </article>
-
-        <article class="tool-card compact-card pinout-card">
-          <div class="pinout-heading">
-            <p class="eyebrow">Live pin mapping</p>
-          </div>
-          <div id="pinGrid" class="pin-grid" aria-label="BPIO2 pin mapping"></div>
-          <div class="pin-live-controls">
-            <label for="pinRefreshInterval"><span>Refresh delay</span>
-              <select id="pinRefreshInterval" disabled>
-                <option value="5">5 ms</option>
-                <option value="10" selected>10 ms</option>
-                <option value="20">20 ms</option>
-                <option value="50">50 ms</option>
-                <option value="100">100 ms</option>
-                <option value="250">250 ms</option>
-                <option value="500">500 ms</option>
-                <option value="1000">1 s</option>
-              </select>
-            </label>
-            <button id="pinLiveButton" class="button pin-live-button" type="button" disabled aria-live="polite">Start live</button>
-          </div>
-        </article>
-      </section>
-
-      <article class="content-card operation-card">
-        <div class="operation-tabs" role="tablist" aria-label="BPIO2 operations">
-          <button class="operation-tab is-active" type="button" role="tab" aria-selected="true" data-operation-tab="gpio">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="M8 6h8M6 8v8M18 8v8M8 18h8"></path></svg>
-            <span>GPIO</span>
-          </button>
-          <button class="operation-tab" type="button" role="tab" aria-selected="false" data-operation-tab="i2c">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 17h14"></path><circle cx="8" cy="7" r="2"></circle><circle cx="16" cy="17" r="2"></circle></svg>
-            <span>I2C</span>
-          </button>
-          <button class="operation-tab" type="button" role="tab" aria-selected="false" data-operation-tab="spi">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"></path></svg>
-            <span>SPI</span>
-          </button>
-          <button class="operation-tab" type="button" role="tab" aria-selected="false" data-operation-tab="sequence">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h5v5H5zM14 14h5v5h-5z"></path><path d="M10 7.5h3a3 3 0 0 1 3 3V14M8 10v4a3 3 0 0 0 3 3h3"></path></svg>
-            <span>Sequence</span>
-          </button>
-        </div>
-
-        <div class="operation-panels">
-          <section class="operation-section is-active" role="tabpanel" data-operation-panel="gpio">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">GPIO control</p>
-                <p>Direction and state changes are applied immediately.</p>
-              </div>
-              <div class="panel-actions gpio-global-actions">
-                <button id="gpioAllHighButton" class="button action-button primary" type="button" disabled>All HIGH</button>
-                <button id="gpioAllLowButton" class="button action-button" type="button" disabled>All LOW</button>
-                <button id="gpioInputsButton" class="button action-button" type="button" disabled>All INPUT (HiZ)</button>
-              </div>
-            </div>
-            <div id="gpioRows" class="gpio-grid"></div>
-          </section>
-
-          <section class="operation-section" role="tabpanel" data-operation-panel="i2c" hidden>
-            <div class="bus-config-row">
-              <label>Speed
+<section aria-label="BPIO2 bit bang I/O controller" class="bpio-shell">
+<div class="toolbar">
+<div aria-label="Web BPIO2 Controller" class="toolbar-brand">
+<a aria-label="ESP32 Bit Pirate home" class="brand-mark" href="../">B</a>
+<h1>Web Bit-Bang I/O Controller</h1>
+</div>
+<div class="toolbar-actions">
+<button aria-expanded="false" aria-label="Open BPIO2 help" class="help-icon-button" data-help-open="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+</button>
+<button class="button action-button primary" id="connectButton" type="button">Connect</button>
+<button class="button action-button" disabled="" hidden="" id="disconnectButton" type="button">Disconnect</button>
+<span aria-live="polite" class="status-pill" id="connectionStatus">Disconnected</span>
+</div>
+</div>
+<section class="overview-grid">
+<article class="tool-card compact-card adapter-card">
+<p class="eyebrow">Adapter</p>
+<dl class="info-list">
+<div><dt>Firmware</dt><dd id="firmwareVersion">-</dd></div>
+<div><dt>BPIO2</dt><dd id="bpioVersion">-</dd></div>
+<div><dt>Current mode</dt><dd id="currentMode">-</dd></div>
+<div><dt>SPI limit</dt><dd id="spiLimit">-</dd></div>
+<div><dt>I2C limit</dt><dd id="i2cLimit">-</dd></div>
+</dl>
+</article>
+<article class="tool-card compact-card pinout-card">
+<div class="pinout-heading">
+<p class="eyebrow">Live pin mapping</p>
+</div>
+<div aria-label="BPIO2 pin mapping" class="pin-grid" id="pinGrid"></div>
+<div class="pin-live-controls">
+<label for="pinRefreshInterval"><span>Refresh delay</span>
+<select disabled="" id="pinRefreshInterval">
+<option value="5">5 ms</option>
+<option selected="" value="10">10 ms</option>
+<option value="20">20 ms</option>
+<option value="50">50 ms</option>
+<option value="100">100 ms</option>
+<option value="250">250 ms</option>
+<option value="500">500 ms</option>
+<option value="1000">1 s</option>
+</select>
+</label>
+<button aria-live="polite" class="button pin-live-button" disabled="" id="pinLiveButton" type="button">Start live</button>
+</div>
+</article>
+</section>
+<article class="content-card operation-card">
+<div aria-label="BPIO2 operations" class="operation-tabs" role="tablist">
+<button aria-selected="true" class="operation-tab is-active" data-operation-tab="gpio" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><circle cx="6" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="M8 6h8M6 8v8M18 8v8M8 18h8"></path></svg>
+<span>GPIO</span>
+</button>
+<button aria-selected="false" class="operation-tab" data-operation-tab="i2c" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M5 7h14M5 17h14"></path><circle cx="8" cy="7" r="2"></circle><circle cx="16" cy="17" r="2"></circle></svg>
+<span>I2C</span>
+</button>
+<button aria-selected="false" class="operation-tab" data-operation-tab="spi" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><rect height="10" rx="2" width="10" x="7" y="7"></rect><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"></path></svg>
+<span>SPI</span>
+</button>
+<button aria-selected="false" class="operation-tab" data-operation-tab="sequence" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M5 5h5v5H5zM14 14h5v5h-5z"></path><path d="M10 7.5h3a3 3 0 0 1 3 3V14M8 10v4a3 3 0 0 0 3 3h3"></path></svg>
+<span>Sequence</span>
+</button>
+</div>
+<div class="operation-panels">
+<section class="operation-section is-active" data-operation-panel="gpio" role="tabpanel">
+<div class="panel-heading">
+<div>
+<p class="eyebrow">GPIO control</p>
+<p>Direction and state changes are applied immediately.</p>
+</div>
+<div class="panel-actions gpio-global-actions">
+<button class="button action-button primary" disabled="" id="gpioAllHighButton" type="button">All HIGH</button>
+<button class="button action-button" disabled="" id="gpioAllLowButton" type="button">All LOW</button>
+<button class="button action-button" disabled="" id="gpioInputsButton" type="button">All INPUT (HiZ)</button>
+</div>
+</div>
+<div class="gpio-grid" id="gpioRows"></div>
+</section>
+<section class="operation-section" data-operation-panel="i2c" hidden="" role="tabpanel">
+<div class="bus-config-row">
+<label>Speed
                 <select id="i2cSpeed">
-                  <option value="100000" selected>100 kHz</option>
-                  <option value="400000">400 kHz</option>
-                  <option value="1000000">1 MHz</option>
-                </select>
-              </label>
-              <label class="checkbox-label"><input id="i2cClockStretch" type="checkbox"> Clock stretch</label>
-            </div>
-
-            <div class="bus-layout">
-              <article class="inner-panel i2c-scan-panel">
-                <p class="eyebrow">Scan</p>
-                <div id="i2cDevices" class="device-list">Click Scan</div>
-                <p>Click a result to reuse it below.</p>
-                <progress id="i2cScanProgress" max="100" value="0" hidden></progress>
-                <button id="i2cScanButton" class="button action-button" type="button" disabled>Scan bus</button>
-              </article>
-
-              <article class="inner-panel">
-                <p class="eyebrow">Transaction</p>
-                <div class="field-grid i2c-fields">
-                  <label>7-bit address<input id="i2cAddress" value="0x53" spellcheck="false"></label>
-                  <label>Write bytes<input id="i2cWrite" value="00" spellcheck="false" placeholder="00 01 FF"></label>
-                  <label>Read length<input id="i2cRead" type="number" min="0" max="65535" value="1"></label>
-                </div>
-                <p class="field-help">For a register read, put the register address in Write bytes and set Read length.</p>
-                <button id="i2cRunButton" class="button action-button primary" type="button" disabled>Run I2C transaction</button>
-                <pre id="i2cResult" class="result-output">No transaction yet.</pre>
-              </article>
-            </div>
-          </section>
-
-          <section class="operation-section" role="tabpanel" data-operation-panel="spi" hidden>
-            <div class="bus-config-row spi-config-row">
-              <label>Speed
-                <span id="spiSpeedControls" class="speed-control">
-                  <select id="spiSpeed">
-                    <option value="100000">100 kHz</option>
-                    <option value="500000">500 kHz</option>
-                    <option value="1000000" selected>1 MHz</option>
-                    <option value="5000000">5 MHz</option>
-                    <option value="10000000">10 MHz</option>
-                    <option value="20000000">20 MHz</option>
-                    <option value="30000000">30 MHz</option>
-                    <option value="40000000">40 MHz</option>
-                    <option value="custom">Custom…</option>
-                  </select>
-                  <span id="spiCustomSpeedField" class="speed-custom-input" hidden>
-                    <input id="spiCustomSpeed" type="text" value="12.5" placeholder="e.g. 22" spellcheck="false" inputmode="decimal" aria-label="Custom SPI speed in MHz">
-                    <span>MHz</span>
-                  </span>
-                </span>
-              </label>
-              <label>Mode
+<option selected="" value="100000">100 kHz</option>
+<option value="400000">400 kHz</option>
+<option value="1000000">1 MHz</option>
+</select>
+</label>
+<label class="checkbox-label"><input id="i2cClockStretch" type="checkbox"/> Clock stretch</label>
+</div>
+<div class="bus-layout">
+<article class="inner-panel i2c-scan-panel">
+<p class="eyebrow">Scan</p>
+<div class="device-list" id="i2cDevices">Click Scan</div>
+<p>Click a result to reuse it below.</p>
+<progress hidden="" id="i2cScanProgress" max="100" value="0"></progress>
+<button class="button action-button" disabled="" id="i2cScanButton" type="button">Scan bus</button>
+</article>
+<article class="inner-panel">
+<p class="eyebrow">Transaction</p>
+<div class="field-grid i2c-fields">
+<label>7-bit address<input id="i2cAddress" spellcheck="false" value="0x53"/></label>
+<label>Write bytes<input id="i2cWrite" placeholder="00 01 FF" spellcheck="false" value="00"/></label>
+<label>Read length<input id="i2cRead" max="65535" min="0" type="number" value="1"/></label>
+</div>
+<p class="field-help">For a register read, put the register address in Write bytes and set Read length.</p>
+<button class="button action-button primary" disabled="" id="i2cRunButton" type="button">Run I2C transaction</button>
+<pre class="result-output" id="i2cResult">No transaction yet.</pre>
+</article>
+</div>
+</section>
+<section class="operation-section" data-operation-panel="spi" hidden="" role="tabpanel">
+<div class="bus-config-row spi-config-row">
+<label>Speed
+                <span class="speed-control" id="spiSpeedControls">
+<select id="spiSpeed">
+<option value="100000">100 kHz</option>
+<option value="500000">500 kHz</option>
+<option selected="" value="1000000">1 MHz</option>
+<option value="5000000">5 MHz</option>
+<option value="10000000">10 MHz</option>
+<option value="20000000">20 MHz</option>
+<option value="30000000">30 MHz</option>
+<option value="40000000">40 MHz</option>
+<option value="custom">Custom…</option>
+</select>
+<span class="speed-custom-input" hidden="" id="spiCustomSpeedField">
+<input aria-label="Custom SPI speed in MHz" id="spiCustomSpeed" inputmode="decimal" placeholder="e.g. 22" spellcheck="false" type="text" value="12.5"/>
+<span>MHz</span>
+</span>
+</span>
+</label>
+<label>Mode
                 <select id="spiMode"><option value="0">Mode 0</option><option value="1">Mode 1</option><option value="2">Mode 2</option><option value="3">Mode 3</option></select>
-              </label>
-              <label>Bit order
+</label>
+<label>Bit order
                 <select id="spiBitOrder"><option value="msb">MSB first</option><option value="lsb">LSB first</option></select>
-              </label>
-              <label>CS idle
+</label>
+<label>CS idle
                 <select id="spiCsIdle"><option value="high">High</option><option value="low">Low</option></select>
-              </label>
-            </div>
-
-            <article class="inner-panel spi-transaction-panel">
-              <p class="eyebrow">Transfer</p>
-              <div class="field-grid spi-fields">
-                <label>TX bytes<input id="spiTx" value="9F" spellcheck="false" placeholder="9F"></label>
-                <label>Extra read bytes<input id="spiRead" type="number" min="0" max="65535" value="3"></label>
-                <label class="checkbox-label"><input id="spiDuplex" type="checkbox"> Full duplex</label>
-              </div>
-              <p class="field-help">Full duplex also returns one received byte for every transmitted byte.</p>
-              <div class="panel-actions left-actions">
-                <button id="spiRunButton" class="button action-button primary" type="button" disabled>Run SPI transfer</button>
-              </div>
-              <pre id="spiResult" class="result-output">No transfer yet.</pre>
-            </article>
-          </section>
-
-          <section class="operation-section" role="tabpanel" data-operation-panel="sequence" hidden>
-            <div class="panel-heading sequence-heading">
-              <div>
-                <p class="eyebrow">Simple automation</p>
-                <p>Add I2C, SPI and GPIO steps and run them in order. GPIO steps can manipulate any pin.</p>
-              </div>
-              <div class="panel-actions">
-                <button id="sequenceImportButton" class="button action-button sequence-secondary-action" type="button" title="Import a BPIO2 sequence text file">Import</button>
-                <button id="sequenceSaveButton" class="button action-button sequence-secondary-action" type="button" title="Save the current sequence as a text file">Save</button>
-                <button id="sequenceClearButton" class="button action-button sequence-secondary-action" type="button" disabled>Clear</button>
-                <button id="sequenceRunButton" class="button action-button primary" type="button" disabled>Run sequence</button>
-                <input id="sequenceFileInput" type="file" accept=".txt,.seq,.bpioseq,text/plain" hidden>
-              </div>
-            </div>
-
-            <div class="sequence-builder">
-              <label>Step type
+</label>
+</div>
+<article class="inner-panel spi-transaction-panel">
+<p class="eyebrow">Transfer</p>
+<div class="field-grid spi-fields">
+<label>TX bytes<input id="spiTx" placeholder="9F" spellcheck="false" value="9F"/></label>
+<label>Extra read bytes<input id="spiRead" max="65535" min="0" type="number" value="3"/></label>
+<label class="checkbox-label"><input id="spiDuplex" type="checkbox"/> Full duplex</label>
+</div>
+<p class="field-help">Full duplex also returns one received byte for every transmitted byte.</p>
+<div class="panel-actions left-actions">
+<button class="button action-button primary" disabled="" id="spiRunButton" type="button">Run SPI transfer</button>
+</div>
+<pre class="result-output" id="spiResult">No transfer yet.</pre>
+</article>
+</section>
+<section class="operation-section" data-operation-panel="sequence" hidden="" role="tabpanel">
+<div class="panel-heading sequence-heading">
+<div>
+<p class="eyebrow">Simple automation</p>
+<p>Add I2C, SPI and GPIO steps and run them in order. GPIO steps can manipulate any pin.</p>
+</div>
+<div class="panel-actions">
+<button class="button action-button sequence-secondary-action" id="sequenceImportButton" title="Import a BPIO2 sequence text file" type="button">Import</button>
+<button class="button action-button sequence-secondary-action" id="sequenceSaveButton" title="Save the current sequence as a text file" type="button">Save</button>
+<button class="button action-button sequence-secondary-action" disabled="" id="sequenceClearButton" type="button">Clear</button>
+<button class="button action-button primary" disabled="" id="sequenceRunButton" type="button">Run sequence</button>
+<input accept=".txt,.seq,.bpioseq,text/plain" hidden="" id="sequenceFileInput" type="file"/>
+</div>
+</div>
+<div class="sequence-builder">
+<label>Step type
                 <select id="sequenceType">
-                  <option value="gpio">GPIO write</option>
-                  <option value="delay">Delay</option>
-                  <option value="spi">SPI transfer</option>
-                  <option value="i2c">I2C transaction</option>
-                </select>
-              </label>
-
-              <div class="sequence-editor" data-sequence-editor="gpio">
-                <label>IO<select id="sequenceIo"><option>0</option><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select></label>
-                <label>Level<select id="sequenceLevel"><option value="high">HIGH</option><option value="low">LOW</option></select></label>
-              </div>
-
-              <div class="sequence-editor" data-sequence-editor="delay" hidden>
-                <label>Delay<input id="sequenceDelay" type="number" min="0" max="60000" value="100"></label>
-                <label>Unit<select id="sequenceDelayUnit"><option value="ms" selected>ms</option><option value="us">µs</option></select></label>
-              </div>
-
-              <div class="sequence-editor" data-sequence-editor="spi" hidden>
-                <label>TX bytes<input id="sequenceSpiTx" value="9F" spellcheck="false"></label>
-                <label>Read<input id="sequenceSpiRead" type="number" min="0" max="65535" value="3"></label>
-                <label class="checkbox-label"><input id="sequenceSpiDuplex" type="checkbox"> Full duplex</label>
-              </div>
-
-              <div class="sequence-editor" data-sequence-editor="i2c" hidden>
-                <label>Address<input id="sequenceI2cAddress" value="0x53" spellcheck="false"></label>
-                <label>Write bytes<input id="sequenceI2cWrite" value="00" spellcheck="false"></label>
-                <label>Read<input id="sequenceI2cRead" type="number" min="0" max="65535" value="1"></label>
-              </div>
-
-              <button id="sequenceAddButton" class="button action-button" type="button">Add step</button>
-            </div>
-
-            <div id="sequenceList" class="sequence-list"></div>
-            <p id="sequenceStatus" class="sequence-status">Ready.</p>
-          </section>
-        </div>
-      </article>
-
-      <details class="content-card technical-log-card">
-        <summary>Technical log <button id="clearLogButton" class="clear-log" type="button">Clear</button></summary>
-        <pre id="technicalLog" class="log-output" aria-live="polite"></pre>
-      </details>
-    </section>
-  </main>
-
-  <section id="toolHelpContent" class="tool-help-source" hidden>
-    <h2 id="toolHelpTitle">Web BPIO2 Bit Bang I/O Controller help</h2>
-    <section>
-      <h3>What is it for?</h3>
-      <p>Control and monitor GPIOs, scan and communicate with I2C devices, exchange SPI data and build simple hardware sequences from the browser through a BPIO2-compatible adapter.</p>
-    </section>
-    <section>
-      <h3>Adapter</h3>
-      <ul>
-        <li>Use a BPIO2-compatible device exposed as a Web Serial port.</li>
-        <li>With ESP32 Bit Pirate, use <code>mode USB</code> → <code>adapter</code> → <code>BPIO2 GPIO/SPI/I2C</code>, assign the eight GPIOs and let the device reboot.</li>
-        <li>SPI uses IO0=CS, IO1=SCK, IO2=MOSI and IO3=MISO, with preset or custom clock speeds up to 40 MHz. I2C uses IO1=SCL and IO2=SDA.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>Connection</h3>
-      <ol>
-        <li>Connect target ground to adapter ground and keep signals within the supported voltage limits.</li>
-        <li>Click Connect and select the BPIO2 serial interface.</li>
-        <li>Use GPIO for live monitoring and direct control, I2C or SPI for bus transactions, and Sequence for simple non-real-time automation.</li>
-      </ol>
-    </section>
-  </section>
-
-  <script type="module" src="../shared/help-modal.js"></script>
-  <script type="module" src="src/App.js"></script>
+<option value="gpio">GPIO write</option>
+<option value="delay">Delay</option>
+<option value="spi">SPI transfer</option>
+<option value="i2c">I2C transaction</option>
+</select>
+</label>
+<div class="sequence-editor" data-sequence-editor="gpio">
+<label>IO<select id="sequenceIo"><option>0</option><option>1</option><option>2</option><option>3</option><option selected="">4</option><option>5</option><option>6</option><option>7</option></select></label>
+<label>Level<select id="sequenceLevel"><option value="high">HIGH</option><option value="low">LOW</option></select></label>
+</div>
+<div class="sequence-editor" data-sequence-editor="delay" hidden="">
+<label>Delay<input id="sequenceDelay" max="60000" min="0" type="number" value="100"/></label>
+<label>Unit<select id="sequenceDelayUnit"><option selected="" value="ms">ms</option><option value="us">µs</option></select></label>
+</div>
+<div class="sequence-editor" data-sequence-editor="spi" hidden="">
+<label>TX bytes<input id="sequenceSpiTx" spellcheck="false" value="9F"/></label>
+<label>Read<input id="sequenceSpiRead" max="65535" min="0" type="number" value="3"/></label>
+<label class="checkbox-label"><input id="sequenceSpiDuplex" type="checkbox"/> Full duplex</label>
+</div>
+<div class="sequence-editor" data-sequence-editor="i2c" hidden="">
+<label>Address<input id="sequenceI2cAddress" spellcheck="false" value="0x53"/></label>
+<label>Write bytes<input id="sequenceI2cWrite" spellcheck="false" value="00"/></label>
+<label>Read<input id="sequenceI2cRead" max="65535" min="0" type="number" value="1"/></label>
+</div>
+<button class="button action-button" id="sequenceAddButton" type="button">Add step</button>
+</div>
+<div class="sequence-list" id="sequenceList"></div>
+<p class="sequence-status" id="sequenceStatus">Ready.</p>
+</section>
+</div>
+</article>
+<details class="content-card technical-log-card">
+<summary>Technical log <button class="clear-log" id="clearLogButton" type="button">Clear</button></summary>
+<pre aria-live="polite" class="log-output" id="technicalLog"></pre>
+</details>
+</section>
+</main>
+<section class="tool-help-source" hidden="" id="toolHelpContent">
+<h2 id="toolHelpTitle">Web BPIO2 Bit Bang I/O Controller help</h2>
+<section>
+<h3>What is it for?</h3>
+<p>Control and monitor GPIOs, scan and communicate with I2C devices, exchange SPI data and build simple hardware sequences from the browser through a BPIO2-compatible adapter.</p>
+</section>
+<section>
+<h3>Adapter</h3>
+<ul>
+<li>Use a BPIO2-compatible device exposed as a Web Serial port.</li>
+<li>With ESP32 Bit Pirate, use <code>mode USB</code> → <code>adapter</code> → <code>BPIO2 GPIO/SPI/I2C</code>, assign the eight GPIOs and let the device reboot.</li>
+<li>SPI uses IO0=CS, IO1=SCK, IO2=MOSI and IO3=MISO, with preset or custom clock speeds up to 40 MHz. I2C uses IO1=SCL and IO2=SDA.</li>
+</ul>
+</section>
+<section>
+<h3>Connection</h3>
+<ol>
+<li>Connect target ground to adapter ground and keep signals within the supported voltage limits.</li>
+<li>Click Connect and select the BPIO2 serial interface.</li>
+<li>Use GPIO for live monitoring and direct control, I2C or SPI for bus transactions, and Sequence for simple non-real-time automation.</li>
+</ol>
+</section>
+</section>
+<script src="../shared/help-modal.js" type="module"></script>
+<script src="src/App.js" type="module"></script>
 </body>
 </html>

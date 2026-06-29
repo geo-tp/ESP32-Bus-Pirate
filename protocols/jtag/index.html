@@ -1,30 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows.">
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-<meta name="theme-color" content="#121212">
-<meta property="og:site_name" content="ESP32 Bit Pirate">
-<meta property="og:locale" content="en_US">
-<meta property="og:title" content="ESP32 JTAG and SWD Pin Scanning">
-<meta property="og:description" content="Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/">
-<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png">
-<meta property="og:image:alt" content="Preview image for JTAG and SWD pin scanning with ESP32 Bit Pirate">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ESP32 JTAG and SWD Pin Scanning">
-<meta name="twitter:description" content="Scan JTAG or SWD candidate pins, verify target pinouts and move into OpenOCD adapter workflows with ESP32 Bit Pirate.">
-<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png">
-<meta name="twitter:image:alt" content="Preview image for JTAG and SWD pin scanning with ESP32 Bit Pirate">
-<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 JTAG and SWD Pin Scanning" property="og:title"/>
+<meta content="Use Bit Pirate as an ESP32 JTAG/SWD workbench to scan debug pins, verify pinouts and move into OpenOCD adapter workflows." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png" property="og:image"/>
+<meta content="JTAG and SWD debug pin scanning visual with an ESP32 board and target pads." property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ESP32 JTAG and SWD Pin Scanning" name="twitter:title"/>
+<meta content="Scan JTAG or SWD candidate pins, verify target pinouts and move into OpenOCD adapter workflows with ESP32 Bit Pirate." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-jtag.png" name="twitter:image"/>
+<meta content="JTAG and SWD debug pin scanning visual with an ESP32 board and target pads." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/jtag/" rel="canonical"/>
 <title>ESP32 JTAG and SWD Pin Scanning | Bit Pirate</title>
-<link rel="stylesheet" href="../protocols.css">
+<link href="../protocols.css" rel="stylesheet"/>
 <script type="application/ld+json">
 
 {
@@ -164,24 +165,23 @@
 }
 
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
 <main class="protocol-page">
 <header class="protocol-header">
-<a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span>ESP32 Bit Pirate</span></a>
-<nav class="page-top-nav top-nav" aria-label="Primary destinations">
+<a aria-label="ESP32 Bit Pirate home" class="brand" href="../../"><span aria-hidden="true" class="brand-mark">B</span><span>ESP32 Bit Pirate</span></a>
+<nav aria-label="Primary destinations" class="page-top-nav top-nav">
 <a href="../../">Site index</a>
-<a href="../"><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
+<a href="../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/15-JTAG" rel="noopener" target="_blank">JTAG wiki</a>
 </nav>
 </header>
-
-<section class="protocol-hero" aria-labelledby="page-title">
+<section aria-labelledby="page-title" class="protocol-hero">
 <div>
 <p class="eyebrow">ESP32-S3 JTAG and SWD pin scanning</p>
 <h1 id="page-title">Find JTAG and SWD debug pins with ESP32</h1>
@@ -192,11 +192,10 @@
 </div>
 </div>
 <figure class="hero-visual">
-<img src="../../recipes/assets/visual-jtag.svg" alt="JTAG and SWD debug pin scanning visual with an ESP32 board and target pads" width="1040" height="600">
+<img alt="JTAG and SWD debug pin scanning visual with an ESP32 board and target pads" height="600" src="../../recipes/assets/visual-jtag.svg" width="1040"/>
 </figure>
 </section>
-
-<section class="protocol-band" aria-labelledby="workflow-title">
+<section aria-labelledby="workflow-title" class="protocol-band">
 <div class="section-head">
 <h2 id="workflow-title">Quick JTAG/SWD workflow</h2>
 <p class="section-intro">Start with voltage, ground and a limited candidate pin group. Treat scan results as candidates, then verify them with the normal debug workflow before relying on the mapping.</p>
@@ -219,8 +218,7 @@ openocd</code></pre>
 </div>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="coverage-title">
+<section aria-labelledby="coverage-title" class="protocol-band">
 <div class="section-head">
 <h2 id="coverage-title">JTAG and SWD workflows covered by ESP32 Bit Pirate</h2>
 <p class="section-intro">Use this overview to choose the right debug workflow before opening a detailed recipe.</p>
@@ -234,8 +232,7 @@ openocd</code></pre>
 <article class="intent-card"><span>Troubleshoot</span><h3>Locked or silent targets</h3><p>Separate wiring issues from reset, power, security lock or disabled debug interface problems.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="fit-title">
+<section aria-labelledby="fit-title" class="protocol-band">
 <div class="section-head">
 <h2 id="fit-title">When an ESP32-S3 JTAG/SWD workbench helps</h2>
 <p class="section-intro">Debug headers are not always labelled. A small external scan workflow can reduce blind probing before you connect a full debugger or write an OpenOCD config.</p>
@@ -246,8 +243,7 @@ openocd</code></pre>
 <article class="signal-card"><span>Repair bench</span><h3>Before blaming the target</h3><p>Check power, reset state, strap pins and debug locks before assuming a failed scan means the interface is absent.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="hardware-title">
+<section aria-labelledby="hardware-title" class="protocol-band">
 <div class="section-head">
 <h2 id="hardware-title">JTAG/SWD hardware reminders</h2>
 <p class="section-intro">These notes stay short. The detailed command references live in the project documentation and firmware repository.</p>
@@ -259,8 +255,7 @@ openocd</code></pre>
 <article class="note-card"><span>Candidate pins</span><p>Keep the scan group small. JTAG permutation scans get slower and noisier as the number of candidate GPIOs grows.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="problems-title">
+<section aria-labelledby="problems-title" class="protocol-band">
 <div class="section-head">
 <h2 id="problems-title">Common JTAG/SWD problems</h2>
 <p class="section-intro">Most failures come from voltage, reset, candidate pin choice, target lock state or using adapter mode before discovery is complete.</p>
@@ -273,21 +268,19 @@ openocd</code></pre>
 <article class="problem-card"><span>Wrong interface assumed</span><p>Try SWD first for likely ARM Cortex targets, and JTAG when the board or SoC documentation suggests a full JTAG chain.</p></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="recipes-title">
+<section aria-labelledby="recipes-title" class="protocol-band">
 <div class="section-head">
 <h2 id="recipes-title">Detailed JTAG and SWD recipes</h2>
 <p class="section-intro">These pages are the task-level workflows. This overview keeps the protocol-level guidance here, while each recipe covers setup, commands and troubleshooting in detail.</p>
 </div>
-<nav class="recipe-index-grid" aria-label="ESP32 Bit Pirate JTAG and SWD recipes">
+<nav aria-label="ESP32 Bit Pirate JTAG and SWD recipes" class="recipe-index-grid">
 <a href="../../recipes/configure-jtag-swd-scan-pins/"><span>Configure</span><strong>Configure the JTAG/SWD scan pin group</strong><small>Choose which GPIOs are included in SWD or JTAG brute-force scans.</small></a>
 <a href="../../recipes/scan-swd-pinout/"><span>SWD</span><strong>Scan for SWD pins</strong><small>Search for SWDIO and SWCLK on a controlled candidate pad set.</small></a>
 <a href="../../recipes/scan-jtag-pinout/"><span>JTAG</span><strong>Scan for a JTAG pinout</strong><small>Find candidate TDI, TDO, TCK and TMS wiring before adapter mode.</small></a>
 <a href="../../recipes/use-openocd-jtag-adapter/"><span>OpenOCD</span><strong>Use OpenOCD adapter mode</strong><small>Switch to host-side debugging after the wiring and voltage are confirmed.</small></a>
 </nav>
 </section>
-
-<section class="protocol-band" aria-labelledby="references-title">
+<section aria-labelledby="references-title" class="protocol-band">
 <div class="section-head">
 <h2 id="references-title">Useful JTAG/SWD references</h2>
 <p class="section-intro">This page is a protocol overview. Use the site index for the full web experience, or GitHub for source code, firmware documentation and the JTAG command reference.</p>
@@ -302,8 +295,7 @@ openocd</code></pre>
 <article class="destination-card"><h3>ESP32 Bit Pirate GitHub</h3><p>Check firmware source, issues and releases that affect JTAG support.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
 </div>
 </section>
-
-<section class="protocol-band" aria-labelledby="faq-title">
+<section aria-labelledby="faq-title" class="protocol-band">
 <div class="section-head">
 <h2 id="faq-title">JTAG and SWD pin scanning FAQ</h2>
 <p class="section-intro">Short answers for common questions before moving into a detailed workflow.</p>
@@ -323,7 +315,6 @@ openocd</code></pre>
 </details>
 </div>
 </section>
-
 </main>
 </body>
 </html>

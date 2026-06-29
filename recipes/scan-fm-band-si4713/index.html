@@ -13,16 +13,16 @@
 <meta content="Use ESP32 Bit Pirate FM sweep, trace and waterfall workflows with a Si4713 module to inspect FM band activity." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/assets/cover.png" property="og:image"/><meta property="og:image:alt" content="Preview image for How to scan the FM band with ESP32 Bit Pirate and Si4713"><meta property="og:image:type" content="image/png">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/assets/cover.png" property="og:image"/><meta content="Stylized FM transmitter module and radio waves." property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<meta content="2026-06-23" property="article:published_time"/>
-<meta content="2026-06-23" property="article:modified_time"/>
+<meta content="2026-06-23" property="article:published_time">
+<meta content="2026-06-23" property="article:modified_time">
 <meta content="Geo" property="article:author"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="How to scan the FM band with ESP32 Bit Pirate and Si4713" name="twitter:title"/>
 <meta content="Use ESP32 Bit Pirate FM sweep, trace and waterfall workflows with a Si4713 module to inspect FM band activity." name="twitter:description"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/assets/cover.png" name="twitter:image"/><meta name="twitter:image:alt" content="Preview image for How to scan the FM band with ESP32 Bit Pirate and Si4713">
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/assets/cover.png" name="twitter:image"/><meta content="Stylized FM transmitter module and radio waves." name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-fm-band-si4713/" rel="canonical"/>
 <title>How to scan the FM band with ESP32 Bit Pirate and Si4713</title>
 <link href="../recipes.css?v=20260623-batch2" rel="stylesheet"/>
@@ -77,25 +77,25 @@
   ]
 }
 </script>
-<script defer src="../../assets/theme-toggle.js?v=20260624-light18"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
-</head>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</meta></meta></head>
 <body>
 <main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>FM</li><li>Intermediate</li><li>5 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav">
 <a href="../">Recipes</a>
 <a href="../../web-tools/">Web Tools</a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">Wiki</a>
-<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
 </nav></div>
 <p class="eyebrow">Recipe · Intermediate · FM</p>
 <h1>How to scan the FM band with Si4713</h1>
 <p>The FM mode can sweep and visualize activity across the FM band through a Si4713 module. This recipe focuses on observation, not broadcasting.</p>
 </header>
 <figure class="recipe-banner">
-<img alt="" height="600" src="../assets/visual-fm.svg" width="1040"/>
+<img alt="Stylized FM transmitter module and radio waves." height="600" src="../assets/visual-fm.svg" width="1040"/>
 <figcaption>Sweep the band, trace one frequency, and use waterfall for visual context.</figcaption>
 </figure>
 <div class="recipe-layout">
@@ -140,7 +140,7 @@ Trace 101.7 MHz signal strength" data-cli-session=""></div>
 <li>Use <code>waterfall</code> for a visual overview.</li>
 <li>Only enter <code>broadcast</code> in a legal controlled setup.</li>
 </ul>
-</section><section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">FM band scan FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does FM sweep show?</summary><p>It scans the 88 to 108 MHz FM band and estimates activity so you can see likely local stations or busy parts of the band.</p></details><details class="recipe-faq-item"><summary>Why do all frequencies look flat?</summary><p>The Si4713 may not be configured, the reset pin or I2C wiring may be wrong, the antenna may be missing, or the local signal level may be too low for the setup.</p></details><details class="recipe-faq-item"><summary>Does scanning transmit FM?</summary><p>No. sweep, trace and waterfall are observation workflows. Broadcast operations are separate and should only be used legally at very low power in a controlled setup.</p></details></div></section><section class="recipe-section">
+</section><section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">FM band scan FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What does FM sweep show?</summary><p>It scans the 88 to 108 MHz FM band and estimates activity so you can see likely local stations or busy parts of the band.</p></details><details class="recipe-faq-item"><summary>Why do all frequencies look flat?</summary><p>The Si4713 may not be configured, the reset pin or I2C wiring may be wrong, the antenna may be missing, or the local signal level may be too low for the setup.</p></details><details class="recipe-faq-item"><summary>Does scanning transmit FM?</summary><p>No. sweep, trace and waterfall are observation workflows. Broadcast operations are separate and should only be used legally at very low power in a controlled setup.</p></details></div></section><section class="recipe-section">
 <h2>Go deeper</h2>
 <nav aria-label="Related links" class="link-card-list"><a href="../../modules/si4713/"><span>Module</span><strong>Si4713 FM module overview</strong></a><a href="../../protocols/fm/"><span>Protocols</span><strong>More FM workflows: FM and RDS debugging with ESP32 Bit Pirate</strong></a>
 <a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/22-FM" rel="noopener" target="_blank"><span>Wiki</span><strong>FM mode</strong></a>

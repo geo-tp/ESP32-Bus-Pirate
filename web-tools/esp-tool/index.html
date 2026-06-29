@@ -1,338 +1,318 @@
-<!doctype html>
-<html lang="en" translate="no" class="notranslate">
+<!DOCTYPE html>
+
+<html class="notranslate" lang="en" translate="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Flash, read, merge and erase ESP firmware images from your browser with Web Serial and esptool-js.">
-  <meta name="google" content="notranslate">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-  <meta name="theme-color" content="#121212">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="Web Serial Tools">
-  <meta property="og:title" content="Web ESP Tool with Web Serial and esptool-js">
-  <meta property="og:description" content="Flash, read, merge and erase ESP firmware images from your browser with Web Serial and esptool-js.">
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-tool/">
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/esp-tool-og.png"><meta property="og:image:alt" content="Preview image for Web ESP Tool with Web Serial and esptool-js">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Web ESP Tool with Web Serial and esptool-js">
-  <meta name="twitter:description" content="Flash, read, merge and erase ESP firmware images from your browser with Web Serial and esptool-js.">
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/esp-tool-og.png"><meta name="twitter:image:alt" content="Preview image for Web ESP Tool with Web Serial and esptool-js">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-tool/">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web ESP Tool","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-tool/","description":"Flash, read, merge and erase ESP firmware from the browser with Web Serial.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
-  <title>Web ESP Tool with Web Serial and esptool-js</title>
-<link rel="stylesheet" href="../styles/main.css">
-  <link rel="stylesheet" href="src/styles.css">
-<script defer src="../../assets/theme-toggle.js?v=20260624-light20"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Flash, read, merge and erase ESP firmware images from your browser with Web Serial and esptool-js." name="description"/>
+<meta content="notranslate" name="google"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="Web Serial Tools" property="og:site_name"/>
+<meta content="Web ESP Tool with Web Serial and esptool-js" property="og:title"/>
+<meta content="Flash, read, merge and erase ESP firmware images from your browser with Web Serial and esptool-js." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-tool/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/esp-tool-og.png" property="og:image"/><meta content="Web ESP Tool with Web Serial and esptool-js preview card." property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Web ESP Tool with Web Serial and esptool-js" name="twitter:title"/>
+<meta content="Flash, read, merge and erase ESP firmware images from your browser with Web Serial and esptool-js." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/esp-tool-og.png" name="twitter:image"/><meta content="Web ESP Tool with Web Serial and esptool-js preview card." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-tool/" rel="canonical"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web ESP Tool","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-tool/","description":"Flash, read, merge and erase ESP firmware from the browser with Web Serial.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
+<title>Web ESP Tool with Web Serial and esptool-js</title>
+<link href="../styles/main.css" rel="stylesheet"/>
+<link href="src/styles.css" rel="stylesheet"/>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light20"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
-  <main class="wrap esp-wrap">
-    <noscript>
-      <section class="notice error">This Web ESP Tool requires JavaScript and Web Serial for device operations.</section>
-    </noscript>
-
-    <section id="serialUnsupported" class="notice error" hidden>
+<main class="wrap esp-wrap">
+<noscript>
+<section class="notice error">This Web ESP Tool requires JavaScript and Web Serial for device operations.</section>
+</noscript>
+<section class="notice error" hidden="" id="serialUnsupported">
       Web Serial is not available in this browser. Merge still works offline; flashing, reading and erasing require Chrome, Edge or another compatible Chromium browser over HTTPS or localhost.
     </section>
-
-    <section class="esp-shell" aria-label="Web ESP Tool">
-      <div class="toolbar">
-        <div class="toolbar-brand" aria-label="Web ESP Tool">
-          <a class="brand-mark" href="../" aria-label="ESP32 Bit Pirate home">B</a>
-          <h1>Web ESP Tool</h1>
-        </div>
-
-        <div class="toolbar-actions">
-          <button class="help-icon-button" type="button" data-help-open aria-label="Open Web ESP Tool help" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
-          </button>
-          <select id="baudRate" class="inline-select" aria-label="Baudrate">
-            <option value="115200">115200</option>
-            <option value="230400">230400</option>
-            <option value="460800">460800</option>
-            <option value="921600" selected>921600</option>
-            <option value="1500000">1500000</option>
-          </select>
-          <button id="connectButton" class="button action-button primary" type="button">Connect</button>
-          <button id="disconnectButton" class="button action-button" type="button" disabled hidden>Disconnect</button>
-          <span id="connectionStatus" class="status-pill">Disconnected</span>
-        </div>
-      </div>
-
-      <div class="mode-tabs" role="tablist" aria-label="ESP operations">
-        <button class="mode-tab is-active" type="button" role="tab" aria-selected="true" data-mode-tab="flash">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
+<section aria-label="Web ESP Tool" class="esp-shell">
+<div class="toolbar">
+<div aria-label="Web ESP Tool" class="toolbar-brand">
+<a aria-label="ESP32 Bit Pirate home" class="brand-mark" href="../">B</a>
+<h1>Web ESP Tool</h1>
+</div>
+<div class="toolbar-actions">
+<button aria-expanded="false" aria-label="Open Web ESP Tool help" class="help-icon-button" data-help-open="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+</button>
+<select aria-label="Baudrate" class="inline-select" id="baudRate">
+<option value="115200">115200</option>
+<option value="230400">230400</option>
+<option value="460800">460800</option>
+<option selected="" value="921600">921600</option>
+<option value="1500000">1500000</option>
+</select>
+<button class="button action-button primary" id="connectButton" type="button">Connect</button>
+<button class="button action-button" disabled="" hidden="" id="disconnectButton" type="button">Disconnect</button>
+<span class="status-pill" id="connectionStatus">Disconnected</span>
+</div>
+</div>
+<div aria-label="ESP operations" class="mode-tabs" role="tablist">
+<button aria-selected="true" class="mode-tab is-active" data-mode-tab="flash" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
           Flash
         </button>
-        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="read">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"></path><path d="M8 11l4 4 4-4"></path><path d="M5 20h14"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="read" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 4v11"></path><path d="M8 11l4 4 4-4"></path><path d="M5 20h14"></path></svg>
           Read
         </button>
-        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="merge">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v5a3 3 0 0 0 3 3h6"></path><path d="M6 20v-5a3 3 0 0 1 3-3"></path><path d="M15 8l4 4-4 4"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="merge" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M6 4v5a3 3 0 0 0 3 3h6"></path><path d="M6 20v-5a3 3 0 0 1 3-3"></path><path d="M15 8l4 4-4 4"></path></svg>
           Merge
         </button>
-        <button class="mode-tab danger-tab" type="button" role="tab" aria-selected="false" data-mode-tab="erase">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
+<button aria-selected="false" class="mode-tab danger-tab" data-mode-tab="erase" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
           Erase
         </button>
-        <span id="bootModeHint">Connect ESP in boot mode</span>
-      </div>
-
-      <div class="workspace">
-        <section class="work-panel" aria-label="Configuration">
-          <section id="bootHelp" class="boot-help" hidden>
-            <div>
-              <strong>Boot mode needed</strong>
-              <span>Hold BOOT, tap RESET, release BOOT when Connecting starts. Then press Connect again.</span>
-            </div>
-            <button id="dismissBootHelpButton" class="button action-button subtle" type="button">Dismiss</button>
-          </section>
-
-          <section class="mode-panel is-active" data-mode-panel="flash">
-            <div class="panel-header">
-              <div>
-                <p class="eyebrow">Flash</p>
-                <h2>Firmware files</h2>
-              </div>
-              <div class="preset-row">
-                <select id="flashPreset" class="inline-select" aria-label="Flash layout preset">
-                  <option value="">Preset layout</option>
-                  <option value="merged-bin" selected>Merged BIN @ 0x0</option>
-                  <option value="esp8266-bin">ESP8266 / NodeMCU</option>
-                  <option value="esp32-app">ESP32 / WROOM</option>
-                  <option value="esp32-s2-app">ESP32-S2</option>
-                  <option value="esp32-s3-app">ESP32-S3</option>
-                  <option value="esp32-c2-app">ESP32-C2</option>
-                  <option value="esp32-c3-app">ESP32-C3</option>
-                  <option value="esp32-c5-app">ESP32-C5</option>
-                  <option value="esp32-c6-app">ESP32-C6</option>
-                  <option value="esp32-h2-app">ESP32-H2</option>
-                  <option value="esp32-p4-app">ESP32-P4</option>
-                  <option value="esp32-factory">ESP32 Factory</option>
-                </select>
-                <button id="addFlashRowButton" class="button action-button subtle" type="button">Add Row</button>
-              </div>
-            </div>
-
-            <div id="flashDropZone" class="drop-zone" tabindex="0">
-              <strong>Drop BIN files here</strong>
-              <span>or use Add Row and choose files manually.</span>
-            </div>
-
-            <div class="file-table-wrap">
-              <table class="file-table">
-                <thead>
-                  <tr>
-                    <th>Address</th>
-                    <th>File</th>
-                    <th>Size</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="flashFileRows"></tbody>
-              </table>
-            </div>
-
-            <div class="options-grid">
-              <label><input id="eraseBeforeFlash" type="checkbox"> Erase before flash</label>
-              <label><input id="verifyAfterFlash" type="checkbox" checked> Verify after write</label>
-              <label><input id="rebootAfterFlash" type="checkbox" checked> Reboot after flash</label>
-              <label>
+<span id="bootModeHint">Connect ESP in boot mode</span>
+</div>
+<div class="workspace">
+<section aria-label="Configuration" class="work-panel">
+<section class="boot-help" hidden="" id="bootHelp">
+<div>
+<strong>Boot mode needed</strong>
+<span>Hold BOOT, tap RESET, release BOOT when Connecting starts. Then press Connect again.</span>
+</div>
+<button class="button action-button subtle" id="dismissBootHelpButton" type="button">Dismiss</button>
+</section>
+<section class="mode-panel is-active" data-mode-panel="flash">
+<div class="panel-header">
+<div>
+<p class="eyebrow">Flash</p>
+<h2>Firmware files</h2>
+</div>
+<div class="preset-row">
+<select aria-label="Flash layout preset" class="inline-select" id="flashPreset">
+<option value="">Preset layout</option>
+<option selected="" value="merged-bin">Merged BIN @ 0x0</option>
+<option value="esp8266-bin">ESP8266 / NodeMCU</option>
+<option value="esp32-app">ESP32 / WROOM</option>
+<option value="esp32-s2-app">ESP32-S2</option>
+<option value="esp32-s3-app">ESP32-S3</option>
+<option value="esp32-c2-app">ESP32-C2</option>
+<option value="esp32-c3-app">ESP32-C3</option>
+<option value="esp32-c5-app">ESP32-C5</option>
+<option value="esp32-c6-app">ESP32-C6</option>
+<option value="esp32-h2-app">ESP32-H2</option>
+<option value="esp32-p4-app">ESP32-P4</option>
+<option value="esp32-factory">ESP32 Factory</option>
+</select>
+<button class="button action-button subtle" id="addFlashRowButton" type="button">Add Row</button>
+</div>
+</div>
+<div class="drop-zone" id="flashDropZone" tabindex="0">
+<strong>Drop BIN files here</strong>
+<span>or use Add Row and choose files manually.</span>
+</div>
+<div class="file-table-wrap">
+<table class="file-table">
+<thead>
+<tr>
+<th>Address</th>
+<th>File</th>
+<th>Size</th>
+<th>Status</th>
+<th></th>
+</tr>
+</thead>
+<tbody id="flashFileRows"></tbody>
+</table>
+</div>
+<div class="options-grid">
+<label><input id="eraseBeforeFlash" type="checkbox"/> Erase before flash</label>
+<label><input checked="" id="verifyAfterFlash" type="checkbox"/> Verify after write</label>
+<label><input checked="" id="rebootAfterFlash" type="checkbox"/> Reboot after flash</label>
+<label>
                 Flash size
-                <select id="flashSizeSelect" class="inline-select">
-                  <option value="detect" selected>Detect</option>
-                  <option value="4MB">4 MB</option>
-                  <option value="8MB">8 MB</option>
-                  <option value="16MB">16 MB</option>
-                  <option value="32MB">32 MB</option>
-                </select>
-              </label>
-            </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="read" hidden>
-            <div class="panel-header">
-              <div>
-                <p class="eyebrow">Read / Backup</p>
-                <h2>Flash region</h2>
-              </div>
-              <select id="readPreset" class="inline-select" aria-label="Read preset">
-                <option value="full">Full Flash</option>
-                <option value="bootloader">Bootloader</option>
-                <option value="partitions">Partition Table</option>
-                <option value="app">Application</option>
-                <option value="custom">Custom Region</option>
-              </select>
-            </div>
-
-            <div class="form-grid read-grid">
-              <label for="readStart">Start address</label>
-              <input id="readStart" value="0x000000" spellcheck="false">
-              <label for="readSize">Size</label>
-              <input id="readSize" value="4MB" spellcheck="false">
-              <label for="readFilename">Output filename</label>
-              <input id="readFilename" value="esp-flash-backup.bin" spellcheck="false">
-            </div>
-
-            <div class="metric-grid">
-              <div><span>Progress</span><strong id="readPercent">0%</strong></div>
-              <div><span>Speed</span><strong id="readSpeed">-</strong></div>
-              <div><span>Read</span><strong id="readAmount">0 B</strong></div>
-              <div><span>Elapsed</span><strong id="readElapsed">0s</strong></div>
-            </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="merge" hidden>
-            <div class="panel-header">
-              <div>
-                <p class="eyebrow">Merge Firmware</p>
-                <h2>Offline image builder</h2>
-              </div>
-              <div class="preset-row">
-                <select id="mergeLayoutPreset" class="inline-select" aria-label="Merge layout preset">
-                  <option value="esp8266-bin">ESP8266 / NodeMCU single BIN</option>
-                  <option value="esp32-app">ESP32 / WROOM layout</option>
-                  <option value="esp32-s2-app">ESP32-S2 layout</option>
-                  <option value="esp32-s3-app" selected>ESP32-S3 layout</option>
-                  <option value="esp32-c2-app">ESP32-C2 layout</option>
-                  <option value="esp32-c3-app">ESP32-C3 layout</option>
-                  <option value="esp32-c5-app">ESP32-C5 layout</option>
-                  <option value="esp32-c6-app">ESP32-C6 layout</option>
-                  <option value="esp32-h2-app">ESP32-H2 layout</option>
-                  <option value="esp32-p4-app">ESP32-P4 layout</option>
-                  <option value="esp32-factory">ESP32 factory + boot_app0</option>
-                  <option value="custom">Custom layout</option>
-                </select>
-                <button id="addMergeRowButton" class="button action-button subtle" type="button">Add Row</button>
-              </div>
-            </div>
-
-            <div id="mergeDropZone" class="drop-zone" tabindex="0">
-              <strong id="mergeDropTitle">Drop ESP32-S3 parts here</strong>
-              <span id="mergeDropHint">bootloader @ 0x0, partitions @ 0x8000, firmware @ 0x10000.</span>
-            </div>
-
-            <div class="file-table-wrap">
-              <table class="file-table">
-                <thead>
-                  <tr>
-                    <th>Address</th>
-                    <th>File</th>
-                    <th>Size</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="mergeFileRows"></tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="erase" hidden>
-            <div class="erase-panel">
-              <p class="eyebrow">Erase</p>
-              <h2>Entire flash</h2>
-              <dl class="info-list">
-                <div><dt>Device</dt><dd id="eraseDevice">Not connected</dd></div>
-                <div><dt>Operation</dt><dd>Full chip erase</dd></div>
-                <div><dt>Confirmation</dt><dd>Required before erase starts</dd></div>
-              </dl>
-              <label class="confirm-line"><input id="rebootAfterErase" type="checkbox" checked> Reboot after erase</label>
-              <label class="confirm-line danger-line"><input id="eraseConfirm" type="checkbox"> I understand this deletes the entire flash</label>
-            </div>
-          </section>
-        </section>
-
-        <aside class="side-panel" aria-label="Memory and device information">
-          <article class="tool-card compact-card device-card">
-            <p class="eyebrow">Device information</p>
-            <dl class="info-list">
-              <div><dt>Chip</dt><dd id="chipModel">-</dd></div>
-              <div><dt>MAC</dt><dd id="macAddress">-</dd></div>
-              <div><dt>Flash ID</dt><dd id="flashId">-</dd></div>
-              <div><dt>Flash size</dt><dd id="flashDetectedSize">-</dd></div>
-              <div><dt>Loader</dt><dd id="loaderStatus">Not loaded</dd></div>
-            </dl>
-          </article>
-
-          <article class="tool-card compact-card memory-card">
-            <div class="panel-header tight">
-              <p class="eyebrow">Memory</p>
-              <strong id="memorySizeLabel">4 MB view</strong>
-            </div>
-            <div class="memory-visual">
-              <div class="memory-axis" aria-hidden="true">
-                <span id="memoryStartLabel">0x000000</span>
-                <span id="memoryMiddleLabel">0x200000</span>
-                <span id="memoryEndLabel">0x400000</span>
-              </div>
-              <div id="memoryMap" class="memory-map" aria-label="Vertical flash memory preview"></div>
-            </div>
-            <div id="validationList" class="validation-list">No files loaded.</div>
-          </article>
-        </aside>
-      </div>
-
-      <article class="content-card action-strip">
-        <div class="primary-area">
-          <button id="primaryAction" class="button action-button primary" type="button">Flash Firmware</button>
-          <span id="operationStatus">Idle</span>
-          <span id="actionHint" class="action-hint">Connect first.</span>
-        </div>
-        <div class="progress-stack">
-          <div class="progress-row">
-            <progress id="operationProgress" max="100" value="0"></progress>
-            <span id="progressValue">0%</span>
-          </div>
-        </div>
-      </article>
-
-      <details class="content-card log-card">
-        <summary>Technical log</summary>
-        <div class="log-header">
-          <h2>esptool-js output</h2>
-          <div class="toolbar-actions">
-            <button id="copyLogButton" class="button action-button subtle" type="button">Copy</button>
-            <button id="clearLogButton" class="button action-button subtle" type="button">Clear</button>
-          </div>
-        </div>
-        <pre id="technicalLog" class="log-output" aria-live="polite"></pre>
-      </details>
-    </section>
-  </main>
-
-  <section id="toolHelpContent" class="tool-help-source" hidden>
-    <h2 id="toolHelpTitle">Web ESP Tool help</h2>
-    <section>
-      <h3>What it does</h3>
-      <p>Flash, read, erase and merge firmware images for ESP8266, ESP32 and newer ESP variants through the ROM serial bootloader.</p>
-    </section>
-    <section>
-      <h3>Adapter</h3>
-      <ul>
-        <li>Use a USB serial adapter or a development board with built-in USB-UART.</li>
-        <li>Connect TX to RX, RX to TX and share GND. Keep 3.3 V logic levels.</li>
-        <li>For bare modules, wire EN/RESET and BOOT/GPIO0 so the chip can enter download mode.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>Connection</h3>
-      <ol>
-        <li>Hold BOOT/GPIO0 low, reset or power-cycle the ESP, then release reset.</li>
-        <li>Click Connect and select the serial port.</li>
-        <li>Load firmware files, choose the matching layout and run the operation.</li>
-      </ol>
-    </section>
-  </section>
-  <script type="module" src="../shared/help-modal.js"></script>
-  <script type="module" src="src/App.js"></script>
+                <select class="inline-select" id="flashSizeSelect">
+<option selected="" value="detect">Detect</option>
+<option value="4MB">4 MB</option>
+<option value="8MB">8 MB</option>
+<option value="16MB">16 MB</option>
+<option value="32MB">32 MB</option>
+</select>
+</label>
+</div>
+</section>
+<section class="mode-panel" data-mode-panel="read" hidden="">
+<div class="panel-header">
+<div>
+<p class="eyebrow">Read / Backup</p>
+<h2>Flash region</h2>
+</div>
+<select aria-label="Read preset" class="inline-select" id="readPreset">
+<option value="full">Full Flash</option>
+<option value="bootloader">Bootloader</option>
+<option value="partitions">Partition Table</option>
+<option value="app">Application</option>
+<option value="custom">Custom Region</option>
+</select>
+</div>
+<div class="form-grid read-grid">
+<label for="readStart">Start address</label>
+<input id="readStart" spellcheck="false" value="0x000000"/>
+<label for="readSize">Size</label>
+<input id="readSize" spellcheck="false" value="4MB"/>
+<label for="readFilename">Output filename</label>
+<input id="readFilename" spellcheck="false" value="esp-flash-backup.bin"/>
+</div>
+<div class="metric-grid">
+<div><span>Progress</span><strong id="readPercent">0%</strong></div>
+<div><span>Speed</span><strong id="readSpeed">-</strong></div>
+<div><span>Read</span><strong id="readAmount">0 B</strong></div>
+<div><span>Elapsed</span><strong id="readElapsed">0s</strong></div>
+</div>
+</section>
+<section class="mode-panel" data-mode-panel="merge" hidden="">
+<div class="panel-header">
+<div>
+<p class="eyebrow">Merge Firmware</p>
+<h2>Offline image builder</h2>
+</div>
+<div class="preset-row">
+<select aria-label="Merge layout preset" class="inline-select" id="mergeLayoutPreset">
+<option value="esp8266-bin">ESP8266 / NodeMCU single BIN</option>
+<option value="esp32-app">ESP32 / WROOM layout</option>
+<option value="esp32-s2-app">ESP32-S2 layout</option>
+<option selected="" value="esp32-s3-app">ESP32-S3 layout</option>
+<option value="esp32-c2-app">ESP32-C2 layout</option>
+<option value="esp32-c3-app">ESP32-C3 layout</option>
+<option value="esp32-c5-app">ESP32-C5 layout</option>
+<option value="esp32-c6-app">ESP32-C6 layout</option>
+<option value="esp32-h2-app">ESP32-H2 layout</option>
+<option value="esp32-p4-app">ESP32-P4 layout</option>
+<option value="esp32-factory">ESP32 factory + boot_app0</option>
+<option value="custom">Custom layout</option>
+</select>
+<button class="button action-button subtle" id="addMergeRowButton" type="button">Add Row</button>
+</div>
+</div>
+<div class="drop-zone" id="mergeDropZone" tabindex="0">
+<strong id="mergeDropTitle">Drop ESP32-S3 parts here</strong>
+<span id="mergeDropHint">bootloader @ 0x0, partitions @ 0x8000, firmware @ 0x10000.</span>
+</div>
+<div class="file-table-wrap">
+<table class="file-table">
+<thead>
+<tr>
+<th>Address</th>
+<th>File</th>
+<th>Size</th>
+<th>Status</th>
+<th></th>
+</tr>
+</thead>
+<tbody id="mergeFileRows"></tbody>
+</table>
+</div>
+</section>
+<section class="mode-panel" data-mode-panel="erase" hidden="">
+<div class="erase-panel">
+<p class="eyebrow">Erase</p>
+<h2>Entire flash</h2>
+<dl class="info-list">
+<div><dt>Device</dt><dd id="eraseDevice">Not connected</dd></div>
+<div><dt>Operation</dt><dd>Full chip erase</dd></div>
+<div><dt>Confirmation</dt><dd>Required before erase starts</dd></div>
+</dl>
+<label class="confirm-line"><input checked="" id="rebootAfterErase" type="checkbox"/> Reboot after erase</label>
+<label class="confirm-line danger-line"><input id="eraseConfirm" type="checkbox"/> I understand this deletes the entire flash</label>
+</div>
+</section>
+</section>
+<aside aria-label="Memory and device information" class="side-panel">
+<article class="tool-card compact-card device-card">
+<p class="eyebrow">Device information</p>
+<dl class="info-list">
+<div><dt>Chip</dt><dd id="chipModel">-</dd></div>
+<div><dt>MAC</dt><dd id="macAddress">-</dd></div>
+<div><dt>Flash ID</dt><dd id="flashId">-</dd></div>
+<div><dt>Flash size</dt><dd id="flashDetectedSize">-</dd></div>
+<div><dt>Loader</dt><dd id="loaderStatus">Not loaded</dd></div>
+</dl>
+</article>
+<article class="tool-card compact-card memory-card">
+<div class="panel-header tight">
+<p class="eyebrow">Memory</p>
+<strong id="memorySizeLabel">4 MB view</strong>
+</div>
+<div class="memory-visual">
+<div aria-hidden="true" class="memory-axis">
+<span id="memoryStartLabel">0x000000</span>
+<span id="memoryMiddleLabel">0x200000</span>
+<span id="memoryEndLabel">0x400000</span>
+</div>
+<div aria-label="Vertical flash memory preview" class="memory-map" id="memoryMap"></div>
+</div>
+<div class="validation-list" id="validationList">No files loaded.</div>
+</article>
+</aside>
+</div>
+<article class="content-card action-strip">
+<div class="primary-area">
+<button class="button action-button primary" id="primaryAction" type="button">Flash Firmware</button>
+<span id="operationStatus">Idle</span>
+<span class="action-hint" id="actionHint">Connect first.</span>
+</div>
+<div class="progress-stack">
+<div class="progress-row">
+<progress id="operationProgress" max="100" value="0"></progress>
+<span id="progressValue">0%</span>
+</div>
+</div>
+</article>
+<details class="content-card log-card">
+<summary>Technical log</summary>
+<div class="log-header">
+<h2>esptool-js output</h2>
+<div class="toolbar-actions">
+<button class="button action-button subtle" id="copyLogButton" type="button">Copy</button>
+<button class="button action-button subtle" id="clearLogButton" type="button">Clear</button>
+</div>
+</div>
+<pre aria-live="polite" class="log-output" id="technicalLog"></pre>
+</details>
+</section>
+</main>
+<section class="tool-help-source" hidden="" id="toolHelpContent">
+<h2 id="toolHelpTitle">Web ESP Tool help</h2>
+<section>
+<h3>What it does</h3>
+<p>Flash, read, erase and merge firmware images for ESP8266, ESP32 and newer ESP variants through the ROM serial bootloader.</p>
+</section>
+<section>
+<h3>Adapter</h3>
+<ul>
+<li>Use a USB serial adapter or a development board with built-in USB-UART.</li>
+<li>Connect TX to RX, RX to TX and share GND. Keep 3.3 V logic levels.</li>
+<li>For bare modules, wire EN/RESET and BOOT/GPIO0 so the chip can enter download mode.</li>
+</ul>
+</section>
+<section>
+<h3>Connection</h3>
+<ol>
+<li>Hold BOOT/GPIO0 low, reset or power-cycle the ESP, then release reset.</li>
+<li>Click Connect and select the serial port.</li>
+<li>Load firmware files, choose the matching layout and run the operation.</li>
+</ol>
+</section>
+</section>
+<script src="../shared/help-modal.js" type="module"></script>
+<script src="src/App.js" type="module"></script>
 </body>
 </html>

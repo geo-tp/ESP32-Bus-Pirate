@@ -6,13 +6,13 @@
 <meta content="Use ESP32 Bit Pirate 2WIRE mode to probe and dump an SLE4442 style smartcard from the interactive shell." name="description"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
-<meta content="ESP32 Bit Pirate" property="og:site_name"><meta content="en_US" property="og:locale"/>
-<meta content="How to read an SLE4442 smartcard with ESP32 Bit Pirate" property="og:title"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/><meta content="en_US" property="og:locale"/>
+<meta content="How to read an SLE4442 smartcard with ESP32 Bit Pirate" property="og:title">
 <meta content="Open the 2WIRE smartcard shell, probe ATR, check security memory and dump a compatible SLE44XX card." property="og:description"/>
 <meta content="article" property="og:type"/><meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-sle4442-smartcard/" property="og:url"/>
-<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-smartcard.png" property="og:image"/><meta content="Preview image for How to read an SLE4442 smartcard with ESP32 Bit Pirate" property="og:image:alt"/><meta content="image/png" property="og:image:type"/><meta content="1200" property="og:image:width"><meta content="630" property="og:image:height">
-<meta content="2026-06-23" property="article:published_time"/><meta content="2026-06-23" property="article:modified_time"/><meta content="Geo" property="article:author"/>
-<meta content="summary_large_image" name="twitter:card"/><meta content="How to read an SLE4442 smartcard with ESP32 Bit Pirate" name="twitter:title"/><meta content="Use 2WIRE mode to probe and dump an SLE4442 style smartcard." name="twitter:description"/><meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-smartcard.png" name="twitter:image"/><meta content="Preview image for How to read an SLE4442 smartcard with ESP32 Bit Pirate" name="twitter:image:alt"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-smartcard.png" property="og:image"/><meta content="Stylized smartcard in a reader." property="og:image:alt"/><meta content="image/png" property="og:image:type"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/>
+<meta content="2026-06-23" property="article:published_time"/><meta content="2026-06-23" property="article:modified_time"/><meta content="Geo" property="article:author">
+<meta content="summary_large_image" name="twitter:card"><meta content="How to read an SLE4442 smartcard with ESP32 Bit Pirate" name="twitter:title"/><meta content="Use 2WIRE mode to probe and dump an SLE4442 style smartcard." name="twitter:description"/><meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-smartcard.png" name="twitter:image"/><meta content="Stylized smartcard in a reader." name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-sle4442-smartcard/" rel="canonical"/>
 <title>How to read an SLE4442 smartcard with ESP32 Bit Pirate</title>
 <link href="../recipes.css" rel="stylesheet"/>
@@ -24,7 +24,7 @@
 </meta></meta></meta></head>
 <body><main class="wrap">
 <header class="hero"><div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>2WIRE</li><li>Intermediate</li><li>5 min</li><li>Smartcard shell</li></ul></div><nav aria-label="Section navigation" class="article-top-nav"><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/07-2WIRE" rel="noopener" target="_blank">Wiki</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a></nav></div><p class="eyebrow">Recipe · Intermediate · 2WIRE</p><h1>How to read an SLE4442 smartcard</h1><p>2WIRE mode has a dedicated SLE44XX smartcard shell for ATR probing, security checks and memory dumps.</p></header>
-<figure class="recipe-banner"><img alt="" height="600" src="../assets/visual-smartcard.svg" width="1040"/><figcaption>Probe first, then dump only after the card responds cleanly.</figcaption></figure>
+<figure class="recipe-banner"><img alt="Stylized smartcard in a reader." height="600" src="../assets/visual-smartcard.svg" width="1040"/><figcaption>Probe first, then dump only after the card responds cleanly.</figcaption></figure>
 <div class="recipe-layout"><article class="recipe-article"><section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
 <p class="wiring-visual-label">Wiring View</p><figure class="wiring-diagram wiring-diagram-main">
 <svg aria-label="Generated wiring diagram" role="img" viewbox="0 0 920 320">

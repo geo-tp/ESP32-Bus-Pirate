@@ -1,388 +1,360 @@
-<!doctype html>
-<html lang="en" translate="no" class="notranslate">
+<!DOCTYPE html>
+
+<html class="notranslate" lang="en" translate="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Identify, read, erase and flash STM32 devices through UART bootloader or ST-Link directly from your browser with Web Serial and WebUSB.">
-  <meta name="google" content="notranslate">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-  <meta name="theme-color" content="#121212">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="ESP32 Bit Pirate">
-  <meta property="og:title" content="STM32 Web Tool — ST-Link and UART, Flash, Read and Erase">
-  <meta property="og:description" content="Program STM32 devices through their UART bootloader or an ST-Link probe directly from a browser.">
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/stm32-tool/">
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/stm32-tool-og.png"><meta property="og:image:alt" content="Preview image for STM32 Web Tool — ST-Link and UART, Flash, Read and Erase">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="STM32 Web Tool — UART and ST-Link Flash, Read and Erase">
-  <meta name="twitter:description" content="Identify, back up and program STM32 devices through Web Serial UART or ST-Link WebUSB.">
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/stm32-tool-og.png"><meta name="twitter:image:alt" content="Preview image for STM32 Web Tool — ST-Link and UART, Flash, Read and Erase">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/stm32-tool/">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web STM32 Tool","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/stm32-tool/","description":"Flash and inspect STM32 devices directly from the browser with Web Serial and WebUSB.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
-  <title>STM32 Web Tool — ST-Link and UART, Flash, Read and Erase</title>
-<link rel="stylesheet" href="../styles/main.css">
-  <link rel="stylesheet" href="../web-serial-terminal/vendor/xterm/xterm.css">
-  <link rel="stylesheet" href="src/styles.css">
-<script defer src="../../assets/theme-toggle.js?v=20260624-light20"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Identify, read, erase and flash STM32 devices through UART bootloader or ST-Link directly from your browser with Web Serial and WebUSB." name="description"/>
+<meta content="notranslate" name="google"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="STM32 Web Tool — ST-Link and UART, Flash, Read and Erase" property="og:title"/>
+<meta content="Program STM32 devices through their UART bootloader or an ST-Link probe directly from a browser." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/stm32-tool/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/stm32-tool-og.png" property="og:image"/><meta content="STM32 Web Tool — ST-Link and UART, Flash, Read and Erase preview card." property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="STM32 Web Tool — UART and ST-Link Flash, Read and Erase" name="twitter:title"/>
+<meta content="Identify, back up and program STM32 devices through Web Serial UART or ST-Link WebUSB." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/stm32-tool-og.png" name="twitter:image"/><meta content="STM32 Web Tool — ST-Link and UART, Flash, Read and Erase preview card." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/stm32-tool/" rel="canonical"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web STM32 Tool","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/stm32-tool/","description":"Flash and inspect STM32 devices directly from the browser with Web Serial and WebUSB.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
+<title>STM32 Web Tool — ST-Link and UART, Flash, Read and Erase</title>
+<link href="../styles/main.css" rel="stylesheet"/>
+<link href="../web-serial-terminal/vendor/xterm/xterm.css" rel="stylesheet"/>
+<link href="src/styles.css" rel="stylesheet"/>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light20"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
-  <main class="wrap stm32-wrap">
-    <noscript>
-      <section class="notice error">STM32 Web Tool requires JavaScript and Web Serial or WebUSB.</section>
-    </noscript>
-
-    <section id="serialUnsupported" class="notice error" hidden>
+<main class="wrap stm32-wrap">
+<noscript>
+<section class="notice error">STM32 Web Tool requires JavaScript and Web Serial or WebUSB.</section>
+</noscript>
+<section class="notice error" hidden="" id="serialUnsupported">
       Web Serial and WebUSB are unavailable. Use Chrome, Edge or another compatible Chromium browser over HTTPS or localhost.
     </section>
-
-    <section id="firefoxWebUsbUnsupported" class="notice error" hidden>
+<section class="notice error" hidden="" id="firefoxWebUsbUnsupported">
       Firefox does not support ST-Link WebUSB. Use Chrome, Edge or another Chromium-based browser for this connection mode.
     </section>
-
-    <section class="stm32-shell" aria-label="STM32 Web Tool">
-      <div class="toolbar">
-        <div class="toolbar-brand" aria-label="STM32 Web Tool">
-          <a class="brand-mark" href="../" aria-label="ESP32 Bit Pirate home">B</a>
-          <div>
-            <h1>STM32 Web Tool</h1>
-          </div>
-        </div>
-
-        <div class="toolbar-actions">
-          <button class="help-icon-button" type="button" data-help-open aria-label="Open STM32 Web Tool help" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
-          </button>
-          <select id="connectionTransport" class="inline-select compact-select transport-select" aria-label="Connection interface">
-            <option value="uart">UART Bootloader</option>
-            <option value="stlink" selected>ST-Link (WebUSB)</option>
-          </select>
-          <label id="uartBaudControl" class="toolbar-field" aria-label="Bootloader baudrate">
-            <span>Baud</span>
-            <select id="bootBaudRate" class="inline-select compact-select">
-              <option value="9600">9600</option>
-              <option value="19200">19200</option>
-              <option value="38400">38400</option>
-              <option value="57600">57600</option>
-              <option value="115200" selected>115200</option>
-            </select>
-          </label>
-          <button id="connectButton" class="button action-button primary" type="button">Connect</button>
-          <button id="disconnectButton" class="button action-button" type="button" disabled hidden>Disconnect</button>
-          <span id="connectionStatus" class="status-pill">Disconnected</span>
-        </div>
-      </div>
-
-      <div class="mode-tabs" role="tablist" aria-label="STM32 operations">
-        <button class="mode-tab is-active" type="button" role="tab" aria-selected="true" data-mode-tab="flash">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
+<section aria-label="STM32 Web Tool" class="stm32-shell">
+<div class="toolbar">
+<div aria-label="STM32 Web Tool" class="toolbar-brand">
+<a aria-label="ESP32 Bit Pirate home" class="brand-mark" href="../">B</a>
+<div>
+<h1>STM32 Web Tool</h1>
+</div>
+</div>
+<div class="toolbar-actions">
+<button aria-expanded="false" aria-label="Open STM32 Web Tool help" class="help-icon-button" data-help-open="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+</button>
+<select aria-label="Connection interface" class="inline-select compact-select transport-select" id="connectionTransport">
+<option value="uart">UART Bootloader</option>
+<option selected="" value="stlink">ST-Link (WebUSB)</option>
+</select>
+<label aria-label="Bootloader baudrate" class="toolbar-field" id="uartBaudControl">
+<span>Baud</span>
+<select class="inline-select compact-select" id="bootBaudRate">
+<option value="9600">9600</option>
+<option value="19200">19200</option>
+<option value="38400">38400</option>
+<option value="57600">57600</option>
+<option selected="" value="115200">115200</option>
+</select>
+</label>
+<button class="button action-button primary" id="connectButton" type="button">Connect</button>
+<button class="button action-button" disabled="" hidden="" id="disconnectButton" type="button">Disconnect</button>
+<span class="status-pill" id="connectionStatus">Disconnected</span>
+</div>
+</div>
+<div aria-label="STM32 operations" class="mode-tabs" role="tablist">
+<button aria-selected="true" class="mode-tab is-active" data-mode-tab="flash" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
           Flash
         </button>
-        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="read">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"></path><path d="M8 11l4 4 4-4"></path><path d="M5 20h14"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="read" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 4v11"></path><path d="M8 11l4 4 4-4"></path><path d="M5 20h14"></path></svg>
           Read
         </button>
-        <button class="mode-tab danger-tab" type="button" role="tab" aria-selected="false" data-mode-tab="erase">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
+<button aria-selected="false" class="mode-tab danger-tab" data-mode-tab="erase" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
           Erase
         </button>
-        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="info">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="info" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
           Device Info
         </button>
-        <button id="consoleTab" class="mode-tab" type="button" role="tab" aria-selected="false" data-mode-tab="console">
-          <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 9l3 3-3 3"></path><path d="M12 15h5"></path></svg>
+<button aria-selected="false" class="mode-tab" data-mode-tab="console" id="consoleTab" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="4"></rect><path d="M7 9l3 3-3 3"></path><path d="M12 15h5"></path></svg>
           Console
         </button>
-        <label id="bootModeControl" class="boot-mode-select">
-          <span>Boot control</span>
-          <select id="bootControlMode" class="inline-select compact-select">
-            <option value="manual" selected>Manual</option>
-            <option value="automatic">RTS / DTR</option>
-          </select>
-        </label>
-      </div>
-
-      <details id="bootControlPanel" class="content-card boot-control-panel" hidden>
-        <summary>Automatic BOOT0 / NRST wiring</summary>
-        <div class="boot-control-grid">
-          <label>
+<label class="boot-mode-select" id="bootModeControl">
+<span>Boot control</span>
+<select class="inline-select compact-select" id="bootControlMode">
+<option selected="" value="manual">Manual</option>
+<option value="automatic">RTS / DTR</option>
+</select>
+</label>
+</div>
+<details class="content-card boot-control-panel" hidden="" id="bootControlPanel">
+<summary>Automatic BOOT0 / NRST wiring</summary>
+<div class="boot-control-grid">
+<label>
             BOOT0 signal
-            <select id="bootSignal" class="inline-select">
-              <option value="dataTerminalReady" selected>DTR</option>
-              <option value="requestToSend">RTS</option>
-            </select>
-          </label>
-          <label>
+            <select class="inline-select" id="bootSignal">
+<option selected="" value="dataTerminalReady">DTR</option>
+<option value="requestToSend">RTS</option>
+</select>
+</label>
+<label>
             NRST signal
-            <select id="resetSignal" class="inline-select">
-              <option value="requestToSend" selected>RTS</option>
-              <option value="dataTerminalReady">DTR</option>
-            </select>
-          </label>
-          <label class="check-label"><input id="bootActiveLevel" type="checkbox" checked> BOOT0 active when signal is asserted</label>
-          <label class="check-label"><input id="resetActiveLevel" type="checkbox" checked> NRST active when signal is asserted</label>
-        </div>
-        <p>Signal polarity depends on the USB-UART adapter and any transistor circuit. Manual mode remains the safe default.</p>
-      </details>
-
-      <div class="workspace">
-        <section class="work-panel" aria-label="Operation configuration">
-          <section id="manualBootHelp" class="boot-help">
-            <div>
-              <strong>Enter the STM32 system bootloader</strong>
-              <span>Set BOOT0 high, reset the target, release RESET, then click Connect. Cross TX/RX and share GND.</span>
-            </div>
-            <span class="serial-format">8E1</span>
-          </section>
-
-          <section id="stlinkHelp" class="boot-help" hidden>
-            <div>
-              <strong>Connect the ST-Link to the target</strong>
-              <span>Wire SWDIO, SWCLK, GND and VTref/3.3V sense, then click Connect and select the ST-Link probe.</span>
-            </div>
-            <span class="serial-format">SWD</span>
-          </section>
-
-          <section class="mode-panel is-active" data-mode-panel="flash">
-            <input id="firmwareFileInput" type="file" accept=".bin,.hex,application/octet-stream,text/plain" hidden>
-            <div id="firmwareDropZone" class="drop-zone firmware-picker" tabindex="0" role="button" aria-label="Choose or drop a BIN or Intel HEX firmware file">
-              <strong>Click to choose or drop a BIN or Intel HEX firmware here</strong>
-              <span>BIN uses the address below. HEX keeps its embedded addresses.</span>
-            </div>
-
-            <article id="firmwareCard" class="firmware-card empty">
-              <div>
-                <span>File</span>
-                <strong id="firmwareName">No firmware selected</strong>
-              </div>
-              <div>
-                <span>Format</span>
-                <strong id="firmwareFormat">-</strong>
-              </div>
-              <div>
-                <span>Size</span>
-                <strong id="firmwareSize">-</strong>
-              </div>
-              <button id="clearFirmwareButton" class="icon-button" type="button" aria-label="Remove firmware" disabled>×</button>
-            </article>
-
-            <div class="form-grid flash-grid">
-              <label for="flashAddress">BIN start address</label>
-              <input id="flashAddress" value="0x08000000" spellcheck="false">
-              <label for="eraseBeforeWrite">Erase strategy</label>
-              <select id="eraseBeforeWrite" class="inline-select wide-select">
-                <option value="needed" selected>Erase required pages / sectors</option>
-                <option value="mass">Erase entire flash</option>
-                <option value="none">Do not erase</option>
-              </select>
-            </div>
-
-            <div id="firmwareSegments" class="segment-list empty">No firmware memory ranges loaded.</div>
-
-            <div class="options-grid">
-              <label><input id="verifyAfterWrite" type="checkbox" checked> Verify after write</label>
-              <label><input id="runAfterWrite" type="checkbox" checked> Run firmware after flash</label>
-              <label><input id="padBin" type="checkbox" checked> Pad final write with 0xFF</label>
-            </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="read" hidden>
-            <div class="panel-header panel-actions">
-              <select id="readPreset" class="inline-select" aria-label="Read preset">
-                <option value="full" selected>Full Flash</option>
-                <option value="application">Application Flash</option>
-                <option value="custom">Custom Region</option>
-              </select>
-            </div>
-
-            <div class="form-grid read-grid">
-              <label for="readStart">Start address</label>
-              <input id="readStart" value="0x08000000" spellcheck="false">
-              <label for="readSize">Size</label>
-              <input id="readSize" value="128KB" spellcheck="false">
-              <label for="readFilename">Output filename</label>
-              <input id="readFilename" value="stm32-flash-backup.bin" spellcheck="false">
-            </div>
-
-            <div class="metric-grid">
-              <div><span>Progress</span><strong id="readPercent">0%</strong></div>
-              <div><span>Speed</span><strong id="readSpeed">-</strong></div>
-              <div><span>Read</span><strong id="readAmount">0 B</strong></div>
-              <div><span>Elapsed</span><strong id="readElapsed">0s</strong></div>
-            </div>
-          </section>
-
-          <section class="mode-panel" data-mode-panel="erase" hidden>
-            <div class="erase-choice-grid">
-              <label class="choice-card">
-                <input type="radio" name="eraseMode" value="mass" checked>
-                <strong>Entire flash</strong>
-                <span>Use the bootloader mass-erase command.</span>
-              </label>
-              <label class="choice-card">
-                <input type="radio" name="eraseMode" value="range">
-                <strong>Address range</strong>
-                <span>Erase every page or sector overlapping the selected region.</span>
-              </label>
-            </div>
-
-            <div id="eraseRangeFields" class="form-grid" hidden>
-              <label for="eraseStart">Start address</label>
-              <input id="eraseStart" value="0x08000000" spellcheck="false">
-              <label for="eraseSize">Size</label>
-              <input id="eraseSize" value="16KB" spellcheck="false">
-            </div>
-
-            <label class="danger-confirm"><input id="eraseConfirm" type="checkbox"> I understand that erased data cannot be recovered.</label>
-            <div id="erasePreview" class="validation-list">Connect a target to preview the erase operation.</div>
-          </section>
-
-          <section class="mode-panel info-panel" data-mode-panel="info" hidden>
-            <div class="panel-header panel-actions">
-              <button id="refreshInfoButton" class="button action-button subtle" type="button">Refresh</button>
-            </div>
-
-            <div class="info-dashboard">
-              <article>
-                <span>Device</span>
-                <strong id="infoDeviceName">Not connected</strong>
-              </article>
-              <article>
-                <span>Device ID</span>
-                <strong id="infoDeviceId">-</strong>
-              </article>
-              <article>
-                <span id="infoInterfaceLabel">Interface</span>
-                <strong id="infoBootloaderVersion">-</strong>
-              </article>
-              <article>
-                <span>Flash range</span>
-                <strong id="infoFlashRange">-</strong>
-              </article>
-            </div>
-
-            <div>
-              <p class="field-title">Advertised commands</p>
-              <div id="commandChips" class="command-chips"><span>Connect to query the bootloader.</span></div>
-            </div>
-
-            <details class="advanced-memory-settings">
-              <summary>Manual memory override</summary>
-              <div class="form-grid">
-                <label for="manualFlashSize">Flash size</label>
-                <input id="manualFlashSize" value="" placeholder="Example: 256KB" spellcheck="false">
-                <label for="manualPageSize">Uniform page size</label>
-                <input id="manualPageSize" value="" placeholder="Optional, example: 2KB" spellcheck="false">
-              </div>
-              <button id="applyMemoryOverrideButton" class="button action-button subtle" type="button">Apply Override</button>
-            </details>
-          </section>
-
-          <section class="mode-panel console-panel" data-mode-panel="console" hidden>
-            <div class="panel-header panel-actions">
-              <div class="preset-row">
-                <select id="consoleBaudRate" class="inline-select compact-select" aria-label="Console baudrate">
-                  <option value="9600">9600</option>
-                  <option value="19200">19200</option>
-                  <option value="38400">38400</option>
-                  <option value="57600">57600</option>
-                  <option value="115200" selected>115200</option>
-                  <option value="230400">230400</option>
-                  <option value="460800">460800</option>
-                  <option value="921600">921600</option>
-                </select>
-                <button id="openConsoleButton" class="button action-button primary" type="button">Open Console</button>
-              </div>
-            </div>
-            <p class="console-note">Opening the console switches the selected port from STM32 bootloader mode (8E1) to regular serial mode (8N1).</p>
-            <div id="terminal" class="terminal-host" aria-label="STM32 serial terminal"></div>
-          </section>
-        </section>
-
-        <aside class="side-panel" aria-label="Memory and device information">
-          <article class="tool-card compact-card device-card">
-            <p class="eyebrow">Connected target</p>
-            <dl class="info-list">
-              <div><dt>Device</dt><dd id="deviceName">-</dd></div>
-              <div><dt>Family</dt><dd id="deviceFamily">-</dd></div>
-              <div><dt>Device ID</dt><dd id="deviceId">-</dd></div>
-              <div><dt id="interfaceLabel">Interface</dt><dd id="bootloaderVersion">-</dd></div>
-              <div><dt>Protection</dt><dd id="protectionBytes">-</dd></div>
-              <div><dt>Flash</dt><dd id="detectedFlashSize">-</dd></div>
-              <div><dt>Erase layout</dt><dd id="eraseGeometry">-</dd></div>
-            </dl>
-          </article>
-
-          <article class="tool-card compact-card memory-card">
-            <div class="panel-header tight">
-              <p class="eyebrow">Flash memory</p>
-              <strong id="memorySizeLabel">128 KB view</strong>
-            </div>
-            <div id="memoryMap" class="memory-map" aria-label="STM32 memory preview"></div>
-            <div id="validationList" class="validation-list">Connect a target and load a firmware image.</div>
-          </article>
-        </aside>
-      </div>
-
-      <article class="content-card action-strip">
-        <div class="primary-area">
-          <button id="primaryAction" class="button action-button primary" type="button">Flash Firmware</button>
-          <button id="cancelAction" class="button action-button danger" type="button" hidden>Cancel</button>
-          <span id="operationStatus">Idle</span>
-          <span id="actionHint" class="action-hint">Connect the ST-Link to the target, then select the probe.</span>
-        </div>
-        <div class="progress-stack">
-          <div class="progress-row">
-            <progress id="operationProgress" max="100" value="0"></progress>
-            <span id="progressValue">0%</span>
-          </div>
-        </div>
-      </article>
-
-      <details class="content-card log-card" open>
-        <summary><span id="logTitle">Technical log</span></summary>
-        <div class="log-header">
-          <button id="copyLogButton" class="button action-button subtle" type="button">Copy</button>
-          <button id="clearLogButton" class="button action-button subtle" type="button">Clear</button>
-        </div>
-        <pre id="technicalLog" class="log-output" aria-live="polite"></pre>
-      </details>
-    </section>
-  </main>
-
-  <section id="toolHelpContent" class="tool-help-source" hidden>
-    <h2 id="toolHelpTitle">STM32 Web Tool help</h2>
-    <section>
-      <h3>What it does</h3>
-      <p>Identify, back up, erase and flash STM32 devices either through the factory UART bootloader or through an ST-Link probe over SWD.</p>
-    </section>
-    <section>
-      <h3>Adapters</h3>
-      <ul>
-        <li>UART mode: use a 3.3 V USB serial adapter connected to the STM32 bootloader UART pins.</li>
-        <li>ST-Link mode: use ST-LINK/V2 or ST-LINK/V2-1 with SWDIO, SWCLK, GND and target voltage sense connected.</li>
-        <li>ST-Link uses WebUSB, so use Chrome, Edge or another Chromium browser. Firefox is not supported for this mode.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>Connection</h3>
-      <ol>
-        <li>For UART, set BOOT0 high, reset the target, then click Connect.</li>
-        <li>For ST-Link, power the target, connect SWD, then click Connect and select the probe.</li>
-        <li>Read a backup before writing when working on hardware you cannot easily recover.</li>
-      </ol>
-    </section>
-  </section>
-  <script src="../web-serial-terminal/vendor/xterm/xterm.min.js"></script>
-  <script src="../web-serial-terminal/vendor/xterm/addon-fit.min.js"></script>
-  <script type="module" src="../shared/help-modal.js"></script>
-  <script type="module" src="src/App.js"></script>
+            <select class="inline-select" id="resetSignal">
+<option selected="" value="requestToSend">RTS</option>
+<option value="dataTerminalReady">DTR</option>
+</select>
+</label>
+<label class="check-label"><input checked="" id="bootActiveLevel" type="checkbox"/> BOOT0 active when signal is asserted</label>
+<label class="check-label"><input checked="" id="resetActiveLevel" type="checkbox"/> NRST active when signal is asserted</label>
+</div>
+<p>Signal polarity depends on the USB-UART adapter and any transistor circuit. Manual mode remains the safe default.</p>
+</details>
+<div class="workspace">
+<section aria-label="Operation configuration" class="work-panel">
+<section class="boot-help" id="manualBootHelp">
+<div>
+<strong>Enter the STM32 system bootloader</strong>
+<span>Set BOOT0 high, reset the target, release RESET, then click Connect. Cross TX/RX and share GND.</span>
+</div>
+<span class="serial-format">8E1</span>
+</section>
+<section class="boot-help" hidden="" id="stlinkHelp">
+<div>
+<strong>Connect the ST-Link to the target</strong>
+<span>Wire SWDIO, SWCLK, GND and VTref/3.3V sense, then click Connect and select the ST-Link probe.</span>
+</div>
+<span class="serial-format">SWD</span>
+</section>
+<section class="mode-panel is-active" data-mode-panel="flash">
+<input accept=".bin,.hex,application/octet-stream,text/plain" hidden="" id="firmwareFileInput" type="file"/>
+<div aria-label="Choose or drop a BIN or Intel HEX firmware file" class="drop-zone firmware-picker" id="firmwareDropZone" role="button" tabindex="0">
+<strong>Click to choose or drop a BIN or Intel HEX firmware here</strong>
+<span>BIN uses the address below. HEX keeps its embedded addresses.</span>
+</div>
+<article class="firmware-card empty" id="firmwareCard">
+<div>
+<span>File</span>
+<strong id="firmwareName">No firmware selected</strong>
+</div>
+<div>
+<span>Format</span>
+<strong id="firmwareFormat">-</strong>
+</div>
+<div>
+<span>Size</span>
+<strong id="firmwareSize">-</strong>
+</div>
+<button aria-label="Remove firmware" class="icon-button" disabled="" id="clearFirmwareButton" type="button">×</button>
+</article>
+<div class="form-grid flash-grid">
+<label for="flashAddress">BIN start address</label>
+<input id="flashAddress" spellcheck="false" value="0x08000000"/>
+<label for="eraseBeforeWrite">Erase strategy</label>
+<select class="inline-select wide-select" id="eraseBeforeWrite">
+<option selected="" value="needed">Erase required pages / sectors</option>
+<option value="mass">Erase entire flash</option>
+<option value="none">Do not erase</option>
+</select>
+</div>
+<div class="segment-list empty" id="firmwareSegments">No firmware memory ranges loaded.</div>
+<div class="options-grid">
+<label><input checked="" id="verifyAfterWrite" type="checkbox"/> Verify after write</label>
+<label><input checked="" id="runAfterWrite" type="checkbox"/> Run firmware after flash</label>
+<label><input checked="" id="padBin" type="checkbox"/> Pad final write with 0xFF</label>
+</div>
+</section>
+<section class="mode-panel" data-mode-panel="read" hidden="">
+<div class="panel-header panel-actions">
+<select aria-label="Read preset" class="inline-select" id="readPreset">
+<option selected="" value="full">Full Flash</option>
+<option value="application">Application Flash</option>
+<option value="custom">Custom Region</option>
+</select>
+</div>
+<div class="form-grid read-grid">
+<label for="readStart">Start address</label>
+<input id="readStart" spellcheck="false" value="0x08000000"/>
+<label for="readSize">Size</label>
+<input id="readSize" spellcheck="false" value="128KB"/>
+<label for="readFilename">Output filename</label>
+<input id="readFilename" spellcheck="false" value="stm32-flash-backup.bin"/>
+</div>
+<div class="metric-grid">
+<div><span>Progress</span><strong id="readPercent">0%</strong></div>
+<div><span>Speed</span><strong id="readSpeed">-</strong></div>
+<div><span>Read</span><strong id="readAmount">0 B</strong></div>
+<div><span>Elapsed</span><strong id="readElapsed">0s</strong></div>
+</div>
+</section>
+<section class="mode-panel" data-mode-panel="erase" hidden="">
+<div class="erase-choice-grid">
+<label class="choice-card">
+<input checked="" name="eraseMode" type="radio" value="mass"/>
+<strong>Entire flash</strong>
+<span>Use the bootloader mass-erase command.</span>
+</label>
+<label class="choice-card">
+<input name="eraseMode" type="radio" value="range"/>
+<strong>Address range</strong>
+<span>Erase every page or sector overlapping the selected region.</span>
+</label>
+</div>
+<div class="form-grid" hidden="" id="eraseRangeFields">
+<label for="eraseStart">Start address</label>
+<input id="eraseStart" spellcheck="false" value="0x08000000"/>
+<label for="eraseSize">Size</label>
+<input id="eraseSize" spellcheck="false" value="16KB"/>
+</div>
+<label class="danger-confirm"><input id="eraseConfirm" type="checkbox"/> I understand that erased data cannot be recovered.</label>
+<div class="validation-list" id="erasePreview">Connect a target to preview the erase operation.</div>
+</section>
+<section class="mode-panel info-panel" data-mode-panel="info" hidden="">
+<div class="panel-header panel-actions">
+<button class="button action-button subtle" id="refreshInfoButton" type="button">Refresh</button>
+</div>
+<div class="info-dashboard">
+<article>
+<span>Device</span>
+<strong id="infoDeviceName">Not connected</strong>
+</article>
+<article>
+<span>Device ID</span>
+<strong id="infoDeviceId">-</strong>
+</article>
+<article>
+<span id="infoInterfaceLabel">Interface</span>
+<strong id="infoBootloaderVersion">-</strong>
+</article>
+<article>
+<span>Flash range</span>
+<strong id="infoFlashRange">-</strong>
+</article>
+</div>
+<div>
+<p class="field-title">Advertised commands</p>
+<div class="command-chips" id="commandChips"><span>Connect to query the bootloader.</span></div>
+</div>
+<details class="advanced-memory-settings">
+<summary>Manual memory override</summary>
+<div class="form-grid">
+<label for="manualFlashSize">Flash size</label>
+<input id="manualFlashSize" placeholder="Example: 256KB" spellcheck="false" value=""/>
+<label for="manualPageSize">Uniform page size</label>
+<input id="manualPageSize" placeholder="Optional, example: 2KB" spellcheck="false" value=""/>
+</div>
+<button class="button action-button subtle" id="applyMemoryOverrideButton" type="button">Apply Override</button>
+</details>
+</section>
+<section class="mode-panel console-panel" data-mode-panel="console" hidden="">
+<div class="panel-header panel-actions">
+<div class="preset-row">
+<select aria-label="Console baudrate" class="inline-select compact-select" id="consoleBaudRate">
+<option value="9600">9600</option>
+<option value="19200">19200</option>
+<option value="38400">38400</option>
+<option value="57600">57600</option>
+<option selected="" value="115200">115200</option>
+<option value="230400">230400</option>
+<option value="460800">460800</option>
+<option value="921600">921600</option>
+</select>
+<button class="button action-button primary" id="openConsoleButton" type="button">Open Console</button>
+</div>
+</div>
+<p class="console-note">Opening the console switches the selected port from STM32 bootloader mode (8E1) to regular serial mode (8N1).</p>
+<div aria-label="STM32 serial terminal" class="terminal-host" id="terminal"></div>
+</section>
+</section>
+<aside aria-label="Memory and device information" class="side-panel">
+<article class="tool-card compact-card device-card">
+<p class="eyebrow">Connected target</p>
+<dl class="info-list">
+<div><dt>Device</dt><dd id="deviceName">-</dd></div>
+<div><dt>Family</dt><dd id="deviceFamily">-</dd></div>
+<div><dt>Device ID</dt><dd id="deviceId">-</dd></div>
+<div><dt id="interfaceLabel">Interface</dt><dd id="bootloaderVersion">-</dd></div>
+<div><dt>Protection</dt><dd id="protectionBytes">-</dd></div>
+<div><dt>Flash</dt><dd id="detectedFlashSize">-</dd></div>
+<div><dt>Erase layout</dt><dd id="eraseGeometry">-</dd></div>
+</dl>
+</article>
+<article class="tool-card compact-card memory-card">
+<div class="panel-header tight">
+<p class="eyebrow">Flash memory</p>
+<strong id="memorySizeLabel">128 KB view</strong>
+</div>
+<div aria-label="STM32 memory preview" class="memory-map" id="memoryMap"></div>
+<div class="validation-list" id="validationList">Connect a target and load a firmware image.</div>
+</article>
+</aside>
+</div>
+<article class="content-card action-strip">
+<div class="primary-area">
+<button class="button action-button primary" id="primaryAction" type="button">Flash Firmware</button>
+<button class="button action-button danger" hidden="" id="cancelAction" type="button">Cancel</button>
+<span id="operationStatus">Idle</span>
+<span class="action-hint" id="actionHint">Connect the ST-Link to the target, then select the probe.</span>
+</div>
+<div class="progress-stack">
+<div class="progress-row">
+<progress id="operationProgress" max="100" value="0"></progress>
+<span id="progressValue">0%</span>
+</div>
+</div>
+</article>
+<details class="content-card log-card" open="">
+<summary><span id="logTitle">Technical log</span></summary>
+<div class="log-header">
+<button class="button action-button subtle" id="copyLogButton" type="button">Copy</button>
+<button class="button action-button subtle" id="clearLogButton" type="button">Clear</button>
+</div>
+<pre aria-live="polite" class="log-output" id="technicalLog"></pre>
+</details>
+</section>
+</main>
+<section class="tool-help-source" hidden="" id="toolHelpContent">
+<h2 id="toolHelpTitle">STM32 Web Tool help</h2>
+<section>
+<h3>What it does</h3>
+<p>Identify, back up, erase and flash STM32 devices either through the factory UART bootloader or through an ST-Link probe over SWD.</p>
+</section>
+<section>
+<h3>Adapters</h3>
+<ul>
+<li>UART mode: use a 3.3 V USB serial adapter connected to the STM32 bootloader UART pins.</li>
+<li>ST-Link mode: use ST-LINK/V2 or ST-LINK/V2-1 with SWDIO, SWCLK, GND and target voltage sense connected.</li>
+<li>ST-Link uses WebUSB, so use Chrome, Edge or another Chromium browser. Firefox is not supported for this mode.</li>
+</ul>
+</section>
+<section>
+<h3>Connection</h3>
+<ol>
+<li>For UART, set BOOT0 high, reset the target, then click Connect.</li>
+<li>For ST-Link, power the target, connect SWD, then click Connect and select the probe.</li>
+<li>Read a backup before writing when working on hardware you cannot easily recover.</li>
+</ol>
+</section>
+</section>
+<script src="../web-serial-terminal/vendor/xterm/xterm.min.js"></script>
+<script src="../web-serial-terminal/vendor/xterm/addon-fit.min.js"></script>
+<script src="../shared/help-modal.js" type="module"></script>
+<script src="src/App.js" type="module"></script>
 </body>
 </html>

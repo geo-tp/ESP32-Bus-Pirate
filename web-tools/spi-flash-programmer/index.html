@@ -1,200 +1,188 @@
-<!doctype html>
-<html lang="en" translate="no" class="notranslate">
+<!DOCTYPE html>
+
+<html class="notranslate" lang="en" translate="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Read, write, erase and verify SPI flash chips directly from your browser using serprog-compatible hardware. No flashrom installation required.">
-  <meta name="google" content="notranslate">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-  <meta name="theme-color" content="#121212">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="Web Serial Tools">
-  <meta property="og:title" content="Web SPI Flash Programmer for serprog-compatible hardware">
-  <meta property="og:description" content="Read, write, erase and verify SPI flash chips directly from your browser using serprog-compatible hardware.">
-  <meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/spi-flash-programmer/">
-  <meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/spi-flash-programmer-og.png"><meta property="og:image:alt" content="Preview image for Web SPI Flash Programmer for serprog-compatible hardware"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Web SPI Flash Programmer for serprog-compatible hardware">
-  <meta name="twitter:description" content="Read, write, erase and verify SPI flash chips directly from your browser using serprog-compatible hardware.">
-  <meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/spi-flash-programmer-og.png"><meta name="twitter:image:alt" content="Preview image for Web SPI Flash Programmer for serprog-compatible hardware">
-  <link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/spi-flash-programmer/">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web SPI Flash Programmer","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/spi-flash-programmer/","description":"Probe, read, write and verify SPI flash chips from the browser using compatible Web Serial hardware.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
-  <title>Web SPI Flash Programmer for serprog-compatible hardware</title>
-<link rel="stylesheet" href="../styles/main.css">
-  <link rel="stylesheet" href="src/styles.css">
-<script defer src="../../assets/theme-toggle.js?v=20260624-light20"></script>
-<link rel="icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png">
-<link rel="apple-touch-icon" href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Read, write, erase and verify SPI flash chips directly from your browser using serprog-compatible hardware. No flashrom installation required." name="description"/>
+<meta content="notranslate" name="google"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="Web Serial Tools" property="og:site_name"/>
+<meta content="Web SPI Flash Programmer for serprog-compatible hardware" property="og:title"/>
+<meta content="Read, write, erase and verify SPI flash chips directly from your browser using serprog-compatible hardware." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/spi-flash-programmer/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/spi-flash-programmer-og.png" property="og:image"/><meta content="Web SPI Flash Programmer for serprog-compatible hardware preview card." property="og:image:alt"/><meta content="image/png" property="og:image:type"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Web SPI Flash Programmer for serprog-compatible hardware" name="twitter:title"/>
+<meta content="Read, write, erase and verify SPI flash chips directly from your browser using serprog-compatible hardware." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/spi-flash-programmer-og.png" name="twitter:image"/><meta content="Web SPI Flash Programmer for serprog-compatible hardware preview card." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/spi-flash-programmer/" rel="canonical"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Web SPI Flash Programmer","url":"https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/spi-flash-programmer/","description":"Probe, read, write and verify SPI flash chips from the browser using compatible Web Serial hardware.","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"ESP32 Bit Pirate","url":"https://github.com/geo-tp/ESP32-Bit-Pirate"}}</script>
+<title>Web SPI Flash Programmer for serprog-compatible hardware</title>
+<link href="../styles/main.css" rel="stylesheet"/>
+<link href="src/styles.css" rel="stylesheet"/>
+<script defer="" src="../../assets/theme-toggle.js?v=20260624-light20"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
 </head>
 <body>
-  <main class="wrap programmer-wrap">
-    <noscript>
-      <section class="notice error">This web SPI flash programmer requires JavaScript and Web Serial.</section>
-    </noscript>
-
-    <section id="serialUnsupported" class="notice error" hidden>
+<main class="wrap programmer-wrap">
+<noscript>
+<section class="notice error">This web SPI flash programmer requires JavaScript and Web Serial.</section>
+</noscript>
+<section class="notice error" hidden="" id="serialUnsupported">
       Web Serial is not available in this browser. Use Chrome, Edge, or another compatible Chromium browser over HTTPS or localhost.
     </section>
-
-    <section class="programmer-shell" aria-label="SPI flash programmer">
-      <div class="toolbar">
-        <div class="toolbar-brand" aria-label="Web SPI Flash Programmer">
-          <a class="brand-mark" href="../" aria-label="ESP32 Bit Pirate home">B</a>
-          <h1>Web SPI Flash Programmer</h1>
-        </div>
-
-        <div class="toolbar-actions">
-          <button class="help-icon-button" type="button" data-help-open aria-label="Open Web SPI Flash Programmer help" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
-          </button>
-          <button id="connectButton" class="button action-button primary" type="button">Connect</button>
-          <button id="disconnectButton" class="button action-button" type="button" disabled hidden>Disconnect</button>
-          <span id="connectionStatus" class="status-pill">Disconnected</span>
-        </div>
-      </div>
-
-      <div class="panel-grid">
-        <article class="tool-card compact-card">
-          <p class="eyebrow">Adapter</p>
-          <dl class="info-list">
-            <div><dt>Programmer</dt><dd id="programmerName">-</dd></div>
-            <div><dt>serprog interface</dt><dd id="ifaceVersion">-</dd></div>
-            <div><dt>Bus</dt><dd id="busType">-</dd></div>
-            <div><dt>Serial buffer</dt><dd id="serialBuffer">-</dd></div>
-            <div><dt>Max SPI read</dt><dd id="maxRead">-</dd></div>
-            <div><dt>Max SPI write</dt><dd id="maxWrite">-</dd></div>
-            <div>
-              <dt><label for="spiFrequencySelect">SPI frequency</label></dt>
-              <dd>
-                <select id="spiFrequencySelect" class="inline-select">
-                  <option value="1000000">1 MHz</option>
-                  <option value="2000000">2 MHz</option>
-                  <option value="4000000">4 MHz</option>
-                  <option value="8000000" selected>8 MHz</option>
-                  <option value="12000000">12 MHz</option>
-                  <option value="16000000">16 MHz</option>
-                  <option value="20000000">20 MHz</option>
-                  <option value="26000000">26 MHz</option>
-                  <option value="40000000">40 MHz</option>
-                  <option value="60000000">60 MHz</option>
-                  <option value="80000000">80 MHz</option>
-                  <option value="custom">Custom...</option>
-                </select>
-                <input id="spiFrequencyCustom" class="inline-input" type="number" min="0.001" step="0.001" inputmode="decimal" value="8" aria-label="Custom SPI frequency in MHz" hidden>
-                <small id="spiFrequencyActual">Actual: -</small>
-              </dd>
-            </div>
-          </dl>
-        </article>
-
-        <article class="tool-card compact-card">
-          <p class="eyebrow">Probe</p>
-          <dl class="info-list">
-            <div><dt>JEDEC ID</dt><dd id="jedecId">-</dd></div>
-            <div><dt>Likely chip</dt><dd id="chipName">-</dd></div>
-            <div><dt>Capacity</dt><dd id="chipCapacity">-</dd></div>
-            <div><dt>Legacy ID</dt><dd id="legacyId">-</dd></div>
-            <div><dt>SFDP signature</dt><dd id="sfdpSignature">-</dd></div>
-          </dl>
-          <button id="probeButton" class="button action-button" type="button" disabled>Probe chip</button>
-        </article>
-      </div>
-
-      <article class="content-card operation-card">
-        <div class="operation-tabs" role="tablist" aria-label="SPI flash operations">
-          <button class="operation-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="readPanel" data-operation-tab="read">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10"></path><path d="M4 12h16"></path><path d="M4 17h10"></path><path d="M16 7l4 5-4 5"></path></svg>
+<section aria-label="SPI flash programmer" class="programmer-shell">
+<div class="toolbar">
+<div aria-label="Web SPI Flash Programmer" class="toolbar-brand">
+<a aria-label="ESP32 Bit Pirate home" class="brand-mark" href="../">B</a>
+<h1>Web SPI Flash Programmer</h1>
+</div>
+<div class="toolbar-actions">
+<button aria-expanded="false" aria-label="Open Web SPI Flash Programmer help" class="help-icon-button" data-help-open="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7h.01"></path></svg>
+</button>
+<button class="button action-button primary" id="connectButton" type="button">Connect</button>
+<button class="button action-button" disabled="" hidden="" id="disconnectButton" type="button">Disconnect</button>
+<span class="status-pill" id="connectionStatus">Disconnected</span>
+</div>
+</div>
+<div class="panel-grid">
+<article class="tool-card compact-card">
+<p class="eyebrow">Adapter</p>
+<dl class="info-list">
+<div><dt>Programmer</dt><dd id="programmerName">-</dd></div>
+<div><dt>serprog interface</dt><dd id="ifaceVersion">-</dd></div>
+<div><dt>Bus</dt><dd id="busType">-</dd></div>
+<div><dt>Serial buffer</dt><dd id="serialBuffer">-</dd></div>
+<div><dt>Max SPI read</dt><dd id="maxRead">-</dd></div>
+<div><dt>Max SPI write</dt><dd id="maxWrite">-</dd></div>
+<div>
+<dt><label for="spiFrequencySelect">SPI frequency</label></dt>
+<dd>
+<select class="inline-select" id="spiFrequencySelect">
+<option value="1000000">1 MHz</option>
+<option value="2000000">2 MHz</option>
+<option value="4000000">4 MHz</option>
+<option selected="" value="8000000">8 MHz</option>
+<option value="12000000">12 MHz</option>
+<option value="16000000">16 MHz</option>
+<option value="20000000">20 MHz</option>
+<option value="26000000">26 MHz</option>
+<option value="40000000">40 MHz</option>
+<option value="60000000">60 MHz</option>
+<option value="80000000">80 MHz</option>
+<option value="custom">Custom...</option>
+</select>
+<input aria-label="Custom SPI frequency in MHz" class="inline-input" hidden="" id="spiFrequencyCustom" inputmode="decimal" min="0.001" step="0.001" type="number" value="8"/>
+<small id="spiFrequencyActual">Actual: -</small>
+</dd>
+</div>
+</dl>
+</article>
+<article class="tool-card compact-card">
+<p class="eyebrow">Probe</p>
+<dl class="info-list">
+<div><dt>JEDEC ID</dt><dd id="jedecId">-</dd></div>
+<div><dt>Likely chip</dt><dd id="chipName">-</dd></div>
+<div><dt>Capacity</dt><dd id="chipCapacity">-</dd></div>
+<div><dt>Legacy ID</dt><dd id="legacyId">-</dd></div>
+<div><dt>SFDP signature</dt><dd id="sfdpSignature">-</dd></div>
+</dl>
+<button class="button action-button" disabled="" id="probeButton" type="button">Probe chip</button>
+</article>
+</div>
+<article class="content-card operation-card">
+<div aria-label="SPI flash operations" class="operation-tabs" role="tablist">
+<button aria-controls="readPanel" aria-selected="true" class="operation-tab is-active" data-operation-tab="read" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M4 7h10"></path><path d="M4 12h16"></path><path d="M4 17h10"></path><path d="M16 7l4 5-4 5"></path></svg>
             Read range
           </button>
-          <button class="operation-tab" type="button" role="tab" aria-selected="false" aria-controls="dumpPanel" data-operation-tab="dump">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"></path><path d="M8 11l4 4 4-4"></path><path d="M5 20h14"></path></svg>
+<button aria-controls="dumpPanel" aria-selected="false" class="operation-tab" data-operation-tab="dump" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 4v11"></path><path d="M8 11l4 4 4-4"></path><path d="M5 20h14"></path></svg>
             Dump chip
           </button>
-          <button class="operation-tab" type="button" role="tab" aria-selected="false" aria-controls="writePanel" data-operation-tab="write">
-            <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
+<button aria-controls="writePanel" aria-selected="false" class="operation-tab" data-operation-tab="write" role="tab" type="button">
+<svg aria-hidden="true" class="tab-icon" viewbox="0 0 24 24"><path d="M12 20V9"></path><path d="M8 13l4-4 4 4"></path><path d="M5 4h14"></path></svg>
             Write chip
           </button>
-        </div>
-
-        <div class="operation-panels">
-          <section id="readPanel" class="operation-section is-active" role="tabpanel" aria-label="Range read operations" data-operation-panel="read">
-            <p class="eyebrow">Read range</p>
-            <div class="operation-controls range-controls">
-              <label for="readStart">Start</label>
-              <input id="readStart" inputmode="text" value="0x000000" spellcheck="false">
-              <label for="readLength">Length</label>
-              <input id="readLength" inputmode="numeric" value="256" spellcheck="false">
-              <button id="readButton" class="button action-button" type="button" disabled>Read range</button>
-              <button id="downloadButton" class="button action-button" type="button" disabled>Save range</button>
-            </div>
-          </section>
-
-          <section id="dumpPanel" class="operation-section" role="tabpanel" aria-label="Full-chip dump operations" data-operation-panel="dump" hidden>
-            <p class="eyebrow">Dump full chip</p>
-            <div class="operation-controls dump-controls">
-              <button id="dumpButton" class="button action-button" type="button" disabled>Dump full chip</button>
-              <button id="downloadDumpButton" class="button action-button" type="button" disabled>Save full dump</button>
-            </div>
-          </section>
-
-          <section id="writePanel" class="operation-section" role="tabpanel" aria-label="Full-chip write operations" data-operation-panel="write" hidden>
-            <p class="eyebrow">Write full chip</p>
-            <div class="operation-controls write-controls">
-              <div class="file-picker">
-                <input id="writeFile" class="file-input" type="file" accept=".bin,application/octet-stream">
-                <label class="button action-button file-button" for="writeFile">Choose BIN</label>
-                <span id="writeFileName" class="file-name">No file selected</span>
-              </div>
-              <button id="writeButton" class="button action-button danger" type="button" disabled>Write full chip</button>
-            </div>
-          </section>
-        </div>
-
-        <div class="progress-row" aria-label="Operation progress">
-          <span id="progressLabel">Idle</span>
-          <progress id="operationProgress" max="100" value="0"></progress>
-          <span id="progressValue">0%</span>
-        </div>
-
-        <pre id="hexPreview" class="hex-preview" aria-label="Read preview">No data read yet.</pre>
-      </article>
-
-      <article class="content-card log-card">
-        <div class="log-header">
-          <h2>Technical log</h2>
-          <button id="clearLogButton" class="button action-button subtle" type="button">Clear</button>
-        </div>
-        <pre id="logOutput" class="log-output" aria-live="polite"></pre>
-      </article>
-    </section>
-  </main>
-
-  <section id="toolHelpContent" class="tool-help-source" hidden>
-    <h2 id="toolHelpTitle">Web SPI Flash Programmer help</h2>
-    <section>
-      <h3>What it does</h3>
-      <p>Read, erase, write and verify SPI NOR flash chips using a serprog-compatible adapter from the browser.</p>
-    </section>
-    <section>
-      <h3>Adapter</h3>
-      <ul>
-        <li>Use hardware running a serprog-compatible firmware.</li>
-        <li>Connect CS, SCK, MOSI, MISO, GND and the correct flash supply voltage.</li>
-        <li>Use short wiring and a conservative SPI frequency when reading unknown boards in-circuit.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>Connection</h3>
-      <ol>
-        <li>Power the flash chip safely before connecting.</li>
-        <li>Click Connect and select the adapter serial port.</li>
-        <li>Read and save a backup before erase or write operations.</li>
-      </ol>
-    </section>
-  </section>
-  <script type="module" src="../shared/help-modal.js"></script>
-  <script type="module" src="src/App.js"></script>
+</div>
+<div class="operation-panels">
+<section aria-label="Range read operations" class="operation-section is-active" data-operation-panel="read" id="readPanel" role="tabpanel">
+<p class="eyebrow">Read range</p>
+<div class="operation-controls range-controls">
+<label for="readStart">Start</label>
+<input id="readStart" inputmode="text" spellcheck="false" value="0x000000"/>
+<label for="readLength">Length</label>
+<input id="readLength" inputmode="numeric" spellcheck="false" value="256"/>
+<button class="button action-button" disabled="" id="readButton" type="button">Read range</button>
+<button class="button action-button" disabled="" id="downloadButton" type="button">Save range</button>
+</div>
+</section>
+<section aria-label="Full-chip dump operations" class="operation-section" data-operation-panel="dump" hidden="" id="dumpPanel" role="tabpanel">
+<p class="eyebrow">Dump full chip</p>
+<div class="operation-controls dump-controls">
+<button class="button action-button" disabled="" id="dumpButton" type="button">Dump full chip</button>
+<button class="button action-button" disabled="" id="downloadDumpButton" type="button">Save full dump</button>
+</div>
+</section>
+<section aria-label="Full-chip write operations" class="operation-section" data-operation-panel="write" hidden="" id="writePanel" role="tabpanel">
+<p class="eyebrow">Write full chip</p>
+<div class="operation-controls write-controls">
+<div class="file-picker">
+<input accept=".bin,application/octet-stream" class="file-input" id="writeFile" type="file"/>
+<label class="button action-button file-button" for="writeFile">Choose BIN</label>
+<span class="file-name" id="writeFileName">No file selected</span>
+</div>
+<button class="button action-button danger" disabled="" id="writeButton" type="button">Write full chip</button>
+</div>
+</section>
+</div>
+<div aria-label="Operation progress" class="progress-row">
+<span id="progressLabel">Idle</span>
+<progress id="operationProgress" max="100" value="0"></progress>
+<span id="progressValue">0%</span>
+</div>
+<pre aria-label="Read preview" class="hex-preview" id="hexPreview">No data read yet.</pre>
+</article>
+<article class="content-card log-card">
+<div class="log-header">
+<h2>Technical log</h2>
+<button class="button action-button subtle" id="clearLogButton" type="button">Clear</button>
+</div>
+<pre aria-live="polite" class="log-output" id="logOutput"></pre>
+</article>
+</section>
+</main>
+<section class="tool-help-source" hidden="" id="toolHelpContent">
+<h2 id="toolHelpTitle">Web SPI Flash Programmer help</h2>
+<section>
+<h3>What it does</h3>
+<p>Read, erase, write and verify SPI NOR flash chips using a serprog-compatible adapter from the browser.</p>
+</section>
+<section>
+<h3>Adapter</h3>
+<ul>
+<li>Use hardware running a serprog-compatible firmware.</li>
+<li>Connect CS, SCK, MOSI, MISO, GND and the correct flash supply voltage.</li>
+<li>Use short wiring and a conservative SPI frequency when reading unknown boards in-circuit.</li>
+</ul>
+</section>
+<section>
+<h3>Connection</h3>
+<ol>
+<li>Power the flash chip safely before connecting.</li>
+<li>Click Connect and select the adapter serial port.</li>
+<li>Read and save a backup before erase or write operations.</li>
+</ol>
+</section>
+</section>
+<script src="../shared/help-modal.js" type="module"></script>
+<script src="src/App.js" type="module"></script>
 </body>
 </html>
