@@ -682,26 +682,49 @@ html[data-theme="light"] .flash-btn[disabled] {
 }
 
 .guide-step {
+  position: relative;
   display: grid;
   min-width: 0;
   min-height: 150px;
   grid-template-rows: auto auto 1fr;
   gap: 8px;
-  padding: 14px;
-  border: 1px solid #2b2b2b;
+  padding: 14px 36px 14px 14px;
+  border: 1px solid #2f3a2f;
+  border-left-color: rgba(0, 255, 204, 0.42);
   border-radius: var(--radius);
-  background: #111;
+  background:
+    linear-gradient(135deg, rgba(0, 255, 204, 0.055), transparent 42%),
+    #111;
   color: #d8fff2;
   text-decoration: none;
   box-shadow: inset 0 0 5px #000;
-  transition: transform 0.08s ease, border-color 0.2s, box-shadow 0.2s;
+  transition: transform 0.08s ease, border-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.guide-step::after {
+  content: ">";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: rgba(0, 255, 204, 0.66);
+  font-size: 0.82rem;
+  font-weight: 900;
+  opacity: 0.72;
+  transition: transform 0.12s ease, opacity 0.2s ease;
 }
 
 .guide-step:hover,
 .guide-step:focus-visible {
   border-color: #00ffcc88;
+  border-left-color: var(--cyan);
   transform: translateY(-1px);
   box-shadow: 0 0 8px rgba(0, 255, 204, 0.12), inset 0 0 8px rgba(0, 0, 0, 0.45);
+}
+
+.guide-step:hover::after,
+.guide-step:focus-visible::after {
+  opacity: 1;
+  transform: translateX(2px);
 }
 
 .guide-step-number {
@@ -1053,6 +1076,24 @@ html[data-theme="light"] .brand-signature-card {
   border-color: #b9c9c0 !important;
   color: #24493b !important;
   box-shadow: inset 0 0 5px rgba(28, 57, 43, 0.08) !important;
+}
+
+html[data-theme="light"] .guide-step {
+  background:
+    linear-gradient(135deg, rgba(0, 127, 122, 0.06), transparent 44%),
+    #fff !important;
+  border-left-color: rgba(0, 127, 122, 0.36) !important;
+}
+
+html[data-theme="light"] .guide-step::after {
+  color: rgba(0, 127, 122, 0.62) !important;
+}
+
+html[data-theme="light"] .guide-step:hover,
+html[data-theme="light"] .guide-step:focus-visible {
+  border-color: #007f7a !important;
+  border-left-color: #007f7a !important;
+  box-shadow: 0 8px 18px rgba(7, 115, 69, 0.1), inset 0 0 4px rgba(255, 255, 255, 0.55) !important;
 }
 
 html[data-theme="light"] .guide-step-number,
