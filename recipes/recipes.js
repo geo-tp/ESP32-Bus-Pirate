@@ -657,9 +657,13 @@
   links.setAttribute("aria-label", "Project links");
 
   const isRecipeArticle = /\/recipes\/[^/]+\/?$/.test(window.location.pathname);
+  const recipeIndexHref = isRecipeArticle ? "../" : null;
+  const homeHref = isRecipeArticle ? "../../" : "../";
   const webToolsHref = isRecipeArticle ? "../../web-tools/" : "../web-tools/";
 
   [
+    ["Home", homeHref],
+    ...(recipeIndexHref ? [["Recipes", recipeIndexHref]] : []),
     ["GitHub", "https://github.com/geo-tp/ESP32-Bit-Pirate"],
     ["Wiki", "https://github.com/geo-tp/ESP32-Bit-Pirate/wiki"],
     ["Web Tools", webToolsHref]
@@ -679,6 +683,56 @@
   footer.appendChild(title);
   footer.appendChild(links);
   main.appendChild(footer);
+})();
+
+(function () {
+  const isRecipeArticle = /\/recipes\/[^/]+\/?$/.test(window.location.pathname);
+
+  if (!isRecipeArticle) {
+    return;
+  }
+
+  const recipeIndexPath = new URL("../", window.location.href).pathname;
+  const normalizePath = (path) => path.replace(/\/+$/, "") || "/";
+
+  const cameFromRecipeIndex = () => {
+    if (!document.referrer || window.history.length < 2) {
+      return false;
+    }
+
+    try {
+      const referrer = new URL(document.referrer);
+      return referrer.origin === window.location.origin
+        && normalizePath(referrer.pathname) === normalizePath(recipeIndexPath);
+    } catch (error) {
+      return false;
+    }
+  };
+
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest("a[href]");
+
+    if (!link || link.target) {
+      return;
+    }
+
+    const target = new URL(link.getAttribute("href"), window.location.href);
+
+    if (target.origin !== window.location.origin || normalizePath(target.pathname) !== normalizePath(recipeIndexPath)) {
+      return;
+    }
+
+    if (!cameFromRecipeIndex()) {
+      return;
+    }
+
+    event.preventDefault();
+    window.history.back();
+  });
 })();
 
 (function () {

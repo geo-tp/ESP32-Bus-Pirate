@@ -1463,6 +1463,12 @@ h2 {
   margin: 0;
 }
 
+@media (max-width: 980px) {
+  .article-hero-top .article-top-nav {
+    display: none;
+  }
+}
+
 .article-hero-tags {
   display: flex;
   flex-wrap: wrap;

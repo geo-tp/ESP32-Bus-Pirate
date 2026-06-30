@@ -85,7 +85,31 @@ html[data-theme="light"] .hero-board-card, html[data-theme="light"] .board-card 
 html[data-theme="light"] .boards-page .button { border-color:rgba(0,135,86,.26); background:linear-gradient(145deg,#e9fff2,#dff8eb); color:#174b31; box-shadow:0 10px 22px rgba(20,60,45,.08); }
 html[data-theme="light"] .boards-page .secondary-button { border-color:rgba(0,120,180,.24); background:linear-gradient(145deg,#edf9ff,#e4f2f8); color:#174255; box-shadow:0 10px 22px rgba(20,60,70,.08); }
 html[data-theme="light"] .identity-link-list a { border-color:#d5e4dd; background:#f6fbf8; color:#215744; }
-@media (max-width: 860px) { .boards-hero, .board-profile, .section-head, .board-open-source { grid-template-columns: 1fr; } .boards-hero-visual { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 860px) {
+  .boards-hero,
+  .board-profile,
+  .section-head,
+  .board-open-source {
+    grid-template-columns: 1fr;
+  }
+
+  .boards-hero-visual {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .board-open-source {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .identity-logo-link {
+    justify-self: center;
+  }
+
+  .identity-link-list {
+    justify-content: center;
+  }
+}
 @media (max-width: 620px) { .boards-page .wrap { width: min(100% - 20px, 1120px); } .button-row { flex-direction:column; } .button-row .button { width:100%; } .boards-hero-visual { grid-template-columns:1fr; } .hero-board-card img { height:260px; } }
 
 /* Landing polish: Cardputer-focused hero + protocol-style board cards */
