@@ -2165,6 +2165,15 @@ h2 {
   .recipe-layout > .aside-card {
     order: -1;
   }
+
+  .aside-card dt.aside-dt-wiring,
+  .aside-card dt.aside-dt-wiring + dd {
+    display: none;
+  }
+
+  .aside-card dt.aside-dt-setup + dd.aside-setup-dd .wiring-list {
+    display: none;
+  }
 }
 
 
