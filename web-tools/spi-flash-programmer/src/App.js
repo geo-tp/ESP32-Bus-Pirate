@@ -78,7 +78,7 @@ function init() {
   elements.clearLogButton.addEventListener("click", () => {
     elements.logOutput.textContent = "";
   });
-  log("Prototype loaded. No serial port is requested until Connect is pressed.");
+  log("Loaded. Connect an ESP32 Bit Pirate in serprog adapter mode or another compatible device.");
 }
 
 function selectOperationTab(name) {
