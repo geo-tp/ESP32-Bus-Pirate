@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" role="img" aria-labelledby="title desc">
+  <title id="title">Firmware analysis companion web tools</title>
+  <desc id="desc">Stylized firmware dump flowing from ESP32 Bit Pirate tools into hex inspection and Binwalk analysis panels.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#17211e"/>
+      <stop offset="1" stop-color="#0b0f0e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#00ffcc"/>
+      <stop offset="1" stop-color="#00ff66"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="760" height="420" rx="22" fill="#090c0b"/>
+  <path d="M0 76h760M0 148h760M0 220h760M0 292h760M0 364h760M94 0v420M188 0v420M282 0v420M376 0v420M470 0v420M564 0v420M658 0v420" stroke="#00ffcc" stroke-opacity=".07"/>
+  <rect x="42" y="50" width="220" height="320" rx="16" fill="url(#panel)" stroke="#2d5b51"/>
+  <rect x="74" y="82" width="156" height="76" rx="10" fill="#101817" stroke="#315f52"/>
+  <path d="M112 112h80M112 132h50" stroke="#00ffcc" stroke-width="8" stroke-linecap="round"/>
+  <rect x="88" y="190" width="128" height="112" rx="12" fill="#0d1312" stroke="#2f3a2f"/>
+  <path d="M104 218h96M104 244h74M104 270h88" stroke="#b8ffb8" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+  <text x="152" y="342" fill="#00ff66" font-family="Menlo, Courier New, monospace" font-size="18" font-weight="800" text-anchor="middle">BP DUMP</text>
+  <path d="M286 210h74" stroke="url(#accent)" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M344 188l34 22-34 22" fill="none" stroke="#00ffcc" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="402" y="48" width="300" height="142" rx="16" fill="url(#panel)" stroke="#2d5b51"/>
+  <text x="432" y="88" fill="#00ffcc" font-family="Menlo, Courier New, monospace" font-size="20" font-weight="900">HEX VIEW</text>
+  <g font-family="Menlo, Courier New, monospace" font-size="16" font-weight="700">
+    <text x="432" y="126" fill="#d8fff2">0000  7F 45 4C 46 02 01</text>
+    <text x="432" y="152" fill="#b8ffb8">0010  AA 55 10 00 FF 3C</text>
+  </g>
+  <rect x="402" y="230" width="300" height="142" rx="16" fill="url(#panel)" stroke="#2d5b51"/>
+  <text x="432" y="270" fill="#00ffcc" font-family="Menlo, Courier New, monospace" font-size="20" font-weight="900">BINWALK</text>
+  <g fill="none" stroke-width="8" stroke-linecap="round">
+    <path d="M436 306h196" stroke="#00ff66"/>
+    <path d="M436 332h132" stroke="#f4d06f"/>
+  </g>
+</svg>
