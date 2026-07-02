@@ -32,14 +32,21 @@
     .theme-toolbar { display:flex; justify-content:flex-end; margin:0 0 14px; }
     .theme-nav-cluster { display:flex; align-items:center; gap:8px; margin-left:auto; }
     @media (max-width:760px) {
-      .page-hero-top { position:relative; z-index:1000; overflow:visible; }
+      :is(.page-hero-top,.article-hero-top,.protocol-header,.site-header) { position:relative; top:auto; left:auto; right:auto; z-index:1000; overflow:visible; border-bottom:0; background:transparent; box-shadow:none; }
+      .mobile-topbar-clone { position:fixed !important; top:0; left:var(--mobile-topbar-left, 6px); right:var(--mobile-topbar-right, 6px); z-index:1000; box-sizing:border-box; width:auto !important; min-width:0; max-width:none; margin-inline:0; padding:8px 0; overflow:visible; border-bottom:1px solid rgba(47,58,47,.78); background:rgba(18,18,18,.96); box-shadow:0 10px 24px rgba(0,0,0,.24); opacity:0; pointer-events:none; transform:translate3d(0,-110%,0); transition:transform 140ms cubic-bezier(.2,0,0,1), opacity 70ms linear; will-change:transform; }
+      .mobile-topbar-clone.site-header { padding:8px 84px 8px 0; }
+      .mobile-topbar-clone::after { display:none !important; }
+      body.mobile-topbar-stuck .mobile-topbar-clone { opacity:1; pointer-events:auto; transform:translate3d(0,0,0); }
+      html[data-theme="light"] .mobile-topbar-clone { border-bottom-color:rgba(202,218,209,.9); background:rgba(247,251,248,.96); box-shadow:0 10px 24px rgba(30,70,50,.12); }
       .theme-nav-cluster { position:relative; z-index:1001; }
       .theme-nav-cluster .nav-menu-toggle { display:inline-grid; flex:0 0 auto; }
       .theme-nav-cluster > :is(.page-top-nav,.site-nav) { display:none; }
       .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) { position:absolute; top:calc(100% + 8px); right:0; z-index:1002; display:flex; width:max-content; min-width:164px; max-width:calc(100vw - 24px); flex-direction:column; gap:7px; margin:0; padding:7px; border:1px solid #2f3a2f; border-radius:8px; background:rgba(17,17,17,.97); box-shadow:0 12px 30px rgba(0,0,0,.34), inset 0 0 8px rgba(0,255,204,.05); }
+      .mobile-topbar-clone .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) { position:fixed; top:calc(var(--mobile-topbar-height, 50px) + 8px); right:max(var(--mobile-topbar-right, 6px), 6px); }
       .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) a { justify-content:flex-start; width:100%; white-space:nowrap; }
-      .site-header { position:relative; padding-right:84px; }
+      .site-header { padding-right:84px; }
       .site-header > .theme-nav-cluster { position:absolute; top:0; right:0; z-index:20; gap:6px; margin-left:0; }
+      .mobile-topbar-clone:is(.article-hero-top,.site-header) > .theme-nav-cluster { top:8px; }
       .site-header > .theme-nav-cluster .theme-toggle { position:static !important; top:auto !important; right:auto !important; }
       html[data-theme="light"] .theme-nav-cluster.is-nav-open > :is(.page-top-nav,.site-nav) { background:rgba(255,255,255,.98) !important; border-color:#b9c9c0 !important; box-shadow:0 12px 30px rgba(31,72,53,.14), inset 0 0 5px rgba(28,57,43,.06) !important; }
     }
@@ -47,6 +54,73 @@
       .page-hero-top { padding-top:10px; }
       .site-header { padding-top:10px; }
       .site-header > .theme-nav-cluster { top:10px; }
+    }
+    @media (min-width:761px) {
+      .desktop-topbar-clone {
+        position:fixed !important;
+        top:0;
+        left:var(--desktop-topbar-left, 24px);
+        right:var(--desktop-topbar-right, 24px);
+        z-index:1000;
+        isolation:isolate;
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-inline:0;
+        padding:8px 0;
+        overflow:visible;
+        border-bottom:0;
+        background:transparent;
+        box-shadow:none;
+        opacity:0;
+        pointer-events:none;
+        transform:translate3d(0,-110%,0);
+        transition:transform 140ms cubic-bezier(.2,0,0,1), opacity 70ms linear;
+        will-change:transform;
+        contain:layout style;
+      }
+      .desktop-topbar-clone::before {
+        content:"";
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:calc(0px - var(--desktop-topbar-left, 24px));
+        right:calc(0px - var(--desktop-topbar-right, 24px));
+        z-index:0;
+        pointer-events:none;
+        border-bottom:1px solid rgba(255,255,255,.065);
+        background:
+          linear-gradient(90deg, transparent 0%, rgba(255,255,255,.012) 18%, rgba(255,255,255,.022) 50%, rgba(255,255,255,.012) 82%, transparent 100%),
+          rgba(18,18,18,.985);
+        box-shadow:0 8px 18px rgba(0,0,0,.18), 0 1px 0 rgba(255,255,255,.018);
+      }
+      .desktop-topbar-clone::after { display:none !important; }
+      .desktop-topbar-clone > * { position:relative; z-index:1; }
+      body.desktop-topbar-reveal .desktop-topbar-clone {
+        opacity:1;
+        pointer-events:auto;
+        transform:translate3d(0,0,0);
+      }
+      html[data-theme="light"] .desktop-topbar-clone {
+        border-bottom-color:transparent;
+        background:transparent;
+        box-shadow:none;
+      }
+      html[data-theme="light"] .desktop-topbar-clone::before {
+        border-bottom-color:rgba(31,43,36,.085);
+        background:
+          linear-gradient(90deg, transparent 0%, rgba(31,43,36,.014) 18%, rgba(31,43,36,.024) 50%, rgba(31,43,36,.014) 82%, transparent 100%),
+          rgba(247,251,248,.985);
+        box-shadow:0 8px 18px rgba(30,42,36,.07), 0 1px 0 rgba(31,43,36,.016);
+      }
+      .desktop-topbar-clone .theme-nav-cluster { margin-left:auto; }
+      .desktop-topbar-clone .nav-menu-toggle { display:none; }
+    }
+    @media (max-width:760px) {
+      .desktop-topbar-clone { display:none; }
+    }
+    @media (min-width:761px) {
+      .mobile-topbar-clone { display:none; }
     }
     html[data-theme="light"] { color-scheme:light; --page-bg:#f4f7f5; --panel-bg:#ffffff; --panel-bg-deep:#e7eee9; --border:#b9c9c0; --text:#183128; --muted:#52665c; --green:#078653; --green-dim:#087345; --cyan:#007f7a; }
     html[data-theme="light"] body { background:#f4f7f5 !important; color:#183128 !important; }
@@ -281,9 +355,288 @@
   };
   syncButton();
 
+  const topbarSelector = ".page-hero-top:not(.mobile-topbar-clone):not(.desktop-topbar-clone), .article-hero-top:not(.mobile-topbar-clone):not(.desktop-topbar-clone), .protocol-header:not(.mobile-topbar-clone):not(.desktop-topbar-clone), .site-header:not(.mobile-topbar-clone):not(.desktop-topbar-clone)";
+  let mobileTopbarClone = null;
+  let desktopTopbarClone = null;
+
+  const syncCloneTheme = (clone) => {
+    if (!clone) {
+      return;
+    }
+
+    const current = root.dataset.theme || "dark";
+    clone.querySelectorAll(".theme-toggle").forEach((cloneButton) => {
+      cloneButton.dataset.theme = current;
+      cloneButton.setAttribute("aria-pressed", String(current === "light"));
+      cloneButton.setAttribute("aria-label", current === "light" ? "Switch to dark theme" : "Switch to light theme");
+    });
+  };
+
+  const syncAllCloneThemes = () => {
+    syncCloneTheme(mobileTopbarClone);
+    syncCloneTheme(desktopTopbarClone);
+  };
+
+  const setupMobileTopbar = () => {
+    const media = window.matchMedia("(max-width: 760px)");
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const getTopbar = () => document.querySelector(topbarSelector);
+
+    const setCloneMenuOpen = (isOpen) => {
+      if (!mobileTopbarClone) {
+        return;
+      }
+
+      const cluster = mobileTopbarClone.querySelector(".theme-nav-cluster");
+      const menuButton = mobileTopbarClone.querySelector(".nav-menu-toggle");
+      if (!cluster || !menuButton) {
+        return;
+      }
+
+      cluster.classList.toggle("is-nav-open", isOpen);
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+    };
+
+    const ensureClone = () => {
+      const topbar = getTopbar();
+      if (!topbar || mobileTopbarClone) {
+        return mobileTopbarClone;
+      }
+
+      mobileTopbarClone = topbar.cloneNode(true);
+      mobileTopbarClone.classList.add("mobile-topbar-clone");
+      mobileTopbarClone.removeAttribute("id");
+      mobileTopbarClone.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+      mobileTopbarClone.inert = true;
+      mobileTopbarClone.addEventListener("click", (event) => {
+        if (event.target.closest(".theme-toggle")) {
+          applyTheme(root.dataset.theme === "light" ? "dark" : "light");
+          syncButton();
+          syncAllCloneThemes();
+          return;
+        }
+
+        if (event.target.closest(".nav-menu-toggle")) {
+          const cluster = mobileTopbarClone.querySelector(".theme-nav-cluster");
+          setCloneMenuOpen(!cluster?.classList.contains("is-nav-open"));
+          return;
+        }
+
+        if (event.target.closest("a")) {
+          setCloneMenuOpen(false);
+        }
+      });
+      document.body.appendChild(mobileTopbarClone);
+      syncCloneTheme(mobileTopbarClone);
+      return mobileTopbarClone;
+    };
+
+    const setReveal = (isVisible) => {
+      document.body.classList.toggle("mobile-topbar-stuck", isVisible);
+      if (mobileTopbarClone) {
+        mobileTopbarClone.inert = !isVisible;
+      }
+      if (!isVisible) {
+        setCloneMenuOpen(false);
+      }
+    };
+
+    const syncOffset = () => {
+      const topbar = getTopbar();
+      const clone = ensureClone();
+      if (!topbar || !clone || !media.matches) {
+        return;
+      }
+
+      const rect = topbar.getBoundingClientRect();
+      const brandMark = topbar.querySelector(".brand-mark");
+      const anchorLeft = brandMark ? brandMark.getBoundingClientRect().left : rect.left;
+      clone.style.setProperty("--mobile-topbar-left", `${Math.round(anchorLeft)}px`);
+      clone.style.setProperty("--mobile-topbar-right", `${Math.round(window.innerWidth - rect.right)}px`);
+      clone.style.setProperty("--mobile-topbar-height", `${Math.round(clone.getBoundingClientRect().height)}px`);
+    };
+
+    const revealClone = () => {
+      syncOffset();
+      mobileTopbarClone?.getBoundingClientRect();
+      setReveal(true);
+    };
+
+    const update = () => {
+      ticking = false;
+      const topbar = getTopbar();
+      ensureClone();
+
+      if (!topbar || !media.matches) {
+        setReveal(false);
+        lastScrollY = window.scrollY;
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      const isScrollingUp = currentScrollY < lastScrollY - 2;
+      const isScrollingDown = currentScrollY > lastScrollY + 2;
+
+      if (currentScrollY <= 80) {
+        setReveal(false);
+        syncOffset();
+      } else if (isScrollingUp) {
+        revealClone();
+      } else if (isScrollingDown) {
+        setReveal(false);
+        syncOffset();
+      }
+
+      lastScrollY = currentScrollY;
+    };
+    const requestUpdate = () => {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    const reset = () => {
+      setReveal(false);
+      syncOffset();
+      lastScrollY = window.scrollY;
+      requestUpdate();
+    };
+
+    window.requestAnimationFrame(() => {
+      syncOffset();
+      update();
+    });
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", reset);
+    media.addEventListener?.("change", reset);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setCloneMenuOpen(false);
+      }
+    });
+    document.addEventListener("pointerdown", (event) => {
+      if (mobileTopbarClone?.querySelector(".theme-nav-cluster")?.classList.contains("is-nav-open") && !mobileTopbarClone.contains(event.target)) {
+        setCloneMenuOpen(false);
+      }
+    });
+  };
+  setupMobileTopbar();
+
+  const setupDesktopTopbar = () => {
+    const media = window.matchMedia("(min-width: 761px)");
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const getTopbar = () => document.querySelector(topbarSelector);
+
+    const ensureClone = () => {
+      const topbar = getTopbar();
+      if (!topbar || desktopTopbarClone) {
+        return desktopTopbarClone;
+      }
+
+      desktopTopbarClone = topbar.cloneNode(true);
+      desktopTopbarClone.classList.add("desktop-topbar-clone");
+      desktopTopbarClone.removeAttribute("id");
+      desktopTopbarClone.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+      desktopTopbarClone.querySelectorAll(".nav-menu-toggle").forEach((element) => element.remove());
+      desktopTopbarClone.inert = true;
+      desktopTopbarClone.addEventListener("click", (event) => {
+        if (!event.target.closest(".theme-toggle")) {
+          return;
+        }
+
+        applyTheme(root.dataset.theme === "light" ? "dark" : "light");
+        syncButton();
+        syncAllCloneThemes();
+      });
+      document.body.appendChild(desktopTopbarClone);
+      syncCloneTheme(desktopTopbarClone);
+      return desktopTopbarClone;
+    };
+
+    const setReveal = (isVisible) => {
+      document.body.classList.toggle("desktop-topbar-reveal", isVisible);
+      if (desktopTopbarClone) {
+        desktopTopbarClone.inert = !isVisible;
+      }
+    };
+
+    const syncOffset = () => {
+      const topbar = getTopbar();
+      const clone = ensureClone();
+      if (!topbar || !clone || !media.matches) {
+        return;
+      }
+
+      const rect = topbar.getBoundingClientRect();
+      clone.style.setProperty("--desktop-topbar-left", `${Math.round(rect.left)}px`);
+      clone.style.setProperty("--desktop-topbar-right", `${Math.round(window.innerWidth - rect.right)}px`);
+    };
+
+    const update = () => {
+      ticking = false;
+      const topbar = getTopbar();
+      ensureClone();
+
+      if (!topbar || !media.matches) {
+        setReveal(false);
+        lastScrollY = window.scrollY;
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      const isScrollingUp = currentScrollY < lastScrollY - 2;
+      const isScrollingDown = currentScrollY > lastScrollY + 2;
+
+      if (currentScrollY <= 80) {
+        setReveal(false);
+        syncOffset();
+      } else if (isScrollingUp) {
+        syncOffset();
+        setReveal(true);
+      } else if (isScrollingDown) {
+        setReveal(false);
+        syncOffset();
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    const requestUpdate = () => {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    window.requestAnimationFrame(syncOffset);
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", () => {
+      setReveal(false);
+      syncOffset();
+      lastScrollY = window.scrollY;
+    });
+    media.addEventListener?.("change", () => {
+      setReveal(false);
+      syncOffset();
+      lastScrollY = window.scrollY;
+    });
+  };
+  setupDesktopTopbar();
+
   button.addEventListener("click", () => {
     applyTheme(root.dataset.theme === "light" ? "dark" : "light");
     syncButton();
+    syncAllCloneThemes();
   });
 
   const toolToolbarActions = document.querySelector(".toolbar-actions");

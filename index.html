@@ -26,7 +26,7 @@
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/" rel="canonical"/>
 <link rel="alternate" type="text/markdown" href="https://geo-tp.github.io/ESP32-Bit-Pirate/llms.txt" title="LLMs guide">
 <link rel="sitemap" type="application/xml" href="https://geo-tp.github.io/ESP32-Bit-Pirate/sitemap.xml">
-<script defer="" src="assets/theme-toggle.js?v=20260624-light18"></script>
+<script defer="" src="assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <title>ESP32 Bit Pirate | Hardware Debugging Firmware, Web Tools &amp; Recipes</title>
 <script type="application/ld+json">
   {
@@ -1538,10 +1538,29 @@
       }
 
       .site-header {
-        position: relative;
+        z-index: 50;
         align-items: flex-start;
         gap: 12px;
         padding-right: 42px;
+      }
+
+      .mobile-topbar-clone.site-header {
+        position: fixed;
+        top: 0;
+        left: var(--mobile-topbar-left, 10px);
+        right: var(--mobile-topbar-right, 10px);
+        margin-inline: 0;
+        padding: 8px 0;
+        padding-right: 42px;
+        border-bottom: 1px solid rgba(47, 58, 47, 0.78);
+        background: rgba(18, 18, 18, 0.96);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+      }
+
+      html[data-theme="light"] .mobile-topbar-clone.site-header {
+        border-bottom-color: rgba(202, 218, 209, 0.9);
+        background: rgba(247, 251, 248, 0.96);
+        box-shadow: 0 10px 24px rgba(30, 70, 50, 0.12);
       }
 
       .site-nav {

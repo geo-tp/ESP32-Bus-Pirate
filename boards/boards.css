@@ -777,3 +777,26 @@ html[data-theme="light"] .modules-page .page-hero-top::after {
     height: 210px;
   }
 }
+
+@media (max-width: 760px) {
+  .boards-page .mobile-topbar-clone,
+  .modules-page .mobile-topbar-clone {
+    position: fixed;
+    top: 0;
+    left: var(--mobile-topbar-left, 6px);
+    right: var(--mobile-topbar-right, 6px);
+    z-index: 1000;
+    margin-inline: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(47, 58, 47, .78);
+    background: rgba(18, 18, 18, .96);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .24);
+  }
+
+  html[data-theme="light"] .boards-page .mobile-topbar-clone,
+  html[data-theme="light"] .modules-page .mobile-topbar-clone {
+    border-bottom-color: rgba(202, 218, 209, .9);
+    background: rgba(247, 251, 248, .96);
+    box-shadow: 0 10px 24px rgba(30, 70, 50, .12);
+  }
+}

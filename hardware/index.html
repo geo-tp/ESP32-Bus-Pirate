@@ -27,8 +27,8 @@
 <meta content="ZRzOB9tX2XsRJbgvgSmH0x4BufDJDpYcfKFn0CZdifA" name="google-site-verification"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/" rel="canonical"/>
 <title>ESP32 Bit Pirate Hardware | Dock, Adapters, Modules &amp; C5 Expander</title>
-<link href="../web-tools/styles/main.css?v=20260626-footer" rel="stylesheet"/>
-<script defer="" src="../assets/theme-toggle.js?v=20260624-light18"></script>
+<link href="../web-tools/styles/main.css?v=20260702-mobileclone2" rel="stylesheet"/>
+<script defer="" src="../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1148,6 +1148,27 @@
 
     @media (max-width: 820px) {
       .module-cta-panel { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .mobile-topbar-clone {
+        position: fixed;
+        top: 0;
+        left: var(--mobile-topbar-left, 10px);
+        right: var(--mobile-topbar-right, 10px);
+        z-index: 50;
+        margin-inline: 0;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(47, 58, 47, 0.78);
+        background: rgba(18, 18, 18, 0.96);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+      }
+
+      html[data-theme="light"] .mobile-topbar-clone {
+        border-bottom-color: rgba(202, 218, 209, 0.9);
+        background: rgba(247, 251, 248, 0.96);
+        box-shadow: 0 10px 24px rgba(30, 70, 50, 0.12);
+      }
     }
 </style>
 </head>
