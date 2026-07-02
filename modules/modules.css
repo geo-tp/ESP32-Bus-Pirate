@@ -230,6 +230,7 @@ html[data-theme="light"] .reference-band .reference-column .compact-reference-li
   border: 1px solid #2f3a2f;
   border-radius: var(--radius);
   background: #0b0e0d;
+  cursor: pointer;
 }
 .pinout-photo-button {
   display: grid;
@@ -260,6 +261,7 @@ html[data-theme="light"] .reference-band .reference-column .compact-reference-li
   gap: 4px;
   padding: 10px;
   border-top: 1px solid #27312b;
+  cursor: pointer;
 }
 .pinout-photo-card figcaption strong {
   color: #f2fff8;
@@ -279,6 +281,7 @@ html[data-theme="light"] .reference-band .reference-column .compact-reference-li
   font-weight: 900;
   text-decoration: none;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .pinout-photo-card figcaption a:hover,
 .pinout-photo-card figcaption a:focus-visible {
