@@ -422,6 +422,29 @@ html[data-theme="light"] .pinout-lightbox-meta {
   border-color: #d8e5df;
   background: #fff;
 }
+html[data-theme="light"] .pinout-lightbox {
+  background: rgba(246,251,248,.92);
+}
+html[data-theme="light"] .pinout-lightbox-title {
+  color: #11251e;
+}
+html[data-theme="light"] .pinout-lightbox-button {
+  border-color: #bfd8cf;
+  background: #fff;
+  color: #174b31;
+  box-shadow: 0 8px 18px rgba(20,60,45,.10);
+}
+html[data-theme="light"] .pinout-lightbox-button:hover,
+html[data-theme="light"] .pinout-lightbox-button:focus-visible {
+  border-color: #00876f;
+  color: #005f4f;
+  background: #eafff5;
+  box-shadow: 0 10px 22px rgba(0,135,111,.16);
+}
+html[data-theme="light"] .pinout-lightbox-stage {
+  border-color: #d8e5df;
+  background: #fff;
+}
 @media (max-width:760px) {
   .pinout-gallery-head,
   .pinout-gallery-grid {
