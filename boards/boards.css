@@ -112,6 +112,275 @@ html[data-theme="light"] .identity-link-list a { border-color:#d5e4dd; backgroun
 }
 @media (max-width: 620px) { .boards-page .wrap { width: min(100% - 20px, 1120px); } .button-row { flex-direction:column; } .button-row .button { width:100%; } .boards-hero-visual { grid-template-columns:1fr; } .hero-board-card img { height:260px; } }
 
+/* Board pinout photo galleries: local thumbnails with the same lightbox pattern as module detail pages. */
+.pinout-photo-gallery {
+  margin-top: clamp(18px, 3vw, 32px);
+  padding: clamp(18px, 3vw, 26px);
+}
+.pinout-gallery-head {
+  display: grid;
+  grid-template-columns: minmax(0,.58fr) minmax(260px,1fr);
+  gap: 22px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+.pinout-gallery-head h3 {
+  margin: 0;
+  color: var(--green-dim);
+  font-size: clamp(1.05rem,2vw,1.35rem);
+  line-height: 1.2;
+}
+.pinout-gallery-head p:not(.eyebrow) {
+  margin: 0;
+  color: #c9d8d3;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+.pinout-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 10px;
+}
+.pinout-photo-card {
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #2f3a2f;
+  border-radius: var(--radius);
+  background: #0b0e0d;
+  cursor: pointer;
+}
+.pinout-photo-button {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  background: #fff;
+  cursor: pointer;
+  overflow: hidden;
+}
+.pinout-photo-card img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.pinout-photo-card:hover,
+.pinout-photo-card:focus-within {
+  border-color: rgba(0,255,204,.55);
+}
+.pinout-photo-card figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-top: 1px solid #27312b;
+  cursor: pointer;
+}
+.pinout-photo-card figcaption strong {
+  color: #f2fff8;
+  font-size: .86rem;
+  line-height: 1.25;
+}
+.pinout-photo-card figcaption span,
+.pinout-lightbox-meta p {
+  color: #c9d8d3;
+  font-size: .8rem;
+  line-height: 1.4;
+}
+.pinout-photo-card figcaption a,
+.pinout-lightbox-meta a {
+  color: var(--cyan);
+  font-size: .72rem;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.pinout-photo-card figcaption a {
+  justify-self: start;
+}
+.pinout-photo-card figcaption a:hover,
+.pinout-photo-card figcaption a:focus-visible,
+.pinout-lightbox-meta a:hover,
+.pinout-lightbox-meta a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pinout-lightbox[hidden] {
+  display: none;
+}
+.pinout-lightbox {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0,1fr) auto;
+  gap: 12px;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding: clamp(12px,2.4vw,26px);
+  overflow: hidden;
+  background: rgba(0,0,0,.86);
+  backdrop-filter: blur(7px);
+  isolation: isolate;
+}
+.pinout-lightbox-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+.pinout-lightbox-title {
+  min-width: 0;
+  color: #f2fff8;
+  font-size: clamp(1rem,2vw,1.25rem);
+  font-weight: 900;
+  line-height: 1.2;
+}
+.pinout-lightbox-controls {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+.pinout-lightbox-button {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(0,255,204,.34);
+  border-radius: var(--radius);
+  background: #101514;
+  color: #d8fff2;
+  cursor: pointer;
+}
+.pinout-lightbox-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.pinout-lightbox-button:hover,
+.pinout-lightbox-button:focus-visible {
+  border-color: rgba(0,255,204,.72);
+  outline: none;
+}
+.pinout-lightbox-stage {
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,204,.20);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.pinout-lightbox-stage img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+.pinout-lightbox-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(0,255,204,.20);
+  border-radius: var(--radius);
+  background: #0b0e0d;
+}
+.pinout-lightbox-meta p {
+  margin: 0;
+}
+.pinout-lightbox-meta a {
+  flex: 0 0 auto;
+}
+html[data-theme="light"] .pinout-photo-gallery {
+  border-color: #d8e5df;
+  background: #f8fcfa;
+}
+html[data-theme="light"] .pinout-gallery-head h3,
+html[data-theme="light"] .pinout-photo-card figcaption strong,
+html[data-theme="light"] .pinout-lightbox-title {
+  color: #11251e;
+}
+html[data-theme="light"] .pinout-gallery-head p:not(.eyebrow),
+html[data-theme="light"] .pinout-photo-card figcaption span {
+  color: #2e4038;
+}
+html[data-theme="light"] .pinout-photo-card,
+html[data-theme="light"] .pinout-lightbox-meta,
+html[data-theme="light"] .pinout-lightbox-stage {
+  border-color: #d8e5df;
+  background: #fff;
+}
+html[data-theme="light"] .pinout-photo-card figcaption {
+  border-top-color: #d8e5df;
+}
+html[data-theme="light"] .pinout-photo-card figcaption a,
+html[data-theme="light"] .pinout-lightbox-meta a {
+  color: #007a66;
+}
+html[data-theme="light"] .pinout-lightbox {
+  background: rgba(246,251,248,.92);
+}
+html[data-theme="light"] .pinout-lightbox-button {
+  border-color: #bfd8cf;
+  background: #fff;
+  color: #174b31;
+  box-shadow: 0 8px 18px rgba(20,60,45,.10);
+}
+html[data-theme="light"] .pinout-lightbox-button:hover,
+html[data-theme="light"] .pinout-lightbox-button:focus-visible {
+  border-color: #00876f;
+  color: #005f4f;
+  background: #eafff5;
+  box-shadow: 0 10px 22px rgba(0,135,111,.16);
+}
+@media (max-width:760px) {
+  .pinout-gallery-head,
+  .pinout-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  .pinout-gallery-grid {
+    gap: 9px;
+  }
+  .pinout-photo-card {
+    grid-template-columns: 118px minmax(0,1fr);
+  }
+  .pinout-photo-button {
+    aspect-ratio: 1 / 1;
+  }
+  .pinout-photo-card figcaption {
+    border-top: 0;
+    border-left: 1px solid #27312b;
+  }
+  .pinout-lightbox {
+    padding: 10px;
+  }
+  .pinout-lightbox-meta {
+    display: grid;
+    gap: 7px;
+    align-items: start;
+  }
+  html[data-theme="light"] .pinout-photo-card figcaption {
+    border-left-color: #d8e5df;
+  }
+}
+
 /* Landing polish: Cardputer-focused hero + protocol-style board cards */
 .boards-hero-visual {
   display: grid;
