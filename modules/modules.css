@@ -208,7 +208,7 @@ html[data-theme="light"] .reference-band .reference-column .compact-reference-li
 }
 .pinout-gallery-head h3 {
   margin: 0;
-  color: #f2fff8;
+  color: var(--green-dim);
   font-size: clamp(1.05rem,2vw,1.35rem);
   line-height: 1.2;
 }
