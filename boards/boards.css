@@ -36,6 +36,8 @@ body.boards-page {
 .board-card-body, .choice-card, .workflow-card, .link-card, .feature-card, .board-note-card { padding: 15px; }
 .board-card h3 { margin-bottom: 8px; color:#f2fff8; }
 .status-row, .chip-list, .quick-links { display:flex; flex-wrap:wrap; gap:7px; margin:10px 0; list-style:none; padding-left:0; }
+.board-profile .status-row { display:flex; width:fit-content; max-width:100%; margin:10px 0 0; background:transparent; box-shadow:none; }
+.board-profile .status-row + .button-row { margin-top:14px; }
 .status-pill, .chip-list li, .quick-links a { display:inline-flex; align-items:center; min-height:28px; padding:5px 8px; border:1px solid #2f3a2f; border-radius: var(--radius); background:#111; color:#b8ffb8; font-size:.74rem; font-weight:800; text-decoration:none; }
 .status-pill.recommended { border-color: rgba(0,255,204,.55); color:#9fffee; }
 .status-pill.special { border-color: rgba(255,214,102,.45); color:#ffe19a; }
@@ -846,6 +848,11 @@ html[data-theme="light"] body.boards-page .quick-links a {
   background: #f8fcf9 !important;
   color: #24493b !important;
   box-shadow: inset 0 0 4px rgba(28, 57, 43, .045) !important;
+}
+
+html[data-theme="light"] body.boards-page .board-profile .status-row {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 html[data-theme="light"] body.boards-page .status-pill.recommended {
