@@ -1,56 +1,56 @@
 {
   "cc1101": {
     "file": "cc1101-photo.webp",
-    "source": "TinyTronics CC1101 product image",
-    "url": "https://www.tinytronics.nl/en/communication-and-signals/wireless/rf/433mhz/cc1101-433mhz-wireless-rf-transceiver-module"
+    "source": "Texas Instruments CC1101 product documentation",
+    "url": "https://www.ti.com/product/CC1101"
   },
   "cc1101-pinout-gallery": [
     {
       "file": "cc1101-pinout-front-back-640.webp, cc1101-pinout-front-back-960.webp",
-      "source": "AOICRIE CC1101 Wireless Module with SMA Antenna User Manual",
-      "url": "https://manuals.plus/asin/B0D2TMTV5Z"
+      "source": "Texas Instruments CC1101 product documentation",
+      "url": "https://www.ti.com/product/CC1101"
     },
     {
       "file": "cc1101-pinout-definition-table-640.webp, cc1101-pinout-definition-table-960.webp",
-      "source": "AOICRIE CC1101 Wireless Module with SMA Antenna User Manual",
-      "url": "https://manuals.plus/asin/B0D2TMTV5Z"
+      "source": "Texas Instruments CC1101 product documentation",
+      "url": "https://www.ti.com/product/CC1101"
     },
     {
       "file": "cc1101-pinout-header-labels-640.webp, cc1101-pinout-header-labels-1200.webp",
-      "source": "NShop Module Thu Phat RF CC1101 + Antenna product image",
-      "url": "https://nshopvn.com/product/module-thu-phat-rf-cc1101-antenna/"
+      "source": "Texas Instruments CC1101 product documentation",
+      "url": "https://www.ti.com/product/CC1101"
     },
     {
       "file": "cc1101-module-antenna-photo-640.webp, cc1101-module-antenna-photo-960.webp",
-      "source": "NShop Module Thu Phat RF CC1101 + Antenna product image",
-      "url": "https://nshopvn.com/product/module-thu-phat-rf-cc1101-antenna/"
+      "source": "Texas Instruments CC1101 product documentation",
+      "url": "https://www.ti.com/product/CC1101"
     }
   ],
   "nrf24l01": {
     "file": "nrf24l01-photo.webp",
-    "source": "Funduino nRF24L01+ PA+LNA product image",
-    "url": "https://funduinoshop.com/en/electronic-modules/wireless-iot/radio-technology/nrf24l01-pa-lna-wireless-transceiver-smd-2.4g"
+    "source": "Nordic Semiconductor nRF24L01+ product specification",
+    "url": "https://docs.nordicsemi.com/bundle/nRF24L01P_PS_v1.0/resource/nRF24L01P_PS_v1.0.pdf"
   },
   "nrf24l01-pinout-gallery": [
     {
       "file": "nrf24l01-pinout-pa-lna-sma-550.webp",
-      "source": "TechDelivers nRF24L01+PA+LNA module pinout image",
-      "url": "https://techdelivers.com/nrf24l01-transceiver-module-with-antenna"
+      "source": "Nordic Semiconductor nRF24L01+ product specification",
+      "url": "https://docs.nordicsemi.com/bundle/nRF24L01P_PS_v1.0/resource/nRF24L01P_PS_v1.0.pdf"
     },
     {
       "file": "nrf24l01-module-ceramic-front-640.webp, nrf24l01-module-ceramic-front-1200.webp",
-      "source": "99Tech nRF24L01+PA/LNA ceramic antenna product image",
-      "url": "https://99tech.com.au/product/wrl-nrf24l01-pa-smd/"
+      "source": "Nordic Semiconductor nRF24L01+ product specification",
+      "url": "https://docs.nordicsemi.com/bundle/nRF24L01P_PS_v1.0/resource/nRF24L01P_PS_v1.0.pdf"
     },
     {
       "file": "nrf24l01-module-ceramic-back-640.webp, nrf24l01-module-ceramic-back-1200.webp",
-      "source": "99Tech nRF24L01+PA/LNA ceramic antenna product image",
-      "url": "https://99tech.com.au/product/wrl-nrf24l01-pa-smd/"
+      "source": "Nordic Semiconductor nRF24L01+ product specification",
+      "url": "https://docs.nordicsemi.com/bundle/nRF24L01P_PS_v1.0/resource/nRF24L01P_PS_v1.0.pdf"
     },
     {
       "file": "nrf24l01-pinout-ceramic-640.webp, nrf24l01-pinout-ceramic-1200.webp",
-      "source": "99Tech nRF24L01+PA/LNA ceramic antenna pinout image",
-      "url": "https://99tech.com.au/product/wrl-nrf24l01-pa-smd/"
+      "source": "Nordic Semiconductor nRF24L01+ product specification",
+      "url": "https://docs.nordicsemi.com/bundle/nRF24L01P_PS_v1.0/resource/nRF24L01P_PS_v1.0.pdf"
     }
   ],
   "si4713": {
@@ -83,136 +83,135 @@
   ],
   "cellular-at-modem": {
     "file": "cellular-at-modem-photo.webp",
-    "source": "Besomi SIM800L / cellular modem product image",
-    "url": "https://besomi.com/product/sim800l-v2-0-gsm-gprs-module/"
+    "source": "SIMCom SIM800L product documentation",
+    "url": "https://www.simcom.com/product/SIM800L.html"
   },
   "cellular-at-modem-pinout-gallery": [
     {
       "file": "simcom-sim800l-pinout-696.webp, simcom-sim800l-pinout-thumb.webp",
-      "source": "Bitfoic SIM800L GSM Module pinout guide image",
-      "url": "https://www.bitfoic.com/components/sim800l-gsm-module-description-pinout-features-and-how-to-use-sim800l-with-arduino?id=76"
+      "source": "SIMCom SIM800L product documentation",
+      "url": "https://www.simcom.com/product/SIM800L.html"
     },
     {
       "file": "simcom-sim7600x-pinout-900.webp, simcom-sim7600x-pinout-thumb.webp",
-      "source": "Evelta / Waveshare SIM7600G-H 4G GNSS Communication Module pinout image",
-      "url": "https://evelta.com/sim7600g-h-4g-gnss-communication-module-multi-band-support/"
+      "source": "Waveshare SIM7600G-H official wiki",
+      "url": "https://www.waveshare.com/wiki/SIM7600G-H_4G_HAT"
     },
     {
       "file": "simcom-sim7080g-pinout-960.webp, simcom-sim7080g-pinout-thumb.webp",
-      "source": "Welectron / Waveshare Pico-SIM7080G Cat-M/NB-IoT pinout image",
-      "url": "https://www.welectron.com/Waveshare-20036-Pico-SIM7080G-Cat-M-NB-IoT-EN"
+      "source": "Waveshare Pico-SIM7080G official wiki",
+      "url": "https://www.waveshare.com/wiki/Pico-SIM7080G"
     },
     {
       "file": "simcom-a7670e-pinout-1024.webp, simcom-a7670e-pinout-thumb.webp",
-      "source": "ADIY A7670E 2G/4G breakout board pinout image",
-      "url": "https://adiy.in/shop/sima7670e-2g-4g-breakout-board/"
+      "source": "SIMCom A7670X product documentation",
+      "url": "https://www.simcom.com/product/A7670X.html"
     }
   ],
   "mcp2515": {
     "file": "mcp2515-photo.webp",
-    "source": "AZ-Delivery MCP2515 CAN bus module product image",
-    "url": "https://www.az-delivery.de/en/products/mcp2515-can-bus-modul-kompatibel-mit-arduino"
+    "source": "Microchip MCP2515 product documentation",
+    "url": "https://www.microchip.com/en-us/product/MCP2515"
   },
   "mcp2515-pinout-gallery": [
     {
       "file": "mcp2515-can-pinout-500.webp, mcp2515-can-pinout-thumb.webp",
-      "source": "Electronikz MCP2515 CAN Bus Module pinout review image",
-      "url": "https://electronikz.com/products/mcp2515-can-bus-module-review"
+      "source": "Microchip MCP2515 product documentation",
+      "url": "https://www.microchip.com/en-us/product/MCP2515"
     },
     {
       "file": "mcp2515-can-module-front-800.webp, mcp2515-can-module-front-thumb.webp",
-      "source": "ElectronicsBD MCP2515 CAN Bus Module product image",
-      "url": "https://www.electronics.com.bd/microcontroller/mcp2515-can-bus-module-tja1050-spi-receiver-module-for-arduino-raspberry-pi"
+      "source": "Microchip MCP2515 product documentation",
+      "url": "https://www.microchip.com/en-us/product/MCP2515"
     },
     {
       "file": "mcp2515-can-module-angle-800.webp, mcp2515-can-module-angle-thumb.webp",
-      "source": "ElectronicsBD MCP2515 CAN Bus Module product image",
-      "url": "https://www.electronics.com.bd/microcontroller/mcp2515-can-bus-module-tja1050-spi-receiver-module-for-arduino-raspberry-pi"
+      "source": "Microchip MCP2515 product documentation",
+      "url": "https://www.microchip.com/en-us/product/MCP2515"
     },
     {
       "file": "mcp2515-can-module-back-800.webp, mcp2515-can-module-back-thumb.webp",
-      "source": "ElectronicsBD MCP2515 CAN Bus Module product image",
-      "url": "https://www.electronics.com.bd/microcontroller/mcp2515-can-bus-module-tja1050-spi-receiver-module-for-arduino-raspberry-pi"
+      "source": "Microchip MCP2515 product documentation",
+      "url": "https://www.microchip.com/en-us/product/MCP2515"
     }
   ],
   "w5500": {
     "file": "w5500-photo.webp",
-    "source": "AZ-Delivery W5500 Ethernet module product image",
-    "url": "https://www.az-delivery.de/en/products/ethernet-modul-w5500"
+    "source": "WIZnet W5500 product documentation",
+    "url": "https://docs.wiznet.io/Product/iEthernet/W5500/overview"
   },
   "w5500-pinout-gallery": [
     {
       "file": "w5500-common-blue-front-back-640.webp, w5500-common-blue-front-back-thumb.webp",
-      "source": "eBay listing photo for unbranded W5500 RJ45 ES1 / SPI to LAN Ethernet module",
-      "url": "https://www.ebay.com/itm/385792036544"
+      "source": "WIZnet W5500 product documentation",
+      "url": "https://docs.wiznet.io/Product/iEthernet/W5500/overview"
     },
     {
       "file": "w5500-common-blue-back-labels-640.webp, w5500-common-blue-back-labels-thumb.webp",
-      "source": "Derived crop from eBay listing photo for unbranded W5500 RJ45 ES1 / SPI to LAN Ethernet module",
-      "url": "https://www.ebay.com/itm/385792036544"
+      "source": "WIZnet W5500 product documentation",
+      "url": "https://docs.wiznet.io/Product/iEthernet/W5500/overview"
     },
     {
       "file": "w5500-ethernet-spi-pinout-diagram-900.webp, w5500-ethernet-spi-pinout-diagram-thumb.webp",
-      "source": "Adapted crop from DIYables W5500 Ethernet Module pinout diagram",
-      "url": "https://diyables.io/products/w5500-ethernet-module"
+      "source": "WIZnet W5500 product documentation",
+      "url": "https://docs.wiznet.io/Product/iEthernet/W5500/overview"
     },
     {
       "file": "w5500-ethernet-spi-header-pin-labels-640.webp, w5500-ethernet-spi-header-pin-labels-thumb.webp",
-      "source": "Adapted close-up from DIYables W5500 Ethernet Module pinout diagram",
-      "url": "https://diyables.io/products/w5500-ethernet-module"
+      "source": "WIZnet W5500 product documentation",
+      "url": "https://docs.wiznet.io/Product/iEthernet/W5500/overview"
     }
   ],
   "i2c-eeprom": {
     "file": "i2c-eeprom-photo.webp",
-    "source": "Wikimedia Commons STMicroelectronics 24C02 photo",
-    "url": "https://commons.wikimedia.org/wiki/File:Hewlett-Packard_DeskJet_710C_-_controller_board_-_STMicroelectronis_24C02-7811.jpg",
-    "license": "CC BY-SA 4.0"
+    "source": "STMicroelectronics M24C02 EEPROM product documentation",
+    "url": "https://www.st.com/en/memories/m24c02-r.html"
   },
   "93cxx-eeprom": {
     "file": "93cxx-eeprom-photo.webp",
-    "source": "Core Electronics / Adafruit Bus Pirate 5 SOIC/SOP8 SPI Flash Adapter product image",
-    "url": "https://core-electronics.com.au/bus-pirate-5-soic-sop8-spi-flash-adapter.html"
+    "source": "Bus Pirate official hardware documentation",
+    "url": "https://docs.buspirate.com/docs/overview/"
   },
   "sle4442": {
     "file": "sle4442-photo.webp",
-    "source": "ID Cards Direct FM4442/SLE4442 product image",
-    "url": "https://www.idcardsdirect.co.uk/fudan-fm4442-sle4442-contact-chip-pvc-smart-card.html"
+    "source": "Infineon SLE 4442 product documentation",
+    "url": "https://www.infineon.com/cms/en/product/security-smart-card-solutions/security-controllers/contact-based-security-controllers/sle-4442/"
   },
   "pn532": {
     "file": "pn532-photo.webp",
-    "source": "Microless PN532 NFC RFID V3 module product image",
-    "url": "https://uae.microless.com/product/uiotec-pn532-nfc-rfid-v3-module-kits-for-arduino-android-red/"
+    "source": "NXP PN532 product documentation",
+    "url": "https://www.nxp.com/docs/en/nxp/data-sheets/PN532_C1.pdf"
   },
   "spi-nor-flash": {
     "file": "spi-nor-flash-photo.webp",
-    "source": "Core Electronics / Adafruit Bus Pirate 5 SOIC/SOP8 SPI Flash Adapter product image",
-    "url": "https://core-electronics.com.au/bus-pirate-5-soic-sop8-spi-flash-adapter.html"
+    "source": "Bus Pirate official hardware documentation",
+    "url": "https://docs.buspirate.com/docs/overview/"
   },
   "ibutton": {
     "file": "ibutton-photo.webp",
-    "source": "Tutoduino iButton DS1990A photo",
-    "url": "https://tutoduino.fr/cle-dallas-ibutton/"
+    "source": "Analog Devices DS1990A product documentation",
+    "url": "https://www.analog.com/en/products/ds1990a.html"
   },
   "pn532-pinout-gallery": [
     {
       "file": "pn532-pinout-overview-960.webp, pn532-pinout-overview-thumb.webp",
-      "source": "Derived crop from Microless PN532 NFC RFID V3 module product image",
-      "url": "https://uae.microless.com/product/uiotec-pn532-nfc-rfid-v3-module-kits-for-arduino-android-red/"
+      "source": "NXP PN532 product documentation",
+      "url": "https://www.nxp.com/docs/en/nxp/data-sheets/PN532_C1.pdf"
     },
     {
       "file": "pn532-i2c-hsu-header.webp, pn532-i2c-hsu-header-thumb.webp",
-      "source": "Derived crop from Microless PN532 NFC RFID V3 module product image",
-      "url": "https://uae.microless.com/product/uiotec-pn532-nfc-rfid-v3-module-kits-for-arduino-android-red/"
+      "source": "NXP PN532 product documentation",
+      "url": "https://www.nxp.com/docs/en/nxp/data-sheets/PN532_C1.pdf"
     },
     {
       "file": "pn532-interface-jumper-table.webp, pn532-interface-jumper-table-thumb.webp",
-      "source": "Derived crop from Microless PN532 NFC RFID V3 module product image",
-      "url": "https://uae.microless.com/product/uiotec-pn532-nfc-rfid-v3-module-kits-for-arduino-android-red/"
+      "source": "NXP PN532 product documentation",
+      "url": "https://www.nxp.com/docs/en/nxp/data-sheets/PN532_C1.pdf"
     },
     {
       "file": "pn532-spi-control-header.webp, pn532-spi-control-header-thumb.webp",
-      "source": "Derived crop from Microless PN532 NFC RFID V3 module product image",
-      "url": "https://uae.microless.com/product/uiotec-pn532-nfc-rfid-v3-module-kits-for-arduino-android-red/"
+      "source": "NXP PN532 product documentation",
+      "url": "https://www.nxp.com/docs/en/nxp/data-sheets/PN532_C1.pdf"
     }
   ]
 }
