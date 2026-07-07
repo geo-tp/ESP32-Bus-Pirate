@@ -1076,3 +1076,9 @@ html[data-theme="light"] .modules-page .page-hero-top::after {
     box-shadow: 0 10px 24px rgba(30, 70, 50, .12);
   }
 }
+
+
+/* Clean board workflow cards: remove decorative numeric badges from the top-left of cards. */
+.workflow-grid { counter-reset: none; }
+.workflow-card { counter-increment: none; min-height:112px; }
+.workflow-card::before { content:none !important; display:none !important; }
