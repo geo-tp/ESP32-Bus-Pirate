@@ -49,6 +49,17 @@ body.modules-page {
 .plain-list { display:grid; gap:10px; max-width:920px; padding-left:18px; }
 .plain-list strong { color:#eefcf7; }
 .note-grid { margin-top:4px; }
+.wiring-check-table { width:100%; border-collapse:collapse; margin-top:14px; overflow:hidden; border:1px solid #27312b; border-radius:var(--radius); background:rgba(0,0,0,.18); }
+.wiring-check-table th, .wiring-check-table td { padding:10px 12px; border-bottom:1px solid #27312b; text-align:left; vertical-align:top; font-size:.9rem; line-height:1.45; }
+.wiring-check-table th { color:#f2fff8; background:rgba(0,0,0,.22); }
+.wiring-check-table td { color:#d8ddd8; }
+.wiring-check-table tr:last-child td { border-bottom:0; }
+html[data-theme="light"] .wiring-check-table { border-color:#d8e5df; background:linear-gradient(145deg,#fff,#f7fbf8); box-shadow:0 10px 24px rgba(20,60,45,.07); }
+html[data-theme="light"] .wiring-check-table th,
+html[data-theme="light"] .wiring-check-table td { border-bottom-color:#d8e5df; }
+html[data-theme="light"] .wiring-check-table th { color:#11251e; background:linear-gradient(145deg,#edf7f1,#e4f1eb); }
+html[data-theme="light"] .wiring-check-table td { color:#2e4038; }
+html[data-theme="light"] .wiring-check-table tbody tr:nth-child(even) { background:rgba(0,135,111,.035); }
 .note-card { position:relative; overflow:hidden; border-color:#00ffcc32; background:linear-gradient(145deg, rgba(0,255,204,.07), transparent 38%), linear-gradient(145deg,#151d1a,#0f1211); box-shadow:0 8px 20px rgba(0,0,0,.15), inset 0 0 5px #000; }
 .note-card::before { content:""; position:absolute; inset:0 auto 0 0; width:3px; background:linear-gradient(180deg, var(--cyan), transparent); }
 .note-card strong { display:block; color:#d8fff2; font-size:.86rem; line-height:1.25; }
@@ -81,6 +92,7 @@ html[data-theme="light"] .modules-page .secondary-button { border-color:rgba(0,1
 @media (max-width:860px) { .module-hero, .module-profile, .section-head, .quick-workflow, .brand-signature-card { grid-template-columns:1fr; } }
 @media (max-width:760px) { .brand-signature-card { text-align:center; } .brand-signature-logo, .brand-signature-link { justify-self:center; } .brand-signature-copy p { margin-inline:auto; } .brand-signature-keywords { justify-content:center; } }
 @media (max-width:620px) { .modules-page .wrap { width:min(100% - 20px,1120px); } .button-row { flex-direction:column; } .button-row .button { width:100%; } }
+@media (max-width:620px) { .wiring-check-table th, .wiring-check-table td { padding:9px 8px; font-size:.82rem; overflow-wrap:anywhere; } }
 /* Modules polish: cleaner topbar, richer hero visual and integrated target cards. */
 .modules-page .page-top-nav { gap:9px; }
 .module-visual { position:relative; min-height:300px; aspect-ratio:16 / 10; border-color:#00ffcc2b; background:radial-gradient(circle at 50% 34%, rgba(0,255,204,.14), transparent 14rem), radial-gradient(circle at 50% 88%, rgba(0,0,0,.38), transparent 15rem), linear-gradient(145deg,#111b18,#0b0f0e 58%,#080a09); box-shadow:0 18px 42px rgba(0,0,0,.22), inset 0 0 28px rgba(0,255,204,.035); }

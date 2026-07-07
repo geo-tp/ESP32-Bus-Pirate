@@ -154,6 +154,13 @@ h1 {
   line-height: 1.08;
 }
 
+.web-tools-home .hero h1 {
+  width: 100%;
+  max-width: none;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
 .hero p {
   max-width: 860px;
   color: #d8ddd8;

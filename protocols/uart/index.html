@@ -4,13 +4,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Use Bit Pirate as an ESP32 UART workbench for serial consoles, autobaud detection, traffic sniffing, bridges and half-duplex links." name="description"/>
+<meta content="Use ESP32 Bit Pirate for UART bridge mode, serial terminal workflows, autobaud detection, raw byte reads, XMODEM transfers and USB-UART adapter workflows." name="description"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="ESP32 Bit Pirate" property="og:site_name"/>
 <meta content="en_US" property="og:locale"/>
-<meta content="ESP32 UART Serial Console and Bridge Debugging" property="og:title"/>
-<meta content="Use Bit Pirate as an ESP32 UART workbench for serial consoles, autobaud detection, traffic sniffing, bridges and half-duplex links." property="og:description"/>
+<meta content="ESP32 UART bridge mode, serial terminal and autobaud tools" property="og:title"/>
+<meta content="Use ESP32 Bit Pirate for UART bridge mode, serial terminal workflows, autobaud detection, raw byte reads, XMODEM transfers and USB-UART adapter workflows." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/" property="og:url"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-uart.png" property="og:image"/>
@@ -19,12 +19,12 @@
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="ESP32 UART Serial Console and Bridge Debugging" name="twitter:title"/>
-<meta content="Debug UART serial consoles, detect baud rates, sniff traffic, bridge devices and test half-duplex links from an ESP32-S3 board." name="twitter:description"/>
+<meta content="ESP32 UART bridge mode, serial terminal and autobaud tools" name="twitter:title"/>
+<meta content="Use ESP32 Bit Pirate for UART bridge mode, serial terminal workflows, autobaud detection, raw byte reads, XMODEM transfers and USB-UART adapter workflows." name="twitter:description"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-uart.png" name="twitter:image"/>
 <meta content="UART debugging visual with an ESP32 board and serial target modules." name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/" rel="canonical"/>
-<title>ESP32 UART Serial Console and Bridge Debugging | Bit Pirate</title>
+<title>ESP32 UART bridge mode, serial terminal and autobaud tools</title>
 <link href="../protocols.css" rel="stylesheet"/>
 <script type="application/ld+json">
 
@@ -33,8 +33,8 @@
   "@graph": [
     {
       "@type": "WebPage",
-      "name": "ESP32 UART Serial Console and Bridge Debugging",
-      "description": "Use Bit Pirate as an ESP32 UART workbench for serial consoles, autobaud detection, traffic sniffing, bridges and half-duplex links.",
+      "name": "ESP32 UART bridge mode, serial terminal and autobaud tools",
+      "description": "Use ESP32 Bit Pirate for UART bridge mode, serial terminal workflows, autobaud detection, raw byte reads, XMODEM transfers and USB-UART adapter workflows.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/",
       "isPartOf": {
         "@type": "WebSite",
@@ -189,8 +189,8 @@
     },
     {
       "@type": "TechArticle",
-      "headline": "Debug UART serial consoles and bridge devices",
-      "description": "Use Bit Pirate as an ESP32 UART workbench for serial consoles, autobaud detection, traffic sniffing, bridges and half-duplex links.",
+      "headline": "ESP32 UART bridge mode, serial terminal and autobaud tools",
+      "description": "Use ESP32 Bit Pirate for UART bridge mode, serial terminal workflows, autobaud detection, raw byte reads, XMODEM transfers and USB-UART adapter workflows.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/",
       "inLanguage": "en",
       "dateModified": "2026-06-28",
@@ -238,11 +238,11 @@
 <section aria-labelledby="page-title" class="protocol-hero">
 <div>
 <p class="eyebrow">ESP32-S3 UART protocol debugging</p>
-<h1 id="page-title">Debug UART serial consoles and bridge devices</h1>
-<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a UART serial console, bridge and traffic inspection workbench. Use it to detect baud rates, bridge target consoles, inspect raw bytes and debug half-duplex links.</p>
+<h1 id="page-title">ESP32 UART bridge mode, serial terminal and autobaud tools</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board into a UART serial console, bridge and traffic inspection workbench. Use it to detect baud rates, bridge target consoles, inspect raw bytes, transfer files and debug half-duplex links.</p>
 <div class="hero-actions">
-<a class="action-link" href="../../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Explore the ESP32 Bit Pirate site index</a>
-<a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Open the GitHub project</a>
+<a class="action-link" href="../../web-tools/web-serial-terminal/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Open Web Serial Terminal</a>
+<a class="action-link" href="../../recipes/use-usb-uart-adapter/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>Use ESP32 as USB-UART</a>
 </div>
 </div>
 <figure class="hero-visual">
