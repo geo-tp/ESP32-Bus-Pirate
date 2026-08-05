@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="ESP32 Bit Pirate is an open-source ESP32-S3 hardware debugging ecosystem with firmware, Web Flasher, Web Serial tools, protocol guides and companion hardware." name="description"/>
-<meta content="ESP32 Bit Pirate, Bus Pirate, ESP32-S3, hardware debugging, embedded debugging, Web Serial, SPI flash programmer, logic analyzer, SUMP logic analyzer, I2C scanner, SPI programmer, UART terminal, HD UART, GPIO, DIO, PWM, servo, 1-Wire, 2-Wire, SLE4442, 3-Wire, JTAG, SWD, CAN, USB CDC, USB HID, USB MSC, USB Host, I2S, FastLED, infrared, Sub-GHz, CC1101, Wi-Fi, BLE, RF24, FM RDS, Ethernet, cellular AT, firmware flasher, hardware hacking tools" name="keywords"/>
+<meta content="ESP32 Bit Pirate, Bus Pirate, ESP32-S3, hardware debugging, embedded debugging, Web Serial, SPI flash programmer, logic analyzer, SUMP logic analyzer, I2C scanner, SPI programmer, UART terminal, HD UART, GPIO, DIO, PWM, servo, 1-Wire, 2-Wire, SLE4442, 3-Wire, JTAG, SWD, CAN, USB CDC, USB HID, USB MSC, USB Host, I2S, FastLED, infrared, Sub-GHz, CC1101, LoRa, SX1262, Wi-Fi, BLE, RF24, FM RDS, Ethernet, cellular AT, firmware flasher, hardware hacking tools" name="keywords"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="ESP32 Bit Pirate" property="og:site_name"/>
@@ -27,6 +27,8 @@
 <link rel="alternate" type="text/markdown" href="https://geo-tp.github.io/llms.txt" title="LLMs guide">
 <link rel="sitemap" type="application/xml" href="https://geo-tp.github.io/ESP32-Bit-Pirate/sitemap.xml">
 <script defer="" src="assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<script defer="" src="assets/vendor/matter-js-0.20.0.min.js"></script>
+<script defer="" src="assets/supported-devices-physics.js?v=20260804"></script>
 <title>ESP32 Bit Pirate | Hardware Debugging Firmware, Web Tools &amp; Recipes</title>
 <script type="application/ld+json">
   {
@@ -103,7 +105,7 @@
             "name": "Which protocols and workflows does it cover?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The project covers wired buses, USB adapter modes and wireless workflows including I2C, SPI, UART, HD UART, GPIO/DIO, PWM/servo, 1-Wire, 2-Wire smartcards, 3-Wire, SLE4442, JTAG, SWD, CAN, I2S, USB CDC/HID/MSC/Host, LED/FastLED control, infrared, Sub-GHz/CC1101, Wi-Fi, BLE, RF24, FM/RDS, Ethernet and cellular AT workflows."
+              "text": "The project covers wired buses, USB adapter modes and wireless workflows including I2C, SPI, UART, HD UART, GPIO/DIO, PWM/servo, 1-Wire, 2-Wire smartcards, 3-Wire, SLE4442, JTAG, SWD, CAN, I2S, USB CDC/HID/MSC/Host, LED/FastLED control, infrared, Sub-GHz/CC1101, LoRa/SX1262, Wi-Fi, BLE, RF24, FM/RDS, Ethernet and cellular AT workflows."
             }
           },
           {
@@ -1276,6 +1278,341 @@
       background: linear-gradient(145deg, #15211f, #0f0f0f);
     }
 
+    .physics-devices {
+      --physics-device-width: clamp(108px, 12vw, 140px);
+      --physics-device-height: clamp(130px, 14.2vw, 158px);
+    }
+
+    .support + .physics-devices {
+      margin-top: 34px;
+    }
+
+    .physics-devices__scene {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid rgba(0, 255, 204, 0.24);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(rgba(0, 255, 204, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 82% 18%, rgba(0, 255, 204, 0.12), transparent 21rem),
+        linear-gradient(145deg, #151d19, #0c0f0e);
+      background-size: 30px 30px, 30px 30px, auto, auto;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.18), inset 0 0 18px rgba(0, 0, 0, 0.48);
+    }
+
+    .physics-devices__scene::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      height: 72px;
+      background: linear-gradient(transparent, rgba(0, 255, 204, 0.055));
+      content: "";
+      pointer-events: none;
+    }
+
+    .physics-devices__copy {
+      position: relative;
+      z-index: 4;
+      max-width: 650px;
+    }
+
+    .physics-devices__copy h2 {
+      color: #b8ffb8;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      letter-spacing: -0.04em;
+    }
+
+    .physics-devices__copy > p:last-child {
+      max-width: 570px;
+      color: #d8ddd8;
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .physics-devices__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .physics-device {
+      display: block;
+      min-width: 0;
+      min-height: 158px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+      color: #d8fff2;
+      text-decoration: none;
+      box-shadow: inset 0 0 5px #000;
+    }
+
+    .physics-device--size-xl {
+      --physics-device-item-width: clamp(136px, 15vw, 164px);
+      --physics-device-item-height: clamp(136px, 15vw, 164px);
+    }
+
+    .physics-device--size-lg {
+      --physics-device-item-width: clamp(112px, 13vw, 142px);
+      --physics-device-item-height: clamp(120px, 14vw, 154px);
+    }
+
+    .physics-device--size-sm {
+      --physics-device-item-width: clamp(88px, 10vw, 110px);
+      --physics-device-item-height: clamp(116px, 12vw, 138px);
+    }
+
+    .physics-device__inner {
+      display: flex;
+      height: 100%;
+      min-height: inherit;
+      flex-direction: column;
+      gap: 7px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      transition: border-color 150ms ease, filter 150ms ease, transform 150ms ease;
+    }
+
+    .physics-device__visual {
+      display: grid;
+      position: relative;
+      width: min(100%, 116px);
+      min-height: 96px;
+      flex: 1 1 auto;
+      place-items: center;
+    }
+
+    .physics-device__visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 112px;
+      object-fit: contain;
+      filter: drop-shadow(0 9px 12px rgba(0, 0, 0, 0.4));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .physics-device--size-xl .physics-device__visual {
+      width: min(100%, 142px);
+    }
+
+    .physics-device--size-xl .physics-device__visual img {
+      max-height: 128px;
+    }
+
+    .physics-device--profile-landscape .physics-device__visual {
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 2 / 1;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+
+    .physics-device--profile-landscape .physics-device__visual img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      object-fit: fill;
+    }
+
+    .physics-device--profile-portrait .physics-device__visual {
+      width: 42%;
+      min-height: 0;
+      aspect-ratio: 1 / 2;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+
+    .physics-device--profile-portrait .physics-device__visual img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      max-height: none;
+      object-fit: fill;
+    }
+
+    .physics-device--profile-t-embed .physics-device__visual img {
+      top: -14%;
+      left: -28%;
+      width: 280%;
+      height: 127%;
+    }
+
+    .physics-device--profile-t190 .physics-device__visual img {
+      top: -18%;
+      left: -27%;
+      width: 270%;
+      height: 135%;
+    }
+
+    .physics-device--visual-compact .physics-device__visual {
+      width: min(82%, 90px);
+    }
+
+    .physics-device--profile-photo .physics-device__visual {
+      width: 68%;
+      min-height: 0;
+      aspect-ratio: 0.72;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+
+    .physics-device--profile-photo .physics-device__visual img {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: auto;
+      height: 100%;
+      max-height: none;
+      object-fit: fill;
+      transform: translateX(-50%);
+    }
+
+    .physics-device--profile-stamp .physics-device__visual {
+      clip-path: inset(3% 1% 5% 1% round 5px);
+    }
+
+    .physics-device__label {
+      display: inline-flex;
+      min-height: 27px;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 8px;
+      border: 1px solid #2f3a2f;
+      border-radius: 999px;
+      background: rgba(17, 17, 17, 0.94);
+      color: #caffca;
+      font-size: 0.68rem;
+      font-weight: 800;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .physics-device:hover .physics-device__inner,
+    .physics-device:focus-visible .physics-device__inner {
+      border-color: rgba(0, 255, 204, 0.55);
+      filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.16));
+      transform: scale(1.035);
+    }
+
+    .physics-device:hover .physics-device__label,
+    .physics-device:focus-visible .physics-device__label {
+      border-color: rgba(0, 255, 204, 0.62);
+      color: var(--cyan);
+    }
+
+    .physics-devices.physics-enabled .physics-devices__scene {
+      height: clamp(480px, 44vw, 500px);
+      padding: 0;
+    }
+
+    .physics-devices.physics-enabled .physics-devices__copy {
+      position: absolute;
+      top: clamp(20px, 3vw, 34px);
+      left: clamp(20px, 3vw, 34px);
+      width: calc(100% - clamp(40px, 6vw, 68px));
+      max-width: 610px;
+      pointer-events: none;
+    }
+
+    .physics-devices.physics-enabled .physics-devices__list {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      display: block;
+      margin: 0;
+    }
+
+    .physics-devices.physics-enabled .physics-device {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: var(--physics-device-item-width, var(--physics-device-width));
+      height: var(--physics-device-item-height, var(--physics-device-height));
+      min-height: 0;
+      border: 0;
+      background: transparent;
+      cursor: grab;
+      box-shadow: none;
+      touch-action: none;
+      transform-origin: center;
+      user-select: none;
+      will-change: transform;
+    }
+
+    .physics-devices.physics-enabled .physics-device__inner {
+      min-height: 0;
+      padding: 5px;
+      background: transparent;
+    }
+
+    .physics-devices.physics-enabled .physics-device__visual {
+      min-height: 0;
+    }
+
+    .physics-devices.physics-enabled .physics-device.is-dragging {
+      z-index: 5;
+      cursor: grabbing;
+    }
+
+    .physics-devices.physics-enabled .physics-device.is-dragging .physics-device__inner {
+      filter: drop-shadow(0 0 13px rgba(0, 255, 204, 0.22));
+      transform: scale(1.045);
+    }
+
+    html[data-theme="light"] .physics-devices__scene {
+      border-color: rgba(0, 126, 118, 0.24);
+      background:
+        linear-gradient(rgba(0, 126, 118, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 126, 118, 0.045) 1px, transparent 1px),
+        radial-gradient(circle at 82% 18%, rgba(0, 126, 118, 0.1), transparent 21rem),
+        linear-gradient(145deg, #ffffff, #e8f0eb);
+      background-size: 30px 30px, 30px 30px, auto, auto;
+      box-shadow: 0 16px 34px rgba(31, 72, 53, 0.1), inset 0 0 12px rgba(28, 57, 43, 0.06);
+    }
+
+    html[data-theme="light"] .physics-devices__scene::after {
+      background: linear-gradient(transparent, rgba(0, 126, 118, 0.06));
+    }
+
+    html[data-theme="light"] .physics-device {
+      border-color: #b9c9c0;
+      background: linear-gradient(145deg, #ffffff, #edf4ef);
+      box-shadow: inset 0 0 5px rgba(28, 57, 43, 0.08);
+    }
+
+    html[data-theme="light"] .physics-devices.physics-enabled .physics-device {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    html[data-theme="light"] .physics-device__label {
+      border-color: #a8c5b7;
+      background: rgba(255, 255, 255, 0.94);
+      color: #087345;
+    }
+
+    html[data-theme="light"] .physics-devices__copy > p:last-child {
+      color: #355448;
+    }
+
     .brand-signature {
       margin-top: 16px;
     }
@@ -1426,6 +1763,38 @@
     }
 
     @media (max-width: 760px) {
+      .physics-devices {
+        --physics-device-width: clamp(66px, 21vw, 86px);
+        --physics-device-height: clamp(90px, 25vw, 106px);
+      }
+
+      .physics-devices.physics-enabled .physics-devices__scene {
+        height: clamp(470px, 126vw, 490px);
+      }
+
+      .physics-devices.physics-enabled .physics-devices__copy {
+        top: 16px;
+        left: 16px;
+        width: calc(100% - 112px);
+        max-width: none;
+      }
+
+      .physics-devices__copy > p:last-child {
+        font-size: 0.78rem;
+        line-height: 1.42;
+      }
+
+      .physics-devices.physics-enabled .physics-device__inner {
+        gap: 4px;
+        padding: 3px;
+      }
+
+      .physics-device__label {
+        min-height: 24px;
+        padding: 4px 6px;
+        font-size: 0.61rem;
+      }
+
       .brand-signature-card {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1450,6 +1819,15 @@
     }
 
     @media (max-width: 1040px) {
+      .physics-devices {
+        --physics-device-width: clamp(96px, 14vw, 122px);
+        --physics-device-height: clamp(118px, 16vw, 144px);
+      }
+
+      .physics-devices.physics-enabled .physics-devices__scene {
+        height: 490px;
+      }
+
       .ecosystem-grid {
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
         grid-template-rows: none;
@@ -1528,6 +1906,32 @@
 
       .featured .content-card:first-child {
         grid-column: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .physics-devices {
+        --physics-device-width: clamp(66px, 21vw, 86px);
+        --physics-device-height: clamp(90px, 25vw, 106px);
+      }
+
+      .physics-device--size-xl {
+        --physics-device-item-width: clamp(86px, 27vw, 102px);
+        --physics-device-item-height: clamp(96px, 29vw, 112px);
+      }
+
+      .physics-device--size-lg {
+        --physics-device-item-width: clamp(76px, 23vw, 90px);
+        --physics-device-item-height: clamp(92px, 27vw, 106px);
+      }
+
+      .physics-device--size-sm {
+        --physics-device-item-width: clamp(70px, 20vw, 80px);
+        --physics-device-item-height: clamp(98px, 27vw, 110px);
+      }
+
+      .physics-devices.physics-enabled .physics-devices__scene {
+        height: clamp(470px, 126vw, 490px);
       }
     }
 
@@ -1646,6 +2050,12 @@
       }
     }
 
+    @media (max-width: 480px) {
+      .physics-devices.physics-enabled .physics-devices__scene {
+        height: clamp(560px, 148vw, 580px);
+      }
+    }
+
     @media (max-width: 360px) {
       .site-footer nav {
         grid-template-columns: 1fr;
@@ -1677,6 +2087,41 @@
         opacity: 0.72;
         stroke: rgba(0, 255, 204, 0.30);
         stroke-dashoffset: 0;
+      }
+
+      .physics-devices.physics-enabled .physics-devices__scene {
+        height: auto;
+        padding: clamp(18px, 3vw, 28px);
+      }
+
+      .physics-devices.physics-enabled .physics-devices__copy {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: auto;
+        max-width: 650px;
+        pointer-events: auto;
+      }
+
+      .physics-devices.physics-enabled .physics-devices__list {
+        position: relative;
+        inset: auto;
+        display: grid;
+        margin-top: 24px;
+      }
+
+      .physics-devices.physics-enabled .physics-device {
+        position: relative;
+        width: auto;
+        height: auto;
+        min-height: 158px;
+        border: 1px solid var(--border);
+        background: linear-gradient(145deg, var(--panel-bg), var(--panel-bg-deep));
+        cursor: pointer;
+        box-shadow: inset 0 0 5px #000;
+        touch-action: auto;
+        transform: none !important;
+        will-change: auto;
       }
 
     }
@@ -1720,7 +2165,7 @@
 <li><span>&gt;</span> automate from Python</li>
 </ul>
 <ul aria-label="Supported protocol families" class="protocols">
-<li><a href="protocols/i2c/">I2C</a></li><li><a href="protocols/spi/">SPI</a></li><li><a href="protocols/uart/">UART</a></li><li><a href="protocols/uart/">HD UART</a></li><li><a href="protocols/at/">AT</a></li><li><a href="protocols/dio/">GPIO / DIO</a></li><li><a href="protocols/dio/">PWM / Servo</a></li><li><a href="protocols/1wire/">1-Wire</a></li><li><a href="protocols/2wire/">2-Wire</a></li><li><a href="protocols/3wire/">3-Wire</a></li><li><a href="protocols/2wire/">SLE4442</a></li><li><a href="protocols/jtag/">JTAG</a></li><li><a href="protocols/jtag/">SWD</a></li><li><a href="protocols/can/">CAN</a></li><li><a href="protocols/i2s/">I2S</a></li><li><a href="protocols/usb-adapters/">USB CDC</a></li><li><a href="protocols/usb-adapters/">USB HID</a></li><li><a href="protocols/usb-adapters/">USB MSC</a></li><li><a href="protocols/usb-adapters/">USB Host</a></li><li><a href="protocols/dio/">LED</a></li><li><a href="protocols/infrared/">Infrared</a></li><li><a href="protocols/subghz/">Sub-GHz</a></li><li><a href="protocols/wifi/">Wi-Fi</a></li><li><a href="protocols/bluetooth/">BLE</a></li><li><a href="protocols/rf24/">RF24</a></li><li><a href="protocols/fm/">FM</a></li><li><a href="protocols/ethernet/">Ethernet</a></li><li><a href="protocols/at/">Cellular</a></li><li><a href="web-tools/web-serial-terminal/">Web Serial</a></li>
+<li><a href="protocols/i2c/">I2C</a></li><li><a href="protocols/spi/">SPI</a></li><li><a href="protocols/uart/">UART</a></li><li><a href="protocols/uart/">HD UART</a></li><li><a href="protocols/at/">AT</a></li><li><a href="protocols/dio/">GPIO / DIO</a></li><li><a href="protocols/dio/">PWM / Servo</a></li><li><a href="protocols/1wire/">1-Wire</a></li><li><a href="protocols/2wire/">2-Wire</a></li><li><a href="protocols/3wire/">3-Wire</a></li><li><a href="protocols/2wire/">SLE4442</a></li><li><a href="protocols/jtag/">JTAG</a></li><li><a href="protocols/jtag/">SWD</a></li><li><a href="protocols/can/">CAN</a></li><li><a href="protocols/i2s/">I2S</a></li><li><a href="protocols/usb-adapters/">USB CDC</a></li><li><a href="protocols/usb-adapters/">USB HID</a></li><li><a href="protocols/usb-adapters/">USB MSC</a></li><li><a href="protocols/usb-adapters/">USB Host</a></li><li><a href="protocols/dio/">LED</a></li><li><a href="protocols/infrared/">Infrared</a></li><li><a href="protocols/subghz/">Sub-GHz</a></li><li><a href="protocols/lora/">LoRa</a></li><li><a href="protocols/wifi/">Wi-Fi</a></li><li><a href="protocols/bluetooth/">BLE</a></li><li><a href="protocols/rf24/">RF24</a></li><li><a href="protocols/fm/">FM</a></li><li><a href="protocols/ethernet/">Ethernet</a></li><li><a href="protocols/at/">Cellular</a></li><li><a href="web-tools/web-serial-terminal/">Web Serial</a></li>
 </ul>
 <p>Use it from a serial terminal, from browser-based tools, or as a dedicated USB adapter for firmware and signal workflows.</p>
 </div>
@@ -1736,7 +2181,7 @@
 </a>
 <div class="brand-signature-copy">
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">ESP32 Bit Pirate</span> project</p>
-<h2 id="bit-pirate-identity-title">Powering the open-source ecosystem.</h2>
+<h2 id="bit-pirate-identity-title">Turn a $5 ESP32-S3 into a browser-based hardware workbench.</h2>
 <p>The Bit Pirate firmware is complemented by scripting, hardware dock, extension, adapters, browser tools, documentation and practical embedded workflows to enable comprehensive hardware debugging and development with serial interfaces or Wi-Fi connectivity.</p>
 <ul aria-label="ESP32 Bit Pirate keywords" class="brand-signature-keywords">
 <li><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener">ESP32-S3 firmware</a></li>
@@ -1751,7 +2196,7 @@
 <div class="section-head">
 <div>
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">01</span> ecosystem</p>
-<h2 id="ecosystem-title">Everything around the firmware, in one place.</h2>
+<h2 id="ecosystem-title">ESP32 firmware, web serial tools, hardware guides.</h2>
 </div>
 <p class="section-intro">The project is more than a C++ firmware repo: it includes browser workflows, documentation, scripts, boards and companion hardware.</p>
 </div>
@@ -1871,7 +2316,7 @@
 <div class="section-head">
 <div>
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">02</span> start here</p>
-<h2 id="start-title">Flash in one click, nothing to install, easy to use.</h2>
+<h2 id="start-title">Flash ESP32-S3 firmware in your browser, no install.</h2>
 </div>
 <p class="section-intro">Use the Web Flasher, open the Web Serial terminal, then explore, script and interact with hardware directly.</p>
 </div>
@@ -1904,7 +2349,7 @@
 <div class="card-copy">
 <p class="card-eyebrow"><span aria-hidden="true" class="eyebrow-mark">03</span> Docs · Recipes</p>
 <h3>Learn by doing real hardware tasks</h3>
-<p>Short practical workflows for I2C, SPI, UART, GPIO, flash, infrared, Sub-GHz, USB, network and debug use cases.</p>
+<p>Short practical workflows for I2C, SPI, UART, GPIO, flash, infrared, Sub-GHz, LoRa, USB, network and debug use cases.</p>
 <span class="card-arrow">Explore Recipes →</span>
 </div>
 </a>
@@ -1959,8 +2404,8 @@
 </article>
 <article class="protocol-card">
 <h3>Wireless and mixed benches</h3>
-<p>Explore Wi-Fi, BLE, infrared, Sub-GHz, RFID and companion board features alongside wired protocols so a single project can cover many real lab situations.</p>
-<ul aria-label="Wireless workflow keywords" class="pill-list"><li><a href="protocols/wifi/">Wi-Fi</a></li><li><a href="protocols/bluetooth/">BLE</a></li><li><a href="protocols/infrared/">Infrared</a></li><li><a href="protocols/subghz/">Sub-GHz</a></li></ul>
+<p>Explore Wi-Fi, BLE, infrared, Sub-GHz, LoRa and companion board features alongside wired protocols so a single project can cover many real lab situations.</p>
+<ul aria-label="Wireless workflow keywords" class="pill-list"><li><a href="protocols/wifi/">Wi-Fi</a></li><li><a href="protocols/bluetooth/">BLE</a></li><li><a href="protocols/infrared/">Infrared</a></li><li><a href="protocols/subghz/">Sub-GHz</a></li><li><a href="protocols/lora/">LoRa</a></li></ul>
 </article>
 </div>
 </section>
@@ -1979,7 +2424,7 @@
 </details>
 <details class="faq-item" open="">
 <summary>Which protocols and workflows does it cover?</summary>
-<p>It covers I2C, SPI, UART, HD UART, GPIO/DIO, PWM/servo, 1-Wire, 2-Wire smartcards, 3-Wire, SLE4442, JTAG, SWD, CAN, I2S, USB CDC/HID/MSC/Host, LED/FastLED control, infrared, Sub-GHz/CC1101, Wi-Fi, BLE, RF24, FM/RDS, Ethernet and cellular AT workflows, plus scanning, dumping, sniffing, bridging, flashing and logic capture.</p>
+<p>It covers I2C, SPI, UART, HD UART, GPIO/DIO, PWM/servo, 1-Wire, 2-Wire smartcards, 3-Wire, SLE4442, JTAG, SWD, CAN, I2S, USB CDC/HID/MSC/Host, LED/FastLED control, infrared, Sub-GHz/CC1101, LoRa/SX1262, Wi-Fi, BLE, RF24, FM/RDS, Ethernet and cellular AT workflows, plus scanning, dumping, sniffing, bridging, flashing and logic capture.</p>
 </details>
 <details class="faq-item">
 <summary>How can I use the ESP32 Bit Pirate CLI?</summary>
@@ -2030,6 +2475,29 @@
 <h2>Keep the setup intentional.</h2>
 <p>Use the correct voltage, share ground only when appropriate, avoid unsafe wiring, and work only on devices and radio environments you own or are authorized to test.</p>
 </aside>
+</section>
+<section aria-describedby="supported-devices-description" aria-labelledby="supported-devices-title" class="physics-devices" data-supported-devices="">
+<div class="physics-devices__scene" data-supported-devices-scene="">
+<div class="physics-devices__copy" data-supported-devices-copy="">
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">Supported</span> devices</p>
+<h2 id="supported-devices-title">Choose your board.</h2>
+<p id="supported-devices-description">Select a board to open its setup, pinout, and flashing guide.</p>
+</div>
+<nav aria-label="Supported ESP32 Bit Pirate board guides" class="physics-devices__list">
+<a class="physics-device physics-device--size-xl" data-physics-device="" href="boards/cardputer/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-cardputer.webp" width="320"/></span><span class="physics-device__label">Cardputer</span></span></a>
+<a class="physics-device physics-device--size-xl" data-physics-device="" href="boards/cardputer-adv/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-cardputer-adv.webp" width="320"/></span><span class="physics-device__label">Cardputer ADV</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-landscape" data-physics-device="" href="boards/t-embed-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed.webp" width="320"/></span><span class="physics-device__label">T-Embed S3</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t-embed" data-physics-device="" href="boards/t-embed-cc1101/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed-cc1101-physics.webp" width="320"/></span><span class="physics-device__label">T-Embed CC1101</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t-embed" data-physics-device="" href="boards/t-embed-cc1101/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed-cc1101-physics.webp" width="320"/></span><span class="physics-device__label">T-Embed CC1101 Plus</span></span></a>
+<a class="physics-device" data-physics-device="" href="boards/esp32-s3-devkit/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/esp32-s3-devkit.webp" width="320"/></span><span class="physics-device__label">ESP32-S3 DevKit</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/m5stick-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-sticks3.webp" width="320"/></span><span class="physics-device__label">M5StickS3</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/stamp-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-stamps3.webp" width="320"/></span><span class="physics-device__label">StampS3</span></span></a>
+<a class="physics-device physics-device--size-sm physics-device--visual-compact" data-physics-device="" href="boards/atom-s3-lite/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-atom-s3-lite.webp" width="320"/></span><span class="physics-device__label">AtomS3 Lite</span></span></a>
+<a class="physics-device physics-device--profile-portrait" data-physics-device="" href="boards/t-display-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-display-s3.webp" width="320"/></span><span class="physics-device__label">T-Display S3</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t190" data-physics-device="" href="boards/vision-master-t190/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/heltec-vision-master-t190.webp" width="320"/></span><span class="physics-device__label">Vision Master T190</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/xiao-esp32-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/seeed-studio-xiao-esp32-s3.webp" width="320"/></span><span class="physics-device__label">XIAO ESP32-S3</span></span></a>
+</nav>
+</div>
 </section>
 <footer class="site-footer">
 <p class="site-footer-title">ESP32 Bit Pirate</p>
