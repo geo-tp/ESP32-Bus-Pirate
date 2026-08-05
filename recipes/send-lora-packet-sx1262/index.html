@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Send one controlled LoRa text or hexadecimal packet with an SX1262 in ESP32 Bit Pirate, verify airtime and confirm reception on an authorized peer." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to send a LoRa packet with an SX1262" property="og:title"/>
+<meta content="Estimate airtime, send one controlled text or hexadecimal LoRa packet, then verify it on an authorized receiver." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-lora-packet-sx1262/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" property="og:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." property="og:image:alt"/>
+<meta content="image/webp" property="og:image:type"/>
+<meta content="800" property="og:image:width"/>
+<meta content="800" property="og:image:height"/>
+<meta content="2026-07-14" property="article:published_time"/>
+<meta content="2026-07-14" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to send a LoRa packet with an SX1262" name="twitter:title"/>
+<meta content="Send one controlled LoRa packet and confirm its airtime, payload and reception." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" name="twitter:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-lora-packet-sx1262/" rel="canonical"/>
+<title>Send a LoRa Packet with SX1262 | ESP32 Bit Pirate</title>
+<link href="../recipes.css?v=20260714-lora1" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to send a LoRa packet with an SX1262",
+      "description": "Send one controlled LoRa text or hexadecimal packet with an SX1262 in ESP32 Bit Pirate, verify airtime and confirm reception on an authorized peer.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14",
+      "author": {"@type": "Person", "name": "Geo"},
+      "publisher": {"@type": "Organization", "name": "ESP32 Bit Pirate", "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"},
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-lora-packet-sx1262/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"},
+        {"@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"},
+        {"@type": "ListItem", "position": 3, "name": "Send a LoRa packet with SX1262", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-lora-packet-sx1262/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Which payload formats does LoRa send accept?", "acceptedAnswer": {"@type": "Answer", "text": "The command accepts text or hexadecimal bytes inside hex braces, for example hex{ 01 AA 02 }. The implementation rejects empty or invalid payloads and limits them to 255 bytes."}},
+        {"@type": "Question", "name": "Does send show LoRa airtime before transmitting?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It prints payload length, calculated airtime and a hexadecimal and ASCII preview before starting the transmission."}},
+        {"@type": "Question", "name": "When should I use the LoRa spam command?", "acceptedAnswer": {"@type": "Answer", "text": "Only for a short, controlled and legal repeated-packet bench test. Choose an interval that respects airtime and regional duty-cycle limits, monitor the authorized receiver and press Enter to stop."}}
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+  <div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>LoRa</li><li>Intermediate</li><li>8 min</li><li>Transmit</li></ul></div><nav aria-label="Section navigation" class="article-top-nav"><a href="../../"><svg aria-hidden="true" class="article-nav-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank">Wiki</a></nav></div>
+  <p class="eyebrow">Recipe · Intermediate · LoRa</p>
+  <h1>How to send a LoRa packet with SX1262</h1>
+  <p>Estimate airtime, transmit one small text or hexadecimal payload and confirm it on your own authorized receiver.</p>
+</header>
+<figure class="recipe-banner"><img alt="SX1262 LoRa module and chirp waveform." height="600" src="../assets/visual-lora.svg" width="1040"/><figcaption>A useful transmit test starts with one short packet, a known peer and an explicit modem profile.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+  <section class="recipe-section recipe-intro-card"><h2>Keep the first transmission controlled</h2><p>Use two nodes you own or are authorized to test, keep them nearby and fit the correct antennas. Confirm the permitted frequency, power, bandwidth and duty cycle for your region before transmitting.</p><ul><li>Start with one short packet, not a repeated stream.</li><li>Keep the receiver open on the exact same LoRa profile.</li><li>Record payload, airtime, RSSI and SNR in the same test note.</li></ul></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Verify both endpoints</h2><p>Run <code>status</code> on the transmitter and receiver. Frequency, bandwidth, SF, CR, sync word, CRC and IQ mode must be compatible.</p><div data-cli-commands="mode lora
+status" data-cli-mode="BitPirate" data-cli-result="[LoRa SX1262]
+State: ready
+[Radio profile]
+[Control pins]
+[Counters]" data-cli-session=""></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Estimate airtime before TX</h2><p>The implementation calculates time-on-air from the active modem profile and payload length. A short payload can still have substantial airtime at a high spreading factor.</p><div data-cli-commands="airtime 10" data-cli-mode="LORA" data-cli-result="[LoRa airtime]
+Length: 10 bytes
+Time: calculated from the active profile" data-cli-session=""></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 3</span><h2>Send one text packet</h2><p>Open <code>receive</code> on the peer first. The sender previews length, airtime, HEX and ASCII before it transmits.</p><div data-cli-commands="send Hello LoRa" data-cli-mode="LORA" data-cli-result="[LoRa TX]
+Length: 10 bytes
+Airtime: calculated milliseconds
+HEX / ASCII: payload preview
+LoRa TX: sent.
+Time: measured TX duration" data-cli-session=""></div><div class="callout success"><h3>Confirm the complete path</h3><p>The peer should report the same payload plus packet RSSI and SNR. A sender-side <code>sent</code> result alone does not prove that the receiver decoded it.</p></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 4</span><h2>Send an exact binary payload</h2><p>Use two-digit hexadecimal bytes when text would change or hide the payload. The maximum payload is 255 bytes.</p><div data-cli-commands="send hex{ 01 AA 02 7F }" data-cli-mode="LORA" data-cli-result="[LoRa TX]
+Length: 4 bytes
+HEX: 01 AA 02 7F
+LoRa TX: sent." data-cli-session=""></div></section>
+  <section class="recipe-section"><h2>Optional repeated bench test</h2><p><code>spam</code> repeatedly sends the same payload and treats the last numeric token as the interval in milliseconds. The accepted interval is 1–600000 ms; press Enter to stop and print the summary.</p><div data-cli-commands="spam probe 5000" data-cli-mode="LORA" data-cli-result="[LoRa spam]
+Length / Airtime
+Interval: 5000 ms
+Stop: press [ENTER]
+
+[Spam summary]
+Sent / Failed / Duration" data-cli-session=""></div><div class="callout warning"><h3>Do not choose an interval from syntax alone</h3><p>The firmware range is not a legal duty-cycle calculation. Base the interval on measured airtime and applicable regional rules, and stop as soon as the controlled receiver test is complete.</p></div></section>
+  <section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>Invalid payload:</strong> use plain text or complete two-digit bytes inside <code>hex{ }</code>.</li><li><strong>Payload too long:</strong> reduce it to 255 bytes or fewer.</li><li><strong>TX reports failed:</strong> check BUSY, power, antenna and the configured oscillator, then inspect <code>status</code>.</li><li><strong>TX succeeds but RX is empty:</strong> compare the full modem profile and confirm the receiver was active before transmission.</li><li><strong>Repeated test causes losses:</strong> lengthen the interval and compare it with airtime, receive processing and applicable duty-cycle limits.</li></ul></section>
+  <section class="recipe-section next-steps-section"><h2>Next steps</h2><ul><li>Repeat single-packet tests at controlled distances and compare RSSI, SNR and error counters.</li><li>Use scan and waterfall as energy observations, not as proof that a LoRa packet decoded.</li><li>Capture one known packet to a versioned <code>.lora</code> file for a repeatable lab fixture.</li></ul></section>
+  <section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">LoRa transmit FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Which payload formats does send accept?</summary><p>Plain text or hexadecimal bytes inside <code>hex{ }</code>. Invalid or empty payloads are rejected, and the limit is 255 bytes.</p></details><details class="recipe-faq-item"><summary>Does send show airtime before transmitting?</summary><p>Yes. It prints length, calculated airtime and a HEX/ASCII preview before starting the radio transmission.</p></details><details class="recipe-faq-item"><summary>When should I use spam?</summary><p>Only for a short authorized repeated-packet bench test with an interval derived from airtime and regional limits. Press Enter to stop.</p></details></div></section>
+  <section class="recipe-section"><h2>Go deeper</h2><nav aria-label="Related links" class="link-card-list"><a href="../receive-lora-packet-sx1262/"><span>Previous recipe</span><strong>Receive and inspect a LoRa packet</strong></a><a href="../scan-lora-frequency-sx1262/"><span>Next recipe</span><strong>Scan LoRa-band frequency activity</strong></a><a href="../configure-sx1262-lora-radio/"><span>Profile</span><strong>Configure the SX1262 modem settings</strong></a><a href="../../protocols/lora/"><span>Protocol</span><strong>LoRa packet and signal analysis overview</strong></a><a href="../../modules/sx1262/"><span>Module</span><strong>SX1262 command and hardware reference</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank"><span>Wiki</span><strong>24-LORA</strong></a><a href="../../web-tools/web-serial-terminal/"><span>Web tool</span><strong>Open the Web Serial Terminal</strong></a></nav></section>
+</article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>Two owned or authorized LoRa nodes</li><li>Working SX1262 wiring and antennas</li><li>Matching LoRa profiles</li><li>Known regional RF limits</li></ul></dd><dt class="aside-dt-setup">Setup</dt><dd class="aside-setup-dd"><p>Keep both endpoints nearby. Start <code>receive</code> on the peer before sending one small packet from the SX1262.</p></dd><dt class="aside-dt-protocol">Protocol</dt><dd>LoRa</dd><dt class="aside-dt-hardware">Hardware</dt><dd>SX1262 transmitter and authorized receiver</dd><dt class="aside-dt-command">Commands</dt><dd><code>airtime</code>, <code>send</code>, <code>spam</code></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA">24-LORA</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-07-14</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20260714-lora1"></script>
+</body>
+</html>

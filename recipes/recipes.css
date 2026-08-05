@@ -1568,6 +1568,49 @@ h2 {
   box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.035);
 }
 
+.recipe-table-scroll {
+  max-width: 100%;
+  margin-top: 14px;
+  overflow-x: auto;
+  border: 1px solid #28342f;
+  border-radius: var(--radius);
+  background: #0d1210;
+}
+
+.recipe-data-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  color: #d8ddd8;
+  font-size: 0.91rem;
+  line-height: 1.45;
+}
+
+.recipe-data-table th,
+.recipe-data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #28342f;
+  text-align: left;
+  vertical-align: top;
+}
+
+.recipe-data-table th {
+  background: rgba(0, 255, 204, 0.08);
+  color: var(--cyan);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.recipe-data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.recipe-data-table td:first-child {
+  color: #f0f4f0;
+  font-weight: 800;
+}
+
 /* Replace raw article bullets and 1. 2. lists with cards that match the tool UI. */
 .recipe-section > ol,
 .recipe-section > ul:not(.hardware-list):not(.wiring-list):not(.mistake-list):not(.recipe-badge-list):not(.tag-list):not(.recipe-pill-list) {

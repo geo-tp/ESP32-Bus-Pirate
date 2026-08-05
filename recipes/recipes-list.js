@@ -5314,5 +5314,246 @@ window.BIT_PIRATE_RECIPES = [
     "time": "5 min",
     "hardware": "MCP2515 CAN module and authorized CAN bus",
     "takeaway": "MCP2515 uses the configured SPI roles; connect CANH/CANL only to a compatible, authorized CAN bus."
+  },
+  {
+    "title": "Wire an SX1262 LoRa module",
+    "slug": "wire-sx1262-lora-module",
+    "description": "Connect SPI, RESET, BUSY and DIO1, then confirm that the radio probe reaches the ready state.",
+    "date": "2026-07-14",
+    "author": "Geo",
+    "difficulty": "Beginner",
+    "type": "Recipe",
+    "mark": "LoRa",
+    "protocols": [
+      "LoRa",
+      "SPI"
+    ],
+    "targets": [
+      "SX1262 LoRa module",
+      "Core1262-HF"
+    ],
+    "workflows": [
+      "Wiring",
+      "Setup"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web Serial Terminal"
+    ],
+    "tags": [
+      "lora",
+      "sx1262",
+      "core1262",
+      "spi",
+      "busy",
+      "dio1",
+      "wiring"
+    ],
+    "cover": "assets/visual-lora.svg",
+    "time": "10 min",
+    "hardware": "SX1262 or compatible Core1262-style LoRa module",
+    "takeaway": "SX1262 needs SPI plus RESET, BUSY and DIO1; the ready state confirms that the radio probe completed."
+  },
+  {
+    "title": "Configure an SX1262 LoRa profile",
+    "slug": "configure-sx1262-lora-radio",
+    "description": "Build a known modem profile, verify every setting and estimate packet airtime.",
+    "date": "2026-07-14",
+    "author": "Geo",
+    "difficulty": "Beginner",
+    "type": "Recipe",
+    "mark": "LoRa",
+    "protocols": [
+      "LoRa",
+      "SPI"
+    ],
+    "targets": [
+      "SX1262 LoRa module",
+      "Core1262-HF"
+    ],
+    "workflows": [
+      "Configuration",
+      "Setup"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web Serial Terminal"
+    ],
+    "tags": [
+      "lora",
+      "sx1262",
+      "frequency",
+      "bandwidth",
+      "spreading factor",
+      "coding rate",
+      "tcxo",
+      "airtime"
+    ],
+    "cover": "assets/visual-lora.svg",
+    "time": "10 min",
+    "hardware": "Configured SX1262 LoRa module and band-matched antenna",
+    "takeaway": "Both LoRa endpoints need compatible frequency, BW, SF, CR, sync, CRC and IQ settings."
+  },
+  {
+    "title": "Receive a LoRa packet with SX1262",
+    "slug": "receive-lora-packet-sx1262",
+    "description": "Use RSSI and CAD first, then decode a packet and inspect its signal metrics and payload.",
+    "date": "2026-07-14",
+    "author": "Geo",
+    "difficulty": "Intermediate",
+    "type": "Recipe",
+    "mark": "LoRa",
+    "protocols": [
+      "LoRa",
+      "SPI"
+    ],
+    "targets": [
+      "SX1262 LoRa module",
+      "Controlled LoRa transmitter"
+    ],
+    "workflows": [
+      "Receive",
+      "Capture & analyze"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web Serial Terminal"
+    ],
+    "tags": [
+      "lora",
+      "sx1262",
+      "receive",
+      "rssi",
+      "snr",
+      "cad",
+      "packet",
+      "payload"
+    ],
+    "cover": "assets/visual-lora.svg",
+    "time": "10 min",
+    "hardware": "SX1262 receiver and owned or authorized LoRa transmitter",
+    "takeaway": "RSSI shows energy, CAD detects a compatible LoRa preamble, and receive decodes a complete packet."
+  },
+  {
+    "title": "Send a LoRa packet with SX1262",
+    "slug": "send-lora-packet-sx1262",
+    "description": "Estimate airtime, send one controlled payload and verify it on an authorized receiver.",
+    "date": "2026-07-14",
+    "author": "Geo",
+    "difficulty": "Intermediate",
+    "type": "Recipe",
+    "mark": "LoRa",
+    "protocols": [
+      "LoRa",
+      "SPI"
+    ],
+    "targets": [
+      "SX1262 LoRa module",
+      "Authorized LoRa receiver"
+    ],
+    "workflows": [
+      "Transmit",
+      "Connect & control"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web Serial Terminal"
+    ],
+    "tags": [
+      "lora",
+      "sx1262",
+      "send",
+      "tx",
+      "payload",
+      "hex",
+      "airtime",
+      "spam"
+    ],
+    "cover": "assets/visual-lora.svg",
+    "time": "8 min",
+    "hardware": "SX1262 transmitter and owned or authorized LoRa receiver",
+    "takeaway": "Preview payload and airtime, send one packet, then use peer RSSI and SNR to prove the complete link."
+  },
+  {
+    "title": "Scan LoRa frequency activity with SX1262",
+    "slug": "scan-lora-frequency-sx1262",
+    "description": "Find RSSI peaks in a narrow range and inspect them with the on-device waterfall.",
+    "date": "2026-07-14",
+    "author": "Geo",
+    "difficulty": "Intermediate",
+    "type": "Recipe",
+    "mark": "LoRa",
+    "protocols": [
+      "LoRa",
+      "SPI"
+    ],
+    "targets": [
+      "SX1262 LoRa module",
+      "Controlled RF source"
+    ],
+    "workflows": [
+      "Scan",
+      "Capture & analyze"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Device display"
+    ],
+    "tags": [
+      "lora",
+      "sx1262",
+      "scan",
+      "waterfall",
+      "rssi",
+      "frequency",
+      "threshold",
+      "spectrum"
+    ],
+    "cover": "assets/visual-lora.svg",
+    "time": "12 min",
+    "hardware": "SX1262 and a supported display-equipped board for waterfall",
+    "takeaway": "Scan and waterfall expose RSSI energy; use CAD and receive before calling a signal compatible LoRa."
+  },
+  {
+    "title": "Record and load a LoRa packet",
+    "slug": "record-load-lora-packet-sx1262",
+    "description": "Save profile, signal metrics and payload to LittleFS, then transmit the validated file once.",
+    "date": "2026-07-14",
+    "author": "Geo",
+    "difficulty": "Intermediate",
+    "type": "Recipe",
+    "mark": "LoRa",
+    "protocols": [
+      "LoRa",
+      "SPI"
+    ],
+    "targets": [
+      "SX1262 LoRa module",
+      "LittleFS .lora file"
+    ],
+    "workflows": [
+      "Record",
+      "Capture & analyze",
+      "File workflow"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web UI LittleFS"
+    ],
+    "tags": [
+      "lora",
+      "sx1262",
+      "record",
+      "load",
+      "littlefs",
+      ".lora",
+      "capture",
+      "profile",
+      "payload"
+    ],
+    "cover": "assets/visual-lora.svg",
+    "time": "12 min",
+    "hardware": "SX1262, authorized LoRa peer and LittleFS storage",
+    "takeaway": "A versioned .lora file preserves the complete profile and payload; load sends once and restores the prior profile."
   }
 ];

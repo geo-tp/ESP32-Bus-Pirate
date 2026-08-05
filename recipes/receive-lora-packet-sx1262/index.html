@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Receive a LoRa packet with an SX1262 in ESP32 Bit Pirate, check RSSI and CAD first, then inspect packet length, RSSI, SNR, hexadecimal and ASCII output." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to receive a LoRa packet with an SX1262" property="og:title"/>
+<meta content="Check LoRa activity with RSSI and CAD, receive a packet, then interpret its RSSI, SNR, hexadecimal and ASCII output." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-lora-packet-sx1262/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" property="og:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." property="og:image:alt"/>
+<meta content="image/webp" property="og:image:type"/>
+<meta content="800" property="og:image:width"/>
+<meta content="800" property="og:image:height"/>
+<meta content="2026-07-14" property="article:published_time"/>
+<meta content="2026-07-14" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to receive a LoRa packet with an SX1262" name="twitter:title"/>
+<meta content="Use RSSI, CAD and receive mode to validate a controlled LoRa link and inspect packet metrics." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" name="twitter:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-lora-packet-sx1262/" rel="canonical"/>
+<title>Receive a LoRa Packet with SX1262 | ESP32 Bit Pirate</title>
+<link href="../recipes.css?v=20260714-lora1" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to receive a LoRa packet with an SX1262",
+      "description": "Receive a LoRa packet with an SX1262 in ESP32 Bit Pirate, check RSSI and CAD first, then inspect packet length, RSSI, SNR, hexadecimal and ASCII output.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14",
+      "author": {"@type": "Person", "name": "Geo"},
+      "publisher": {"@type": "Organization", "name": "ESP32 Bit Pirate", "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"},
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-lora-packet-sx1262/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"},
+        {"@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"},
+        {"@type": "ListItem", "position": 3, "name": "Receive a LoRa packet with SX1262", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-lora-packet-sx1262/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What is the difference between RSSI, CAD and receive in LoRa mode?", "acceptedAnswer": {"@type": "Answer", "text": "RSSI samples channel energy, CAD looks for a LoRa preamble compatible with the active bandwidth and spreading factor, and receive waits for and decodes a complete compatible packet."}},
+        {"@type": "Question", "name": "Why can CAD detect activity while receive shows no packet?", "acceptedAnswer": {"@type": "Answer", "text": "CAD can detect a compatible LoRa preamble without producing a valid payload. The packet may be corrupted or use a different frequency, coding rate, sync word, CRC or IQ setting."}},
+        {"@type": "Question", "name": "How do I stop LoRa RSSI, CAD or receive mode?", "acceptedAnswer": {"@type": "Answer", "text": "Press Enter in the serial terminal. Receive mode then prints its packet, error and dropped-packet summary."}}
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+  <div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>LoRa</li><li>Intermediate</li><li>10 min</li><li>Receive</li></ul></div><nav aria-label="Section navigation" class="article-top-nav"><a href="../../"><svg aria-hidden="true" class="article-nav-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank">Wiki</a></nav></div>
+  <p class="eyebrow">Recipe · Intermediate · LoRa</p>
+  <h1>How to receive a LoRa packet with SX1262</h1>
+  <p>Measure channel energy, check for a compatible LoRa preamble, then decode packets and inspect their signal metrics and payload.</p>
+</header>
+<figure class="recipe-banner"><img alt="SX1262 LoRa module and chirp waveform." height="600" src="../assets/visual-lora.svg" width="1040"/><figcaption>RSSI, CAD and packet receive answer three different questions about the same configured channel.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+  <section class="recipe-section recipe-intro-card"><h2>Start with a controlled source</h2><p>Use your own transmitter or an authorized lab node with the exact profile from the configuration recipe. Fit a band-matched antenna before powering the radio.</p><ul><li><strong>RSSI</strong> answers: is there measurable RF energy?</li><li><strong>CAD</strong> answers: is a compatible LoRa preamble present?</li><li><strong>Receive</strong> answers: can this profile decode a complete packet?</li></ul></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Verify the active profile</h2><p>Re-enter LoRa mode, then compare every setting with the transmitter. Do not run <code>config</code> unless you intend to rebuild the profile from its defaults.</p><div data-cli-commands="mode lora
+status" data-cli-mode="BitPirate" data-cli-result="[LoRa SX1262]
+State: ready
+[Radio profile]
+[SPI pins]
+[Control pins]" data-cli-session=""></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Measure the noise floor with RSSI</h2><p>Sample once per second, first with the controlled transmitter silent and then active. Press Enter to stop.</p><div data-cli-commands="rssi 1000" data-cli-mode="LORA" data-cli-result="[LoRa RSSI]
+Interval: 1000 ms
+Press ENTER to stop." data-cli-session=""></div><div class="callout note"><h3>Energy is not a decoded packet</h3><p>A stronger RSSI can come from another LoRa profile or a different radio signal in the same channel.</p></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 3</span><h2>Look for a compatible LoRa preamble</h2><p><code>cad</code> uses the current bandwidth and spreading factor. The argument sets the interval between detection windows; press Enter to stop and view the summary.</p><div data-cli-commands="cad 250" data-cli-mode="LORA" data-cli-result="[LoRa CAD]
+Frequency: active profile
+Bandwidth / SF: active profile
+Press ENTER to stop.
+[CAD summary]" data-cli-session=""></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 4</span><h2>Receive and inspect a packet</h2><p>Start receive mode, send a short packet from the controlled peer, then press Enter when the sample is complete.</p><div data-cli-commands="receive" data-cli-mode="LORA" data-cli-result="[LoRa receive]
+Frequency / bandwidth / SF: active profile
+Press ENTER to stop.
+
+[RX #1]
+Time: elapsed
+Length: payload bytes
+RSSI: packet signal level
+SNR: packet signal-to-noise ratio
+HEX: payload bytes
+ASCII: printable payload
+
+[Receive summary]
+Packets / Errors / Dropped" data-cli-session=""></div></section>
+  <section class="recipe-section"><h2>Read the result</h2><ul><li><strong>Length</strong> is the decoded payload size, up to 255 bytes in this implementation.</li><li><strong>RSSI</strong> is the received signal level for that packet; compare it over repeated packets, not in isolation.</li><li><strong>SNR</strong> reports signal-to-noise ratio and may be negative on a valid LoRa link.</li><li><strong>HEX</strong> preserves every payload byte; <strong>ASCII</strong> is the human-readable view where bytes are printable.</li><li><strong>Errors and dropped</strong> in the final summary reveal receive problems that a single successful line can hide.</li></ul></section>
+  <section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>RSSI changes but CAD stays quiet:</strong> the energy may not be LoRa, or bandwidth and spreading factor do not match.</li><li><strong>CAD detects activity but no packet arrives:</strong> compare frequency, coding rate, sync word, CRC and IQ mode; also check for collisions or a damaged payload.</li><li><strong>No activity at all:</strong> confirm both antennas, physical band, transmitter state and distance, then recheck the active profile.</li><li><strong>Receive exits or misses events:</strong> check DIO1, BUSY, stable 3.3 V and the receive summary counters.</li><li><strong>Unreadable ASCII:</strong> inspect HEX; binary payloads are not expected to render as text.</li></ul></section>
+  <section class="recipe-section next-steps-section"><h2>Next steps</h2><ul><li>Repeat the test at controlled distances and record RSSI, SNR, errors and dropped packets.</li><li>Estimate airtime before adding a controlled send test.</li><li>Keep raw LoRa experiments separate from LoRaWAN expectations; this mode handles LoRa radio packets, not a LoRaWAN network session.</li></ul></section>
+  <section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">LoRa receive FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>What is the difference between RSSI, CAD and receive?</summary><p>RSSI samples energy, CAD searches for a LoRa preamble compatible with the active BW/SF, and receive decodes a complete compatible packet.</p></details><details class="recipe-faq-item"><summary>Why can CAD detect activity while receive shows nothing?</summary><p>The signal can have a detectable preamble but a corrupted payload or incompatible frequency, CR, sync word, CRC or IQ setting.</p></details><details class="recipe-faq-item"><summary>How do I stop these continuous commands?</summary><p>Press Enter. Receive mode then prints its packet, error and dropped-packet summary.</p></details></div></section>
+  <section class="recipe-section"><h2>Go deeper</h2><nav aria-label="Related links" class="link-card-list"><a href="../configure-sx1262-lora-radio/"><span>Previous recipe</span><strong>Configure the SX1262 LoRa profile</strong></a><a href="../send-lora-packet-sx1262/"><span>Next recipe</span><strong>Send one controlled LoRa packet</strong></a><a href="../wire-sx1262-lora-module/"><span>Wiring</span><strong>Wire and probe the SX1262 module</strong></a><a href="../../protocols/lora/"><span>Protocol</span><strong>LoRa packet and signal analysis overview</strong></a><a href="../../modules/sx1262/"><span>Module</span><strong>SX1262 command and hardware reference</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank"><span>Wiki</span><strong>24-LORA</strong></a><a href="../../web-tools/web-serial-terminal/"><span>Web tool</span><strong>Open the Web Serial Terminal</strong></a></nav></section>
+</article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>Working SX1262 wiring and antenna</li><li>Configured LoRa profile</li><li>Owned or authorized LoRa transmitter</li><li>Matching peer settings</li></ul></dd><dt class="aside-dt-setup">Setup</dt><dd class="aside-setup-dd"><p>Place the receiver and controlled transmitter nearby with a legal regional frequency and compatible radio profile.</p></dd><dt class="aside-dt-protocol">Protocol</dt><dd>LoRa</dd><dt class="aside-dt-hardware">Hardware</dt><dd>SX1262 / Core1262-style module</dd><dt class="aside-dt-command">Commands</dt><dd><code>rssi</code>, <code>cad</code>, <code>receive</code></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA">24-LORA</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-07-14</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20260714-lora1"></script>
+</body>
+</html>

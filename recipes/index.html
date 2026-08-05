@@ -4,25 +4,25 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="description"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="description"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="website" property="og:type"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ESP32 Bit Pirate" property="og:site_name"/>
 <meta content="ESP32 Bit Pirate Recipes: Learn Hardware Debugging by Doing" property="og:title"/>
-<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." property="og:description"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." property="og:description"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" property="og:url"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools-og.png" property="og:image"/><meta content="ESP32 Bit Pirate recipes preview card." property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="ESP32 Bit Pirate Recipes: Learn Hardware Debugging by Doing" name="twitter:title"/>
-<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="twitter:description"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="twitter:description"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools-og.png" name="twitter:image"/><meta content="ESP32 Bit Pirate recipes preview card." name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" rel="canonical"/>
 <title>ESP32 Bit Pirate Recipes | Learn Hardware Debugging by Doing</title>
-<link href="recipes.css?v=20260702-mobileclone2" rel="stylesheet"/>
+<link href="recipes.css?v=20260714-lora1" rel="stylesheet"/>
 <script defer="" src="../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <script type="application/ld+json">
 {
@@ -30,7 +30,7 @@
   "@type": "CollectionPage",
   "name": "ESP32 Bit Pirate Recipes",
   "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/",
-  "description": "Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows.",
+  "description": "Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows.",
   "publisher": {
     "@type": "Organization",
     "name": "ESP32 Bit Pirate",
@@ -50,7 +50,7 @@
 <span>ESP32 Bit Pirate</span>
 </a><nav aria-label="Primary navigation" class="page-top-nav"><a href="../#start"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M5 4v16M5 5h11l-1.5 4L16 13H5"></path></svg>Start here</a><a href="../web-tools/"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><rect height="15" rx="2" width="18" x="3" y="4"></rect><path d="M3 8h18M7 6h.01M10 6h.01"></path></svg>Web tools</a><a href="../hardware/"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><rect height="14" rx="2" width="10" x="7" y="5"></rect><path d="M4 8h3M4 12h3M4 16h3M17 8h3M17 12h3M17 16h3"></path></svg>Hardware</a><a href="../modules/"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><rect height="7" rx="1.5" width="7" x="4" y="4"></rect><rect height="7" rx="1.5" width="7" x="13" y="4"></rect><rect height="7" rx="1.5" width="7" x="4" y="13"></rect><path d="M14 16h6M17 13v6"></path></svg>Modules</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a></nav></div>
 <h1>Hardware Debugging Recipes</h1>
-<p class="hero-description hero-description-justify">Learn ESP32 Bit Pirate by doing real tasks. These short recipes act like practical documentation: start from zero, connect safely, run useful commands, then grow into UART, I2C, SPI, GPIO, flash, IR, SubGHz, USB, network and debug workflows.</p>
+<p class="hero-description hero-description-justify">Learn ESP32 Bit Pirate by doing real tasks. These short recipes act like practical documentation: start from zero, connect safely, run useful commands, then grow into UART, I2C, SPI, GPIO, flash, IR, LoRa, SubGHz, USB, network and debug workflows.</p>
 </header>
 <section aria-label="Search recipes" class="recipe-search">
 <label class="visually-hidden" for="recipe-search-input">Search recipes</label>
@@ -81,6 +81,7 @@
 <option value="USB">USB</option>
 <option value="Infrared">Infrared</option>
 <option value="Sub-GHz">Sub-GHz</option>
+<option value="LoRa">LoRa</option>
 <option value="Wi-Fi">Wi-Fi</option>
 <option value="BLE">BLE</option>
 <option value="RF24">RF24</option>
@@ -112,7 +113,7 @@
 </select>
 </label>
 </div>
-<p class="recipe-count" data-recipe-count="">138 recipes</p>
+<p class="recipe-count" data-recipe-count="">144 recipes</p>
 </section>
 <section aria-label="Bit Pirate recipe links" class="recipe-grid recipe-static-grid" data-static-recipe-grid="">
 <article class="recipe-card">
@@ -356,6 +357,60 @@
 <h2>Receive and analyze a Sub-GHz frame</h2>
 <p class="recipe-description">Capture the frame shape and encoding hints before deciding whether any replay workflow is appropriate.</p>
 <ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="wire-sx1262-lora-module/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-lora.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span>Beginner</p>
+<h2>Wire an SX1262 LoRa module</h2>
+<p class="recipe-description">Connect SPI, RESET, BUSY and DIO1, then confirm that the radio probe reaches the ready state.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="configure-sx1262-lora-radio/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-lora.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span>Beginner</p>
+<h2>Configure an SX1262 LoRa profile</h2>
+<p class="recipe-description">Build a known modem profile, verify every setting and estimate packet airtime.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="receive-lora-packet-sx1262/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-lora.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span>Intermediate</p>
+<h2>Receive a LoRa packet with SX1262</h2>
+<p class="recipe-description">Use RSSI and CAD first, then decode a packet and inspect its signal metrics and payload.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>10 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="send-lora-packet-sx1262/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-lora.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span>Intermediate</p>
+<h2>Send a LoRa packet with SX1262</h2>
+<p class="recipe-description">Estimate airtime, send one controlled payload and verify it on an authorized receiver.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>8 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-lora-frequency-sx1262/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-lora.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span>Intermediate</p>
+<h2>Scan LoRa frequency activity with SX1262</h2>
+<p class="recipe-description">Find RSSI peaks in a narrow range and inspect them with the on-device waterfall.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>12 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="record-load-lora-packet-sx1262/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-lora.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span>Intermediate</p>
+<h2>Record and load a LoRa packet</h2>
+<p class="recipe-description">Save profile, signal metrics and payload to LittleFS, then transmit the validated file once.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>12 min</li></ul>
 </a>
 </article>
 <article class="recipe-card">
@@ -1332,14 +1387,14 @@
 <li><span>Find unknown hardware</span><strong>Scan I2C, read UART logs, detect GPIO activity, identify chips and avoid guessing before writing code.</strong></li>
 <li><span>Backup memories</span><strong>Dump SPI flash, I2C EEPROM, 1-Wire EEPROM or smartcard data before repair work or firmware experiments.</strong></li>
 <li><span>Use ESP32 adapters</span><strong>Run ESP32 serprog, ESP32 SUMP logic analyzer, USB CDC, IR Toy/LIRC and browser-based SPI flash workflows.</strong></li>
-<li><span>Practice real protocols</span><strong>Learn UART, I2C, SPI, DIO, Infrared, SubGHz, RFID, CAN, Ethernet, BLE and USB through small tasks.</strong></li>
+<li><span>Practice real protocols</span><strong>Learn UART, I2C, SPI, DIO, Infrared, LoRa, SubGHz, RFID, CAN, Ethernet, BLE and USB through small tasks.</strong></li>
 <li><span>Build repeatable tests</span><strong>Use alias, repeat, command chaining, delays, profiles and Python automation for repeatable bench workflows.</strong></li>
 <li><span>Troubleshoot</span><strong>Identify and resolve issues in your hardware setup or firmware configuration.</strong></li>
 <li><span>Learn by practice</span><strong>Use the recipes to learn the firmware feature by feature, while keeping the full Wiki as the reference.</strong></li>
 </ul>
 </section>
 </main>
-<script src="recipes-list.js?v=20260629-recipesfix1"></script>
-<script src="recipes.js?v=20260629-recipesfix1"></script>
+<script src="recipes-list.js?v=20260714-lora2"></script>
+<script src="recipes.js?v=20260714-lora2"></script>
 </body>
 </html>

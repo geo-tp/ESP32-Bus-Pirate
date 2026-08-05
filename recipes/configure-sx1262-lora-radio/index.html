@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Configure an SX1262 LoRa profile in ESP32 Bit Pirate, verify frequency, bandwidth, spreading factor, coding rate, sync word and TCXO, then check airtime." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to configure an SX1262 LoRa radio profile" property="og:title"/>
+<meta content="Configure frequency, bandwidth, spreading factor, coding rate, sync word and TCXO for an SX1262 LoRa module." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-sx1262-lora-radio/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" property="og:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." property="og:image:alt"/>
+<meta content="image/webp" property="og:image:type"/>
+<meta content="800" property="og:image:width"/>
+<meta content="800" property="og:image:height"/>
+<meta content="2026-07-14" property="article:published_time"/>
+<meta content="2026-07-14" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to configure an SX1262 LoRa radio profile" name="twitter:title"/>
+<meta content="Build a known SX1262 LoRa profile, verify it with status and estimate packet airtime." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" name="twitter:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-sx1262-lora-radio/" rel="canonical"/>
+<title>Configure an SX1262 LoRa Radio | ESP32 Bit Pirate</title>
+<link href="../recipes.css?v=20260714-lora1" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to configure an SX1262 LoRa radio profile",
+      "description": "Configure an SX1262 LoRa profile in ESP32 Bit Pirate, verify frequency, bandwidth, spreading factor, coding rate, sync word and TCXO, then check airtime.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14",
+      "author": {"@type": "Person", "name": "Geo"},
+      "publisher": {"@type": "Organization", "name": "ESP32 Bit Pirate", "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"},
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-sx1262-lora-radio/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"},
+        {"@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"},
+        {"@type": "ListItem", "position": 3, "name": "Configure an SX1262 LoRa radio", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-sx1262-lora-radio/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Which SX1262 settings must match between two LoRa nodes?", "acceptedAnswer": {"@type": "Answer", "text": "Frequency, bandwidth, spreading factor, coding rate, sync word, CRC and IQ mode must be compatible. Preamble expectations must also allow the receiver to detect the packet."}},
+        {"@type": "Question", "name": "Does config preserve the previous LoRa profile?", "acceptedAnswer": {"@type": "Answer", "text": "No. In the supplied implementation, config resets the radio profile to 868 MHz, 125 kHz, SF9, CR 4/7, 14 dBm, preamble 8, private sync word, CRC on, normal IQ and 1.8 V TCXO before offering custom settings."}},
+        {"@type": "Question", "name": "Can I configure 433 MHz on a Core1262-HF?", "acceptedAnswer": {"@type": "Answer", "text": "The firmware accepts a broad SX1262 frequency range, but the Core1262-HF matching network is specified for 850 to 930 MHz. Use a module and antenna designed for the target band."}}
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+  <div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>LoRa</li><li>Beginner</li><li>10 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav"><a href="../../"><svg aria-hidden="true" class="article-nav-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank">Wiki</a></nav></div>
+  <p class="eyebrow">Recipe · Beginner · LoRa</p>
+  <h1>How to configure an SX1262 LoRa radio</h1>
+  <p>Start from a known profile, select only settings supported by the implementation and verify the result before receive or transmit tests.</p>
+</header>
+<figure class="recipe-banner"><img alt="SX1262 LoRa module and chirp waveform." height="600" src="../assets/visual-lora.svg" width="1040"/><figcaption>Both LoRa endpoints need compatible modem settings; frequency alone is not enough.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+  <section class="recipe-section"><h2>Know what config resets</h2><p>Every explicit <code>config</code> run resets the radio profile before asking whether you want custom settings. The pin values remain the current defaults or choices shown by the prompts.</p><div class="recipe-table-scroll"><table class="recipe-data-table"><thead><tr><th>Setting</th><th>Default</th><th>Implementation choices</th></tr></thead><tbody><tr><td>Frequency</td><td>868.0 MHz</td><td>150–960 MHz in software; stay inside module and regional limits.</td></tr><tr><td>Bandwidth</td><td>125 kHz</td><td>125, 250 or 500 kHz.</td></tr><tr><td>Spreading factor</td><td>SF9</td><td>SF6 through SF12.</td></tr><tr><td>Coding rate</td><td>4/7</td><td>4/5 through 4/8.</td></tr><tr><td>TX power</td><td>14 dBm</td><td>-9 through +22 dBm, subject to hardware and legal limits.</td></tr><tr><td>Preamble</td><td>8 symbols</td><td>6 through 65535.</td></tr><tr><td>Packet options</td><td>Private sync 0x1424, CRC on, normal IQ</td><td>Sync word, CRC and IQ mode are configurable.</td></tr><tr><td>Oscillator</td><td>1.8 V TCXO</td><td>XTAL or supported DIO3 TCXO voltages from 1.6 to 3.3 V.</td></tr></tbody></table></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Open LoRa mode, then deliberately reconfigure</h2><p>Use the wiring recipe first. Run <code>config</code> only when you are ready to rebuild the profile from its defaults.</p><div data-cli-commands="mode lora
+config" data-cli-mode="BitPirate" data-cli-result="[LoRa pin configuration]
+[LoRa default profile]
+Configure radio settings?
+✅ LoRa SX1262 configured." data-cli-session=""></div></section>
+  <section class="recipe-section"><h2>Answer the radio prompts</h2><ol><li>Choose the frequency that matches the physical module, antenna and regional band plan.</li><li>Match bandwidth, spreading factor and coding rate to the other LoRa endpoint.</li><li>Use a legal TX power and a preamble suitable for the link.</li><li>Match sync word, CRC and IQ mode exactly.</li><li>Keep 1.8 V TCXO for compatible Core1262 hardware; select 0 only for an XTAL-based module.</li></ol><div class="callout warning"><h3>Software range is not RF coverage</h3><p>The configuration prompt accepts 150–960 MHz because it targets SX1262 generally. The pictured Core1262-HF hardware remains an 850–930 MHz module.</p></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Verify the complete profile</h2><div data-cli-commands="status
+airtime 16" data-cli-mode="LORA" data-cli-result="[LoRa SX1262]
+State: ready
+[Radio profile]
+[LoRa airtime]
+Length: 16 bytes
+Time: calculated from the active profile" data-cli-session=""></div><p><code>status</code> prints the profile, SPI/control pins and counters. <code>airtime 16</code> shows how the active bandwidth, SF and CR affect a 16-byte packet.</p></section>
+  <section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>Two nodes cannot communicate:</strong> compare frequency, BW, SF, CR, sync word, CRC and IQ mode line by line.</li><li><strong>Setup fails after changing TCXO:</strong> restore the oscillator voltage required by the module.</li><li><strong>Range is unexpectedly poor:</strong> check the antenna and physical module band before increasing power.</li><li><strong>Old profile disappeared:</strong> <code>config</code> intentionally starts from the implementation defaults.</li></ul></section>
+  <section class="recipe-section next-steps-section"><h2>Next steps</h2><ul><li>Use RSSI and CAD to check activity with the configured frequency, bandwidth and spreading factor.</li><li>Open receive mode with a known transmitter using the same profile.</li><li>Estimate airtime before any controlled transmission and respect regional duty-cycle rules.</li></ul></section>
+  <section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">SX1262 configuration FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Which settings must match between two nodes?</summary><p>Frequency, bandwidth, spreading factor, coding rate, sync word, CRC and IQ mode must be compatible. Preamble detection must also be possible.</p></details><details class="recipe-faq-item"><summary>Does config preserve the previous profile?</summary><p>No. It resets to the documented defaults before it offers custom radio settings.</p></details><details class="recipe-faq-item"><summary>Can I use 433 MHz on Core1262-HF?</summary><p>No. A software frequency setting does not change its 850–930 MHz RF matching. Use hardware and an antenna designed for the target band.</p></details></div></section>
+  <section class="recipe-section"><h2>Go deeper</h2><nav aria-label="Related links" class="link-card-list"><a href="../wire-sx1262-lora-module/"><span>Previous recipe</span><strong>Wire and probe the SX1262 module</strong></a><a href="../receive-lora-packet-sx1262/"><span>Next recipe</span><strong>Receive a LoRa packet with SX1262</strong></a><a href="../../protocols/lora/"><span>Protocol</span><strong>LoRa packet and signal analysis overview</strong></a><a href="../../modules/sx1262/"><span>Module</span><strong>SX1262 profile and command reference</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank"><span>Wiki</span><strong>24-LORA</strong></a><a href="../../web-tools/web-serial-terminal/"><span>Web tool</span><strong>Open the Web Serial Terminal</strong></a></nav></section>
+</article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>Working SX1262 wiring</li><li>Band-matched antenna</li><li>Known peer profile or planned lab profile</li><li>Regional frequency and power limits</li></ul></dd><dt class="aside-dt-setup">Setup</dt><dd class="aside-setup-dd"><p>Complete the SX1262 wiring recipe and confirm <code>State: ready</code> before changing modem parameters.</p></dd><dt class="aside-dt-protocol">Protocol</dt><dd>LoRa</dd><dt class="aside-dt-hardware">Hardware</dt><dd>SX1262 / Core1262-style module</dd><dt class="aside-dt-command">Commands</dt><dd><code>config</code>, <code>status</code>, <code>airtime</code></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA">24-LORA</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-07-14</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20260714-lora1"></script>
+</body>
+</html>

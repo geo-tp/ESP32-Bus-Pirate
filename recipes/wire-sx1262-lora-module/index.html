@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Wire an SX1262 LoRa module to ESP32 Bit Pirate with SPI, RESET, BUSY and DIO1, then verify that the radio probe reaches the ready state." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="How to wire an SX1262 LoRa module to ESP32 Bit Pirate" property="og:title"/>
+<meta content="Wire an SX1262 LoRa module with SPI, RESET, BUSY and DIO1, then verify that the radio probe reaches the ready state." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-sx1262-lora-module/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" property="og:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." property="og:image:alt"/>
+<meta content="image/webp" property="og:image:type"/>
+<meta content="800" property="og:image:width"/>
+<meta content="800" property="og:image:height"/>
+<meta content="2026-07-14" property="article:published_time"/>
+<meta content="2026-07-14" property="article:modified_time"/>
+<meta content="Geo" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="How to wire an SX1262 LoRa module to ESP32 Bit Pirate" name="twitter:title"/>
+<meta content="Connect SX1262 SPI and control lines, then confirm the LoRa radio probe from the serial CLI." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" name="twitter:image"/>
+<meta content="Core1262-HF SX1262 LoRa module." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-sx1262-lora-module/" rel="canonical"/>
+<title>Wire an SX1262 LoRa Module | ESP32 Bit Pirate</title>
+<link href="../recipes.css?v=20260714-lora1" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to wire an SX1262 LoRa module to ESP32 Bit Pirate",
+      "description": "Wire an SX1262 LoRa module to ESP32 Bit Pirate with SPI, RESET, BUSY and DIO1, then verify that the radio probe reaches the ready state.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14",
+      "author": {"@type": "Person", "name": "Geo"},
+      "publisher": {"@type": "Organization", "name": "ESP32 Bit Pirate", "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"},
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-sx1262-lora-module/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"},
+        {"@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"},
+        {"@type": "ListItem", "position": 3, "name": "Wire an SX1262 LoRa module", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-sx1262-lora-module/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Which GPIO pins does the default SX1262 setup use?", "acceptedAnswer": {"@type": "Answer", "text": "The supplied implementation defaults to SCK GPIO5, MISO GPIO6, MOSI GPIO7, CS GPIO4, RESET GPIO3, BUSY GPIO2 and DIO1 GPIO1."}},
+        {"@type": "Question", "name": "What does BUSY stayed high mean?", "acceptedAnswer": {"@type": "Answer", "text": "The firmware could not see BUSY return low during the SX1262 probe. Check 3.3 V power, common ground, the BUSY connection and the module reset and TCXO setup."}},
+        {"@type": "Question", "name": "Do DIO2 and DIO3 connect to ESP32 GPIO?", "acceptedAnswer": {"@type": "Answer", "text": "Not with the documented Core1262-style setup. The implementation enables DIO2 RF-switch control and DIO3 TCXO control inside a compatible module; the host wiring uses DIO1 as its interrupt line."}}
+      ]
+    }
+  ]
+}
+</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+  <div class="article-hero-top"><div class="article-brand-tags"><a aria-label="ESP32 Bit Pirate home" class="brand" href="../"><span aria-hidden="true" class="brand-mark">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul aria-label="Recipe tags" class="article-hero-tags"><li>LoRa</li><li>Beginner</li><li>10 min</li><li>Serial CLI</li></ul></div><nav aria-label="Section navigation" class="article-top-nav"><a href="../../"><svg aria-hidden="true" class="article-nav-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank">Wiki</a></nav></div>
+  <p class="eyebrow">Recipe · Beginner · LoRa</p>
+  <h1>How to wire an SX1262 LoRa module</h1>
+  <p>Connect SPI plus RESET, BUSY and DIO1, then let ESP32 Bit Pirate probe the radio before changing any modem settings.</p>
+</header>
+<figure class="recipe-banner"><img alt="SX1262 LoRa module sending chirp packets." height="600" src="../assets/visual-lora.svg" width="1040"/><figcaption>The SX1262 needs three control lines beyond SPI: RESET, BUSY and DIO1.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+  <section aria-label="Generated wiring diagram" class="recipe-section wiring-visual-section">
+    <p class="wiring-visual-label">Wiring View</p>
+    <figure class="wiring-diagram wiring-diagram-main">
+      <svg aria-label="SX1262 to ESP32 Bit Pirate default wiring" role="img" viewBox="0 0 920 320">
+        <rect class="wiring-node wiring-node-left" height="224" rx="8" width="220" x="34" y="48"></rect><rect class="wiring-node wiring-node-right" height="224" rx="8" width="220" x="666" y="48"></rect>
+        <text class="wiring-title" text-anchor="middle" x="144" y="86">SX1262</text><text class="wiring-title" text-anchor="middle" x="776" y="86">ESP32 default</text>
+        <line class="wiring-line wire-0" x1="254" x2="666" y1="122" y2="122"></line><text class="wiring-pin" text-anchor="end" x="232" y="126">SCK / MOSI / MISO</text><text class="wiring-pin" x="688" y="126">GPIO5 / 7 / 6</text>
+        <line class="wiring-line wire-1" x1="254" x2="666" y1="144" y2="144"></line><text class="wiring-pin" text-anchor="end" x="232" y="148">CS / NSS</text><text class="wiring-pin" x="688" y="148">GPIO4</text>
+        <line class="wiring-line wire-2" x1="254" x2="666" y1="166" y2="166"></line><text class="wiring-pin" text-anchor="end" x="232" y="170">RESET</text><text class="wiring-pin" x="688" y="170">GPIO3</text>
+        <line class="wiring-line wire-3" x1="254" x2="666" y1="188" y2="188"></line><text class="wiring-pin" text-anchor="end" x="232" y="192">BUSY</text><text class="wiring-pin" x="688" y="192">GPIO2</text>
+        <line class="wiring-line wire-4" x1="254" x2="666" y1="210" y2="210"></line><text class="wiring-pin" text-anchor="end" x="232" y="214">DIO1</text><text class="wiring-pin" x="688" y="214">GPIO1</text>
+      </svg>
+      <div aria-hidden="true" class="wiring-mobile-list"><div class="wiring-mobile-row wire-0"><span>SCK / MOSI / MISO</span><span class="wiring-mobile-arrow">-&gt;</span><span>GPIO5 / 7 / 6</span></div><div class="wiring-mobile-row wire-1"><span>CS / NSS</span><span class="wiring-mobile-arrow">-&gt;</span><span>GPIO4</span></div><div class="wiring-mobile-row wire-2"><span>RESET</span><span class="wiring-mobile-arrow">-&gt;</span><span>GPIO3</span></div><div class="wiring-mobile-row wire-3"><span>BUSY</span><span class="wiring-mobile-arrow">-&gt;</span><span>GPIO2</span></div><div class="wiring-mobile-row wire-4"><span>DIO1</span><span class="wiring-mobile-arrow">-&gt;</span><span>GPIO1</span></div></div>
+      <figcaption>Default mapping from the supplied LoRa implementation. Change it during configuration when these GPIO are not free on your board.</figcaption>
+    </figure>
+  </section>
+  <section class="recipe-section"><h2>Power and antenna first</h2><ul class="wiring-list"><li>3V3 → stable 3.3 V supply</li><li>GND → ESP32 common ground</li><li>ANT / U.FL → antenna matched to the physical module band</li><li>DIO2 → module RF switch, not a host GPIO in this setup</li><li>DIO3 → module TCXO control, 1.8 V by default</li></ul><div class="callout warning"><h3>Physical band still matters</h3><p>The pictured Core1262-HF is matched for 850–930 MHz. A firmware frequency prompt cannot make an HF module suitable for 433 MHz.</p></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Enter LoRa mode</h2><p>Entering the mode starts the pin prompts when the radio is not already configured. Accept the defaults only when they match free GPIO on your ESP32 board.</p><div data-cli-commands="mode lora" data-cli-mode="BitPirate" data-cli-result="[LoRa pin configuration]
+[LoRa default profile]
+LoRa: using the default radio profile.
+✅ LoRa SX1262 ready." data-cli-session=""></div></section>
+  <section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Confirm the detected radio and pins</h2><div data-cli-commands="status" data-cli-mode="LORA" data-cli-result="[LoRa SX1262]
+State: ready
+[SPI pins]
+[Control pins]
+[Counters]" data-cli-session=""></div><div class="callout success"><h3>What success looks like</h3><p><code>State: ready</code> confirms that reset, BUSY and the SPI probe completed. Status also repeats the saved GPIO map before you continue.</p></div></section>
+  <section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>BUSY stayed high:</strong> recheck 3.3 V, common ground, RESET, BUSY and the module oscillator setup.</li><li><strong>No valid radio response:</strong> check CS, SCK, MOSI and MISO, then shorten the SPI wiring.</li><li><strong>Protected-pin prompt:</strong> select free GPIO for the actual board instead of forcing the DevKit defaults.</li><li><strong>Unstable probe:</strong> verify the TCXO voltage expected by the module; use XTAL mode only on compatible hardware.</li></ul></section>
+  <section class="recipe-section next-steps-section"><h2>Next steps</h2><ul><li>Configure a known LoRa modem profile and verify it with <code>status</code>.</li><li>Use RSSI and CAD before opening continuous packet receive.</li><li>Keep all radio work inside the legal band, power and duty-cycle limits for your region.</li></ul></section>
+  <section aria-labelledby="faq-title" class="recipe-section recipe-faq"><h2 id="faq-title">SX1262 wiring FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Which GPIO pins does the default setup use?</summary><p>SCK GPIO5, MISO GPIO6, MOSI GPIO7, CS GPIO4, RESET GPIO3, BUSY GPIO2 and DIO1 GPIO1.</p></details><details class="recipe-faq-item"><summary>What does BUSY stayed high mean?</summary><p>The firmware could not see BUSY return low during the SX1262 probe. Check power, ground, BUSY, RESET and the TCXO setup.</p></details><details class="recipe-faq-item"><summary>Do DIO2 and DIO3 connect to the ESP32?</summary><p>Not with this Core1262-style setup. The driver uses DIO2 for the module RF switch and DIO3 for TCXO control; the host interrupt connection is DIO1.</p></details></div></section>
+  <section class="recipe-section"><h2>Go deeper</h2><nav aria-label="Related links" class="link-card-list"><a href="../../protocols/lora/"><span>Protocol</span><strong>LoRa packet and signal analysis overview</strong></a><a href="../../modules/sx1262/"><span>Module</span><strong>SX1262 LoRa wiring and tool reference</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA" rel="noopener" target="_blank"><span>Wiki</span><strong>24-LORA</strong></a><a href="../configure-sx1262-lora-radio/"><span>Next recipe</span><strong>Configure the SX1262 LoRa radio profile</strong></a><a href="../../protocols/spi/"><span>SPI</span><strong>Check SPI wiring and chip select</strong></a><a href="../../boards/esp32-s3-devkit/"><span>Board</span><strong>ESP32-S3 DevKit GPIO guide</strong></a><a href="../../web-tools/web-serial-terminal/"><span>Web tool</span><strong>Open the Web Serial Terminal</strong></a></nav></section>
+</article>
+<aside aria-label="Recipe setup and details" class="content-card aside-card"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>ESP32 Bit Pirate with LoRa mode</li><li>SX1262 module with DIO2 RF switch and compatible oscillator setup</li><li>3.3 V supply and jumper wires</li><li>Band-matched antenna</li></ul></dd><dt class="aside-dt-setup">Setup</dt><dd class="aside-setup-dd"><ul class="wiring-list aside-setup-list" data-wiring-left="SX1262" data-wiring-right="ESP32"><li>SPI → GPIO5 / 7 / 6</li><li>CS → GPIO4</li><li>RESET → GPIO3</li><li>BUSY → GPIO2</li><li>DIO1 → GPIO1</li><li>3V3 / GND → 3.3 V / GND</li></ul></dd><dt class="aside-dt-protocol">Protocol</dt><dd>LoRa, SPI</dd><dt class="aside-dt-hardware">Hardware</dt><dd>SX1262 / Core1262-style module</dd><dt class="aside-dt-command">Command</dt><dd><code>mode lora</code>, <code>status</code></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/24-LORA">24-LORA</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-07-14</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20260714-lora1"></script>
+</body>
+</html>
