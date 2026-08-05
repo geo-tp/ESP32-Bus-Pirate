@@ -4,13 +4,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Browse ESP32 protocol tools for I2C, SPI, UART, JTAG, CAN, Sub-GHz, Wi-Fi, BLE, USB adapters and browser-based hardware workflows." name="description"/>
+<meta content="Browse ESP32 protocol tools for I2C, SPI, UART, JTAG, CAN, Sub-GHz, LoRa, Wi-Fi, BLE, USB adapters and browser-based hardware workflows." name="description"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="ESP32 Bit Pirate" property="og:site_name"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ESP32 protocol tools and hardware workflows" property="og:title"/>
-<meta content="Browse ESP32 protocol tools for I2C, SPI, UART, JTAG, CAN, Sub-GHz, Wi-Fi, BLE, USB adapters and browser-based hardware workflows." property="og:description"/>
+<meta content="Browse ESP32 protocol tools for I2C, SPI, UART, JTAG, CAN, Sub-GHz, LoRa, Wi-Fi, BLE, USB adapters and browser-based hardware workflows." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/" property="og:url"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/assets/esp32-bit-pirate-og.png" property="og:image"/>
@@ -34,7 +34,7 @@
     {
       "@type": "CollectionPage",
       "name": "ESP32 protocol tools and hardware workflows",
-      "description": "Browse ESP32 protocol tools for I2C, SPI, UART, JTAG, CAN, Sub-GHz, Wi-Fi, BLE, USB adapters and browser-based hardware workflows.",
+      "description": "Browse ESP32 protocol tools for I2C, SPI, UART, JTAG, CAN, Sub-GHz, LoRa, Wi-Fi, BLE, USB adapters and browser-based hardware workflows.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/",
       "isPartOf": {
         "@type": "WebSite",
@@ -45,10 +45,10 @@
         "ESP32 Bit Pirate supported protocols",
         "ESP32-S3 hardware debugging",
         "I2C SPI UART GPIO workbench",
-        "JTAG CAN Infrared Sub-GHz Wi-Fi BLE"
+        "JTAG CAN Infrared Sub-GHz LoRa Wi-Fi BLE"
       ],
       "inLanguage": "en",
-      "dateModified": "2026-06-28"
+      "dateModified": "2026-07-14"
     },
     {
       "@type": "ItemList",
@@ -141,48 +141,54 @@
         {
           "@type": "ListItem",
           "position": 15,
+          "name": "LoRa SX1262",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
           "name": "Wi-Fi debugging",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/"
         },
         {
           "@type": "ListItem",
-          "position": 16,
+          "position": 17,
           "name": "Bluetooth and BLE",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/bluetooth/"
         },
         {
           "@type": "ListItem",
-          "position": 17,
+          "position": 18,
           "name": "RF24 nRF24L01",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/rf24/"
         },
         {
           "@type": "ListItem",
-          "position": 18,
+          "position": 19,
           "name": "FM and RDS",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/fm/"
         },
         {
           "@type": "ListItem",
-          "position": 19,
+          "position": 20,
           "name": "CAN bus with MCP2515",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/can/"
         },
         {
           "@type": "ListItem",
-          "position": 20,
+          "position": 21,
           "name": "Ethernet W5500",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/ethernet/"
         },
         {
           "@type": "ListItem",
-          "position": 21,
+          "position": 22,
           "name": "AT and cellular modems",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/at/"
         },
         {
           "@type": "ListItem",
-          "position": 22,
+          "position": 23,
           "name": "LED, PWM and servo signals",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/dio/"
         }
@@ -277,6 +283,7 @@
 <div class="protocol-hub-grid">
 <a class="protocol-hub-card" href="infrared/"><span>Infrared</span><strong>Infrared remote debugging</strong><small>Capture, record, load and replay IR remote signals with file-based workflows when useful.</small><em>capture · decode · replay</em></a>
 <a class="protocol-hub-card" href="subghz/"><span>Sub-GHz</span><strong>Sub-GHz CC1101</strong><small>Wire CC1101 modules, scan frequency activity, receive frames and record bench captures.</small><em>scan · sweep · receive · record</em></a>
+<a class="protocol-hub-card" href="lora/"><span>LoRa</span><strong>LoRa SX1262</strong><small>Wire SX1262 modules, configure modem profiles, observe RSSI and CAD, exchange packets and preserve .lora captures.</small><em>configure · CAD · receive · record</em></a>
 <a class="protocol-hub-card" href="wifi/"><span>Wi-Fi</span><strong>Wi-Fi debugging</strong><small>Scan networks, start access point mode, check local devices and separate radio from service issues.</small><em>scan · AP · discover</em></a>
 <a class="protocol-hub-card" href="bluetooth/"><span>BLE</span><strong>Bluetooth and BLE</strong><small>Scan Bluetooth devices and compare BLE HID behavior with wired USB HID workflows.</small><em>scan · HID · reset</em></a>
 <a class="protocol-hub-card" href="rf24/"><span>RF24</span><strong>RF24 nRF24L01</strong><small>Configure nRF24L01 modules, scan channels, sweep activity and send or receive payloads.</small><em>configure · scan · send · receive</em></a>
