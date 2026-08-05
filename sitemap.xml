@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/cardputer/</loc>
@@ -51,6 +51,10 @@
     <lastmod>2026-07-07</lastmod>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/</loc>
+    <lastmod>2026-07-14</lastmod>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/xiao-esp32-s3/</loc>
     <lastmod>2026-07-07</lastmod>
   </url>
@@ -60,19 +64,23 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/cc1101/</loc>
     <lastmod>2026-07-07</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/sx1262/</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/modules/spi-nor-flash/</loc>
@@ -195,6 +203,10 @@
     <lastmod>2026-06-28</lastmod>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/</loc>
+    <lastmod>2026-07-14</lastmod>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/web-serial-terminal/</loc>
   </url>
   <url>
@@ -280,6 +292,10 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-nrf24-module/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-sx1262-lora-radio/</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/connect-w5500-ethernet/</loc>
@@ -423,6 +439,10 @@
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/read-usb-host-descriptors/</loc>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-lora-packet-sx1262/</loc>
+    <lastmod>2026-07-14</lastmod>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-rf24-payloads/</loc>
   </url>
   <url>
@@ -436,6 +456,10 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-infrared-remote-file/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-load-lora-packet-sx1262/</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-subghz-signal-littlefs/</loc>
@@ -468,6 +492,10 @@
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-jtag-pinout/</loc>
   </url>
   <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-lora-frequency-sx1262/</loc>
+    <lastmod>2026-07-14</lastmod>
+  </url>
+  <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-rf24-channel-activity/</loc>
   </url>
   <url>
@@ -490,6 +518,10 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-hduart-bytecode-query/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-lora-packet-sx1262/</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-rf24-payload/</loc>
@@ -622,6 +654,10 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-si4713-fm-module/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-sx1262-lora-module/</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-w5500-ethernet-module/</loc>
