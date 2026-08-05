@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use ESP32 Bit Pirate with SX1262 LoRa modules to configure radio profiles, inspect RSSI and CAD, send or receive packets, scan frequencies and save .lora captures." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="#121212" name="theme-color"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="ESP32 SX1262 LoRa Packet Debugging" property="og:title"/>
+<meta content="Configure an SX1262, inspect RSSI and CAD, send or receive raw LoRa packets, scan frequencies and preserve .lora captures with ESP32 Bit Pirate." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" property="og:image"/>
+<meta content="Waveshare Core1262-HF LoRa module with an SX1262 transceiver and antenna connector." property="og:image:alt"/>
+<meta content="image/webp" property="og:image:type"/>
+<meta content="800" property="og:image:width"/>
+<meta content="800" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ESP32 SX1262 LoRa Packet Debugging" name="twitter:title"/>
+<meta content="Wire and configure SX1262 LoRa, observe RSSI and CAD, exchange packets, scan activity and work with .lora captures." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/modules/assets/sx1262-photo.webp" name="twitter:image"/>
+<meta content="Waveshare Core1262-HF LoRa module with an SX1262 transceiver and antenna connector." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/" rel="canonical"/>
+<title>ESP32 SX1262 LoRa Packet Debugging | Bit Pirate</title>
+<link href="../protocols.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "ESP32 SX1262 LoRa Packet Debugging",
+      "description": "Use ESP32 Bit Pirate with SX1262 LoRa modules to configure radio profiles, inspect RSSI and CAD, send or receive packets, scan frequencies and save .lora captures.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 SX1262 LoRa debugging",
+        "Raw LoRa packet analysis",
+        "LoRa RSSI and CAD monitoring",
+        "LoRa frequency scan",
+        "Meshtastic frame inspection"
+      ],
+      "inLanguage": "en",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14"
+    },
+    {
+      "@type": "ItemList",
+      "name": "ESP32 Bit Pirate SX1262 LoRa recipes",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Wire an SX1262 LoRa module",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-sx1262-lora-module/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Configure an SX1262 LoRa radio",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/configure-sx1262-lora-radio/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Receive a LoRa packet with SX1262",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/receive-lora-packet-sx1262/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Send a LoRa packet with SX1262",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/send-lora-packet-sx1262/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Scan LoRa frequency activity with SX1262",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-lora-frequency-sx1262/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Record and load a LoRa packet with SX1262",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/record-load-lora-packet-sx1262/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ESP32 Bit Pirate use an SX1262 LoRa module?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. LoRa mode supports SX1262 hardware connected over SPI with RESET, BUSY and DIO1 control lines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is raw LoRa packet mode the same as LoRaWAN?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Raw LoRa packet exchange configures the radio modem directly; it does not join a LoRaWAN network or manage LoRaWAN sessions and network-server communication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which LoRa settings must match between two radios?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Frequency, bandwidth, spreading factor, coding rate, sync word, CRC and IQ mode must be compatible. The module and antenna must also match the physical RF band."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the ESP32 Bit Pirate Meshtastic shell do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It applies compatible modem presets and provides key, send, receive and frame-inspection workflows for analysis. Exiting restores the previous raw LoRa profile."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supported protocols",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SX1262 LoRa packet debugging",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "ESP32 SX1262 LoRa Packet and Signal Analysis",
+      "description": "Use ESP32 Bit Pirate with SX1262 LoRa modules to configure radio profiles, inspect RSSI and CAD, send or receive packets, scan frequencies and save .lora captures.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/lora/",
+      "inLanguage": "en",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14",
+      "author": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+      },
+      "about": [
+        "ESP32 SX1262 LoRa debugging",
+        "Raw LoRa packet analysis",
+        "LoRa RSSI and CAD monitoring",
+        "LoRa frequency scan",
+        "Meshtastic frame inspection"
+      ]
+    }
+  ]
+}
+</script>
+<script defer="" src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/apple-touch-icon.png" rel="apple-touch-icon"/>
+</head>
+<body>
+<main class="protocol-page">
+<header class="protocol-header">
+<a aria-label="ESP32 Bit Pirate home" class="brand" href="../../"><span aria-hidden="true" class="brand-mark">B</span><span>ESP32 Bit Pirate</span></a>
+<nav aria-label="Primary destinations" class="page-top-nav top-nav">
+<a href="../../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><circle cx="6" cy="12" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="m7.8 11 8.4-4M7.8 13l8.4 4"></path></svg>Site index</a>
+<a href="../"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Protocols</a>
+<a href="../../modules/sx1262/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><rect height="12" rx="2" width="14" x="5" y="6"></rect><path d="M9 3v3m6-3v3M9 18v3m6-3v3M2 10h3m14 0h3M2 14h3m14 0h3"></path></svg>SX1262 module</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a>
+</nav>
+</header>
+
+<section aria-labelledby="page-title" class="protocol-hero">
+<div>
+<p class="eyebrow">ESP32-S3 and SX1262 LoRa debugging</p>
+<h1 id="page-title">SX1262 LoRa packet, signal and Meshtastic analysis</h1>
+<p class="lead">ESP32 Bit Pirate turns a compatible ESP32-S3 board plus an SX1262 module into a transparent LoRa workbench. Wire and probe the radio, configure every modem parameter, observe RSSI and CAD, send or receive packets, scan activity, preserve <code>.lora</code> captures and inspect compatible Meshtastic frames.</p>
+<div class="hero-actions">
+<a class="action-link" href="../../recipes/wire-sx1262-lora-module/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 12h6M14 12h6M10 8v8M14 8v8"></path><circle cx="4" cy="12" r="2"></circle><circle cx="20" cy="12" r="2"></circle></svg>Start with SX1262 wiring</a>
+<a class="action-link" href="../../recipes/receive-lora-packet-sx1262/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0M7 16a5 5 0 0 1 10 0M10 16a2 2 0 0 1 4 0"></path></svg>Receive a LoRa packet</a>
+</div>
+</div>
+<figure class="hero-visual">
+<img alt="LoRa radio debugging visual with an ESP32 board, SX1262 module, antenna and packet activity" height="600" src="../../recipes/assets/visual-lora.svg" width="1040"/>
+</figure>
+</section>
+
+<section aria-labelledby="workflow-title" class="protocol-band">
+<div class="section-head">
+<h2 id="workflow-title">Quick SX1262 LoRa workflow</h2>
+<p class="section-intro">Prove the hardware and receive path before transmitting. A LoRa packet is only decodable when both radios use compatible modem settings and hardware for the same physical band.</p>
+</div>
+<div class="workflow-layout">
+<ol class="step-list">
+<li><span>01</span><p>Wire 3.3 V, ground, SPI, CS, RESET, BUSY and DIO1. Connect an antenna matched to the module RF band before any transmission.</p></li>
+<li><span>02</span><p>Run <code>mode lora</code>, accept or change the pins, then use <code>config</code> and <code>status</code> to verify the complete radio profile.</p></li>
+<li><span>03</span><p>Start receive-side diagnosis with <code>rssi</code>, <code>cad</code> and <code>receive</code> while a known second radio sends the same profile.</p></li>
+<li><span>04</span><p>Use <code>airtime</code> before <code>send</code>. Keep transmission tests short, controlled and compliant with the rules for the selected frequency.</p></li>
+<li><span>05</span><p>Use <code>scan</code> or <code>waterfall</code> for frequency activity, then <code>record</code> and <code>load</code> when a packet and its profile must be reproduced.</p></li>
+</ol>
+<div class="command-panel">
+<pre class="command-block"><code>mode lora
+config
+status
+rssi 250
+cad 250
+receive
+airtime 16
+send Hello
+scan
+waterfall
+record
+load
+meshtastic</code></pre>
+<p class="command-note">Core CLI flow from the current implementation. <code>spam</code>, <code>jam</code> and every transmit workflow are for isolated, authorized RF tests only.</p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="coverage-title" class="protocol-band">
+<div class="section-head">
+<h2 id="coverage-title">LoRa workflows covered by ESP32 Bit Pirate</h2>
+<p class="section-intro">Choose the smallest workflow that answers the current bench question, then move to a detailed recipe when the hardware and profile are understood.</p>
+</div>
+<div class="intent-grid">
+<article class="intent-card"><span>Configure</span><h3>Complete modem profile</h3><p>Set frequency, bandwidth, spreading factor, coding rate, power, preamble, sync word, CRC, IQ and TCXO behavior.</p></article>
+<article class="intent-card"><span>Packet</span><h3>Send and receive</h3><p>Exchange text or hexadecimal payloads up to 255 bytes and inspect receive time, gap, length, RSSI, SNR, HEX and ASCII.</p></article>
+<article class="intent-card"><span>Detect</span><h3>RSSI and CAD</h3><p>Monitor channel energy with RSSI or use LoRa Channel Activity Detection to distinguish possible compatible LoRa activity.</p></article>
+<article class="intent-card"><span>Explore</span><h3>Scan, waterfall and ear</h3><p>Scan an expected range, render display activity or map received signal level to audio before attempting packet decoding.</p></article>
+<article class="intent-card"><span>.lora</span><h3>Packet profile files</h3><p>Record one received payload and its complete modem profile to LittleFS, then load it for a controlled single transmission.</p></article>
+<article class="intent-card"><span>Mesh</span><h3>Meshtastic analysis shell</h3><p>Apply compatible presets and inspect text, position, node information, telemetry and routing frames without hiding the radio profile.</p></article>
+</div>
+</section>
+
+<section aria-labelledby="fit-title" class="protocol-band">
+<div class="section-head">
+<h2 id="fit-title">Raw LoRa, LoRaWAN and Meshtastic are different layers</h2>
+<p class="section-intro">The SX1262 provides the radio. The packet format and network behavior above that radio depend on the software stack in use.</p>
+</div>
+<div class="signal-grid">
+<article class="signal-card"><span>Raw LoRa</span><h3>Direct packet workbench</h3><p>The normal LoRa shell controls modem parameters and raw payloads directly. Two radios can exchange packets when their profiles and bands match.</p></article>
+<article class="signal-card"><span>LoRaWAN</span><h3>Not a LoRaWAN network stack</h3><p>Raw packet mode does not join a network, create device sessions, handle gateways or communicate with a LoRaWAN network server.</p></article>
+<article class="signal-card"><span>Meshtastic</span><h3>Compatible frame analysis</h3><p>The <code>meshtastic</code> shell provides supported presets, channel-key handling and frame inspection. Exiting restores the original raw LoRa profile.</p></article>
+</div>
+</section>
+
+<section aria-labelledby="hardware-title" class="protocol-band">
+<div class="section-head">
+<h2 id="hardware-title">SX1262 hardware and profile reminders</h2>
+<p class="section-intro">Software frequency limits do not change RF matching. Confirm the exact module variant, its antenna and every signal pin before judging radio performance.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>3.3 V only</span><p>Power the module from a stable 3.3 V source and share ground. Do not apply 5 V logic to the SX1262 or ESP32 GPIO.</p></article>
+<article class="note-card"><span>SPI plus control</span><p>The default mapping is SCK GPIO5, MISO GPIO6, MOSI GPIO7, CS GPIO4, RESET GPIO3, BUSY GPIO2 and DIO1 GPIO1.</p></article>
+<article class="note-card"><span>RF switch and TCXO</span><p>Core1262-style boards commonly use DIO2 for RF-switch control and DIO3 for TCXO control. The default TCXO voltage is 1.8 V.</p></article>
+<article class="note-card"><span>Physical band</span><p>The pictured Core1262-HF is matched for 850–930 MHz. Select a module and antenna built for the intended regional band.</p></article>
+<article class="note-card"><span>Matching profile</span><p>Frequency, bandwidth, spreading factor, coding rate, sync word, CRC and IQ mode must be compatible between peers.</p></article>
+<article class="note-card"><span>Legal RF use</span><p>Respect regional frequency, power, bandwidth and duty-cycle rules. Use repeat, continuous-wave or similar tests only in an isolated authorized lab.</p></article>
+</div>
+</section>
+
+<section aria-labelledby="problems-title" class="protocol-band">
+<div class="section-head">
+<h2 id="problems-title">Common SX1262 LoRa problems</h2>
+<p class="section-intro">Separate bus faults, channel energy, LoRa activity and valid packets. Each layer answers a different question.</p>
+</div>
+<div class="problem-grid">
+<article class="problem-card"><span>Probe fails</span><p>If BUSY remains high, check RESET and BUSY first. If no valid radio response returns, recheck 3.3 V, ground, SPI, CS and the selected pin mapping.</p></article>
+<article class="problem-card"><span>Energy, no packet</span><p>RSSI can show any in-band energy. Match the complete LoRa profile and use CAD before expecting <code>receive</code> to decode a valid packet.</p></article>
+<article class="problem-card"><span>CAD, no receive</span><p>CAD indicates possible LoRa preamble activity, not a guaranteed valid payload. Check sync word, CRC, IQ, preamble and receive timing.</p></article>
+<article class="problem-card"><span>Wrong band</span><p>A firmware setting within 150–960 MHz cannot retune the module RF matching. Use the correct SX1262 board variant and antenna.</p></article>
+<article class="problem-card"><span>Capture will not load</span><p>Keep a valid, small <code>.lora</code> file in LittleFS. The loader validates its fields, sends once with the saved profile and restores the prior profile.</p></article>
+<article class="problem-card"><span>No waterfall</span><p>The waterfall is a display visualization. On a target without a supported screen, use <code>scan</code> or <code>rssi</code> for serial output instead.</p></article>
+</div>
+</section>
+
+<section aria-labelledby="board-choice-title" class="protocol-band">
+<div class="section-head">
+<h2 id="board-choice-title">Module and ESP32 board choice</h2>
+<p class="section-intro">Start with the SX1262 module reference for RF and pin details, then confirm that the selected ESP32-S3 target exposes the required GPIO and enough power for the radio.</p>
+</div>
+<div class="note-grid">
+<article class="note-card"><span>Vision Master T190</span><p><a href="../../boards/vision-master-t190/">Open the T190 board page</a> for its integrated display, button mapping and optional onboard SX1262 pinout.</p></article>
+<article class="note-card"><span>SX1262 module</span><p><a href="../../modules/sx1262/">Open the SX1262 module page</a> for Core1262 photos, wiring, default profile, command behavior and source-based implementation notes.</p></article>
+<article class="note-card"><span>ESP32-S3 DevKit</span><p><a href="../../boards/esp32-s3-devkit/">Open the ESP32-S3 DevKit page</a> when wiring the radio through exposed GPIO or the project Dock.</p></article>
+<article class="note-card"><span>Other targets</span><p><a href="../../boards/">Compare supported ESP32-S3 boards</a> before changing the default pin map or relying on display-only workflows.</p></article>
+</div>
+</section>
+
+<section aria-labelledby="recipes-title" class="protocol-band">
+<div class="section-head">
+<h2 id="recipes-title">Detailed SX1262 LoRa recipes</h2>
+<p class="section-intro">Follow the batch in order for a first bring-up, or jump directly to the task that matches a radio already known to work.</p>
+</div>
+<nav aria-label="ESP32 Bit Pirate SX1262 LoRa recipes" class="recipe-index-grid">
+<a href="../../recipes/wire-sx1262-lora-module/"><span>Wire</span><strong>Wire an SX1262 LoRa module</strong><small>Connect SPI, RESET, BUSY and DIO1, then verify the SX1262 probe.</small></a>
+<a href="../../recipes/configure-sx1262-lora-radio/"><span>Configure</span><strong>Configure the SX1262 LoRa profile</strong><small>Set the full modem profile and understand the 868 MHz defaults.</small></a>
+<a href="../../recipes/receive-lora-packet-sx1262/"><span>Receive</span><strong>Receive a LoRa packet with SX1262</strong><small>Use RSSI, CAD and packet receive to inspect payload, RSSI and SNR.</small></a>
+<a href="../../recipes/send-lora-packet-sx1262/"><span>Send</span><strong>Send one controlled LoRa packet</strong><small>Estimate airtime and transmit one text or hexadecimal payload.</small></a>
+<a href="../../recipes/scan-lora-frequency-sx1262/"><span>Scan</span><strong>Scan LoRa frequency activity</strong><small>Find RSSI peaks and use display visualization without losing the active profile.</small></a>
+<a href="../../recipes/record-load-lora-packet-sx1262/"><span>Capture</span><strong>Record and load a .lora packet</strong><small>Preserve payload, receive metrics and the complete modem profile in LittleFS.</small></a>
+</nav>
+</section>
+
+<section aria-labelledby="references-title" class="protocol-band">
+<div class="section-head">
+<h2 id="references-title">Useful LoRa references</h2>
+<p class="section-intro">Connect the protocol overview to the hardware page, serial tools, LittleFS workflow, board selection and firmware source.</p>
+</div>
+<div class="destination-grid">
+<article class="destination-card"><h3>SX1262 module reference</h3><p>Check photos, pinout, default radio profile, commands and the Core1262-HF physical band.</p><a class="action-link" href="../../modules/sx1262/">Open SX1262 module reference</a></article>
+<article class="destination-card"><h3>SPI protocol overview</h3><p>Use the SPI page when the radio probe fails before debugging LoRa settings.</p><a class="action-link" href="../spi/">Open SPI debugging guide</a></article>
+<article class="destination-card"><h3>Web Serial Terminal</h3><p>Drive LoRa mode and its interactive commands from a compatible browser.</p><a class="action-link" href="../../web-tools/web-serial-terminal/">Open Web Serial Terminal</a></article>
+<article class="destination-card"><h3>LittleFS file manager</h3><p>Manage saved <code>.lora</code> packet files from the browser-based device UI.</p><a class="action-link" href="../../recipes/manage-littlefs-files-webui/">Manage LittleFS files</a></article>
+<article class="destination-card"><h3>Flash ESP32 Bit Pirate</h3><p>Install a current firmware build on a supported ESP32-S3 board.</p><a class="action-link" href="../../webflasher/">Open Web Flasher</a></article>
+<article class="destination-card"><h3>Supported boards</h3><p>Check available GPIO and display support before selecting a target.</p><a class="action-link" href="../../boards/">Compare supported boards</a></article>
+<article class="destination-card"><h3>All practical recipes</h3><p>Browse LoRa alongside the complete hardware-debugging recipe library.</p><a class="action-link" href="../../recipes/">Browse all recipes</a></article>
+<article class="destination-card"><h3>Firmware source</h3><p>Inspect the current implementation, releases and issues affecting LoRa mode.</p><a class="action-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">Open GitHub repository</a></article>
+</div>
+</section>
+
+<section aria-labelledby="faq-title" class="protocol-band">
+<div class="section-head">
+<h2 id="faq-title">SX1262 LoRa debugging FAQ</h2>
+<p class="section-intro">Short answers for the distinctions and settings that most often block a first packet exchange.</p>
+</div>
+<div class="faq-list">
+<details><summary>Can ESP32 Bit Pirate use an SX1262 LoRa module?</summary><p>Yes. LoRa mode supports SX1262 hardware connected over SPI with RESET, BUSY and DIO1 control lines.</p></details>
+<details><summary>Is raw LoRa packet mode the same as LoRaWAN?</summary><p>No. Raw LoRa packet exchange configures the radio modem directly; it does not join a LoRaWAN network or manage sessions, gateways and network-server communication.</p></details>
+<details><summary>Which LoRa settings must match between two radios?</summary><p>Frequency, bandwidth, spreading factor, coding rate, sync word, CRC and IQ mode must be compatible. The module and antenna must also match the physical RF band.</p></details>
+<details><summary>What does the ESP32 Bit Pirate Meshtastic shell do?</summary><p>It applies supported modem presets and provides channel-key, send, receive and frame-inspection workflows for analysis. Exiting stops receive and restores the previous raw LoRa profile.</p></details>
+</div>
+</section>
+
+<footer class="site-footer">
+<p class="site-footer-title">ESP32 Bit Pirate</p>
+<nav aria-label="Project links">
+<a href="../../">Home</a>
+<a href="../../webflasher/">Web Flasher</a>
+<a href="../../recipes/">Recipes</a>
+<a href="../../web-tools/">Web Tools</a>
+<a href="../../modules/sx1262/">SX1262 Module</a>
+<a href="../">Protocols</a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a>
+</nav>
+</footer>
+</main>
+</body>
+</html>
