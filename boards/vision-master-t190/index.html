@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Use ESP32 Bit Pirate on the Heltec Vision Master T190 with its 1.9-inch ST7789 display, two buttons, Wi-Fi terminal and optional SX1262 LoRa radio." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
+<meta content="article" property="og:type"/>
+<meta content="ESP32 Bit Pirate" property="og:site_name"/>
+<meta content="Heltec Vision Master T190 ESP32-S3 LoRa firmware" property="og:title"/>
+<meta content="Use ESP32 Bit Pirate on Vision Master T190 with its 1.9-inch TFT, physical buttons, Wi-Fi terminal and optional onboard SX1262 LoRa radio." property="og:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/" property="og:url"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/boards/images/og/heltec-vision-master-t190-og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="Heltec Vision Master T190 front and rear board view for ESP32 Bit Pirate firmware." property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Heltec Vision Master T190 ESP32-S3 LoRa firmware" name="twitter:title"/>
+<meta content="Vision Master T190 support with a 1.9-inch TFT, buttons, Wi-Fi terminal and optional onboard SX1262 LoRa." name="twitter:description"/>
+<meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/boards/images/og/heltec-vision-master-t190-og.png" name="twitter:image"/>
+<meta content="Heltec Vision Master T190 front and rear board view for ESP32 Bit Pirate firmware." name="twitter:image:alt"/>
+<link href="https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/" rel="canonical"/>
+<meta content="en_US" property="og:locale"/>
+<title>Heltec Vision Master T190 ESP32-S3 LoRa firmware | Bit Pirate</title>
+<link href="../../web-tools/styles/main.css?v=20260702-mobileclone2" rel="stylesheet"/>
+<link href="../boards.css?v=20260707-cardputer-table-cleanup" rel="stylesheet"/>
+<script defer="" src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/#website",
+      "name": "ESP32 Bit Pirate",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/",
+      "inLanguage": "en",
+      "sameAs": ["https://github.com/geo-tp/ESP32-Bit-Pirate"]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/#article",
+      "headline": "Heltec Vision Master T190 ESP32-S3 LoRa firmware",
+      "name": "Heltec Vision Master T190 ESP32-S3 LoRa firmware",
+      "description": "Use ESP32 Bit Pirate on the Heltec Vision Master T190 with its 1.9-inch ST7789 display, two buttons, Wi-Fi terminal and optional SX1262 LoRa radio.",
+      "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/",
+      "mainEntityOfPage": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/",
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-16",
+      "inLanguage": "en",
+      "author": {"@type": "Person", "name": "Geo"},
+      "publisher": {"@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/#website"},
+      "isPartOf": {"@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/#website"},
+      "about": [
+        "Heltec Vision Master T190 firmware",
+        "Vision Master T190 ESP32-S3",
+        "Vision Master T190 SX1262 LoRa",
+        "ST7789 ESP32-S3 display",
+        "ESP32 Bit Pirate"
+      ],
+      "keywords": "Heltec Vision Master T190 firmware, T190 ESP32-S3, T190 SX1262 LoRa, ST7789 display, ESP32 Bit Pirate",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/images/og/heltec-vision-master-t190-og.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "ESP32 Bit Pirate", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"},
+        {"@type": "ListItem", "position": 2, "name": "Boards", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/"},
+        {"@type": "ListItem", "position": 3, "name": "Vision Master T190", "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/boards/vision-master-t190/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Heltec Vision Master T190 supported by ESP32 Bit Pirate?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. The implementation includes a dedicated DEVICE_VISION_MASTER_T190 board path with ST7789 display, physical-button input and board-specific Wi-Fi client behavior."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does every Vision Master T190 include an SX1262 LoRa radio?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. Heltec sells a version without LoRa plus LF and HF radio variants. Confirm the exact model and RF band before using LoRa mode."}
+        },
+        {
+          "@type": "Question",
+          "name": "Which buttons does ESP32 Bit Pirate use on Vision Master T190?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The current implementation maps GPIO0 to OK and GPIO21 to Right. Button events are edge-detected with internal pull-ups."}
+        },
+        {
+          "@type": "Question",
+          "name": "Which pins connect the optional SX1262 on Vision Master T190?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The official pin map assigns SCK GPIO9, MISO GPIO11, MOSI GPIO10, NSS GPIO8, RESET GPIO12, BUSY GPIO13 and DIO1 GPIO14. Confirm these values in the LoRa setup prompts."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is raw LoRa mode on Vision Master T190 the same as LoRaWAN?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. ESP32 Bit Pirate raw LoRa mode directly configures and exchanges radio packets; it does not provide LoRaWAN joining, sessions, gateways or network-server behavior."}
+        }
+      ,
+        {
+          "@type": "Question",
+          "name": "How do I enter download mode?",
+          "acceptedAnswer": {"@type": "Answer", "text": "With USB connected, hold BOOT, press and release RST, then release BOOT."}
+        }]
+    }
+  ]
+}
+</script>
+<link href="../../favicon.ico" rel="icon" sizes="any"/>
+<link href="../../favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="../../apple-touch-icon.png" rel="apple-touch-icon"/>
+</head>
+<body class="boards-page">
+<main class="wrap">
+<header class="hero">
+<div class="page-hero-top">
+<a aria-label="ESP32 Bit Pirate home" class="brand" href="../../"><span aria-hidden="true" class="brand-mark">B</span><span>ESP32 Bit Pirate</span></a>
+<nav aria-label="Primary navigation" class="page-top-nav">
+<a aria-current="page" href="../../boards/"><svg aria-hidden="true" class="page-nav-icon" viewbox="0 0 24 24"><rect height="13" rx="2" width="16" x="4" y="5"></rect><path d="M8 9h8M8 13h5M7 21h10"></path></svg>Boards</a>
+<a href="../../modules/"><svg aria-hidden="true" class="page-nav-icon" viewbox="0 0 24 24"><rect height="7" rx="1.5" width="7" x="4" y="4"></rect><rect height="7" rx="1.5" width="7" x="13" y="4"></rect><rect height="7" rx="1.5" width="7" x="4" y="13"></rect><path d="M14 16h6M17 13v6"></path></svg>Modules</a>
+<a href="../../hardware/"><svg aria-hidden="true" class="page-nav-icon" viewbox="0 0 24 24"><rect height="14" rx="2" width="10" x="7" y="5"></rect><path d="M4 8h3M4 12h3M4 16h3M17 8h3M17 12h3M17 16h3"></path></svg>Hardware</a>
+<a href="../../recipes/"><svg aria-hidden="true" class="page-nav-icon" viewbox="0 0 24 24"><path d="M5 4.5h11a3 3 0 0 1 3 3v12H8a3 3 0 0 0-3 3z"></path><path d="M5 4.5v18M8 9h7M8 13h5"></path></svg>Recipes</a>
+<a href="../../web-tools/"><svg aria-hidden="true" class="page-nav-icon" viewbox="0 0 24 24"><rect height="15" rx="2" width="18" x="3" y="4"></rect><path d="M3 8h18M7 6h.01M10 6h.01"></path></svg>Web Tools</a>
+</nav>
+</div>
+<nav class="breadcrumb"><a href="../../">Home</a> / <a href="../">Boards</a> / Vision Master T190</nav>
+<section class="board-profile">
+<div>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Heltec</span> display and LoRa workbench</p>
+<h1>Heltec Vision Master T190 ESP32-S3 LoRa firmware</h1>
+<p>Use Vision Master T190 when a wide 1.9-inch color display, two physical buttons, USB-C, battery support and optional onboard SX1262 radio fit the bench task. The ESP32 Bit Pirate implementation gives the board a dedicated display, input and Wi-Fi path while keeping serial and browser terminal workflows available.</p>
+<div class="status-row"><span class="status-pill">1.9-inch TFT</span><span class="status-pill special">optional SX1262 LoRa</span></div>
+<div class="button-row">
+<a class="button" href="../../protocols/lora/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0M7 16a5 5 0 0 1 10 0M10 16a2 2 0 0 1 4 0"></path></svg>Open LoRa workflows</a>
+<a class="button secondary-button" href="../"><svg aria-hidden="true" class="page-nav-icon" viewbox="0 0 24 24"><rect height="13" rx="2" width="16" x="4" y="5"></rect><path d="M8 9h8M8 13h5M7 21h10"></path></svg>Compare boards</a>
+</div>
+</div>
+<div class="board-profile-media">
+<img alt="Heltec Vision Master T190 front and rear view with 1.9-inch TFT, ESP32-S3 and optional RA62 SX1262 module." class="board-profile-image" fetchpriority="high" height="655" sizes="(max-width: 860px) 82vw, 430px" src="../images/large/heltec-vision-master-t190.webp" srcset="../images/small/heltec-vision-master-t190.webp 320w, ../images/large/heltec-vision-master-t190.webp 655w" width="655"/>
+<p class="board-profile-caption">Board-specific guide derived from the VisionMasterT190 implementation and official Heltec hardware references.</p>
+</div>
+</section>
+</header>
+
+<section aria-labelledby="pinout-gallery-title" class="boards-panel pinout-photo-gallery">
+<div class="pinout-gallery-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Pinout</span> hardware references</p><h3 id="pinout-gallery-title">Vision Master T190 pinout and board photos</h3></div><p>Four official references for header wiring, board orientation, optional radio identification and the supplied accessories.</p></div>
+<div class="pinout-gallery-grid">
+<figure class="pinout-photo-card"><button aria-label="Open the official Vision Master T190 pin map with GPIO, QuickLink and LoRa signals" class="pinout-photo-button" data-gallery-caption="Official header map with GPIO, ADC, touch, UART, QuickLink and onboard LoRa signal labels." data-gallery-image="../images/pinout/vision-master-t190-pinout.webp" data-gallery-source="https://heltec.org/project/vision-master-t190/" data-gallery-title="Vision Master T190 pin map" type="button"><img alt="Official Vision Master T190 pin map with GPIO, QuickLink and LoRa signals" decoding="async" fetchpriority="low" height="256" loading="lazy" src="../images/pinout/vision-master-t190-pinout-thumb.webp" width="420"/></button><figcaption><strong>Official T190 pin map</strong><span>Header GPIO, QuickLink and optional SX1262 connections.</span><a href="https://heltec.org/project/vision-master-t190/" rel="noopener" target="_blank">Source</a></figcaption></figure>
+<figure class="pinout-photo-card"><button aria-label="Open the Vision Master T190 front and rear board photo" class="pinout-photo-button" data-gallery-caption="Front display and rear PCB view for locating the ESP32-S3, antenna connectors, headers and optional RA62 radio module." data-gallery-image="../images/large/heltec-vision-master-t190.webp" data-gallery-source="https://heltec.org/project/vision-master-t190/" data-gallery-title="Vision Master T190 front and rear" type="button"><img alt="Vision Master T190 front display and rear PCB with optional RA62 radio module" decoding="async" fetchpriority="low" height="420" loading="lazy" src="../images/detail/vision-master-t190-front-back-thumb.webp" width="420"/></button><figcaption><strong>Front and rear board view</strong><span>Display orientation, rear PCB and optional radio placement.</span><a href="https://heltec.org/project/vision-master-t190/" rel="noopener" target="_blank">Source</a></figcaption></figure>
+<figure class="pinout-photo-card"><button aria-label="Open the Vision Master T190 kit photo with antenna, sensor cable and headers" class="pinout-photo-button" data-gallery-caption="Official kit view with the T190 board, antenna for radio variants, sensor cable and header strips." data-gallery-image="../images/detail/vision-master-t190-kit.webp" data-gallery-source="https://heltec.org/project/vision-master-t190/" data-gallery-title="Vision Master T190 kit" type="button"><img alt="Vision Master T190 kit with board, antenna, sensor cable and header strips" decoding="async" fetchpriority="low" height="420" loading="lazy" src="../images/detail/vision-master-t190-kit-thumb.webp" width="420"/></button><figcaption><strong>Kit and accessories</strong><span>Board, optional antenna, sensor cable and header strips.</span><a href="https://heltec.org/project/vision-master-t190/" rel="noopener" target="_blank">Source</a></figcaption></figure>
+<figure class="pinout-photo-card"><button aria-label="Open the Vision Master T190 angled display photo" class="pinout-photo-button" data-gallery-caption="Angled board view showing the 1.9-inch TFT, transparent support plate and narrow ESP32-S3 form factor." data-gallery-image="../images/detail/vision-master-t190-angle.webp" data-gallery-source="https://heltec.org/project/vision-master-t190/" data-gallery-title="Vision Master T190 display angle" type="button"><img alt="Angled Vision Master T190 board view with 1.9-inch TFT and transparent support plate" decoding="async" fetchpriority="low" height="420" loading="lazy" src="../images/detail/vision-master-t190-angle-thumb.webp" width="420"/></button><figcaption><strong>Display and support plate</strong><span>1.9-inch TFT and narrow board form factor.</span><a href="https://heltec.org/project/vision-master-t190/" rel="noopener" target="_blank">Source</a></figcaption></figure>
+</div>
+<div aria-labelledby="pinout-lightbox-title" aria-modal="true" class="pinout-lightbox" hidden="" role="dialog"><div class="pinout-lightbox-top"><strong class="pinout-lightbox-title" id="pinout-lightbox-title"></strong><div class="pinout-lightbox-controls"><button aria-label="Previous pinout image" class="pinout-lightbox-button" data-gallery-prev="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button><button aria-label="Next pinout image" class="pinout-lightbox-button" data-gallery-next="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button><button aria-label="Close pinout image" class="pinout-lightbox-button" data-gallery-close="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div></div><div class="pinout-lightbox-stage"><img alt="" data-gallery-full="" decoding="async"/></div><div class="pinout-lightbox-meta"><p data-gallery-caption=""></p><a data-gallery-source="" href="https://heltec.org/project/vision-master-t190/" rel="noopener" target="_blank">Source</a></div></div>
+</section>
+
+<section class="boards-panel">
+<div class="section-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Overview</span> compatibility</p><h2>Vision Master T190 board overview</h2></div><p>The board implementation is display- and button-aware. The optional LoRa hardware remains variant-dependent, so confirm the product model before planning a radio workflow.</p></div>
+<div class="board-meta">
+<div><strong>Core</strong><span>ESP32-S3R8 with Wi-Fi, Bluetooth LE, 16 MB flash and 8 MB PSRAM in Heltec's current specification.</span></div>
+<div><strong>Display</strong><span>1.9-inch ST7789 TFT, 170 × 320 visible pixels and 262K colors.</span></div>
+<div><strong>Inputs</strong><span>GPIO0 maps to OK; GPIO21 maps to Right in the current ESP32 Bit Pirate implementation.</span></div>
+<div><strong>Radio variants</strong><span>Available without LoRa, as LF hardware, or as HF hardware. The radio-equipped variants use an SX1262-based RA62 module.</span></div>
+</div>
+</section>
+
+<section class="boards-panel">
+<div class="section-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Implementation</span> source-derived behavior</p><h2>How ESP32 Bit Pirate uses the T190 hardware</h2></div><p>These details come directly from the <code>VisionMasterT190</code> board implementation in <code>src.zip</code>.</p></div>
+<div class="workflow-grid">
+<div class="workflow-card"><strong>Dedicated ST7789 display</strong><p>The display uses MOSI GPIO48, SCLK GPIO38, CS GPIO39, DC GPIO47, RESET GPIO40, backlight GPIO17 and active-low display power on GPIO7.</p></div>
+<div class="workflow-card"><strong>Separate display SPI host</strong><p>The display config selects <code>SPI3_HOST</code>, no MISO and <code>useSharedSpi = false</code>, keeping its bus separate from normal shared-SPI workflows.</p></div>
+<div class="workflow-card"><strong>Two-button input</strong><p>GPIO0 produces OK and GPIO21 produces Right. Both use internal pull-ups and edge-detected presses; holding a key does not repeatedly generate events.</p></div>
+<div class="workflow-card"><strong>Startup and Wi-Fi feedback</strong><p>Boot shows the Bit Pirate logo, waits up to three seconds for a button and clears the display. Wi-Fi client status is rendered directly on the TFT.</p></div>
+</div>
+</section>
+
+<section class="boards-panel">
+<div class="section-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Workflows</span> practical tasks</p><h2>Vision Master T190 supported workflows</h2></div><p>The wide screen makes traces and RF activity visible, while USB serial and Wi-Fi terminal modes remain the main text interfaces.</p></div>
+<div class="workflow-grid">
+<div class="workflow-card"><strong>Display-assisted debugging</strong><p>Use the TFT for board selection, status, logic or analog traces, frequency activity and LoRa waterfall output.</p></div>
+<div class="workflow-card"><strong>USB and browser terminal</strong><p>Use USB Serial or the browser Web Serial Terminal for the complete CLI, prompts and long command output.</p></div>
+<div class="workflow-card"><strong>Wi-Fi terminal</strong><p>Use AP mode or saved client credentials. The T190 client path reads <code>ssid</code> and <code>pass</code> from the <code>wifi_settings</code> NVS namespace.</p></div>
+<div class="workflow-card"><strong>Optional onboard LoRa</strong><p>On radio-equipped variants, use the SX1262 shell for profile configuration, RSSI, CAD, packets, scans, captures and Meshtastic frame analysis.</p></div>
+</div>
+</section>
+
+<section class="boards-panel">
+<h2>Vision Master T190 pin mapping and wiring notes</h2>
+<p>The ESP32 Bit Pirate display path consumes GPIO7, GPIO17, GPIO38, GPIO39, GPIO40, GPIO47 and GPIO48. Its physical input path consumes GPIO0 and GPIO21. Do not assign those pins to generic buses while the board display and buttons are active.</p>
+<p>Heltec's header map exposes power, ground and GPIO including GPIO1–4, GPIO8–16, GPIO43 and GPIO44. GPIO1/GPIO2 also serve the QuickLink I2C connector, while GPIO43/GPIO44 carry UART0 TX/RX.</p>
+<p class="notice">Use 3.3 V-compatible logic and verify the exact header orientation before wiring. On a LoRa-equipped T190, GPIO8–14 are already connected to the onboard radio and should not be treated as free GPIO.</p>
+</section>
+
+<section class="boards-panel">
+<div class="section-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">LoRa</span> onboard SX1262 map</p><h2>Use the correct radio variant and pins</h2></div><p>The product name alone does not guarantee an onboard radio. Match the hardware variant, antenna and regional frequency before entering LoRa mode.</p></div>
+<div class="board-meta">
+<div><strong>SPI</strong><span>SCK GPIO9, MISO GPIO11, MOSI GPIO10 and NSS/CS GPIO8.</span></div>
+<div><strong>Control</strong><span>RESET GPIO12, BUSY GPIO13 and DIO1 GPIO14.</span></div>
+<div><strong>LF variant</strong><span>Heltec documents 470–510 MHz hardware and EU433 coverage in the official frequency table.</span></div>
+<div><strong>HF variant</strong><span>Heltec documents 863–928 MHz hardware for EU868, IN865, US915, AU915, AS923 and KR920 regions.</span></div>
+</div>
+<p class="notice">The current LoRa setup explicitly prompts for every SX1262 pin and the radio profile. Confirm the onboard pin map instead of accepting generic external-module defaults blindly.</p>
+</section>
+
+<section class="boards-panel">
+<div class="section-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Next</span> useful pages</p><h2>Vision Master T190 useful next pages</h2></div><p>Connect the board-specific implementation to LoRa, serial, GPIO, I2C, browser tools and official hardware references.</p></div>
+<div class="board-reference-grid">
+<div class="board-reference-column"><h3>Protocol modes</h3><div class="link-grid">
+<a class="link-card" href="../../protocols/lora/"><strong>LoRa SX1262</strong><p>Configure the radio, observe RSSI and CAD, exchange packets and inspect captures.</p></a>
+<a class="link-card" href="../../protocols/i2c/"><strong>I2C</strong><p>Use the QuickLink GPIO1/GPIO2 path for compatible 3.3 V sensors.</p></a>
+<a class="link-card" href="../../protocols/uart/"><strong>UART</strong><p>Plan serial links around the board's fixed display, button and radio signals.</p></a>
+<a class="link-card" href="../../protocols/dio/"><strong>DIO/GPIO</strong><p>Use exposed pins only after excluding reserved onboard connections.</p></a>
+</div></div>
+<div class="board-reference-column"><h3>LoRa recipes</h3><div class="link-grid">
+<a class="link-card" href="../../recipes/configure-sx1262-lora-radio/"><strong>Configure SX1262 LoRa</strong><p>Set frequency, bandwidth, spreading factor and the complete modem profile.</p></a>
+<a class="link-card" href="../../recipes/receive-lora-packet-sx1262/"><strong>Receive a LoRa packet</strong><p>Use RSSI, CAD and packet receive with the onboard radio variant.</p></a>
+<a class="link-card" href="../../recipes/scan-lora-frequency-sx1262/"><strong>Scan LoRa activity</strong><p>Use the T190 display for frequency visualization and waterfall output.</p></a>
+<a class="link-card" href="../../recipes/record-load-lora-packet-sx1262/"><strong>Record and load .lora files</strong><p>Preserve a packet and its radio profile in LittleFS.</p></a>
+</div></div>
+<div class="board-reference-column"><h3>Tools and sources</h3><div class="link-grid">
+<a class="link-card" href="../../web-tools/web-serial-terminal/"><strong>Web Serial Terminal</strong><p>Drive the complete Bit Pirate CLI from a compatible browser.</p></a>
+<a class="link-card" href="../../modules/sx1262/"><strong>SX1262 module reference</strong><p>Understand the radio profile, commands and transceiver behavior.</p></a>
+<a class="link-card" href="https://heltec.org/project/vision-master-t190/" rel="noopener" target="_blank"><strong>Official Heltec product page</strong><p>Check current variants, specifications, pin map and downloads.</p></a>
+<a class="link-card" href="https://resource.heltec.cn/download/HT-VMT190/HT-VMT190%20Datasheet.pdf" rel="noopener" target="_blank"><strong>Official T190 datasheet</strong><p>Open the hardware pin definitions, RF bands and electrical specifications.</p></a>
+</div></div>
+</div>
+</section>
+
+<section class="boards-panel">
+<div class="section-head"><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">FAQ</span> board-specific answers</p><h2>Vision Master T190 FAQ</h2></div><p>Quick answers about firmware support, screen pins, buttons, board variants and the optional SX1262 radio.</p></div>
+<div class="board-faq">
+<details><summary>Is Heltec Vision Master T190 supported by ESP32 Bit Pirate?</summary><p>Yes. The implementation includes a dedicated <code>DEVICE_VISION_MASTER_T190</code> board path with ST7789 display, physical-button input and board-specific Wi-Fi client behavior.</p></details>
+<details><summary>Does every Vision Master T190 include an SX1262 LoRa radio?</summary><p>No. Heltec sells a version without LoRa plus LF and HF radio variants. Confirm the exact model, RF band and antenna before using LoRa mode.</p></details>
+<details><summary>Which buttons does ESP32 Bit Pirate use?</summary><p>GPIO0 maps to OK and GPIO21 maps to Right. Both inputs use internal pull-ups and edge-detected presses.</p></details>
+<details><summary>Which pins connect the optional SX1262?</summary><p>The official pin map assigns SCK GPIO9, MISO GPIO11, MOSI GPIO10, NSS GPIO8, RESET GPIO12, BUSY GPIO13 and DIO1 GPIO14. Confirm these values in the LoRa setup prompts.</p></details>
+<details><summary>Is raw LoRa mode on T190 the same as LoRaWAN?</summary><p>No. ESP32 Bit Pirate raw LoRa mode directly configures and exchanges radio packets; it does not provide LoRaWAN joining, sessions, gateways or network-server behavior.</p></details>
+
+<details><summary>How do I enter download mode?</summary><p>With USB connected, hold BOOT, press and release RST, then release BOOT.</p></details></div>
+</section>
+
+<section aria-labelledby="identity-title" class="board-open-source"><a class="identity-logo-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener"><picture><source srcset="../../web-tools/assets/bit-pirate-square.webp" type="image/webp"/><img alt="ESP32 Bit Pirate logo." class="identity-logo" height="512" loading="lazy" src="../../web-tools/assets/bit-pirate-square.png" width="512"/></picture></a><div><p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Open</span> source project</p><h2 id="identity-title">Vision Master T190 inside ESP32 Bit Pirate</h2><p>This page connects the board-specific C++ implementation to the physical T190 display, buttons, Wi-Fi path, exposed headers and optional LoRa radio.</p><ul aria-label="ESP32 Bit Pirate project links" class="identity-link-list"><li><a href="../../protocols/">protocol workbench</a></li><li><a href="../../recipes/">practical recipes</a></li><li><a href="../../modules/">target modules</a></li><li><a href="../../hardware/">hardware notes</a></li></ul></div></section>
+
+<footer class="site-footer"><p class="site-footer-title">ESP32 Bit Pirate</p><nav aria-label="Project links"><a href="../../">Home</a><a href="../../boards/">Boards</a><a href="../../modules/">Modules</a><a href="../../protocols/">Protocols</a><a href="../../hardware/">Hardware</a><a href="../../web-tools/">Web Tools</a><a href="../../recipes/">Recipes</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">GitHub</a></nav></footer>
+</main>
+<script>
+(function(){var gallery=document.querySelector('.pinout-photo-gallery');if(!gallery)return;var items=Array.prototype.slice.call(gallery.querySelectorAll('.pinout-photo-card'));var box=gallery.querySelector('.pinout-lightbox');var image=box.querySelector('[data-gallery-full]');var title=box.querySelector('#pinout-lightbox-title');var caption=box.querySelector('[data-gallery-caption]');var source=box.querySelector('[data-gallery-source]');var close=box.querySelector('[data-gallery-close]');var prev=box.querySelector('[data-gallery-prev]');var next=box.querySelector('[data-gallery-next]');var active=0;var lastFocus=null;function openAt(index){active=(index+items.length)%items.length;var item=items[active];var trigger=item.querySelector('.pinout-photo-button');lastFocus=document.activeElement;image.src=trigger.dataset.galleryImage;image.alt=trigger.querySelector('img').alt;title.textContent=trigger.dataset.galleryTitle;caption.textContent=trigger.dataset.galleryCaption;source.href=trigger.dataset.gallerySource;box.hidden=false;document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';close.focus();}function hide(){box.hidden=true;image.removeAttribute('src');document.documentElement.style.overflow='';document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}function step(offset){openAt(active+offset);}items.forEach(function(item,index){item.addEventListener('click',function(event){if(event.target.closest&&event.target.closest('a'))return;openAt(index);});});close.addEventListener('click',hide);prev.addEventListener('click',function(){step(-1);});next.addEventListener('click',function(){step(1);});box.addEventListener('click',function(event){if(event.target===box)hide();});document.addEventListener('keydown',function(event){if(box.hidden)return;if(event.key==='Escape')hide();if(event.key==='ArrowLeft')step(-1);if(event.key==='ArrowRight')step(1);});})();
+</script>
+</body>
+</html>

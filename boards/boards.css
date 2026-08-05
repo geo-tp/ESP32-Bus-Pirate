@@ -53,6 +53,76 @@ body.boards-page {
 .board-meta span { display:block; margin-top:4px; color:#d8ddd8; font-size:.82rem; line-height:1.45; }
 .button-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
 .button-row .button { margin-top:0; }
+.board-buy-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid rgba(255, 214, 102, .34);
+  border-left: 3px solid #ffd666;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 0 0, rgba(255, 214, 102, .10), transparent 11rem),
+    linear-gradient(145deg, rgba(255, 214, 102, .055), rgba(0, 0, 0, .16));
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, .48);
+}
+.board-buy-copy { display: grid; gap: 3px; min-width: 0; }
+.board-buy-kicker {
+  color: #ffe19a;
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .055em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.board-buy-card strong {
+  color: #f2fff8;
+  font-size: .91rem;
+  line-height: 1.3;
+}
+.board-buy-card small {
+  color: #bfc9c3;
+  font-size: .68rem;
+  line-height: 1.35;
+}
+.board-buy-button {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 225, 154, .62);
+  border-radius: calc(var(--radius) - 2px);
+  background: linear-gradient(145deg, #ffe29a, #e9bd54);
+  box-shadow: 0 8px 18px rgba(255, 214, 102, .12);
+  color: #211a08;
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.board-buy-button svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.board-buy-button:hover,
+.board-buy-button:focus-visible {
+  border-color: #fff0c4;
+  outline: none;
+  box-shadow: 0 10px 22px rgba(255, 214, 102, .20);
+  transform: translateY(-1px);
+}
 .notice { margin-top:12px; padding:12px; border:1px solid rgba(255,214,102,.35); border-radius:var(--radius); background:rgba(255,214,102,.08); }
 .board-faq details { position:relative; padding: 0; overflow:hidden; }
 .board-faq summary { display:flex; gap:10px; align-items:center; cursor:pointer; padding:14px 44px 14px 14px; line-height:1.35; }
@@ -86,6 +156,23 @@ html[data-theme="light"] .breadcrumb a:hover, html[data-theme="light"] .breadcru
 html[data-theme="light"] .hero-board-card, html[data-theme="light"] .board-card img, html[data-theme="light"] .board-profile-image { background: radial-gradient(circle at 50% 35%, rgba(0,135,111,.10), transparent 12rem), #f7fbf8; }
 html[data-theme="light"] .boards-page .button { border-color:rgba(0,135,86,.26); background:linear-gradient(145deg,#e9fff2,#dff8eb); color:#174b31; box-shadow:0 10px 22px rgba(20,60,45,.08); }
 html[data-theme="light"] .boards-page .secondary-button { border-color:rgba(0,120,180,.24); background:linear-gradient(145deg,#edf9ff,#e4f2f8); color:#174255; box-shadow:0 10px 22px rgba(20,60,70,.08); }
+html[data-theme="light"] body.boards-page .board-buy-card {
+  border-color: rgba(168, 116, 0, .28) !important;
+  border-left-color: #b57a00 !important;
+  background:
+    radial-gradient(circle at 0 0, rgba(255, 198, 64, .12), transparent 11rem),
+    linear-gradient(145deg, #fffdf7, #f8f1de) !important;
+  box-shadow: 0 8px 20px rgba(91, 65, 12, .08) !important;
+}
+html[data-theme="light"] .board-buy-kicker { color: #72510a; }
+html[data-theme="light"] .board-buy-card strong { color: #2a220f; }
+html[data-theme="light"] .board-buy-card small { color: #665d47; }
+html[data-theme="light"] .board-buy-button {
+  border-color: rgba(116, 76, 0, .34);
+  background: linear-gradient(145deg, #ffdc83, #e8b94b);
+  color: #211a08;
+  box-shadow: 0 8px 18px rgba(117, 79, 6, .12);
+}
 html[data-theme="light"] .identity-link-list a { border-color:#d5e4dd; background:#f6fbf8; color:#215744; }
 @media (max-width: 860px) {
   .boards-hero,
@@ -112,7 +199,7 @@ html[data-theme="light"] .identity-link-list a { border-color:#d5e4dd; backgroun
     justify-content: center;
   }
 }
-@media (max-width: 620px) { .boards-page .wrap { width: min(100% - 20px, 1120px); } .button-row { flex-direction:column; } .button-row .button { width:100%; } .boards-hero-visual { grid-template-columns:1fr; } .hero-board-card img { height:260px; } }
+@media (max-width: 620px) { .boards-page .wrap { width: min(100% - 20px, 1120px); } .button-row { flex-direction:column; } .button-row .button { width:100%; } .board-buy-card { grid-template-columns:1fr; } .board-buy-button { width:100%; } .boards-hero-visual { grid-template-columns:1fr; } .hero-board-card img { height:260px; } }
 
 /* Board pinout photo galleries: local thumbnails with the same lightbox pattern as module detail pages. */
 .pinout-photo-gallery {
