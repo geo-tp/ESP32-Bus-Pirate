@@ -475,6 +475,14 @@ html[data-theme="light"] .hero-actions .secondary-button {
   box-shadow: 0 0 12px #00ff9944, inset 0 0 6px #000;
 }
 
+.card-note {
+  display: block;
+  margin-top: 4px;
+  color: #aab5ae;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
 .flash-area {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1272,6 +1280,10 @@ html[data-theme="light"] .card.active {
   background: linear-gradient(145deg, #d7ffe9, #b6efcf) !important;
   color: #032f20 !important;
   box-shadow: 0 0 0 3px rgba(7, 134, 83, 0.25), 0 12px 26px rgba(7, 134, 83, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.65) !important;
+}
+
+html[data-theme="light"] .card-note {
+  color: #52675c;
 }
 
 @media (max-width: 860px) {

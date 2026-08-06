@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 Bit Pirate - Heltec Vision Master T190",
+  "version": "1.7",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/firmwares/bit_pirate_17_vision-master-t190.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

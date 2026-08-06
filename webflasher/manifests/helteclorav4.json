@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 Bit Pirate - Heltec WiFi LoRa 32 V4",
+  "version": "1.7",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/firmwares/bit_pirate_17_heltec_wifi_lora_32_V4.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
