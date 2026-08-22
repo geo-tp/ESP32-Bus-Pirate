@@ -11,7 +11,14 @@
 #include <nvs.h>
 #include <esp_mac.h>
 #include "soc/soc.h"
+// The forced-download-boot latch moved between peripherals depending on the
+// target: classic chips keep it in RTC_CNTL (rtc_cntl_reg.h), while the
+// ESP32-C6 has no rtc_cntl_reg.h at all and exposes it via LP_AON.
+#if CONFIG_IDF_TARGET_ESP32C6
+#include "soc/lp_aon_reg.h"
+#else
 #include "soc/rtc_cntl_reg.h"
+#endif
 #include "esp_image_format.h"
 
 namespace {
@@ -398,7 +405,13 @@ void SystemService::reboot(bool hard) const {
 }
 
 void SystemService::rebootToBootloader() const {
+#if CONFIG_IDF_TARGET_ESP32C6
+    // ESP32-C6: the forced download boot bit lives in LP_AON SYS_CFG
+    // (bit 30, LP_AON_FORCE_DOWNLOAD_BOOT); there is no RTC_CNTL_OPTION1_REG.
+    REG_WRITE(LP_AON_SYS_CFG_REG, LP_AON_FORCE_DOWNLOAD_BOOT);
+#else
     REG_WRITE(RTC_CNTL_OPTION1_REG, RTC_CNTL_FORCE_DOWNLOAD_BOOT);
+#endif
     delay(100);
     esp_restart();
 }
