@@ -1,5 +1,10 @@
 #include "UsbS3Service.h"
-#include <sstream>  
+
+// Real implementation only for ESP32-S3; other targets use the inline
+// stub declared in UsbS3Service.h
+#if CONFIG_IDF_TARGET_ESP32S3
+
+#include <sstream>
 #include <esp_mac.h>
 #include <esp32-hal-tinyusb.h>
 #include "freertos/FreeRTOS.h"
@@ -745,3 +750,5 @@ std::string UsbS3Service::getUsbSerialFromEfuseMac() {
 
     return std::string("ESP32-BP-") + macSuffix;
 }
+
+#endif // CONFIG_IDF_TARGET_ESP32S3
