@@ -96,20 +96,28 @@ private:
     static uint16_t popRxDuration();
 
     static inline uint8_t fastReadPin(uint8_t pin) {
+#if defined(CONFIG_IDF_TARGET_ESP32C3) || defined(CONFIG_IDF_TARGET_ESP32C6) || defined(CONFIG_IDF_TARGET_ESP32C5) || defined(CONFIG_IDF_TARGET_ESP32H2)
+        return (GPIO.in.val >> pin) & 0x1;
+#else
         if (pin < 32) {
             return (GPIO.in >> pin) & 0x1;
         }
 
         return (GPIO.in1.val >> (pin - 32)) & 0x1;
+#endif
     }
 
     static inline void fastWritePinLow(uint8_t pin) {
+#if defined(CONFIG_IDF_TARGET_ESP32C3) || defined(CONFIG_IDF_TARGET_ESP32C6) || defined(CONFIG_IDF_TARGET_ESP32C5) || defined(CONFIG_IDF_TARGET_ESP32H2)
+        GPIO.out_w1tc.val = (1UL << pin);
+#else
         if (pin < 32) {
             GPIO.out_w1tc = (1UL << pin);
             return;
         }
 
         GPIO.out1_w1tc.val = (1UL << (pin - 32));
+#endif
     }
 
     static inline InfraredToyConfig config = {0, 0};
