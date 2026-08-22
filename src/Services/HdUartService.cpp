@@ -161,7 +161,13 @@ uart_config_t HdUartService::buildUartConfig(unsigned long baud, uint8_t bits, c
         .parity = parityMode,
         .stop_bits = stopBits,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+        // ESP32-C6 has no APB clock source for UART; PLL_F80M is its equivalent
+        // fast clock. Other targets keep the legacy APB source.
+#if defined(CONFIG_IDF_TARGET_ESP32C6)
+        .source_clk = UART_SCLK_PLL_F80M
+#else
         .source_clk = UART_SCLK_APB
+#endif
     };
 
     return config;

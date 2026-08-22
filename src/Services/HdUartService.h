@@ -10,7 +10,14 @@
 #include "Models/ByteCode.h"
 #include "Interfaces/IHdUartService.h"
 
+// ESP32-C6 exposes only two HP UARTs (SOC_UART_HP_NUM == 2, its third
+// SOC_UART_NUM entry is the LP_UART), so fall back to UART1 there.
+// Targets with three HP UARTs (e.g. ESP32-S3) keep using UART2.
+#if SOC_UART_HP_NUM > 2
 #define HD_UART_PORT UART_NUM_2
+#else
+#define HD_UART_PORT UART_NUM_1
+#endif
 #define UART_RX_BUFFER_SIZE 256
 
 class HdUartService : public IHdUartService {
