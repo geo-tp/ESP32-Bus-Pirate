@@ -66,6 +66,7 @@ void UsbUartBridgeAdapter::configureUart(unsigned long baudRate, uint32_t uartCo
     );
 }
 
+#if !ARDUINO_USB_MODE
 void UsbUartBridgeAdapter::onLineCoding(void* arg, esp_event_base_t eventBase, int32_t eventId, void* eventData) {
     (void)arg;
     (void)eventBase;
@@ -84,6 +85,7 @@ void UsbUartBridgeAdapter::onLineCoding(void* arg, esp_event_base_t eventBase, i
 
     configureUart(data->line_coding.bit_rate, uartConfig);
 }
+#endif
 
 void UsbUartBridgeAdapter::pumpUartToUsb() {
     uint8_t buffer[BRIDGE_CHUNK_SIZE];
@@ -154,7 +156,7 @@ void UsbUartBridgeAdapter::run(const UsbUartBridgeConfig& config, IInput& input,
     hostSerial->disableReboot();
     hostSerial->setRxBufferSize(USB_RX_BUFFER_SIZE);
     hostSerial->setTimeout(0);
-#if ARDUINO_USB_CDC_ON_BOOT
+#if !ARDUINO_USB_MODE && ARDUINO_USB_CDC_ON_BOOT
     Serial.onEvent(ARDUINO_USB_CDC_LINE_CODING_EVENT, onLineCoding);
 #endif
     hostSerial->begin(DEFAULT_BAUD);

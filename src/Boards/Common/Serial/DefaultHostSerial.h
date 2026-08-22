@@ -71,7 +71,7 @@ public:
     }
 
     void disableReboot() override {
-#if ARDUINO_USB_CDC_ON_BOOT
+#if !ARDUINO_USB_MODE && ARDUINO_USB_CDC_ON_BOOT
         Serial.enableReboot(false);
 #endif
     }

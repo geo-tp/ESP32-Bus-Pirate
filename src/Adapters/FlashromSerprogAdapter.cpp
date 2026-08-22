@@ -147,6 +147,20 @@ void FlashromSerprogAdapter::onUsbEvent(void* arg, esp_event_base_t eventBase, i
     (void)eventBase;
     (void)eventData;
 
+#if ARDUINO_USB_MODE
+    if (eventId == ARDUINO_HW_CDC_CONNECTED_EVENT) {
+        cdcConnected = true;
+        resetSpiBusState();
+        purgeInput();
+        return;
+    }
+
+    if (eventId == ARDUINO_HW_CDC_BUS_RESET_EVENT) {
+        cdcConnected = false;
+        resetSpiBusState();
+        purgeInput();
+    }
+#else
     if (eventId == ARDUINO_USB_CDC_CONNECTED_EVENT) {
         cdcConnected = true;
         resetSpiBusState();
@@ -159,6 +173,7 @@ void FlashromSerprogAdapter::onUsbEvent(void* arg, esp_event_base_t eventBase, i
         resetSpiBusState();
         purgeInput();
     }
+#endif
 }
 
 void FlashromSerprogAdapter::handleCommand(uint8_t command, IInput& input) {
