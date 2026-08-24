@@ -11,6 +11,7 @@ void WifiController::handleCommand(const TerminalCommand &cmd)
     if (root == "connect") handleConnect(cmd);
     else if (root == "disconnect") handleDisconnect(cmd);
     else if (root == "status") handleStatus(cmd);
+    else if (root == "hostname") handleHostname(cmd);
     else if (root == "ap") handleAp(cmd);
     else if (root == "spam") handleApSpam();
     else if (root == "spoof") handleSpoof(cmd);
@@ -138,7 +139,7 @@ void WifiController::handleConnect(const TerminalCommand &cmd)
     }
 
     terminalView.println("WiFi: Connecting to " + ssid + "...");
-
+    
     wifiService.setModeApSta();
     wifiService.connect(ssid, password);
     if (wifiService.isConnected()) {
@@ -207,6 +208,47 @@ void WifiController::handleStatus(const TerminalCommand &cmd)
     terminalView.println("Mode         : " + std::string(IWifiService::wifiModeToStr(wifiService.getWifiModeRaw())));
     terminalView.println("Status       : " + std::string(IWifiService::wlStatusToStr(status)));
     terminalView.println("====================\n");
+}
+
+/*
+Hostname
+*/
+void WifiController::handleHostname(const TerminalCommand &cmd)
+{
+    const std::string hostname = cmd.getSubcommand();
+
+    if (hostname.empty()) {
+        terminalView.println("Usage: hostname <name>");
+        return;
+    }
+
+    if (hostname.length() > 32) {
+        terminalView.println("Invalid hostname. Maximum 32 characters.");
+        return;
+    }
+
+    if (hostname.front() == '-' || hostname.back() == '-') {
+        terminalView.println("Invalid hostname. Cannot start or end with '-'.");
+        return;
+    }
+
+    for (char c : hostname) {
+        if (!(argTransformer.isValidAlphanumeric(std::string(1, c)) || c == '-')) {
+            terminalView.println("Invalid hostname. Use letters, numbers, and '-' only, ");
+            return;
+        }
+    }
+
+   
+
+    // Save hostname to NVS and set it
+    nvsService.open();
+    nvsService.saveString(GlobalState::getInstance().getNvsHostnameField(), hostname);
+    nvsService.close();
+    WiFi.setHostname(hostname.c_str());
+
+    terminalView.println("WiFi: hostname set to: " + wifiService.getHostname());
+    terminalView.println("*WiFi connection must be restarted for hostname to take effect.*\n");
 }
 
 /*
