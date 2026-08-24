@@ -1,5 +1,25 @@
 #include "Controllers/WifiController.h"
 #include "Vendors/wifi_atks.h"
+#include <cctype>
+
+static bool validHostname(const std::string& hostname)
+{
+    if (hostname.empty() || hostname.length() > 63) {
+        return false;
+    }
+
+    for (char c : hostname) {
+        if (!(std::isalnum(static_cast<unsigned char>(c)) || c == '-')) {
+            return false;
+        }
+    }
+
+    if (hostname.front() == '-' || hostname.back() == '-') {
+        return false;
+    }
+
+    return true;
+}
 
 /*
 Entry point for command
