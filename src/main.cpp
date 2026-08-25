@@ -1,4 +1,4 @@
-#ifndef UNIT_TEST
+﻿#ifndef UNIT_TEST
 
 #include <Views/SerialTerminalView.h>
 #include <Views/WebTerminalView.h>
@@ -12,6 +12,7 @@
 #include <Boards/StickS3/StickS3Board.h>
 #include <Boards/StampS3/StampS3Board.h>
 #include <Boards/S3DevKit/S3DevKitBoard.h>
+#include <Boards/C6DevKit/C6DevKitBoard.h>
 #include <Boards/Common/Inputs/DefaultInput.h>
 #include <Boards/TDisplayS3/TDisplayS3Board.h>
 #include <Boards/WaveshareS3Geek/WaveshareS3GeekBoard.h>
@@ -43,7 +44,7 @@ the main loop through the ActionDispatcher.
     * WebTerminalView       -> text terminal in a browser (via WebSocket).
     * CardputerTerminalView -> Cardputer LCD acts as the terminal screen.
 
-- Device View: the interface for device’s screen (if any).
+- Device View: the interface for deviceâ€™s screen (if any).
     * M5DeviceView, St7789SpiDeviceView, St7789ParallelDeviceView, CardputerDeviceView, NoScreenDeviceView, etc.
     * Used for UI elements like mode, pinout mapping, or logic traces.
 
@@ -135,6 +136,12 @@ void setup() {
         IHostSerial& hostSerial = board.getHostSerial();
     #elif defined(DEVICE_S3DEVKIT)
         S3DevKitBoard board;
+        board.initialize();
+        IDeviceView& deviceView = board.getDeviceView();
+        IInput& deviceInput = board.getDeviceInput();
+        IHostSerial& hostSerial = board.getHostSerial();
+    #elif defined(DEVICE_C6DEVKIT)
+        C6DevKitBoard board;
         board.initialize();
         IDeviceView& deviceView = board.getDeviceView();
         IInput& deviceInput = board.getDeviceInput();
