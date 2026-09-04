@@ -107,7 +107,7 @@
             "name": "What does the ESP32-C5 Bus Expander add?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The ESP32-C5 Bus Expander connects over UART and acts as a radio coprocessor for features such as 5 GHz Wi-Fi, with future room for 802.15.4 radio protocols."
+              "text": "The ESP32-C5 Bus Expander connects over UART and acts as a radio coprocessor with support for 5 GHz Wi-Fi and Zigbee over IEEE 802.15.4."
             }
           },
           {
@@ -1192,7 +1192,7 @@
 <div class="hardware-hero-copy">
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">Hardware</span> dock · adapters · expander</p>
 <h1 id="hardware-title">Build a better <span>bench</span> around Bit Pirate.</h1>
-<p class="hardware-lead">Explore the ESP32 Bit Pirate hardware lineup: Dock board, plug-in adapters for common modules such as CC1101, NRF24, CAN and serial interfaces, selectable target-side logic levels from 1.8V to 5V, and optional radio coprocessors such as ESP32-C5 for extended 5 GHz Wi-Fi experiments. Use this page for the physical hardware layer, then jump to Boards for ESP32-S3 targets or Modules for concrete chips and peripherals.</p>
+<p class="hardware-lead">Explore the ESP32 Bit Pirate hardware lineup: Dock board, plug-in adapters for common modules such as CC1101, NRF24, CAN and serial interfaces, selectable target-side logic levels from 1.8V to 5V, and optional radio coprocessors such as ESP32-C5 for 5 GHz Wi-Fi and Zigbee support. Use this page for the physical hardware layer, then jump to Boards for ESP32-S3 targets or Modules for concrete chips and peripherals.</p>
 <div class="hero-actions">
 <a class="button" href="#dock"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><rect height="14" rx="2" width="14" x="5" y="5"></rect><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path></svg>Bit Pirate Hardware</a>
 <a class="button secondary-button" href="../boards/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><rect height="13" rx="2" width="16" x="4" y="5"></rect><path d="M8 9h8M8 13h5M7 21h10"></path></svg>Compare boards</a>
@@ -1219,7 +1219,7 @@
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">C5</span> radio coprocessor</p>
 <h2>Keep Bit Pirate on the ESP32-S3, add a second chip for radio work.</h2>
 <p>The ESP32-C5 Bus Expander is the companion firmware for a small ESP32-C5 board connected to the main ESP32 Bit Pirate device. The goal is not to replace the primary board: the S3 still stays the user interface, CLI endpoint, scripting target and web-tool bridge.</p>
-<p>The C5 side handles radio features that are not available on the usual ESP32-S3 targets, starting with 5 GHz Wi-Fi experiments. The architecture also leaves room for later IEEE 802.15.4 work such as Zigbee, Thread or Matter-oriented protocol exploration.</p>
+<p>The C5 side handles radio features that are not available on the usual ESP32-S3 targets, with support for 5 GHz Wi-Fi and Zigbee over IEEE 802.15.4. The architecture also leaves room for Thread and Matter-oriented protocol work.</p>
 <div class="inline-actions">
 <a class="button" href="https://github.com/geo-tp/ESP32-Bus-Expander" rel="noopener"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path><path d="M5 5v14h14"></path></svg>Open expander repo</a>
 </div>
