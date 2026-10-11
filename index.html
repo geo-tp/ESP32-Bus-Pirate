@@ -28,7 +28,7 @@
 <link rel="sitemap" type="application/xml" href="https://geo-tp.github.io/ESP32-Bit-Pirate/sitemap.xml">
 <script defer="" src="assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <script defer="" src="assets/vendor/matter-js-0.20.0.min.js"></script>
-<script defer="" src="assets/supported-devices-physics.js?v=20260804"></script>
+<script defer="" src="assets/supported-devices-physics.js?v=20261010-1"></script>
 <link rel="stylesheet" href="assets/firmware-gallery.css?v=20260912-4"/>
 <script defer src="assets/firmware-gallery.js?v=20260912-2"></script>
 <title>ESP32 Bit Pirate | Hardware Debugging Firmware, Web Tools &amp; Recipes</title>
@@ -1285,8 +1285,8 @@
       --physics-device-height: clamp(130px, 14.2vw, 158px);
     }
 
-    .support + .physics-devices {
-      margin-top: 34px;
+    #start .physics-devices {
+      margin-top: 16px;
     }
 
     .physics-devices__scene {
@@ -1324,7 +1324,7 @@
     }
 
     .physics-devices__copy h2 {
-      color: #b8ffb8;
+      color: var(--green-dim);
       font-size: clamp(1.35rem, 2.5vw, 2rem);
       letter-spacing: -0.04em;
     }
@@ -1492,6 +1492,8 @@
     .physics-device__label {
       display: inline-flex;
       min-height: 27px;
+      flex: 0 0 auto;
+      max-width: 100%;
       align-items: center;
       justify-content: center;
       padding: 5px 8px;
@@ -1519,7 +1521,7 @@
     }
 
     .physics-devices.physics-enabled .physics-devices__scene {
-      height: clamp(480px, 44vw, 500px);
+      height: var(--physics-scene-height, 560px);
       padding: 0;
     }
 
@@ -1528,7 +1530,7 @@
       top: clamp(20px, 3vw, 34px);
       left: clamp(20px, 3vw, 34px);
       width: calc(100% - clamp(40px, 6vw, 68px));
-      max-width: 610px;
+      max-width: 440px;
       pointer-events: none;
     }
 
@@ -1545,8 +1547,8 @@
       top: 0;
       left: 0;
       z-index: 2;
-      width: var(--physics-device-item-width, var(--physics-device-width));
-      height: var(--physics-device-item-height, var(--physics-device-height));
+      width: min(var(--physics-device-item-width, var(--physics-device-width)), var(--physics-cell-width, 100%));
+      height: max(160px, var(--physics-device-item-height, var(--physics-device-height)));
       min-height: 0;
       border: 0;
       background: transparent;
@@ -1770,20 +1772,21 @@
         --physics-device-height: clamp(90px, 25vw, 106px);
       }
 
-      .physics-devices.physics-enabled .physics-devices__scene {
-        height: clamp(470px, 126vw, 490px);
-      }
 
       .physics-devices.physics-enabled .physics-devices__copy {
         top: 16px;
         left: 16px;
-        width: calc(100% - 112px);
+        width: calc(100% - 32px);
         max-width: none;
       }
 
       .physics-devices__copy > p:last-child {
         font-size: 0.78rem;
         line-height: 1.42;
+      }
+
+      .physics-devices.physics-enabled .physics-device {
+        height: 132px;
       }
 
       .physics-devices.physics-enabled .physics-device__inner {
@@ -1826,9 +1829,6 @@
         --physics-device-height: clamp(118px, 16vw, 144px);
       }
 
-      .physics-devices.physics-enabled .physics-devices__scene {
-        height: 490px;
-      }
 
       .ecosystem-grid {
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
@@ -1932,9 +1932,6 @@
         --physics-device-item-height: clamp(98px, 27vw, 110px);
       }
 
-      .physics-devices.physics-enabled .physics-devices__scene {
-        height: clamp(470px, 126vw, 490px);
-      }
     }
 
     @media (max-width: 620px) {
@@ -2049,12 +2046,6 @@
       .card-cover,
       .featured .content-card:first-child .card-cover {
         height: auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .physics-devices.physics-enabled .physics-devices__scene {
-        height: clamp(560px, 148vw, 580px);
       }
     }
 
@@ -2438,6 +2429,32 @@
 </a>
 </article>
 </div>
+<section aria-describedby="supported-devices-description" aria-labelledby="supported-devices-title" class="physics-devices" data-supported-devices="">
+<div class="physics-devices__scene" data-supported-devices-scene="">
+<div class="physics-devices__copy" data-supported-devices-copy="">
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">Supported</span> devices</p>
+<h2 id="supported-devices-title">Choose your board.</h2>
+<p id="supported-devices-description">Select a board for its pinout and guide.</p>
+</div>
+<nav aria-label="Supported ESP32 Bit Pirate board guides" class="physics-devices__list">
+<a class="physics-device physics-device--size-xl" data-physics-device="" href="boards/cardputer/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-cardputer.webp" width="320"/></span><span class="physics-device__label">Cardputer</span></span></a>
+<a class="physics-device physics-device--size-xl" data-physics-device="" href="boards/cardputer-adv/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-cardputer-adv.webp" width="320"/></span><span class="physics-device__label">Cardputer ADV</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-landscape" data-physics-device="" href="boards/t-embed-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed.webp" width="320"/></span><span class="physics-device__label">T-Embed S3</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t-embed" data-physics-device="" href="boards/t-embed-cc1101/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed-cc1101-physics.webp" width="320"/></span><span class="physics-device__label">T-Embed CC1101</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t-embed" data-physics-device="" href="boards/t-embed-cc1101/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed-cc1101-physics.webp" width="320"/></span><span class="physics-device__label">T-Embed CC1101 Plus</span></span></a>
+<a class="physics-device" data-physics-device="" href="boards/esp32-s3-devkit/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/esp32-s3-devkit.webp" width="320"/></span><span class="physics-device__label">ESP32-S3 DevKit</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/esp32-s3-super-mini/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/esp32-s3-super-mini.webp" width="320"/></span><span class="physics-device__label">Super Mini / Zero</span></span></a>
+<a class="physics-device" data-physics-device="" href="boards/unexpected-maker-pros3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/unexpected-maker-pros3.webp" width="240"/></span><span class="physics-device__label">ProS3</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/waveshare-esp32-s3-geek/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/waveshare-esp32-s3-geek.webp" width="320"/></span><span class="physics-device__label">Waveshare GEEK</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/m5stick-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-sticks3.webp" width="320"/></span><span class="physics-device__label">M5StickS3</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/stamp-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-stamps3.webp" width="320"/></span><span class="physics-device__label">StampS3</span></span></a>
+<a class="physics-device physics-device--size-sm physics-device--visual-compact" data-physics-device="" href="boards/atom-s3-lite/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-atom-s3-lite.webp" width="320"/></span><span class="physics-device__label">AtomS3 Lite</span></span></a>
+<a class="physics-device physics-device--profile-portrait" data-physics-device="" href="boards/t-display-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-display-s3.webp" width="320"/></span><span class="physics-device__label">T-Display S3</span></span></a>
+<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t190" data-physics-device="" href="boards/vision-master-t190/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/heltec-vision-master-t190.webp" width="320"/></span><span class="physics-device__label">Vision Master T190</span></span></a>
+<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/xiao-esp32-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/seeed-studio-xiao-esp32-s3.webp" width="320"/></span><span class="physics-device__label">XIAO ESP32-S3</span></span></a>
+</nav>
+</div>
+</section>
 </section>
 <section aria-labelledby="community-video-title" class="community-video">
 <div class="section-head">
@@ -2539,29 +2556,7 @@
 <p>Use the correct voltage, share ground only when appropriate, avoid unsafe wiring, and work only on devices and radio environments you own or are authorized to test.</p>
 </aside>
 </section>
-<section aria-describedby="supported-devices-description" aria-labelledby="supported-devices-title" class="physics-devices" data-supported-devices="">
-<div class="physics-devices__scene" data-supported-devices-scene="">
-<div class="physics-devices__copy" data-supported-devices-copy="">
-<p class="eyebrow"><span aria-hidden="true" class="eyebrow-mark">Supported</span> devices</p>
-<h2 id="supported-devices-title">Choose your board.</h2>
-<p id="supported-devices-description">Select a board to open its setup, pinout, and flashing guide.</p>
-</div>
-<nav aria-label="Supported ESP32 Bit Pirate board guides" class="physics-devices__list">
-<a class="physics-device physics-device--size-xl" data-physics-device="" href="boards/cardputer/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-cardputer.webp" width="320"/></span><span class="physics-device__label">Cardputer</span></span></a>
-<a class="physics-device physics-device--size-xl" data-physics-device="" href="boards/cardputer-adv/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-cardputer-adv.webp" width="320"/></span><span class="physics-device__label">Cardputer ADV</span></span></a>
-<a class="physics-device physics-device--size-lg physics-device--profile-landscape" data-physics-device="" href="boards/t-embed-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed.webp" width="320"/></span><span class="physics-device__label">T-Embed S3</span></span></a>
-<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t-embed" data-physics-device="" href="boards/t-embed-cc1101/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed-cc1101-physics.webp" width="320"/></span><span class="physics-device__label">T-Embed CC1101</span></span></a>
-<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t-embed" data-physics-device="" href="boards/t-embed-cc1101/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-embed-cc1101-physics.webp" width="320"/></span><span class="physics-device__label">T-Embed CC1101 Plus</span></span></a>
-<a class="physics-device" data-physics-device="" href="boards/esp32-s3-devkit/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/esp32-s3-devkit.webp" width="320"/></span><span class="physics-device__label">ESP32-S3 DevKit</span></span></a>
-<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/m5stick-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-sticks3.webp" width="320"/></span><span class="physics-device__label">M5StickS3</span></span></a>
-<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/stamp-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-stamps3.webp" width="320"/></span><span class="physics-device__label">StampS3</span></span></a>
-<a class="physics-device physics-device--size-sm physics-device--visual-compact" data-physics-device="" href="boards/atom-s3-lite/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/m5-atom-s3-lite.webp" width="320"/></span><span class="physics-device__label">AtomS3 Lite</span></span></a>
-<a class="physics-device physics-device--profile-portrait" data-physics-device="" href="boards/t-display-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/lilygo-t-display-s3.webp" width="320"/></span><span class="physics-device__label">T-Display S3</span></span></a>
-<a class="physics-device physics-device--size-lg physics-device--profile-portrait physics-device--profile-t190" data-physics-device="" href="boards/vision-master-t190/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/heltec-vision-master-t190.webp" width="320"/></span><span class="physics-device__label">Vision Master T190</span></span></a>
-<a class="physics-device physics-device--size-sm" data-physics-device="" href="boards/xiao-esp32-s3/"><span class="physics-device__inner"><span class="physics-device__visual"><img alt="" decoding="async" draggable="false" height="320" loading="lazy" src="boards/images/small/seeed-studio-xiao-esp32-s3.webp" width="320"/></span><span class="physics-device__label">XIAO ESP32-S3</span></span></a>
-</nav>
-</div>
-</section>
+
 <section class="project-supporters" aria-labelledby="project-supporters-title">
 <div class="section-head">
 <div>

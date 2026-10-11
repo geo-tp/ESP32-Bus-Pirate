@@ -28,7 +28,9 @@
   engine.gravity.y = 0.9;
 
   const world = engine.world;
-  const sceneInset = 24;
+  let sceneInset = 24;
+  let copyBounds = { right: 0, bottom: 0 };
+  let layoutKey = "";
   const devices = [];
   let boundaries = [];
   let activeDrag = null;
@@ -67,8 +69,11 @@
       translateX = width - sceneInset - body.bounds.max.x;
     }
 
-    if (body.bounds.min.y < sceneInset) {
-      translateY = sceneInset - body.bounds.min.y;
+    const top = body.bounds.min.x < copyBounds.right + 12
+      ? Math.max(sceneInset, copyBounds.bottom + 12)
+      : sceneInset;
+    if (body.bounds.min.y < top) {
+      translateY = top - body.bounds.min.y;
     } else if (body.bounds.max.y > height - sceneInset) {
       translateY = height - sceneInset - body.bounds.max.y;
     }
@@ -82,6 +87,40 @@
       x: translateX ? 0 : body.velocity.x,
       y: translateY ? 0 : body.velocity.y,
     });
+  };
+
+  // Let each card fall, then gently settle it around its own landing position.
+  // Neighbours still collide and can be dragged, but labels never finish sideways.
+  const guideDevice = (device) => {
+    const { body, home } = device;
+    if (body.isStatic || activeDrag?.device === device) return;
+
+    const dx = home.x - body.position.x;
+    const dy = home.y - body.position.y;
+    const da = home.angle - body.angle;
+    if (body.isSleeping) {
+      if (Math.hypot(dx, dy) < 1 && Math.abs(da) < 0.01) return;
+      Sleeping.set(body, false);
+    }
+    if (body.position.y >= home.y - 12) device.landing = true;
+
+    if (device.landing && Math.hypot(dx, dy) < 0.6 && body.speed < 0.15 && Math.abs(da) < 0.008) {
+      Body.setPosition(body, { x: home.x, y: home.y });
+      Body.setAngle(body, home.angle);
+      Body.setVelocity(body, { x: 0, y: 0 });
+      Body.setAngularVelocity(body, 0);
+      Sleeping.set(body, true);
+      return;
+    }
+
+    const mass = body.mass;
+    Body.applyForce(body, body.position, {
+      x: mass * (dx * 0.00012 - body.velocity.x * 0.00055),
+      y: device.landing
+        ? mass * (dy * 0.00012 - body.velocity.y * 0.00055 - engine.gravity.y * engine.gravity.scale)
+        : 0,
+    });
+    Body.setAngularVelocity(body, body.angularVelocity * 0.55 + da * 0.13);
   };
 
   const stopLoop = () => {
@@ -100,6 +139,7 @@
 
     const elapsed = lastFrameTime ? Math.min(time - lastFrameTime, 1000 / 30) : 1000 / 60;
     lastFrameTime = time;
+    devices.forEach(guideDevice);
     Engine.update(engine, elapsed);
     devices.forEach((device) => confineDeviceToScene(device));
     renderDevices();
@@ -150,32 +190,84 @@
     Composite.add(world, boundaries);
   };
 
-  const resizePhysics = () => {
-    if (reducedMotion.matches) {
-      return;
-    }
-
+  const measureLayout = () => {
     const width = scene.clientWidth;
-    const height = scene.clientHeight;
-    if (!width || !height) {
+    const compact = width <= 700;
+    sceneInset = compact ? 14 : 24;
+    const gap = compact ? 12 : 16;
+    const availableWidth = width - sceneInset * 2;
+    scene.style.removeProperty("--physics-cell-width");
+    const widest = Math.max(...deviceElements.map((element) => element.offsetWidth));
+    // Three columns keep the mobile gallery compact without shrinking its labels.
+    const columns = compact ? 3 : Math.max(3, Math.floor((availableWidth + gap) / (widest + gap)));
+    const cellWidth = (availableWidth - gap * (columns - 1)) / columns;
+    scene.style.setProperty("--physics-cell-width", `${cellWidth}px`);
+    const measurements = deviceElements.map((element) => ({
+      element,
+      width: element.offsetWidth,
+      height: element.offsetHeight,
+    }));
+    const sceneRect = scene.getBoundingClientRect();
+    const copyRect = copy.getBoundingClientRect();
+    copyBounds = {
+      right: copyRect.right - sceneRect.left,
+      bottom: copyRect.bottom - sceneRect.top,
+    };
+    const firstRowCount = measurements.length % columns || columns;
+    const firstRowLeft = sceneInset + (columns - firstRowCount) * (cellWidth + gap);
+    const besideCopy = firstRowLeft >= copyBounds.right + 20;
+    let rowTop = besideCopy ? sceneInset + 16 : copyBounds.bottom + 56;
+    let index = 0;
+    let row = 0;
+    while (index < measurements.length) {
+      const count = row === 0 ? firstRowCount : Math.min(columns, measurements.length - index);
+      const rowHeight = Math.max(...measurements.slice(index, index + count).map(({ height }) => height));
+      for (let item = 0; item < count; item++, index++) {
+        const measurement = measurements[index];
+        const column = columns - count + item;
+        const angle = (((index * 13) % 7) - 3) * (compact ? 0.009 : 0.013);
+        const halfWidth = (measurement.width * Math.cos(angle) + measurement.height * Math.abs(Math.sin(angle))) / 2;
+        const x = sceneInset + column * (cellWidth + gap) + cellWidth / 2 + ((index * 7) % 5 - 2);
+        measurement.home = {
+          x: Math.max(sceneInset + halfWidth + 2, Math.min(width - sceneInset - halfWidth - 2, x)),
+          y: rowTop + rowHeight / 2 + ((index * 11) % 7 - 3),
+          angle,
+        };
+      }
+      rowTop += rowHeight + gap;
+      row++;
+    }
+    const height = Math.ceil(rowTop - gap + sceneInset + 8);
+    scene.style.setProperty("--physics-scene-height", `${height}px`);
+    const key = JSON.stringify([width, height, copyBounds, measurements.map(({ width, height }) => [width, height])]);
+    return { width, height, measurements, key };
+  };
+
+  const resizePhysics = () => {
+    if (reducedMotion.matches) return;
+    const layout = measureLayout();
+    if (layout.key === layoutKey) {
+      renderDevices();
       return;
     }
+    layoutKey = layout.key;
+    finishDrag();
 
-    devices.forEach((device) => {
-      const nextWidth = device.element.offsetWidth;
-      const nextHeight = device.element.offsetHeight;
-      if (nextWidth !== device.width || nextHeight !== device.height) {
-        Body.scale(device.body, nextWidth / device.width, nextHeight / device.height);
-        device.width = nextWidth;
-        device.height = nextHeight;
+    devices.forEach((device, index) => {
+      const next = layout.measurements[index];
+      Body.setAngle(device.body, 0);
+      if (next.width !== device.width || next.height !== device.height) {
+        Body.scale(device.body, next.width / device.width, next.height / device.height);
       }
-      confineDeviceToScene(device, width, height);
-      wakeDevice(device.body);
+      Object.assign(device, next, { landing: true });
+      Body.setPosition(device.body, device.home);
+      Body.setAngle(device.body, device.home.angle);
+      Body.setVelocity(device.body, { x: 0, y: 0 });
+      Body.setAngularVelocity(device.body, 0);
+      Sleeping.set(device.body, true);
     });
-
-    replaceBoundaries(width, height);
+    replaceBoundaries(layout.width, layout.height);
     renderDevices();
-    startLoop();
   };
 
   const queueResize = () => {
@@ -209,12 +301,13 @@
     element.classList.remove("is-dragging");
 
     if (dragged && event?.type !== "pointercancel" && velocityAge < 80) {
-      const maxThrowSpeed = 18;
+      const maxThrowSpeed = 10;
       const speed = Vector.magnitude(throwVelocity);
       const scale = speed > maxThrowSpeed ? maxThrowSpeed / speed : 1;
       Body.setVelocity(device.body, Vector.mult(throwVelocity, scale));
     }
 
+    device.landing = true;
     confineDeviceToScene(device);
 
     if (element.hasPointerCapture?.(pointerId)) {
@@ -336,43 +429,23 @@
     });
   };
 
-  const createDevices = () => {
-    const sceneWidth = scene.clientWidth;
-    const sceneHeight = scene.clientHeight;
-    const measurements = deviceElements.map((element) => ({
-      element,
-      width: element.offsetWidth,
-      height: element.offsetHeight,
-    }));
-    const widest = Math.max(...measurements.map(({ width }) => width));
-    const columns = Math.max(2, Math.floor((sceneWidth - 24) / (widest + 10)));
-    const cellWidth = (sceneWidth - 24) / columns;
-
-    measurements.forEach((measurement, index) => {
-      const column = index % columns;
-      const row = Math.floor(index / columns);
-      const itemsInColumn = Math.floor((measurements.length - 1 - column) / columns) + 1;
-      const x = 12 + cellWidth * (column + 0.5);
-      const firstY = measurement.height / 2 + sceneInset;
-      const lastY = Math.max(firstY, sceneHeight - measurement.height / 2 - sceneInset);
-      const availableStep = itemsInColumn > 1 ? (lastY - firstY) / (itemsInColumn - 1) : 0;
-      const step = Math.min(measurement.height + 14, availableStep);
-      const y = Math.min(firstY + row * step, lastY);
-      const angle = (((index * 37) % 11) - 5) * 0.035;
-      const body = Bodies.rectangle(x, y, measurement.width, measurement.height, {
-        angle,
+  const createDevices = (layout) => {
+    layout.measurements.forEach((measurement, index) => {
+      const { home, width, height } = measurement;
+      const body = Bodies.rectangle(home.x, home.y - 52 - (index % 3) * 12, width, height, {
+        angle: home.angle + ((index % 3) - 1) * 0.055,
         chamfer: { radius: 8 },
         density: 0.001,
-        friction: 0.08,
-        frictionAir: 0.018,
-        restitution: 0.34,
+        friction: 0.18,
+        frictionAir: 0.035,
+        restitution: 0.2,
         sleepThreshold: 55,
         label: measurement.element.textContent.trim(),
       });
-      const device = { ...measurement, body, keyboardLocked: false };
-
+      const device = { ...measurement, body, landing: false, keyboardLocked: false };
       devices.push(device);
       Composite.add(world, body);
+      confineDeviceToScene(device, layout.width, layout.height);
       addDeviceInteraction(device);
     });
   };
@@ -384,13 +457,16 @@
 
     initialized = true;
     section.classList.add("physics-enabled");
-    replaceBoundaries(scene.clientWidth, scene.clientHeight);
-    createDevices();
+    const layout = measureLayout();
+    layoutKey = layout.key;
+    replaceBoundaries(layout.width, layout.height);
+    createDevices(layout);
     renderDevices();
 
     if ("ResizeObserver" in window) {
       const resizeObserver = new ResizeObserver(queueResize);
       resizeObserver.observe(scene);
+      resizeObserver.observe(copy);
     } else {
       window.addEventListener("resize", queueResize, { passive: true });
     }

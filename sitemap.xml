@@ -9,14 +9,14 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/esp-sdr/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-05</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/hardware/</loc>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-10-09</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/cardputer/</loc>
@@ -68,7 +68,7 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-10-09</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/</loc>
@@ -132,7 +132,7 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2c/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/uart/</loc>
@@ -152,7 +152,7 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/wifi/</loc>
@@ -281,6 +281,7 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/choose-dedicated-usb-adapter-mode/</loc>
+    <lastmod>2026-10-09</lastmod>
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/choose-gpio-pinout-before-wiring/</loc>
@@ -671,5 +672,33 @@
   </url>
   <url>
     <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/identify-unknown-i2c-device/</loc>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-esp-sdr-usb-adapter/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-24ghz-band-esp-sdr/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/reduce-noise-calibrate-esp-sdr/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-i2c-bus-frequency/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/esp32-s3-super-mini/</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/unexpected-maker-pros3/</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://geo-tp.github.io/ESP32-Bit-Pirate/boards/waveshare-esp32-s3-geek/</loc>
+    <lastmod>2026-10-10</lastmod>
   </url>
 </urlset>
