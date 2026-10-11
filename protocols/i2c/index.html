@@ -27,7 +27,6 @@
 <title>ESP32 I2C Scanner and Bus Debugging | Bit Pirate</title>
 <link href="../protocols.css" rel="stylesheet"/>
 <script type="application/ld+json">
-
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -46,10 +45,11 @@
         "ESP32 I2C scanner",
         "I2C register reader",
         "I2C EEPROM dump",
-        "stuck I2C bus recovery"
+        "stuck I2C bus recovery",
+        "I2C SCL frequency measurement"
       ],
       "inLanguage": "en",
-      "dateModified": "2026-06-28"
+      "dateModified": "2026-10-09"
     },
     {
       "@type": "ItemList",
@@ -108,6 +108,12 @@
           "position": 9,
           "name": "Wire a PN532 RFID reader in I2C mode",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/wire-pn532-rfid-reader-i2c/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "name": "Measure the I2C bus frequency",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-i2c-bus-frequency/"
         }
       ]
     },
@@ -169,7 +175,7 @@
       "description": "Use Bit Pirate as an ESP32 I2C scanner and debugging workbench for device discovery, register reads, EEPROM backup and stuck SDA/SCL recovery.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/i2c/",
       "inLanguage": "en",
-      "dateModified": "2026-06-28",
+      "dateModified": "2026-10-09",
       "author": {
         "@type": "Organization",
         "name": "ESP32 Bit Pirate"
@@ -193,7 +199,6 @@
     }
   ]
 }
-
 </script>
 <script defer="" src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
@@ -254,6 +259,7 @@ eeprom 0x50</code></pre>
 <p class="section-intro">Use this overview to choose the right I2C workflow before opening a detailed recipe.</p>
 </div>
 <div class="intent-grid">
+<article class="intent-card"><span>Measure</span><h3>I2C bus frequency</h3><p>Run <code>freq</code> without arguments to measure the configured SCL pin while the original controller generates traffic. Read the clock frequency and timing before configuring later I2C transactions.</p></article>
 <article class="intent-card"><span>Scan</span><h3>ESP32 I2C scanner</h3><p>Find devices that acknowledge on an unknown I2C bus and use the detected 7-bit addresses as the first clue for deeper inspection.</p></article>
 <article class="intent-card"><span>Inspect</span><h3>I2C register reader</h3><p>Read known registers from sensors, RTCs, controllers and other I2C peripherals after the address and wiring are confirmed.</p></article>
 <article class="intent-card"><span>Dump</span><h3>I2C EEPROM dump</h3><p>Work with common 24XX / AT24C-style EEPROM devices through the dedicated <code>eeprom [addr]</code> shell, where chip probing, addressing width, page size and backup order matter before any write operation.</p></article>
@@ -313,6 +319,7 @@ eeprom 0x50</code></pre>
 <a href="../../recipes/run-i2c-scan-python-lab/"><span>Automate</span><strong>Run an I2C scan from Python Lab</strong><small>Drive a repeatable browser-based I2C scan workflow.</small></a>
 <a href="../../recipes/emulate-i2c-slave-device/"><span>Emulate</span><strong>Emulate an I2C slave device</strong><small>Listen as a target address during master-side testing.</small></a>
 <a href="../../recipes/wire-pn532-rfid-reader-i2c/"><span>Wire</span><strong>Wire a PN532 RFID reader in I2C mode</strong><small>Connect a PN532 module through its I2C bus path.</small></a>
+<a href="../../recipes/measure-i2c-bus-frequency/"><span>Measure</span><strong>Measure the I2C bus frequency</strong><small>Run freq without arguments to measure the active SCL clock.</small></a>
 </nav>
 </section>
 <section aria-labelledby="references-title" class="protocol-band">

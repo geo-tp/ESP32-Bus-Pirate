@@ -26,7 +26,8 @@
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/" rel="canonical"/>
 <title>ESP32 USB Adapter Modes: SUMP, Flashrom, AVR | Bit Pirate</title>
 <link href="../protocols.css" rel="stylesheet"/>
-<script type="application/ld+json">{
+<script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -44,10 +45,11 @@
         "PulseView SUMP logic analyzer",
         "Flashrom serprog SPI flash",
         "AVRDUDE AVR ISP",
-        "OpenOCD JTAG SWD adapter"
+        "OpenOCD JTAG SWD adapter",
+        "ESP SDR USB adapter"
       ],
       "inLanguage": "en",
-      "dateModified": "2026-06-28"
+      "dateModified": "2026-10-09"
     },
     {
       "@type": "ItemList",
@@ -94,6 +96,12 @@
           "position": 7,
           "name": "Use the SubGHz raw CDC adapter",
           "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-subghz-raw-cdc-adapter/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "Use the ESP SDR USB adapter",
+          "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-esp-sdr-usb-adapter/"
         }
       ]
     },
@@ -155,7 +163,7 @@
       "description": "Use Bit Pirate as an ESP32 USB adapter workbench for PulseView SUMP capture, Flashrom serprog, AVRDUDE ISP and OpenOCD JTAG/SWD.",
       "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/protocols/usb-adapters/",
       "inLanguage": "en",
-      "dateModified": "2026-06-28",
+      "dateModified": "2026-10-09",
       "author": {
         "@type": "Organization",
         "name": "ESP32 Bit Pirate"
@@ -178,7 +186,8 @@
       ]
     }
   ]
-}</script>
+}
+</script>
 <script defer="" src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.ico" rel="icon" sizes="any"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
@@ -239,6 +248,7 @@ openocd</code></pre>
 <p class="section-intro">Use this overview to choose the adapter mode that matches the host-side tool.</p>
 </div>
 <div class="intent-grid">
+<article class="intent-card"><span>ESP SDR</span><h3>2.4 GHz SDR adapter</h3><p>Use the ESP32-S3 radio through native USB to view a live spectrum and waterfall or sweep the 2.4 GHz band with Web ESP SDR.</p></article>
 <article class="intent-card"><span>PulseView</span><h3>SUMP logic analyzer</h3><p>Capture digital signals from GPIOs with the Logic Sniffer / SUMP driver in PulseView or with the browser Web Logic Analyzer.</p></article>
 <article class="intent-card"><span>Flashrom</span><h3>serprog SPI flash programmer</h3><p>Expose a serprog-compatible USB CDC adapter for Flashrom, or use the browser SPI Flash Programmer for probe, read, erase and verify work.</p></article>
 <article class="intent-card"><span>AVR ISP</span><h3>AVRDUDE Bus Pirate SPI adapter</h3><p>Use the legacy Bus Pirate SPI programmer path expected by AVRDUDE for ATmega and ATtiny ISP targets.</p></article>
@@ -296,6 +306,7 @@ openocd</code></pre>
 <a href="../../recipes/use-openocd-jtag-adapter/"><span>OpenOCD</span><strong>Use ESP32 Bit Pirate as an OpenOCD JTAG adapter</strong><small>Move from pin discovery to a host-side debug workflow.</small></a>
 <a href="../../recipes/use-usb-ir-toy-lirc-adapter/"><span>LIRC</span><strong>Use the USB IR Toy LIRC adapter</strong><small>Capture and replay infrared timing through LIRC-compatible tools.</small></a>
 <a href="../../recipes/use-subghz-raw-cdc-adapter/"><span>CDC</span><strong>Use the SubGHz raw CDC adapter</strong><small>Expose a raw USB serial transport for external SubGHz tooling.</small></a>
+<a href="../../recipes/use-esp-sdr-usb-adapter/"><span>SDR</span><strong>Use the ESP SDR USB adapter</strong><small>Start the dedicated radio adapter and connect Web ESP SDR.</small></a>
 </nav>
 </section>
 <section aria-labelledby="references-title" class="protocol-band">
