@@ -1069,6 +1069,12 @@ h2 {
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.65);
 }
 
+.recipe-section [data-cli-session]:not(:last-child),
+.recipe-section > .cli-window:not(:last-child),
+.recipe-section > pre:not(:last-child) {
+  margin-bottom: 16px;
+}
+
 .cli-window-chrome {
   position: relative;
   display: flex;

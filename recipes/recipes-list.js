@@ -1,5 +1,165 @@
 window.BIT_PIRATE_RECIPES = [
   {
+    "title": "Measure the I2C bus frequency",
+    "slug": "measure-i2c-bus-frequency",
+    "description": "Measure an active I2C bus clock with the no-argument freq command.",
+    "difficulty": "Beginner",
+    "time": "5 min",
+    "protocols": [
+      "I2C"
+    ],
+    "workflows": [
+      "Capture & analyze",
+      "Measure"
+    ],
+    "tags": [
+      "i2c",
+      "freq",
+      "frequency",
+      "scl",
+      "clock",
+      "bus speed",
+      "timing",
+      "passive",
+      "measurement"
+    ],
+    "takeaway": "Probe SCL and run freq to measure the I2C clock rate.",
+    "date": "2026-10-09",
+    "author": "Geo",
+    "type": "Recipe",
+    "mark": "I²C",
+    "targets": [
+      "I2C bus",
+      "SCL clock"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web Serial Terminal"
+    ],
+    "cover": "assets/visual-i2c.svg",
+    "hardware": "Active I2C bus, SCL probe and shared ground"
+  },
+  {
+    "title": "Use the ESP SDR USB adapter",
+    "slug": "use-esp-sdr-usb-adapter",
+    "description": "Select the SDR adapter from USB mode, view the spectrum in Web ESP SDR and return to the CLI.",
+    "difficulty": "Beginner",
+    "time": "5 min",
+    "protocols": [
+      "SDR",
+      "USB"
+    ],
+    "workflows": [
+      "Connect & control",
+      "Configure"
+    ],
+    "tags": [
+      "esp-sdr",
+      "adapter",
+      "usb",
+      "cdc",
+      "esp32-s3",
+      "radio",
+      "setup"
+    ],
+    "takeaway": "Start the SDR adapter, open the spectrum viewer and return to the CLI.",
+    "date": "2026-10-05",
+    "author": "Geo",
+    "type": "Recipe",
+    "mark": "SDR",
+    "targets": [
+      "ESP32-S3 radio",
+      "2.4 GHz RF activity"
+    ],
+    "tools": [
+      "Serial CLI",
+      "Web ESP SDR"
+    ],
+    "cover": "assets/visual-usb-adapters.svg",
+    "hardware": "ESP32-S3 with SDR adapter firmware, USB cable and antenna"
+  },
+  {
+    "title": "Scan the 2.4 GHz band with ESP SDR",
+    "slug": "scan-24ghz-band-esp-sdr",
+    "description": "Start the SDR adapter and sweep 2400–2483.5 MHz to find activity in Web ESP SDR.",
+    "difficulty": "Beginner",
+    "time": "8 min",
+    "protocols": [
+      "SDR",
+      "Wi-Fi",
+      "BLE"
+    ],
+    "workflows": [
+      "Capture & analyze",
+      "Scan"
+    ],
+    "tags": [
+      "esp-sdr",
+      "wideband",
+      "sweep",
+      "scan",
+      "2.4 GHz",
+      "occupancy",
+      "peak hold",
+      "zigbee",
+      "thread"
+    ],
+    "takeaway": "Sweep the 2.4 GHz band and open active frequencies in Live SDR.",
+    "date": "2026-10-05",
+    "author": "Geo",
+    "type": "Recipe",
+    "mark": "SDR",
+    "targets": [
+      "ESP32-S3 radio",
+      "2.4 GHz RF activity"
+    ],
+    "tools": [
+      "Web ESP SDR",
+      "Web Serial"
+    ],
+    "cover": "assets/visual-rf24.svg",
+    "hardware": "ESP32-S3 with SDR adapter firmware, USB cable and antenna"
+  },
+  {
+    "title": "Reduce noise and calibrate ESP SDR",
+    "slug": "reduce-noise-calibrate-esp-sdr",
+    "description": "Start the SDR adapter, reduce background noise and optionally calibrate the receiver in Web ESP SDR.",
+    "difficulty": "Intermediate",
+    "time": "10 min",
+    "protocols": [
+      "SDR"
+    ],
+    "workflows": [
+      "Capture & analyze",
+      "Debug"
+    ],
+    "tags": [
+      "esp-sdr",
+      "calibration",
+      "noise",
+      "gain",
+      "baseline",
+      "receiver",
+      "spectrum",
+      "troubleshooting"
+    ],
+    "takeaway": "Reduce background noise and compare the spectrum before and after correction.",
+    "date": "2026-10-05",
+    "author": "Geo",
+    "type": "Recipe",
+    "mark": "SDR",
+    "targets": [
+      "ESP32-S3 radio",
+      "2.4 GHz RF activity"
+    ],
+    "tools": [
+      "Web ESP SDR",
+      "Web Serial"
+    ],
+    "cover": "assets/visual-troubleshooting.svg",
+    "hardware": "ESP32-S3 with SDR adapter firmware, USB cable and antenna"
+  },
+  {
     "title": "Scan an unknown I2C device",
     "slug": "scan-unknown-i2c-device",
     "description": "Use ESP32 Bit Pirate to scan an I2C bus and find connected devices.",
@@ -4686,7 +4846,7 @@ window.BIT_PIRATE_RECIPES = [
   {
     "title": "Choose a dedicated USB adapter mode",
     "slug": "choose-dedicated-usb-adapter-mode",
-    "description": "Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy or SubGHz tool modes.",
+    "description": "Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy, SubGHz or ESP SDR tool modes.",
     "date": "2026-06-23",
     "author": "Geo",
     "difficulty": "Intermediate",
@@ -4722,7 +4882,7 @@ window.BIT_PIRATE_RECIPES = [
     "cover": "assets/visual-browser-tools.svg",
     "time": "5 min",
     "hardware": "ESP32 Bit Pirate firmware with native USB",
-    "takeaway": "Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy or SubGHz tool modes."
+    "takeaway": "Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy, SubGHz or ESP SDR tool modes."
   },
   {
     "title": "Use ESP32 as a USB-UART dongle",

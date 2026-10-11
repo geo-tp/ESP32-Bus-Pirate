@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Select the SDR adapter from USB mode, view the spectrum in Web ESP SDR and return to the CLI."/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta name="theme-color" content="#121212"/>
+<meta property="og:site_name" content="ESP32 Bit Pirate"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:title" content="How to use the ESP SDR USB adapter"/>
+<meta property="og:description" content="Select the SDR adapter from USB mode, view the spectrum in Web ESP SDR and return to the CLI."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-esp-sdr-usb-adapter/"/>
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png"/>
+<meta property="og:image:alt" content="USB adapter and host-tool workflow."/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="article:published_time" content="2026-10-05"/>
+<meta property="article:modified_time" content="2026-10-11"/>
+<meta property="article:author" content="Geo"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="How to use the ESP SDR USB adapter"/>
+<meta name="twitter:description" content="Select the SDR adapter from USB mode, view the spectrum in Web ESP SDR and return to the CLI."/>
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png"/>
+<meta name="twitter:image:alt" content="USB adapter and host-tool workflow."/>
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-esp-sdr-usb-adapter/"/>
+<title>Use the ESP SDR USB adapter | ESP32 Bit Pirate</title>
+<link rel="stylesheet" href="../recipes.css?v=20261011-command-spacing"/>
+<link rel="icon" href="../../favicon.ico" sizes="any"/>
+<link rel="icon" href="../../favicon.png" sizes="48x48" type="image/png"/>
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to use the ESP SDR USB adapter",
+      "description": "Select the SDR adapter from USB mode, view the spectrum in Web ESP SDR and return to the CLI.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png",
+      "datePublished": "2026-10-05",
+      "dateModified": "2026-10-11",
+      "author": {
+        "@type": "Person",
+        "name": "Geo"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-esp-sdr-usb-adapter/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Recipes",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Use the ESP SDR USB adapter",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-esp-sdr-usb-adapter/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need an external radio module?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SDR uses the ESP32-S3 radio and antenna; no GPIO wiring is needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Disconnect return to the CLI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It releases the browser’s serial port. Reset the board to leave adapter mode."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="article-hero-top"><div class="article-brand-tags"><a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul class="article-hero-tags" aria-label="Recipe tags"><li>SDR</li><li>Beginner</li><li>5 min</li><li>Serial CLI + Web ESP SDR</li></ul></div><nav class="article-top-nav" aria-label="Section navigation"><a href="../../"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank">Wiki</a></nav></div>
+<p class="eyebrow">Recipe · Beginner · SDR, USB</p>
+<h1>How to use the ESP SDR USB adapter</h1>
+<p>Use the ESP32-S3 radio as a USB SDR source for the browser spectrum viewer.</p>
+</header>
+<figure class="recipe-banner"><img src="../assets/visual-usb-adapters.svg" alt="USB adapter and host-tool workflow." width="1040" height="600"/><figcaption>The dedicated adapter connects the ESP32-S3 radio to a host tool through native USB.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+<section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Start the SDR adapter</h2><p>Switch to <strong>USB</strong> mode and open <strong>Adapters</strong>:</p><div data-cli-session="" data-cli-mode="BitPirate" data-cli-commands="mode usb
+adapters"><pre><code>mode usb
+adapters</code></pre></div><p>Select <strong>ESP-SDR Raw 2.4GHz</strong>. The board reboots into SDR mode.</p></section>
+<section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Open the spectrum viewer</h2><p>Close the terminal, open <a href="../../web-tools/esp-sdr/">Web ESP SDR</a> and click <strong>Connect</strong>. Select the board’s USB port.</p><p>In <strong>Live SDR</strong>, set a center frequency, such as <strong>2437 MHz</strong>, then click <strong>Start stream</strong>.</p></section>
+<section class="recipe-section command-step-section"><span class="step-label">Step 3</span><h2>Return to the CLI</h2><p>Click <strong>Stop</strong>, then <strong>Disconnect</strong>. Reset the board and reopen the terminal. Select the SDR adapter again for the next session.</p></section>
+<section class="recipe-section result-section"><h2>Result</h2><div class="callout success"><h3>What success looks like</h3><p>The spectrum and waterfall update with RF activity. Resetting the board returns to the normal Bit Pirate CLI.</p></div></section>
+<section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>No SDR entry:</strong> Use ESP32-S3 firmware that includes the SDR adapter.</li><li><strong>Port busy or missing:</strong> Close other serial clients and check the native USB cable. After a reset, select SDR again.</li><li><strong>Little activity:</strong> Check the antenna and tune to a nearby active 2.4 GHz device.</li></ul></section>
+<section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">ESP SDR FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Do I need an external radio module?</summary><p>No. SDR uses the ESP32-S3 radio and antenna; no GPIO wiring is needed.</p></details><details class="recipe-faq-item"><summary>Does Disconnect return to the CLI?</summary><p>No. It releases the browser’s serial port. Reset the board to leave adapter mode.</p></details></div></section>
+<section class="recipe-section"><h2>Go deeper</h2><nav class="link-card-list" aria-label="Related links"><a href="../../web-tools/esp-sdr/"><span>Web Tool</span><strong>Open Web ESP SDR</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters"><span>Wiki</span><strong>USB adapter modes</strong></a><a href="../../protocols/usb-adapters/"><span>Protocol</span><strong>USB adapter workflows</strong></a><a href="../scan-24ghz-band-esp-sdr/"><span>Related</span><strong>Scan the 2.4 GHz band with ESP SDR</strong></a><a href="../reduce-noise-calibrate-esp-sdr/"><span>Related</span><strong>Reduce noise and calibrate ESP SDR</strong></a></nav></section>
+</article>
+<aside class="content-card aside-card" aria-label="Recipe setup and details"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>ESP32-S3 with Bit Pirate SDR support</li><li>Native USB data cable and antenna</li><li>Serial terminal and Web Serial browser</li></ul></dd><dt class="aside-dt-setup">Setup</dt><dd class="aside-setup-dd"><p>Use native USB and the board antenna, or a suitable external 2.4 GHz antenna.</p></dd><dt class="aside-dt-protocol">Protocol</dt><dd>SDR, USB</dd><dt>Web tool</dt><dd><a href="../../web-tools/esp-sdr/">Web ESP SDR</a></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters">99-Adapters</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-10-11</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20261009-recipes1"></script>
+</body>
+</html>

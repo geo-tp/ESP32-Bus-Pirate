@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Start the SDR adapter and sweep 2400–2483.5 MHz to find activity in Web ESP SDR."/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta name="theme-color" content="#121212"/>
+<meta property="og:site_name" content="ESP32 Bit Pirate"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:title" content="How to scan the 2.4 GHz band with ESP SDR"/>
+<meta property="og:description" content="Start the SDR adapter and sweep 2400–2483.5 MHz to find activity in Web ESP SDR."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-24ghz-band-esp-sdr/"/>
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png"/>
+<meta property="og:image:alt" content="2.4 GHz radio activity illustration."/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="article:published_time" content="2026-10-05"/>
+<meta property="article:modified_time" content="2026-10-11"/>
+<meta property="article:author" content="Geo"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="How to scan the 2.4 GHz band with ESP SDR"/>
+<meta name="twitter:description" content="Start the SDR adapter and sweep 2400–2483.5 MHz to find activity in Web ESP SDR."/>
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png"/>
+<meta name="twitter:image:alt" content="2.4 GHz radio activity illustration."/>
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-24ghz-band-esp-sdr/"/>
+<title>Scan the 2.4 GHz band with ESP SDR | ESP32 Bit Pirate</title>
+<link rel="stylesheet" href="../recipes.css?v=20261011-command-spacing"/>
+<link rel="icon" href="../../favicon.ico" sizes="any"/>
+<link rel="icon" href="../../favicon.png" sizes="48x48" type="image/png"/>
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to scan the 2.4 GHz band with ESP SDR",
+      "description": "Start the SDR adapter and sweep 2400–2483.5 MHz to find activity in Web ESP SDR.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-rf24.png",
+      "datePublished": "2026-10-05",
+      "dateModified": "2026-10-11",
+      "author": {
+        "@type": "Person",
+        "name": "Geo"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-24ghz-band-esp-sdr/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Recipes",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Scan the 2.4 GHz band with ESP SDR",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/scan-24ghz-band-esp-sdr/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does occupancy measure channel airtime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It counts sampled visits above the local noise floor, not continuous airtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do frequency guides identify a protocol?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. They mark known channel frequencies; they do not decode packets or identify transmitters."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="article-hero-top"><div class="article-brand-tags"><a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul class="article-hero-tags" aria-label="Recipe tags"><li>SDR</li><li>Beginner</li><li>8 min</li><li>Web ESP SDR</li></ul></div><nav class="article-top-nav" aria-label="Section navigation"><a href="../../"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank">Wiki</a></nav></div>
+<p class="eyebrow">Recipe · Beginner · SDR, Wi-Fi, BLE</p>
+<h1>How to scan the 2.4 GHz band with ESP SDR</h1>
+<p>Sweep the 2.4 GHz band to find activity, then open an active frequency in Live SDR.</p>
+</header>
+<figure class="recipe-banner"><img src="../assets/visual-rf24.svg" alt="2.4 GHz radio activity illustration." width="1040" height="600"/><figcaption>A wideband sweep visits several tuning centers to build one view of the selected range.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+<section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Start and connect the SDR adapter</h2><p>Switch to <strong>USB</strong> mode and open <strong>Adapters</strong>:</p><div data-cli-session="" data-cli-mode="BitPirate" data-cli-commands="mode usb
+adapters"><pre><code>mode usb
+adapters</code></pre></div><p>Select <strong>ESP-SDR Raw 2.4GHz</strong>. The board reboots into SDR mode.</p><p>Close the terminal, open <a href="../../web-tools/esp-sdr/">Web ESP SDR</a> and click <strong>Connect</strong>. Select the board’s USB port.</p></section>
+<section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Scan the band</h2><p>Select <strong>Wideband Analyzer</strong>, set <strong>Scan range · MHz</strong> to <strong>2400–2483.5</strong> and click <strong>Start scan</strong>. Start with manual gain at <strong>41 of 82</strong> and <strong>Sensitive</strong> scan detail. Let several sweeps complete.</p></section>
+<section class="recipe-section command-step-section"><span class="step-label">Step 3</span><h2>Find activity</h2><p>Use <strong>Peak hold</strong> to see the strongest levels and <strong>Occupancy</strong> to compare activity across sampled visits. Click a frequency in the spectrum or waterfall to open it in <strong>Live SDR</strong>.</p></section>
+<section class="recipe-section result-section"><h2>Result</h2><div class="callout success"><h3>What success looks like</h3><p>The spectrum and waterfall show activity across the selected band. Sweeps visit frequencies in sequence and can miss short bursts.</p></div></section>
+<section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>Slow sweep:</strong> Stop and choose Balanced or Fast scan detail, or narrow the range.</li><li><strong>Missing burst:</strong> Open Live SDR at the expected frequency and repeat the device operation.</li><li><strong>Unstable comparison:</strong> Keep manual gain and antenna position fixed; reset history before comparing runs.</li></ul></section>
+<section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">ESP SDR FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Does occupancy measure channel airtime?</summary><p>No. It counts sampled visits above the local noise floor, not continuous airtime.</p></details><details class="recipe-faq-item"><summary>Do frequency guides identify a protocol?</summary><p>No. They mark known channel frequencies; they do not decode packets or identify transmitters.</p></details></div></section>
+<section class="recipe-section"><h2>Go deeper</h2><nav class="link-card-list" aria-label="Related links"><a href="../../web-tools/esp-sdr/"><span>Web Tool</span><strong>Open Web ESP SDR</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters"><span>Wiki</span><strong>USB adapter modes</strong></a><a href="../../protocols/usb-adapters/"><span>Protocol</span><strong>USB adapter workflows</strong></a><a href="../use-esp-sdr-usb-adapter/"><span>Related</span><strong>Use the ESP SDR USB adapter</strong></a><a href="../reduce-noise-calibrate-esp-sdr/"><span>Related</span><strong>Reduce noise and calibrate ESP SDR</strong></a></nav></section>
+</article>
+<aside class="content-card aside-card" aria-label="Recipe setup and details"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>ESP32-S3 with Bit Pirate SDR support</li><li>Native USB data cable and antenna</li><li>Serial terminal and Web Serial browser</li></ul></dd><dt class="aside-dt-setup">Setup</dt><dd class="aside-setup-dd"><p>Keep the antenna in one position and use a nearby active 2.4 GHz device for comparison.</p></dd><dt class="aside-dt-protocol">Protocol</dt><dd>SDR, Wi-Fi, BLE</dd><dt>Web tool</dt><dd><a href="../../web-tools/esp-sdr/">Web ESP SDR</a></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters">99-Adapters</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-10-11</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20261009-recipes1"></script>
+</body>
+</html>

@@ -34,6 +34,7 @@
     { name: "gpio", kind: "protocol", aliases: ["gpio", "dio", "pin", "pins"] },
     { name: "usb", kind: "protocol", aliases: ["usb", "web serial", "cdc", "hid"] },
     { name: "lora", kind: "protocol", aliases: ["lora", "sx1262", "core1262"] },
+    { name: "sdr", kind: "protocol", aliases: ["esp sdr", "sdr", "software defined radio"] },
     { name: "scan", kind: "action", aliases: ["scan", "discover", "detect", "identify", "find", "probe", "enumerate"] },
     { name: "read", kind: "action", aliases: ["read", "dump", "inspect", "view", "monitor", "trace"] },
     { name: "debug", kind: "action", aliases: ["debug", "diagnose", "diagnostic", "troubleshoot", "recover", "health"] },
@@ -49,10 +50,11 @@
 
   const getQueryWords = (query, concepts) => {
     let remainder = normalize(query);
-    concepts.forEach((concept) => {
-      concept.aliases.forEach((alias) => {
-        remainder = remainder.replaceAll(normalize(alias), " ");
-      });
+    // Remove phrases first so shorter aliases cannot split them (e.g. DIO in radio).
+    const aliases = concepts.flatMap((concept) => concept.aliases.map(normalize))
+      .sort((a, b) => b.length - a.length);
+    aliases.forEach((alias) => {
+      remainder = remainder.replaceAll(alias, " ");
     });
     return remainder.split(/\s+/).filter((word) => word.length > 1);
   };
@@ -81,6 +83,7 @@
     "usb": ["usb", "hid", "cdc", "msc"],
     "infrared": ["infrared", "ir toy", "lirc"],
     "sub ghz": ["subghz", "cc1101"],
+    "sdr": ["sdr"],
     "lora": ["lora", "sx1262", "core1262"],
     "wi fi": ["wi fi", "wifi"],
     "ble": ["ble", "bluetooth"],
@@ -748,6 +751,7 @@
   const toolLinks = [
     ["Web Serial Terminal", "web-tools/web-serial-terminal/"],
     ["Web Logic Analyzer", "web-tools/logic-analyzer/"],
+    ["Web ESP SDR", "web-tools/esp-sdr/"],
     ["SPI Flash Programmer", "web-tools/spi-flash-programmer/"],
     ["AVR Programmer", "web-tools/avr-programmer/"],
     ["STM32 Tool", "web-tools/stm32-tool/"],

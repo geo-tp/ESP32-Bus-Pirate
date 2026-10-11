@@ -4,25 +4,25 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="description"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, ESP SDR, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="description"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="website" property="og:type"/>
 <meta content="en_US" property="og:locale"/>
 <meta content="ESP32 Bit Pirate" property="og:site_name"/>
 <meta content="ESP32 Bit Pirate Recipes: Learn Hardware Debugging by Doing" property="og:title"/>
-<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." property="og:description"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, ESP SDR, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." property="og:description"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" property="og:url"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools-og.png" property="og:image"/><meta content="ESP32 Bit Pirate recipes preview card." property="og:image:alt"/><meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="ESP32 Bit Pirate Recipes: Learn Hardware Debugging by Doing" name="twitter:title"/>
-<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="twitter:description"/>
+<meta content="Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, ESP SDR, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows." name="twitter:description"/>
 <meta content="https://geo-tp.github.io/ESP32-Bit-Pirate/web-tools/assets/bit-pirate-web-tools-og.png" name="twitter:image"/><meta content="ESP32 Bit Pirate recipes preview card." name="twitter:image:alt"/>
 <link href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/" rel="canonical"/>
 <title>ESP32 Bit Pirate Recipes | Learn Hardware Debugging by Doing</title>
-<link href="recipes.css?v=20260714-lora1" rel="stylesheet"/>
+<link href="recipes.css?v=20261011-command-spacing" rel="stylesheet"/>
 <script defer="" src="../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
 <script type="application/ld+json">
 {
@@ -30,7 +30,7 @@
   "@type": "CollectionPage",
   "name": "ESP32 Bit Pirate Recipes",
   "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/",
-  "description": "Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows.",
+  "description": "Learn ESP32 Bit Pirate with practical recipes for Web Serial, GPIO, UART, I2C, SPI flash, EEPROM, LoRa, ESP SDR, SUMP logic analyzer, Infrared, SubGHz, USB and network workflows.",
   "publisher": {
     "@type": "Organization",
     "name": "ESP32 Bit Pirate",
@@ -50,13 +50,12 @@
 <span>ESP32 Bit Pirate</span>
 </a><nav aria-label="Primary navigation" class="page-top-nav"><a href="../#start"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M5 4v16M5 5h11l-1.5 4L16 13H5"></path></svg>Start here</a><a href="../web-tools/"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><rect height="15" rx="2" width="18" x="3" y="4"></rect><path d="M3 8h18M7 6h.01M10 6h.01"></path></svg>Web tools</a><a href="../hardware/"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><rect height="14" rx="2" width="10" x="7" y="5"></rect><path d="M4 8h3M4 12h3M4 16h3M17 8h3M17 12h3M17 16h3"></path></svg>Hardware</a><a href="../modules/"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><rect height="7" rx="1.5" width="7" x="4" y="4"></rect><rect height="7" rx="1.5" width="7" x="13" y="4"></rect><rect height="7" rx="1.5" width="7" x="4" y="13"></rect><path d="M14 16h6M17 13v6"></path></svg>Modules</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank"><svg aria-hidden="true" class="article-nav-icon" viewbox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 2s-1.2-.4-4 1.5a13.7 13.7 0 0 0-7.3 0C5.8 1.6 4.6 2 4.6 2a5 5 0 0 0-.1 2.8A5.4 5.4 0 0 0 3 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22"></path></svg>GitHub</a></nav></div>
 <h1>Hardware Debugging Recipes</h1>
-<p class="hero-description hero-description-justify">Learn ESP32 Bit Pirate by doing real tasks. These short recipes act like practical documentation: start from zero, connect safely, run useful commands, then grow into UART, I2C, SPI, GPIO, flash, IR, LoRa, SubGHz, USB, network and debug workflows.</p>
+<p class="hero-description hero-description-justify">Learn ESP32 Bit Pirate by doing real tasks. These short recipes act like practical documentation: start from zero, connect safely, run useful commands, then grow into UART, I2C, SPI, GPIO, flash, IR, LoRa, SDR, SubGHz, USB, network and debug workflows.</p>
 </header>
 <section aria-label="Search recipes" class="recipe-search">
 <label class="visually-hidden" for="recipe-search-input">Search recipes</label>
 <div class="recipe-search-bar">
 <input autocomplete="off" autofocus="" class="recipe-search-input" data-recipe-search="" id="recipe-search-input" name="q" placeholder="Try: scan I2C, stuck bus, read EEPROM…" type="search"/>
-<button aria-label="Clear search" class="recipe-search-clear" data-search-clear="" hidden="" type="button">x</button>
 <span aria-hidden="true" class="recipe-search-icon">⌕</span>
 </div>
 </section>
@@ -82,6 +81,7 @@
 <option value="Infrared">Infrared</option>
 <option value="Sub-GHz">Sub-GHz</option>
 <option value="LoRa">LoRa</option>
+<option value="SDR">SDR</option>
 <option value="Wi-Fi">Wi-Fi</option>
 <option value="BLE">BLE</option>
 <option value="RF24">RF24</option>
@@ -113,9 +113,45 @@
 </select>
 </label>
 </div>
-<p class="recipe-count" data-recipe-count="">144 recipes</p>
+<p class="recipe-count" data-recipe-count="">148 recipes</p>
 </section>
 <section aria-label="Bit Pirate recipe links" class="recipe-grid recipe-static-grid" data-static-recipe-grid="">
+<article class="recipe-card">
+<a class="recipe-card-link" href="measure-i2c-bus-frequency/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">I²C</span>Beginner</p>
+<h2>Measure the I2C bus frequency</h2>
+<p class="recipe-description">Probe SCL and run freq to measure the I2C clock rate.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="use-esp-sdr-usb-adapter/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-usb-adapters.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SDR</span>Beginner</p>
+<h2>Use the ESP SDR USB adapter</h2>
+<p class="recipe-description">Start the SDR adapter, open the spectrum viewer and return to the CLI.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Any CLI</li><li>5 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="scan-24ghz-band-esp-sdr/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-rf24.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SDR</span>Beginner</p>
+<h2>Scan the 2.4 GHz band with ESP SDR</h2>
+<p class="recipe-description">Sweep the 2.4 GHz band and open active frequencies in Live SDR.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Web ESP SDR</li><li>8 min</li></ul>
+</a>
+</article>
+<article class="recipe-card">
+<a class="recipe-card-link" href="reduce-noise-calibrate-esp-sdr/">
+<img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-troubleshooting.svg" width="520"/>
+<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">SDR</span>Intermediate</p>
+<h2>Reduce noise and calibrate ESP SDR</h2>
+<p class="recipe-description">Reduce background noise and compare the spectrum before and after correction.</p>
+<ul class="recipe-pill-list recipe-facts-list"><li>Web ESP SDR</li><li>10 min</li></ul>
+</a>
+</article>
 <article class="recipe-card">
 <a class="recipe-card-link" href="scan-unknown-i2c-device/">
 <img alt="" class="recipe-cover" height="300" loading="lazy" src="assets/visual-i2c.svg" width="520"/>
@@ -1394,7 +1430,7 @@
 </ul>
 </section>
 </main>
-<script src="recipes-list.js?v=20260714-lora2"></script>
-<script src="recipes.js?v=20260714-lora2"></script>
+<script src="recipes-list.js?v=20261011-i2c"></script>
+<script src="recipes.js?v=20261009-recipes1"></script>
 </body>
 </html>

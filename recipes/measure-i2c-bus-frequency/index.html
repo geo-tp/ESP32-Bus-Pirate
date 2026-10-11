@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Measure an active I2C bus clock with the no-argument freq command."/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta name="theme-color" content="#121212"/>
+<meta property="og:site_name" content="ESP32 Bit Pirate"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:title" content="How to measure the I2C bus frequency"/>
+<meta property="og:description" content="Measure an active I2C bus clock with the no-argument freq command."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-i2c-bus-frequency/"/>
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2c.png"/>
+<meta property="og:image:alt" content="I2C bus connected to an ESP32 Bit Pirate board."/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="article:published_time" content="2026-10-09"/>
+<meta property="article:modified_time" content="2026-10-11"/>
+<meta property="article:author" content="Geo"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="How to measure the I2C bus frequency"/>
+<meta name="twitter:description" content="Measure an active I2C bus clock with the no-argument freq command."/>
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2c.png"/>
+<meta name="twitter:image:alt" content="I2C bus connected to an ESP32 Bit Pirate board."/>
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-i2c-bus-frequency/"/>
+<title>Measure the I2C bus frequency | ESP32 Bit Pirate</title>
+<link rel="stylesheet" href="../recipes.css?v=20261011-command-spacing"/>
+<link rel="icon" href="../../favicon.ico" sizes="any"/>
+<link rel="icon" href="../../favicon.png" sizes="48x48" type="image/png"/>
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to measure the I2C bus frequency",
+      "description": "Measure an active I2C bus clock with the no-argument freq command.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-i2c.png",
+      "datePublished": "2026-10-09",
+      "dateModified": "2026-10-11",
+      "author": {
+        "@type": "Person",
+        "name": "Geo"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-i2c-bus-frequency/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Recipes",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Measure the I2C bus frequency",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/measure-i2c-bus-frequency/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need SDA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SCL and shared ground are enough for this measurement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this the bus data throughput?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It measures the clock during transfers, without averaging in idle time."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="article-hero-top"><div class="article-brand-tags"><a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul class="article-hero-tags" aria-label="Recipe tags"><li>I2C</li><li>Beginner</li><li>5 min</li><li>Serial CLI</li></ul></div><nav class="article-top-nav" aria-label="Section navigation"><a href="../../"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C" rel="noopener" target="_blank">Wiki</a></nav></div>
+<p class="eyebrow">Recipe · Beginner · I2C</p>
+<h1>How to measure the I2C bus frequency</h1>
+<p>Probe SCL and run <code>freq</code> to find the clock rate of an active I2C bus.</p>
+</header>
+<figure class="recipe-banner"><img src="../assets/visual-i2c.svg" alt="I2C bus connected to an ESP32 Bit Pirate board." width="1040" height="600"/><figcaption>Measure the clock produced by the existing I2C controller on SCL.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+<section class="recipe-section command-step-section"><span class="step-label">Step 1</span><h2>Configure and connect SCL</h2><p>Enter I2C mode and select the GPIO that will probe SCL:</p><div data-cli-session="" data-cli-mode="BitPirate" data-cli-commands="mode i2c"><pre><code>mode i2c</code></pre></div><p>Connect that pin to the target’s SCL and share GND. Leave the original controller connected. Use <code>config</code> to check the selected pin if needed.</p></section>
+<section class="recipe-section command-step-section"><span class="step-label">Step 2</span><h2>Measure the clock</h2><p>Run <code>freq</code> with <strong>no arguments</strong> while the original controller generates I2C traffic:</p><div data-cli-session="" data-cli-mode="I2C" data-cli-commands="freq"><pre><code>freq</code></pre></div><p>The command listens to SCL without generating traffic. Press <strong>Enter</strong> to cancel.</p></section>
+<section class="recipe-section command-step-section"><span class="step-label">Step 3</span><h2>Read and optionally save</h2><p>Read <strong>Freq</strong> in kHz and the period, LOW and HIGH times in µs. A 10 µs period is about 100 kHz.</p><p>At <strong>Save frequency to the configuration?</strong>, choose <code>y</code> to update Bit Pirate’s I2C setting or <code>n</code> to leave it unchanged. The original controller’s clock is unaffected.</p></section>
+<section class="recipe-section result-section"><h2>Result</h2><p>Example report for a 100 kHz bus; actual values vary:</p><div data-cli-session="" data-cli-mode="I2C" data-cli-commands="freq" data-cli-result="=== Frequency Report ===
+Freq: 100.00 kHz
+Period: 10.00 us
+LOW: 5.00 us
+HIGH: 5.00 us
+Cycles: 128/128
+========================"><pre><code>freq
+=== Frequency Report ===
+Freq: 100.00 kHz
+Period: 10.00 us
+LOW: 5.00 us
+HIGH: 5.00 us
+Cycles: 128/128
+========================</code></pre></div><div class="callout success"><h3>What success looks like</h3><p>Repeated measurements during traffic give a consistent SCL clock rate.</p></div></section>
+<section class="recipe-section troubleshooting-section"><h2>Troubleshooting</h2><ul class="mistake-list"><li><strong>Still listening:</strong> Trigger traffic from the original controller; an idle bus has no clock to measure.</li><li><strong>Unstable result:</strong> Check SCL selection, shared ground, pull-ups and short wiring.</li><li><strong>Command unavailable:</strong> Use firmware and a board with I2C frequency capture support.</li></ul></section>
+<section class="recipe-section recipe-faq" aria-labelledby="faq-title"><h2 id="faq-title">I2C frequency FAQ</h2><div class="recipe-faq-list"><details class="recipe-faq-item"><summary>Do I need SDA?</summary><p>No. SCL and shared ground are enough for this measurement.</p></details><details class="recipe-faq-item"><summary>Is this the bus data throughput?</summary><p>No. It measures the clock during transfers, without averaging in idle time.</p></details></div></section>
+<section class="recipe-section"><h2>Go deeper</h2><nav class="link-card-list" aria-label="Related links"><a href="../../web-tools/web-serial-terminal/"><span>Web Tool</span><strong>Open Web Serial Terminal</strong></a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C"><span>Wiki</span><strong>I2C mode</strong></a><a href="../../protocols/i2c/"><span>Protocol</span><strong>I2C workflows</strong></a><a href="../detect-uart-baudrate-autobaud/"><span>Related</span><strong>Auto-detect an unknown UART baud rate</strong></a><a href="../use-logic-analyzer-pulseview/"><span>Related</span><strong>Use the logic analyzer with PulseView</strong></a><a href="../scan-unknown-i2c-device/"><span>Related</span><strong>Scan an unknown I2C device</strong></a></nav></section>
+</article>
+<aside class="content-card aside-card" aria-label="Recipe setup and details"><dl><dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>ESP32 Bit Pirate firmware with I2C freq support</li><li>Powered I2C bus with active traffic</li><li>Access to SCL and a common ground</li><li>Serial terminal and short probe wires</li></ul></dd><dt class="aside-dt-setup">Wiring</dt><dd class="aside-setup-dd"><ul class="wiring-list aside-setup-list" data-wiring-left="I2C bus" data-wiring-right="Bit Pirate"><li>SCL → Configured SCL GPIO</li><li>GND → GND</li></ul><p>Leave SDA disconnected. Keep the target’s power and pull-ups; use an SCL voltage compatible with the ESP32 input.</p></dd><dt class="aside-dt-protocol">Protocol</dt><dd>I2C</dd><dt>Firmware commands checked</dt><dd><code>mode i2c</code><br/><code>freq</code></dd><dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/05-I2C">05-I2C</a></dd><dt class="aside-dt-date">Date</dt><dd>2026-10-11</dd></dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20261009-recipes1"></script>
+</body>
+</html>
