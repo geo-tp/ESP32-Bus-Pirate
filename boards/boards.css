@@ -1169,3 +1169,96 @@ html[data-theme="light"] .modules-page .page-hero-top::after {
 .workflow-grid { counter-reset: none; }
 .workflow-card { counter-increment: none; min-height:112px; }
 .workflow-card::before { content:none !important; display:none !important; }
+
+
+/* Cardputer ADV: official radio Caps supported by Bit Pirate. */
+.adv-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.adv-cap-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 204, .25);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #17211f, #101412);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .16), inset 0 0 5px #000;
+}
+.adv-cap-media {
+  height: clamp(180px, 24vw, 245px);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 255, 204, .17);
+  background: #f8f8f8;
+}
+.adv-cap-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 57%;
+}
+.adv-cap-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 18px;
+}
+.adv-cap-content .adv-cap-mode {
+  margin: 0 0 8px;
+  color: var(--cyan);
+  font-size: .71rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.adv-cap-content h3 {
+  margin: 0;
+  color: #f2fff8;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+.adv-cap-content .adv-cap-band {
+  margin: 5px 0 10px;
+  color: #a9e8d5;
+  font-size: .8rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+.adv-cap-content > p:not(.adv-cap-mode):not(.adv-cap-band) {
+  margin: 0 0 15px;
+  font-size: .87rem;
+}
+.adv-cap-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 255, 204, .15);
+}
+.adv-cap-disclosure {
+  color: #bfc9c3;
+  font-size: .7rem;
+  line-height: 1.45;
+}
+html[data-theme="light"] body.boards-page .adv-cap-card {
+  border-color: #c6d8cf;
+  background: linear-gradient(145deg, #fff, #f4faf7);
+  box-shadow: 0 8px 20px rgba(31, 72, 53, .075), inset 0 0 4px rgba(28, 57, 43, .04);
+}
+html[data-theme="light"] body.boards-page .adv-cap-media,
+html[data-theme="light"] body.boards-page .adv-cap-actions { border-color: #d8e6df; }
+html[data-theme="light"] body.boards-page .adv-cap-content h3 { color: #11251e; }
+html[data-theme="light"] body.boards-page .adv-cap-content .adv-cap-mode { color: #007f7a; }
+html[data-theme="light"] body.boards-page .adv-cap-content .adv-cap-band { color: #336a5b; }
+html[data-theme="light"] body.boards-page .adv-cap-disclosure { color: #536c60; }
+@media (max-width: 660px) {
+  .adv-cap-grid { grid-template-columns: 1fr; }
+  .adv-cap-media { height: 220px; }
+}
