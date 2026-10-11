@@ -125,8 +125,10 @@ void I2cController::handleSniff(const TerminalCommand& cmd) {
         terminalView.println("I2C Sniffer: Listening on SCL/SDA... Press [ENTER] to stop.\n");
     }
 
+    // Passive sniffing must not leave the active Wire/I2C controller
+    i2cService.end();
     i2cSnifferService.setAddressFilter(filterEnabled, filterAddress);
-    i2cSnifferService.begin(state.getI2cSclPin(), state.getI2cSdaPin()); // dont need freq to work
+    i2cSnifferService.begin(state.getI2cSclPin(), state.getI2cSdaPin()); // passive monitor
     if (!i2cSnifferService.setup()) {
         i2cSnifferService.setAddressFilter(false, 0);
         i2cService.configure(state.getI2cSdaPin(), state.getI2cSclPin(), state.getI2cFrequency());

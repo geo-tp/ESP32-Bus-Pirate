@@ -444,6 +444,7 @@ void test_sniff_uses_current_pins_then_reconfigures_service() {
     TEST_ASSERT_EQUAL_UINT32(1, fakeI2cSnifferBeginCalls);
     TEST_ASSERT_EQUAL_UINT8(1, fakeI2cSnifferScl);
     TEST_ASSERT_EQUAL_UINT8(2, fakeI2cSnifferSda);
+    TEST_ASSERT_EQUAL_UINT32(1, fixture.i2cService.endCalls);
     TEST_ASSERT_EQUAL_UINT32(1, fixture.i2cService.configurations.size());
     TEST_ASSERT_TRUE(fixture.view.contains("I2C Sniffer: Stopped"));
 }

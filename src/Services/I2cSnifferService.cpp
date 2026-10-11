@@ -16,6 +16,19 @@
 #include <memory>
 #endif
 
+//   -DBITPIRATE_I2C_SNIFFER_OPT_O3=0    disable the local -O3 optimization
+//   -DBITPIRATE_I2C_SNIFFER_SYMBOL_RING_SIZE=4096  increase per-line backlog
+#ifndef BITPIRATE_I2C_SNIFFER_OPT_O3
+#define BITPIRATE_I2C_SNIFFER_OPT_O3 1
+#endif
+#ifndef BITPIRATE_I2C_SNIFFER_SYMBOL_RING_SIZE
+#define BITPIRATE_I2C_SNIFFER_SYMBOL_RING_SIZE 2048
+#endif
+#if BITPIRATE_I2C_SNIFFER_OPT_O3 && defined(__GNUC__)
+#pragma GCC push_options
+#pragma GCC optimize ("O3")
+#endif
+
 namespace {
 #if SOC_RMT_SUPPORT_DMA
 // Passive SCL frequency capture.
@@ -103,15 +116,23 @@ static constexpr uint16_t kRingMask = kRingSize - 1;
 static constexpr uint32_t kTickMask = 0x7FFFFFFFUL;
 static volatile uint32_t acknowledgedErrors = 0;
 static constexpr uint32_t kGuardTicks = 25; // hold 2.5 us after both watermarks
-// ISR only queues burst-completion metadata. Retiming thousands of edges in
-// the ISR blocked the next receive for up to ~260us in real scan traces.
-static constexpr uint8_t kCompletionSlots = 8;
-static constexpr uint8_t kCompletionMask = kCompletionSlots - 1;
-struct Completion {
-    uint16_t start;
-    uint16_t end;
-    uint32_t epoch;
-    uint32_t progress;
+// Retiming and edge extraction in the ISR delayed the next receive.
+// ISR copies owned RMT symbols into this single-producer/single-consumer
+// queue; pulse conversion, epoch retiming and calibration run in task context.
+static constexpr uint16_t kSymbolRingSize = BITPIRATE_I2C_SNIFFER_SYMBOL_RING_SIZE;
+static_assert(kSymbolRingSize >= kRxSymbols * 2 &&
+              (kSymbolRingSize & (kSymbolRingSize - 1)) == 0 &&
+              kSymbolRingSize <= 32768,
+              "I2C RMT symbol ring must be a power of two between 1024 and 32768");
+static constexpr uint16_t kSymbolRingMask = kSymbolRingSize - 1;
+static constexpr uint8_t kChunkSlots = 16;
+static constexpr uint8_t kChunkMask = kChunkSlots - 1;
+struct Chunk {
+    uint16_t start; // ring offset of first copied RMT symbol
+    uint16_t count;
+    uint32_t callbackUs; // only meaningful for last chunk of a burst
+    bool last;
+    int8_t tailLevel; // physical level sampled at RX_END, -1 if unused
 };
 
 struct Channel {
@@ -123,13 +144,19 @@ struct Channel {
     volatile uint16_t read = 0;
     volatile uint16_t readyWrite = 0; // published only after end-of-burst epoch calibration
     uint16_t burstStart = 0;
-    Completion completions[kCompletionSlots] = {};
-    volatile uint8_t completionW = 0; // ISR producer
-    volatile uint8_t completionR = 0; // task consumer
+    rmt_symbol_word_t* queuedSymbols = nullptr;
+    Chunk chunks[kChunkSlots] = {};
+    volatile uint16_t symbolWrite = 0; // ISR producer, task consumer
+    volatile uint16_t symbolRead = 0;
+    volatile uint8_t chunkWrite = 0;
+    volatile uint8_t chunkRead = 0;
+    bool discardUntilBoundary = false; // task-only recovery after overflow
     volatile uint32_t progress = 0;
     volatile bool haveProgress = false;
     volatile bool overflow = false;
     volatile bool receiving = false;
+    volatile bool inCallback = false;
+    volatile bool arming = false;
     volatile bool enabled = false;
     volatile esp_err_t rxError = ESP_OK;
     uint32_t elapsedTicks = 0;
@@ -169,7 +196,7 @@ static uint32_t reportedAlignmentFailures = 0;
 static bool alignmentValid = false;
 
 // Called from single-producer per-channel RMT RX ISR, consumed from task.
-static inline void IRAM_ATTR emit(Channel& c, uint32_t time, bool rise) {
+static inline void emit(Channel& c, uint32_t time, bool rise) {
     const uint16_t w = c.write;
     const uint16_t n = (uint16_t)((w + 1u) & kRingMask);
     if (n == __atomic_load_n(&c.read, __ATOMIC_ACQUIRE)) {
@@ -182,7 +209,7 @@ static inline void IRAM_ATTR emit(Channel& c, uint32_t time, bool rise) {
     c.edges[w] = (time & 0x7FFFFFFFUL) | (rise ? 0x80000000UL : 0);
     __atomic_store_n(&c.write, n, __ATOMIC_RELEASE);
 }
-static inline void IRAM_ATTR pulse(Channel& c, uint32_t duration, uint8_t level) {
+static inline void pulse(Channel& c, uint32_t duration, uint8_t level) {
     // RMT symbols contain two level/duration intervals. The very first
     // level establishes the initial state; every subsequent change is an edge.
     if (duration == 0) return;
@@ -201,75 +228,130 @@ static inline void IRAM_ATTR pulse(Channel& c, uint32_t duration, uint8_t level)
     c.elapsedTicks += duration;
 }
 static bool IRAM_ATTR arm(Channel& c) {
+    // The callback and the task-side error retry can race. Allow only one
+    // rmt_receive() at a time per channel.
+    if (__atomic_exchange_n(&c.arming, true, __ATOMIC_ACQ_REL)) return false;
     // ESP32-S3 RMT starts counting on the FIRST received edge, not when
     // rmt_receive is called. Do not timestamp this burst at arm time.
-    c.burstStart = c.write;
-    c.elapsedTicks = 0;
-    c.levelKnown = false;
     c.started = true;
     const esp_err_t e = rmt_receive(c.handle, c.symbols,
                                    kRxSymbols * sizeof(rmt_symbol_word_t), &rxConfig);
     c.rxError = e;
-    c.receiving = (e == ESP_OK);
+    __atomic_store_n(&c.receiving, e == ESP_OK, __ATOMIC_RELEASE);
     if (e != ESP_OK) ++errors;
+    __atomic_store_n(&c.arming, false, __ATOMIC_RELEASE);
     return e == ESP_OK;
 }
 static bool IRAM_ATTR onDone(rmt_channel_handle_t, const rmt_rx_done_event_data_t* data, void* ctx) {
     auto* c = static_cast<Channel*>(ctx);
-    if (!running) return false;
-    // Read wall clock BEFORE copying potentially hundreds of symbols in ISR.
-    const uint32_t callbackUs = (uint32_t)esp_timer_get_time();
-    // Copy/decode immediately: partial-RX buffers may be reused by the driver
-    // as soon as this callback returns. Never retain received_symbols.
-    for (size_t i = 0; i < data->num_symbols; ++i) {
-        const rmt_symbol_word_t& s = data->received_symbols[i];
-        pulse(*c, s.duration0, s.level0);
-        pulse(*c, s.duration1, s.level1);
+    if (!__atomic_load_n(&running, __ATOMIC_ACQUIRE)) return false;
+    __atomic_store_n(&c->inCallback, true, __ATOMIC_RELEASE);
+    // The driver's partial-RX memory can be overwritten after this callback:
+    // copy the complete callback into our owned FIFO BEFORE returning.
+    const bool last = data->flags.is_last;
+    const uint32_t callbackUs = last ? (uint32_t)esp_timer_get_time() : 0;
+    const size_t n = data->num_symbols;
+    int8_t tailLevel = -1;
+    if (last && n) {
+        const auto& tail = data->received_symbols[n - 1u];
+        if (tail.duration0 && !tail.duration1) {
+            tailLevel = static_cast<int8_t>(gpio_get_level(c->pin));
+        }
+    }
+    const uint16_t w = c->symbolWrite;
+    const uint16_t r = __atomic_load_n(&c->symbolRead, __ATOMIC_ACQUIRE);
+    const uint8_t cw = c->chunkWrite;
+    const uint8_t nextChunk = (uint8_t)((cw + 1u) & kChunkMask);
+    if (n > kSymbolRingSize - 1u - ((w - r) & kSymbolRingMask) ||
+        n > kRxSymbols ||
+        nextChunk == __atomic_load_n(&c->chunkRead, __ATOMIC_ACQUIRE)) {
+        c->overflow = true;
+        ++overflows;
+    } else {
+        // No heap allocation, calibration or per-edge atomic ring operations
+        // in the interrupt. Copy as 32-bit words to keep the
+        // routine IRAM-safe even if the flash cache is momentarily disabled.
+        uint16_t dst = w;
+        for (size_t i = 0; i < n; ++i) {
+            c->queuedSymbols[dst].val = data->received_symbols[i].val;
+            dst = (uint16_t)((dst + 1u) & kSymbolRingMask);
+        }
+        c->chunks[cw] = {w, (uint16_t)n, callbackUs, last, tailLevel};
+        __atomic_store_n(&c->symbolWrite, dst, __ATOMIC_RELEASE);
+        __atomic_store_n(&c->chunkWrite, nextChunk, __ATOMIC_RELEASE);
     }
     if (data->flags.is_last) {
-        // A final RMT half-symbol may have duration=0 even though its level
-        // encodes the final physical transition. Preserve that edge ONLY if:
-        //  - a valid first half-symbol precedes it,
-        //  - the final level differs from the last captured level, and
-        //  - a GPIO sample after RX idle corroborates that final level.
-        // Its timestamp is the end of the previous measured half-symbol;
-        // this is a bounded reconstruction, not a speculative STOP based
-        // solely on the idle GPIO level. Count each recovery explicitly.
-        if (data->num_symbols != 0) {
-            const auto& tail = data->received_symbols[data->num_symbols - 1u];
-            if (tail.duration0 != 0 && tail.duration1 == 0 &&
-                c->levelKnown && tail.level1 != c->currentLevel &&
-                gpio_get_level(c->pin) == static_cast<int>(tail.level1)) {
-                emit(*c, c->elapsedTicks, tail.level1 != 0);
-                c->currentLevel = tail.level1;
-            }
-        }
         c->receiving = false;
-        // At RX_END the last input level has remained stable for the idle
-        // threshold. RMT starts counting at the first edge of this burst.
-        // Estimate the epoch from RX_END minus captured pulse durations and
-        // the final timeout, rather than the unrelated arm() time. This is
-        // still SOFTWARE timestamp alignment: ISR scheduling and the final
-        // symbol truncation introduce uncertainty (particularly at 400 kHz).
-        const uint32_t endTicks = callbackUs * 10u;
-        const uint32_t epoch = endTicks - c->elapsedTicks - kIdleNs / 100u;
-        const uint8_t w = c->completionW;
-        const uint8_t next = (uint8_t)((w + 1u) & kCompletionMask);
-        if (next == __atomic_load_n(&c->completionR, __ATOMIC_ACQUIRE)) {
-            // Completion metadata was lost: previous edges must not be
-            // decoded with a stale/unrelated timestamp origin.
-            c->overflow = true;
-            ++overflows;
-        } else {
-            c->completions[w] = {c->burstStart, c->write, epoch, endTicks};
-            __atomic_store_n(&c->completionW, next, __ATOMIC_RELEASE);
-        }
-        // ESP-IDF allows rmt_receive() in ISR context. Do this *before*
-        // rewriting any timestamps or running calibration on the main core.
-        if (running) arm(*c);
+        // Rearm as early as possible; the slower decode runs in poll().
+        if (__atomic_load_n(&running, __ATOMIC_ACQUIRE)) arm(*c);
     }
+    __atomic_store_n(&c->inCallback, false, __ATOMIC_RELEASE);
     return false;
 }
+
+// Only the task calls these functions. The ISR never touches edge buffers or
+// RMT elapsedTicks, so a new burst can be received while we decode the last.
+static void finishBurst(Channel& c, uint32_t callbackUs) {
+    const uint32_t endTicks = callbackUs * 10u;
+    const uint32_t epoch = endTicks - c.elapsedTicks - kIdleNs / 100u;
+    uint16_t i = c.burstStart;
+    const uint16_t end = c.write;
+    while (i != end) {
+        const uint32_t e = c.edges[i];
+        c.edges[i] = (((e & kTickMask) + epoch) & kTickMask) | (e & 0x80000000UL);
+        i = (uint16_t)((i + 1u) & kRingMask);
+    }
+    __atomic_store_n(&c.readyWrite, end, __ATOMIC_RELEASE);
+    __atomic_store_n(&c.progress, endTicks, __ATOMIC_RELEASE);
+    __atomic_store_n(&c.haveProgress, true, __ATOMIC_RELEASE);
+    ++c.completed;
+    c.burstStart = end;
+    c.elapsedTicks = 0;
+    c.levelKnown = false;
+    c.currentLevel = 1;
+}
+
+static void decodeQueued(Channel& c) {
+    while (!c.overflow) {
+        const uint8_t r = c.chunkRead;
+        if (r == __atomic_load_n(&c.chunkWrite, __ATOMIC_ACQUIRE)) break;
+        const Chunk chunk = c.chunks[r];
+        uint16_t i = chunk.start;
+        // After a lost chunk, no timestamps or protocol edges are reliable
+        // until the next complete RMT burst begins.
+        if (!c.discardUntilBoundary) {
+            for (unsigned j = 0; j < chunk.count; ++j) {
+                const rmt_symbol_word_t symbol = c.queuedSymbols[i];
+                pulse(c, symbol.duration0, symbol.level0);
+                pulse(c, symbol.duration1, symbol.level1);
+                i = (uint16_t)((i + 1u) & kSymbolRingMask);
+            }
+            if (chunk.last) {
+                // RMT can encode the final physical transition with a zero
+                // duration1; corroborate it against the idle GPIO level.
+                if (chunk.count) {
+                    const uint16_t tailPos = (uint16_t)((chunk.start + chunk.count - 1u) & kSymbolRingMask);
+                    const auto tail = c.queuedSymbols[tailPos];
+                    if (tail.duration0 && !tail.duration1 && c.levelKnown &&
+                        tail.level1 != c.currentLevel &&
+                        chunk.tailLevel == static_cast<int>(tail.level1)) {
+                        emit(c, c.elapsedTicks, tail.level1 != 0);
+                        c.currentLevel = tail.level1;
+                    }
+                }
+                if (!c.overflow) finishBurst(c, chunk.callbackUs);
+            }
+        } else if (chunk.last) {
+            c.discardUntilBoundary = false;
+        }
+        // Publish free space only after the entire chunk is no longer read.
+        __atomic_store_n(&c.symbolRead,
+                         (uint16_t)((chunk.start + chunk.count) & kSymbolRingMask),
+                         __ATOMIC_RELEASE);
+        __atomic_store_n(&c.chunkRead, (uint8_t)((r + 1u) & kChunkMask), __ATOMIC_RELEASE);
+    }
+}
+
 // Resources survive repeated sniffs; only I2C mode exit frees them.
 static void dispose(Channel& c) {
     if (c.handle) {
@@ -280,9 +362,14 @@ static void dispose(Channel& c) {
     c.enabled = false;
     if (c.symbols) { heap_caps_free(c.symbols); c.symbols = nullptr; }
     if (c.edges) { heap_caps_free(c.edges); c.edges = nullptr; }
+    if (c.queuedSymbols) { heap_caps_free(c.queuedSymbols); c.queuedSymbols = nullptr; }
     c.write = c.read = c.readyWrite = 0;
-    c.completionW = c.completionR = 0;
+    c.symbolWrite = c.symbolRead = 0;
+    c.chunkWrite = c.chunkRead = 0;
+    c.discardUntilBoundary = false;
     c.receiving = false;
+    c.inCallback = false;
+    c.arming = false;
     c.haveProgress = false;
 }
 
@@ -301,13 +388,21 @@ bool prepare() {
         kRingSize * sizeof(uint32_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
     mem->dataPin.edges = static_cast<uint32_t*>(heap_caps_malloc(
         kRingSize * sizeof(uint32_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
+    mem->clock.queuedSymbols = static_cast<rmt_symbol_word_t*>(heap_caps_malloc(
+        kSymbolRingSize * sizeof(rmt_symbol_word_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
+    mem->dataPin.queuedSymbols = static_cast<rmt_symbol_word_t*>(heap_caps_malloc(
+        kSymbolRingSize * sizeof(rmt_symbol_word_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
     mem->clock.symbols = static_cast<rmt_symbol_word_t*>(heap_caps_malloc(
         kRxSymbols * sizeof(rmt_symbol_word_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT | MALLOC_CAP_DMA));
     mem->dataPin.symbols = static_cast<rmt_symbol_word_t*>(heap_caps_malloc(
         kRxSymbols * sizeof(rmt_symbol_word_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
-    if (!mem->clock.edges || !mem->dataPin.edges || !mem->clock.symbols || !mem->dataPin.symbols) {
+    if (!mem->clock.edges || !mem->dataPin.edges ||
+        !mem->clock.queuedSymbols || !mem->dataPin.queuedSymbols ||
+        !mem->clock.symbols || !mem->dataPin.symbols) {
         heap_caps_free(mem->clock.edges);
         heap_caps_free(mem->dataPin.edges);
+        heap_caps_free(mem->clock.queuedSymbols);
+        heap_caps_free(mem->dataPin.queuedSymbols);
         heap_caps_free(mem->clock.symbols);
         heap_caps_free(mem->dataPin.symbols);
         mem->~CaptureMemory();
@@ -321,8 +416,11 @@ bool prepare() {
 
 static void resetChannel(Channel& c) {
     c.write = c.read = c.readyWrite = 0;
-    c.completionW = c.completionR = 0;
+    c.symbolWrite = c.symbolRead = 0;
+    c.chunkWrite = c.chunkRead = 0;
+    c.discardUntilBoundary = false;
     c.burstStart = 0;
+    c.elapsedTicks = 0;
     c.progress = 0;
     c.haveProgress = false;
     c.overflow = false;
@@ -332,6 +430,8 @@ static void resetChannel(Channel& c) {
     c.levelKnown = false;
     c.started = false;
     c.receiving = false;
+    c.inCallback = false;
+    c.arming = false;
 }
 
 static bool init(Channel& c, uint8_t pin, bool dma, const char* label) {
@@ -427,41 +527,19 @@ bool begin(uint8_t sclPin, uint8_t sdaPin) {
     }
     return true;
 }
-// Apply the completion's epoch only after the ISR has already restarted RX.
-// readyWrite is the publication fence: next() cannot read relative timestamps
-// from a not-yet-finalized burst. The ISR is the only ring-edge producer;
-// completed bursts can be patched here while it appends later bursts.
-static void finalize(Channel& c) {
-    while (true) {
-        const uint8_t r = c.completionR;
-        if (r == __atomic_load_n(&c.completionW, __ATOMIC_ACQUIRE)) break;
-        const Completion meta = c.completions[r];
-        uint16_t i = meta.start;
-        while (i != meta.end) {
-            const uint32_t e = c.edges[i];
-            c.edges[i] = (((e & kTickMask) + meta.epoch) & kTickMask) |
-                         (e & 0x80000000UL);
-            i = (uint16_t)((i + 1u) & kRingMask);
-        }
-        __atomic_store_n(&c.readyWrite, meta.end, __ATOMIC_RELEASE);
-        __atomic_store_n(&c.progress, meta.progress, __ATOMIC_RELEASE);
-        __atomic_store_n(&c.haveProgress, true, __ATOMIC_RELEASE);
-        ++c.completed;
-        __atomic_store_n(&c.completionR, (uint8_t)((r + 1u) & kCompletionMask), __ATOMIC_RELEASE);
-    }
-}
 void poll() {
     if (!running || !captureMemory) return;
-    // If completion bookkeeping or the edge ring overflowed, none of the
-    // unpublished edges has a trustworthy timestamp. Discard the backlog and
-    // leave the decoder to resync at a subsequent START.
     if (!scl().overflow && !sda().overflow) {
-        finalize(scl());
-        finalize(sda());
+        decodeQueued(scl());
+        decodeQueued(sda());
     }
-    // Retry an ISR rearm failure in main context, as before.
-    if (!scl().receiving) arm(scl());
-    if (!sda().receiving) arm(sda());
+    // Retry any ISR rearm failure from task context.
+    if (!__atomic_load_n(&scl().receiving, __ATOMIC_ACQUIRE) &&
+        !__atomic_load_n(&scl().inCallback, __ATOMIC_ACQUIRE) &&
+        !__atomic_load_n(&scl().arming, __ATOMIC_ACQUIRE)) arm(scl());
+    if (!__atomic_load_n(&sda().receiving, __ATOMIC_ACQUIRE) &&
+        !__atomic_load_n(&sda().inCallback, __ATOMIC_ACQUIRE) &&
+        !__atomic_load_n(&sda().arming, __ATOMIC_ACQUIRE)) arm(sda());
 }
 static inline bool before(uint32_t a, uint32_t b) {
     return (((a - b) & kTickMask) & 0x40000000UL) != 0;
@@ -650,13 +728,14 @@ bool next(Edge& result, bool& isSda) {
     return true;
 }
 bool drained() {
-    // Only finalized edges are visible via readyWrite. Pending completion
-    // records must be processed before the decoder may finalize a tail STOP.
+    // The decoder may finalize a tail STOP only after both RMT raw queues
+    // and both finalized edge queues have been fully consumed.
     return running && captureMemory &&
            scl().read == __atomic_load_n(&scl().readyWrite, __ATOMIC_ACQUIRE) &&
            sda().read == __atomic_load_n(&sda().readyWrite, __ATOMIC_ACQUIRE) &&
-           scl().completionR == __atomic_load_n(&scl().completionW, __ATOMIC_ACQUIRE) &&
-           sda().completionR == __atomic_load_n(&sda().completionW, __ATOMIC_ACQUIRE);
+           scl().chunkRead == __atomic_load_n(&scl().chunkWrite, __ATOMIC_ACQUIRE) &&
+           sda().chunkRead == __atomic_load_n(&sda().chunkWrite, __ATOMIC_ACQUIRE) &&
+           !scl().discardUntilBoundary && !sda().discardUntilBoundary;
 }
 bool takeAlignmentFailure() {
     if (!captureMemory) return false;
@@ -671,14 +750,19 @@ bool takeOverflow() {
     const bool bad = scl().overflow || sda().overflow || nowErrors != acknowledgedErrors;
     acknowledgedErrors = nowErrors;
     if (bad) {
-        // Clear both streams atomically with respect to the ISR writers.
+        // Drop both queues and discard the remainder of any in-flight burst.
         // Published bytes may already have reached the output; future data
-        // must begin from a fresh, complete RX burst pair.
+        // must begin from fresh, complete RX burst pairs.
         Channel* const channels[2] = {&scl(), &sda()};
         for (Channel* c : channels) {
             __atomic_store_n(&c->read, __atomic_load_n(&c->write, __ATOMIC_ACQUIRE), __ATOMIC_RELEASE);
             __atomic_store_n(&c->readyWrite, c->read, __ATOMIC_RELEASE);
-            __atomic_store_n(&c->completionR, __atomic_load_n(&c->completionW, __ATOMIC_ACQUIRE), __ATOMIC_RELEASE);
+            __atomic_store_n(&c->chunkRead, __atomic_load_n(&c->chunkWrite, __ATOMIC_ACQUIRE), __ATOMIC_RELEASE);
+            __atomic_store_n(&c->symbolRead, __atomic_load_n(&c->symbolWrite, __ATOMIC_ACQUIRE), __ATOMIC_RELEASE);
+            c->burstStart = c->write;
+            c->elapsedTicks = 0;
+            c->levelKnown = false;
+            c->discardUntilBoundary = true;
             c->overflow = false;
         }
         alignmentValid = false;
@@ -1314,3 +1398,7 @@ bool I2cSnifferService::measureFrequency(uint8_t scl, uint32_t timeoutMs,
     return false;
 #endif
 }
+
+#if BITPIRATE_I2C_SNIFFER_OPT_O3 && defined(__GNUC__)
+#pragma GCC pop_options
+#endif
