@@ -431,6 +431,31 @@ html[data-theme="light"] .hero-actions .secondary-button {
   scroll-margin-top: 18px;
 }
 
+.flash-compat-note {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  margin: 15px 0 3px;
+  padding: 10px 12px;
+  border: 1px solid rgba(73, 182, 119, 0.24);
+  border-radius: 8px;
+  background: rgba(73, 182, 119, 0.055);
+  color: #b5c0b9;
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+
+.flash-compat-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--green-dim);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  transform: translateY(0.02em);
+}
+
 .board-section + .board-section {
   margin-top: 16px;
 }
@@ -1283,6 +1308,12 @@ html[data-theme="light"] .card.active {
 }
 
 html[data-theme="light"] .card-note {
+  color: #52675c;
+}
+
+html[data-theme="light"] .flash-compat-note {
+  border-color: rgba(7, 134, 83, 0.20);
+  background: rgba(7, 134, 83, 0.055);
   color: #52675c;
 }
 

@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="Install ESP32 Bit Pirate firmware from a browser, open the Web Serial terminal after flashing, and follow practical recipes or theoretical documentation for ESP32-S3 hardware debugging workflows." name="description"/>
-<meta content="ESP32 Bit Pirate Web Flasher, ESP32-S3 firmware flasher, ESP32 Web Serial flashing, ESP32-S3 Web Serial terminal, Cardputer firmware, StampS3 firmware, T-Embed firmware, ESP32-C5 Bus Expander, hardware debugging firmware, browser firmware installer, ESP32 Bit Pirate documentation" name="keywords"/>
+<meta content="ESP32 Bit Pirate Web Flasher, ESP32-S3 firmware flasher, ESP32 Web Serial flashing, ESP32-S3 Web Serial terminal, Cardputer firmware, StampS3 firmware, T-Embed firmware, ESP32-C5 Bus Expander, ESP32-C6 Bus Expander, hardware debugging firmware, browser firmware installer, ESP32 Bit Pirate documentation" name="keywords"/>
 <meta content="index,follow,max-snippet:-1,max-image-preview:large" name="robots"/>
 <meta content="#121212" name="theme-color"/>
 <meta content="website" property="og:type"/>
@@ -37,7 +37,7 @@
         "@type": "WebApplication",
         "name": "ESP32 Bit Pirate Web Flasher",
         "url": "https://geo-tp.github.io/ESP32-Bit-Pirate/webflasher/",
-        "description": "Browser-based Web Serial flasher for installing ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5 Bus Expander, then continuing with Web Serial tools and documentation.",
+        "description": "Browser-based Web Serial flasher for installing ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5/C6 Bus Expander, then continuing with Web Serial tools and documentation.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web",
         "isAccessibleForFree": true,
@@ -56,7 +56,7 @@
           {
             "@type": "HowToStep",
             "name": "Choose your board",
-            "text": "Select the exact ESP32-S3 or ESP32-C5 target so the correct firmware manifest is used."
+            "text": "Select the exact ESP32-S3, ESP32-C5 or ESP32-C6 target so the correct firmware manifest is used."
           },
           {
             "@type": "HowToStep",
@@ -83,7 +83,7 @@
             "name": "What does the ESP32 Bit Pirate Web Flasher do?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "It installs ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5 Bus Expander directly from a compatible browser using Web Serial."
+              "text": "It installs ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5/C6 Bus Expander directly from a compatible browser using Web Serial."
             }
           },
           {
@@ -163,7 +163,7 @@
 <div class="hero-copy">
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">⚡</span> Browser firmware installer</p>
 <h1>Flash the firmware in one click, then start using it.</h1>
-<p class="lead">Install ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5 Bus Expander directly from your browser. This page is organized as a simple flow: flash the device, open the Web Serial terminal, then continue with practical recipes or theoretical documentation.</p>
+<p class="lead">Install ESP32 Bit Pirate firmware on supported ESP32-S3 boards and the ESP32-C5/C6 Bus Expander directly from your browser. This page is organized as a simple flow: flash the device, open the Web Serial terminal, then continue with practical recipes or theoretical documentation.</p>
 <div aria-label="Primary actions" class="hero-actions">
 <a class="button" href="#flash-workflow"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><path d="M13 2 5 13h6l-1 9 8-12h-6z"></path></svg>Select board and flash</a>
 <a class="button secondary-button" href="../web-tools/web-serial-terminal/"><svg aria-hidden="true" class="button-icon" viewbox="0 0 24 24"><rect height="15" rx="2" width="18" x="3" y="4"></rect><path d="M3 8h18M8 13l2 2-2 2M13 17h4"></path></svg>Open Web terminal</a>
@@ -210,6 +210,7 @@
 <p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">01</span> Choose firmware</p>
 <h2 id="flash-workflow-title">Select your ESP32 Bit Pirate target</h2>
 <p>Plug in your board with a USB cable and select the corresponding firmware below. The installer will guide you through the flashing process.</p>
+<p class="flash-compat-note"><span aria-hidden="true" class="flash-compat-icon">ⓘ</span> Any ESP32-S3 with at least 4 MB of flash can run Bit Pirate with the S3 DevKit or S3 Super Mini firmware. Default pin mapping may vary by board.</p>
 </div>
 <div aria-labelledby="master-board-title" class="board-section">
 <h3 id="master-board-title">ESP32 Bit Pirate firmware (ESP32-S3)</h3>
@@ -219,22 +220,25 @@
 <button aria-selected="false" class="card master-card" data-key="stamps3" role="option" type="button">Stamp-S3</button>
 <button aria-selected="false" class="card master-card" data-key="atoms3lite" role="option" type="button">Atom-S3 Lite</button>
 <button aria-selected="false" class="card master-card" data-key="sticks3" role="option" type="button">Stick-S3</button>
-<button aria-selected="false" class="card master-card" data-key="s3devkit" role="option" type="button">ESP32-S3 DevKit</button>
+<button aria-selected="false" class="card master-card" data-key="s3devkit" role="option" title="Generic ESP32-S3 target for boards with 8 MB flash, with or without PSRAM (N8, N8R2, N8R8, N8R16, etc.)." type="button">ESP32-S3 DevKit <span class="card-note">8 MB Flash</span></button>
 <button aria-selected="false" class="card master-card" data-key="tembed" role="option" type="button">T-Embed</button>
 <button aria-selected="false" class="card master-card" data-key="tembedcc1101" role="option" type="button">T-Embed CC1101</button>
 <button aria-selected="false" class="card master-card" data-key="tembedcc1101plus" role="option" type="button">T-Embed CC1101 Plus</button>
 <button aria-selected="false" class="card master-card" data-key="tdisplays3" role="option" type="button">T-Display S3</button>
 <button aria-selected="false" class="card master-card" data-key="xiaoesp32s3" role="option" type="button">Xiao ESP32-S3</button>
-<button aria-selected="false" class="card master-card" data-key="s3devkitn16r8" role="option" type="button">ESP32-S3 N16R8</button>
+<button aria-selected="false" class="card master-card" data-key="s3devkitn16r8" role="option" title="Generic ESP32-S3 target for boards with 16 MB flash and 8 MB PSRAM (N16R8)." type="button">ESP32-S3 N16R8 <span class="card-note">16 MB Flash</span></button>
 <button aria-selected="false" class="card master-card" data-key="visionmastert190" role="option" type="button">Heltec Vision Master T190</button>
 <button aria-selected="false" class="card master-card" data-key="helteclorav4" role="option" type="button">Heltec WiFi LoRa 32 V4 <span class="card-note">No screen</span></button>
 <button aria-selected="false" class="card master-card" data-key="waveshares3geek" role="option" type="button">Waveshare ESP32-S3 Geek</button>
+<button aria-selected="false" class="card master-card" data-key="pros3" role="option" type="button">Unexpected Maker ProS3</button>
+<button aria-selected="false" class="card master-card" data-key="s3supermini" role="option" title="For ESP32-S3 Super Mini / Zero and compatible 4 MB variants using this board profile." type="button">ESP32-S3 Super Mini / Zero <span class="card-note">4 MB Flash</span></button>
 </div>
 </div>
 <div aria-labelledby="expander-board-title" class="board-section">
-<h3 id="expander-board-title">ESP32 Bus Expander firmware (ESP32-C5)</h3>
-<div aria-label="Choose an ESP32-C5 expander board" class="boards-grid expander-grid" id="boards-expander" role="listbox">
-<button aria-selected="false" class="card expander-card" data-key="c5expander" role="option" type="button">ESP32-C5 Expander</button>
+<h3 id="expander-board-title">ESP32 Bus Expander firmware (ESP32-C5 / ESP32-C6)</h3>
+<div aria-label="Choose an ESP32-C5 or ESP32-C6 expander board" class="boards-grid expander-grid" id="boards-expander" role="listbox">
+<button aria-selected="false" class="card expander-card" data-key="c5expander" role="option" title="Compatible with most ESP32-C5 boards, including the official DevKit, Super Mini-style boards, and other C5 variants." type="button">ESP32-C5 Expander</button>
+<button aria-selected="false" class="card expander-card" data-key="c6expander" role="option" title="Compatible with most ESP32-C6 boards, including the official DevKit, Super Mini-style boards, and other C6 variants." type="button">ESP32-C6 Expander</button>
 </div>
 </div>
 <div aria-live="polite" class="flash-area">
@@ -388,24 +392,24 @@
 </a>
 </article>
 <article class="system-card">
-<a class="system-card-link" href="../recipes/">
-<img alt="Practical recipe cards for hardware bench workflows." class="card-cover" height="300" loading="lazy" src="../assets/index-recipes.svg" width="520"/>
+<a class="system-card-link" href="../modules/">
+<img alt="Electronic modules and chips on a workbench." class="card-cover" height="300" loading="lazy" src="../assets/index-modules.svg" width="520"/>
 <div class="card-copy">
-<p class="card-eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">How-to</span> Recipes</p>
-<h3>Practical bench documentation</h3>
-<p>Searchable task pages that explain wiring, commands and browser tool workflows.</p>
-<span class="card-arrow">Read recipes →</span>
+<p class="card-eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Chips</span> Modules</p>
+<h3>Modules and chips</h3>
+<p>Wiring guides for CC1101, SPI flash, PN532, nRF24L01, MCP2515 and other bench parts.</p>
+<span class="card-arrow">Explore modules →</span>
 </div>
 </a>
 </article>
 <article class="system-card">
-<a class="system-card-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki" rel="noopener" target="_blank">
-<img alt="Documentation page with mode and command references." class="card-cover" height="300" loading="lazy" src="../assets/index-wiki.svg" width="520"/>
+<a class="system-card-link" href="../hardware/">
+<img alt="PCB dock and adapter board." class="card-cover" height="300" loading="lazy" src="../assets/index-dock.svg" width="520"/>
 <div class="card-copy">
-<p class="card-eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">Wiki</span> Documentation</p>
-<h3>Theoretical bench documentation</h3>
-<p>Mode pages, setup notes and command references for serial, web UI and adapter workflows.</p>
-<span class="card-arrow">Open wiki ↗</span>
+<p class="card-eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">PCB</span> Dock &amp; adapters</p>
+<h3>Hardware extension path</h3>
+<p>A carrier-board direction for adapters, accessories and level logic from 1.8V to 5V.</p>
+<span class="card-arrow">Explore hardware →</span>
 </div>
 </a>
 </article>
@@ -433,27 +437,7 @@
 </article>
 </div>
 </section>
-<section aria-labelledby="bit-pirate-identity-title" class="brand-signature">
-<div class="brand-signature-card">
-<a class="brand-signature-link" href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">
-<picture>
-<source srcset="../web-tools/assets/bit-pirate-square.webp" type="image/webp"/>
-<img alt="ESP32 Bit Pirate logo." class="brand-signature-logo" height="512" loading="lazy" src="../web-tools/assets/bit-pirate-square.png" width="512"/>
-</picture>
-</a>
-<div class="brand-signature-copy">
-<p class="eyebrow"><span aria-hidden="true" class="eyebrow-text-mark">ESP32 Bit Pirate</span> project</p>
-<h2 id="bit-pirate-identity-title">Powering the open-source ecosystem.</h2>
-<p>The Bit Pirate firmware is complemented by scripting, hardware dock, expansion boards, browser tools, documentation and practical embedded workflows for serial interfaces, protocol exploration and Wi-Fi connected debugging.</p>
-<ul aria-label="ESP32 Bit Pirate keywords" class="brand-signature-keywords">
-<li><a href="https://github.com/geo-tp/ESP32-Bit-Pirate" rel="noopener" target="_blank">ESP32-S3 firmware</a></li>
-<li><a href="../recipes/">hardware debugging</a></li>
-<li><a href="../web-tools/">Web Serial tools</a></li>
-<li><a href="../protocols/">embedded workbench</a></li>
-</ul>
-</div>
-</div>
-</section>
+
 <footer class="site-footer">
 <p class="site-footer-title">ESP32 Bit Pirate</p>
 <nav aria-label="Project links">
