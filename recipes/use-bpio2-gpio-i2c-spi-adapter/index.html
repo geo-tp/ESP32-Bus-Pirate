@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Control eight GPIOs, scan I2C and transfer SPI data with the BPIO2 USB adapter, Web Bit-Bang I/O Controller and Python Scripting Lab."/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta name="theme-color" content="#121212"/>
+<meta property="og:site_name" content="ESP32 Bit Pirate"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:title" content="How to use the BPIO2 GPIO, I2C and SPI adapter"/>
+<meta property="og:description" content="Control eight GPIOs, scan I2C and transfer SPI data with the BPIO2 USB adapter, Web Bit-Bang I/O Controller and Python Scripting Lab."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-bpio2-gpio-i2c-spi-adapter/"/>
+<meta property="og:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png"/>
+<meta property="og:image:alt" content="USB adapter and host-tool workflow."/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="article:published_time" content="2026-10-12"/>
+<meta property="article:modified_time" content="2026-10-12"/>
+<meta property="article:author" content="Geo"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="How to use the BPIO2 GPIO, I2C and SPI adapter"/>
+<meta name="twitter:description" content="Control eight GPIOs, scan I2C and transfer SPI data with the BPIO2 USB adapter, Web Bit-Bang I/O Controller and Python Scripting Lab."/>
+<meta name="twitter:image" content="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png"/>
+<meta name="twitter:image:alt" content="USB adapter and host-tool workflow."/>
+<link rel="canonical" href="https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-bpio2-gpio-i2c-spi-adapter/"/>
+<title>Use the BPIO2 GPIO, I2C and SPI adapter | ESP32 Bit Pirate</title>
+<link rel="stylesheet" href="../recipes.css?v=20261011-command-spacing"/>
+<link rel="icon" href="../../favicon.ico" sizes="any"/>
+<link rel="icon" href="../../favicon.png" sizes="48x48" type="image/png"/>
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "How to use the BPIO2 GPIO, I2C and SPI adapter",
+      "description": "Control eight GPIOs, scan I2C and transfer SPI data with the BPIO2 USB adapter, Web Bit-Bang I/O Controller and Python Scripting Lab.",
+      "image": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/assets/covers/visual-usb-adapters.png",
+      "datePublished": "2026-10-12",
+      "dateModified": "2026-10-12",
+      "author": {
+        "@type": "Person",
+        "name": "Geo"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ESP32 Bit Pirate",
+        "url": "https://github.com/geo-tp/ESP32-Bit-Pirate"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-bpio2-gpio-i2c-spi-adapter/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ESP32 Bit Pirate",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Recipes",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Use the BPIO2 GPIO, I2C and SPI adapter",
+          "item": "https://geo-tp.github.io/ESP32-Bit-Pirate/recipes/use-bpio2-gpio-i2c-spi-adapter/"
+        }
+      ]
+    }
+  ]
+}</script>
+<script defer src="../../assets/theme-toggle.js?v=20260702-desktop-sober2"></script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="article-hero-top"><div class="article-brand-tags"><a class="brand" href="../../" aria-label="ESP32 Bit Pirate home"><span class="brand-mark" aria-hidden="true">B</span><span class="visually-hidden">ESP32 Bit Pirate home</span></a><ul class="article-hero-tags" aria-label="Recipe tags"><li>GPIO / I2C / SPI</li><li>Intermediate</li><li>10 min</li><li>BPIO2 + Web Tools</li></ul></div><nav class="article-top-nav" aria-label="Section navigation"><a href="../../"><svg class="article-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>Home</a><a href="../">Recipes</a><a href="../../web-tools/">Web Tools</a><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank">Wiki</a></nav></div>
+<p class="eyebrow">Recipe · Intermediate · GPIO, I2C, SPI, USB</p>
+<h1>How to use the BPIO2 GPIO, I2C and SPI adapter</h1>
+<p>Expose eight ESP32 GPIOs over USB CDC for direct pin control and I2C or SPI transactions. BPIO2 uses a binary protocol for repeatable operations from software.</p>
+</header>
+<figure class="recipe-banner"><img src="../assets/visual-usb-adapters.svg" alt="USB adapter and host-tool workflow." width="1040" height="600"/><figcaption>One USB adapter for GPIO control, I2C/SPI transfers and browser automation.</figcaption></figure>
+<div class="recipe-layout">
+<article class="recipe-article">
+<section class="recipe-section" aria-labelledby="compatible-tools-title">
+<h2 id="compatible-tools-title">Compatible web tools</h2>
+<p><strong>Both tools support the BPIO2 adapter:</strong> use the controller for direct interaction or Python Lab for scripts.</p>
+<nav class="link-card-list" aria-label="BPIO2 compatible tools">
+<a href="../../web-tools/bpio2/"><span>GPIO · I2C · SPI</span><strong>Web Bit-Bang I/O Controller</strong></a>
+<a href="../../web-tools/python-lab/"><span>Python automation</span><strong>Python Scripting Lab</strong></a>
+</nav>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 1</span><h2>Enable the BPIO2 adapter</h2>
+<p>In the Bit Pirate terminal, open the USB adapters menu:</p>
+<div data-cli-session="" data-cli-mode="BitPirate" data-cli-commands="mode usb
+adapters"><pre><code>mode usb
+adapters</code></pre></div>
+<p>Select <strong>BPIO2 GPIO/SPI/I2C</strong> and assign eight unique GPIOs to <strong>IO0 through IO7</strong>. Keep the mapping handy. The board reboots into BPIO2 mode over native USB; close the terminal before connecting a web tool.</p>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 2</span><h2>Wire the selected IOs</h2>
+<p><strong>IO0–IO7 are adapter labels, not ESP32 GPIO numbers.</strong> Use the GPIOs assigned in Step 1 and connect adapter GND to target GND.</p>
+<div class="recipe-table-scroll"><table class="recipe-data-table">
+<thead><tr><th scope="col">BPIO2 pin</th><th scope="col">HiZ mode</th><th scope="col">I2C mode</th><th scope="col">SPI mode</th></tr></thead>
+<tbody>
+<tr><td>IO0</td><td>GPIO</td><td>GPIO</td><td>CS</td></tr>
+<tr><td>IO1</td><td>GPIO</td><td>SCL</td><td>SCK</td></tr>
+<tr><td>IO2</td><td>GPIO</td><td>SDA</td><td>MOSI</td></tr>
+<tr><td>IO3</td><td>GPIO</td><td>GPIO</td><td>MISO</td></tr>
+<tr><td>IO4–IO7</td><td>GPIO</td><td>GPIO</td><td>GPIO</td></tr>
+<tr><td>GND</td><td colspan="3">Target GND</td></tr>
+</tbody></table></div>
+<p><strong>HiZ</strong> makes all eight IOs available as GPIOs. <strong>I2C</strong> reserves IO1/IO2; <strong>SPI</strong> reserves IO0–IO3. The remaining pins stay available as auxiliary GPIOs.</p>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 3</span><h2>Open the web controller</h2>
+<p>Open the <a href="../../web-tools/bpio2/">Web Bit-Bang Controller</a>, click <strong>Connect</strong> and select your board's port.</p>
+<p>Use the tabs to control pins, exchange data or run a sequence.</p>
+</section>
+<section class="recipe-section command-step-section">
+<span class="step-label">Step 4</span><h2>Automate with Python Scripting Lab</h2>
+<p><a href="../../web-tools/python-lab/">Web Python Scripting Lab</a> also connects directly to this adapter. Disconnect the controller, open Python Lab and select a BPIO2 example from <strong>Scripts</strong>, or import a compatible script. Click <strong>Run</strong> and select the adapter port when prompted.</p>
+<p>Use BPIO2 scripts to repeat transfers, collect readings or build hardware checks. They use the binary adapter API; ordinary Bit Pirate CLI commands require normal CLI mode. No local Python installation is needed for the web lab.</p>
+</section>
+<section class="recipe-section result-section">
+<h2>Result</h2>
+<div class="callout success"><h3>What success looks like</h3><p>The controller reports the adapter and its pin mapping. GPIO states update, or your I2C/SPI target returns the expected data. Python Lab can automate the same adapter through BPIO2.</p></div>
+<p>To return to the Bit Pirate CLI, disconnect the web tool and reset the board. Enable BPIO2 again for another adapter session.</p>
+</section>
+<section class="recipe-section troubleshooting-section">
+<h2>Troubleshooting</h2>
+<ul class="mistake-list">
+<li><strong>Port busy:</strong> Disconnect the terminal or other web tool; only one client can use the serial port at a time.</li>
+<li><strong>No BPIO2 response:</strong> Confirm the adapter was selected and the board rebooted. Use a browser with Web Serial support.</li>
+<li><strong>Wrong pin or no data:</strong> Check the IO-to-GPIO mapping, shared ground and target power. Pins reserved by I2C/SPI are controlled by the active bus.</li>
+</ul>
+</section>
+<section class="recipe-section">
+<h2>Go deeper</h2>
+<nav class="link-card-list" aria-label="Related links">
+<a href="../choose-dedicated-usb-adapter-mode/"><span>Recipe</span><strong>Choose a dedicated USB adapter mode</strong></a>
+<a href="../choose-gpio-pinout-before-wiring/"><span>Recipe</span><strong>Choose GPIOs before wiring</strong></a>
+<a href="../open-python-scripting-lab/"><span>Recipe</span><strong>Open Python Scripting Lab</strong></a>
+<a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters" rel="noopener" target="_blank"><span>Wiki</span><strong>USB adapter reference</strong></a>
+</nav>
+</section>
+</article>
+<aside class="content-card aside-card" aria-label="Recipe setup and details"><dl>
+<dt class="aside-dt-requirements">Requirements</dt><dd class="aside-setup-dd"><ul class="hardware-list setup-list aside-setup-list"><li>ESP32 Bit Pirate with BPIO2 support</li><li>Eight available GPIOs and a native USB data cable</li><li>Web Serial browser</li><li>GPIO, I2C or SPI target and shared ground</li></ul></dd>
+<dt class="aside-dt-protocol">Protocol</dt><dd>BPIO2 over USB CDC · GPIO, I2C, SPI</dd>
+<dt>Compatible tools</dt><dd><a href="../../web-tools/bpio2/">Web Bit-Bang I/O Controller</a><br/><a href="../../web-tools/python-lab/">Python Scripting Lab</a></dd>
+<dt class="aside-dt-wiki">Wiki source</dt><dd><a href="https://github.com/geo-tp/ESP32-Bit-Pirate/wiki/99-Adapters">99-Adapters</a></dd>
+<dt class="aside-dt-date">Date</dt><dd>2026-10-12</dd>
+</dl></aside>
+</div>
+</main>
+<script src="../recipes.js?v=20261009-recipes1"></script>
+</body>
+</html>

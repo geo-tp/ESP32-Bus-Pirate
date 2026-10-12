@@ -1336,7 +1336,7 @@ window.BIT_PIRATE_RECIPES = [
   {
     "title": "Use OpenOCD adapter mode",
     "slug": "use-openocd-jtag-adapter",
-    "description": "Use ESP32 Bit Pirate JTAG mode openocd command to switch the device into an OpenOCD-compatible adapter workflow after pinout is known.",
+    "description": "Start the ESP32 Bit Pirate OpenOCD adapter and run SWD or JTAG host commands with the Bus Pirate driver, USB serial port and matching target config.",
     "difficulty": "Advanced",
     "type": "Recipe",
     "mark": "OCD",
@@ -1365,7 +1365,7 @@ window.BIT_PIRATE_RECIPES = [
     "cover": "assets/visual-openocd.svg",
     "time": "5 min",
     "hardware": "Known JTAG/SWD target pinout",
-    "takeaway": "Switch to adapter mode only after wiring and target voltage are confirmed.",
+    "takeaway": "Connect a known SWD or JTAG target with the Bus Pirate driver and matching OpenOCD host command.",
     "date": "2026-06-23",
     "author": "Geo"
   },
@@ -4883,6 +4883,56 @@ window.BIT_PIRATE_RECIPES = [
     "time": "5 min",
     "hardware": "ESP32 Bit Pirate firmware with native USB",
     "takeaway": "Use the USB adapters menu to reboot ESP32 Bit Pirate into flashrom, AVRDUDE, SUMP, OpenOCD, IR Toy, SubGHz or ESP SDR tool modes."
+  },
+  {
+    "title": "Use the BPIO2 GPIO, I2C and SPI adapter",
+    "slug": "use-bpio2-gpio-i2c-spi-adapter",
+    "description": "Control eight GPIOs, scan I2C and transfer SPI data with the BPIO2 USB adapter, Web Bit-Bang I/O Controller and Python Scripting Lab.",
+    "date": "2026-10-12",
+    "author": "Geo",
+    "difficulty": "Intermediate",
+    "type": "Recipe",
+    "mark": "BPIO2",
+    "protocols": [
+      "GPIO",
+      "I2C",
+      "SPI",
+      "USB"
+    ],
+    "targets": [
+      "BPIO2 adapter",
+      "GPIO pins",
+      "I2C devices",
+      "SPI peripherals"
+    ],
+    "workflows": [
+      "Connect & control",
+      "Scan",
+      "Read",
+      "Write",
+      "Automation"
+    ],
+    "tools": [
+      "Web Bit-Bang I/O Controller",
+      "Python Scripting Lab",
+      "Web Serial"
+    ],
+    "tags": [
+      "bpio2",
+      "bitbang",
+      "bit-bang",
+      "gpio",
+      "i2c",
+      "spi",
+      "usb",
+      "adapter",
+      "python-lab",
+      "automation"
+    ],
+    "cover": "assets/visual-usb-adapters.svg",
+    "time": "10 min",
+    "hardware": "ESP32-S3 native USB, eight assigned GPIOs and an I2C/SPI or GPIO target",
+    "takeaway": "Use eight GPIOs, I2C and SPI from Web Bit-Bang I/O Controller or Python Scripting Lab."
   },
   {
     "title": "Use ESP32 as a USB-UART dongle",
